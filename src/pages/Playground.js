@@ -1,19 +1,19 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { Button } from './components/Button'
-import GoogleLoginButton from './components/GoogleLoginButton'
-import { Input } from './components/Input'
-import { FormInput } from './components/FormInput'
-import ProgressBar from './components/ProgressBar'
-import StatusMessage from './components/StatusMessage'
+import { Button } from '../components/Button'
+import GoogleLoginButton from '../components/GoogleLoginButton'
+import { Input } from '../components/Input'
+import { FormInput } from '../components/FormInput'
+import ProgressBar from '../components/ProgressBar'
+import StatusMessage from '../components/StatusMessage'
 
 const PlaygroundContainer = styled.div`
     box-sizing: border-box;
     padding: 0px 24px 0px 24px;
     width: 100%;
     min-height: 100%;
-    border: 2px solid blue;
+    // border: 2px solid blue;
 
     & > h1 {
         margin: 0px;

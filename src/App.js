@@ -1,8 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Switch, Route } from 'react-router-dom'
-import Playground from './Playground'
-import { Landing, Vendor, Admin } from './pages'
+// import Playground from './Playground'
+import { Landing, Vendor, Admin, Playground } from './pages'
 
 
 const AppContainer = styled.div`

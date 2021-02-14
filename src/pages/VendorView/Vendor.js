@@ -1,9 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Header } from '../components/Header'
-import { FormInput } from '../components/FormInput'
-import ProgressBar from '../components/ProgressBar'
-import StatusMessage from '../components/StatusMessage'
+import { Header } from '../../components/Header'
+import { FormInput } from '../../components/FormInput'
+import ProgressBar from '../../components/ProgressBar'
+import StatusMessage from '../../components/StatusMessage'
 
 const VendorPageContainer = styled.div`
     box-sizing: border-box;
