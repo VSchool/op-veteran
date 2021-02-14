@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import Playground from './Playground'
 
 const AppContainer = styled.div`
   width: 100%;
@@ -12,7 +13,7 @@ export default function App() {
 
   return (
     <AppContainer>
-      <h1>App Component</h1>
+      <Playground />
     </AppContainer>
   )
 }
