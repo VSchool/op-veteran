@@ -4,8 +4,7 @@ import styled from 'styled-components'
 import { Landing } from './pages'
 
 const AppContainer = styled.div`
-box-sizing: border-box;
-
+  box-sizing: border-box;
   width: 100%;
   height: 100vh;
   position: relative;

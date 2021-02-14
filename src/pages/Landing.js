@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Button } from '../components/Button'
+// import { Button } from '../components/Button'
+import GoogleLoginButton from '../components/GoogleLoginButton'
 import logo from '../assets/images/vetfest-logo.png'
 
 const LandingContainer = styled.div`
@@ -8,7 +9,7 @@ const LandingContainer = styled.div`
     width: 100%;
     height: 100%;
     position: relative;
-    border: 2px solid dodgerblue;
+    // border: 2px solid dodgerblue;
 
     & > img {
         width: 160px;
@@ -32,7 +33,7 @@ const LandingContainer = styled.div`
         font-size: 28px;
         line-height: 32px;
         color: #545454;
-        border: 1px dotted orange;
+        // border: 1px dotted orange;
     }
 
     & > h3 {
@@ -50,7 +51,7 @@ const LandingContainer = styled.div`
         line-height: 24px;
         letter-spacing: 0.02em;
         color: #545454;
-        border: 1px dotted orange;
+        // border: 1px dotted orange;
     }
 
     & > h2 {
@@ -68,7 +69,7 @@ const LandingContainer = styled.div`
         line-height: 24px;
         text-align: center;
         color: #545454;
-        border: 1px dotted orange;
+        // border: 1px dotted orange;
     }
 `
 
@@ -79,6 +80,7 @@ export default function Landing() {
             <h3>OP Veteran</h3>
             <h1>VetFest Registration</h1>
             <h2>Register or sign in with</h2>
+            <GoogleLoginButton />
         </LandingContainer>
     )
 }
