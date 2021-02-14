@@ -29,6 +29,10 @@ export default function App() {
         <Route path='/admin'>
           <Admin />
         </Route>
+
+        <Route path='/playground'>
+          <Playground />
+        </Route>
       </Switch>
     </AppContainer>
   )
