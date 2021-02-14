@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import StatusMessage from '../../components/StatusMessage'
 
 const SponsorshipContainer = styled.div`
     box-sizing: border-box;
@@ -9,12 +10,54 @@ const SponsorshipContainer = styled.div`
     left: 0px;
     right: 0px;
     border: 2px solid blue;
+
+    & > h1 {
+        box-sizing: border-box;
+        margin: 0px;
+        position: absolute;
+        top: 104px;
+        left: calc(50% - 328px/2);
+        width: 328px;
+        max-height: 64px;
+        font-family: Open Sans;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 32px;
+        line-height: 32px;
+        color: #545454;
+        border: 1px solid dodgerblue;
+    }
+
+    & > .subtitle {
+        box-sizing: border-box;
+        margin: 0px;
+        position: absolute;
+        top: 176px;
+        left: calc(50% - 328px/2);
+        width: 328px;
+        max-height: 40px;
+        font-family: Open Sans;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 16px;
+        line-height: 20px;
+        color: #545454;
+        border: 1px solid dodgerblue;
+    }
+
+    & > .status-message {
+        position: absolute;
+        top: 16px;
+        left: calc(50% - 328px/2);
+    }
 `
 
 export default function SponsorshipSelection() {
     return (
         <SponsorshipContainer>
-            <p>Sponsorship</p>
+            <h1>{'Sponsorship level selection'}.</h1>
+            <p className={'subtitle'}>Choose the right sponsorship package for your organization.</p>
+            <StatusMessage className={'status-message'} message={'Thanks! We added that information to your profile. Let’s find the correct sponsorship level for your organization.'} />
         </SponsorshipContainer>
     )
 }
