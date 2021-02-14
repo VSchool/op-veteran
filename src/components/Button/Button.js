@@ -23,7 +23,7 @@ const StyledButton = styled.button`
 `
 
 export default function Button(props) {
-    const { buttonText, buttonStyle } = props
+    const { buttonText, buttonStyle, ...buttonProps } = props
     const { background, border, fontColor } = setStyle(buttonStyle)
 
     return (
@@ -31,6 +31,7 @@ export default function Button(props) {
             background={background} 
             border={border} 
             color={fontColor}
+				{...buttonProps}
         >
             {buttonText}
         </StyledButton>

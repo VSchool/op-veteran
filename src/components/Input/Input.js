@@ -81,13 +81,13 @@ const InputContainer = styled.div`
 `
 
 export default function Input(props) {
-    const { labelText, placeholder, className } = props
+    const { labelText, className, ...inputProps } = props
     
     return (
         <InputContainer className={className}>
             <p className={'label'}>{labelText}</p>
             <div className={'wrapper'}>
-                <input />
+                <input aria-label={labelText} {...inputProps} />
                 <img src={warningIcon} alt={'Invalid text entered'} />
             </div>
             <p className={'helper-text'}>{'Helper text'}</p>

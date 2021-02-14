@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useContext, useState } from 'react'
 import styled from 'styled-components'
+import { AuthContext } from "../context/AuthProvider";
 import { Button } from '../components/Button'
 import GoogleLoginButton from '../components/GoogleLoginButton'
 import { Input } from '../components/Input'
@@ -105,18 +106,43 @@ const LandingContainer = styled.div`
 `
 
 export default function Landing() {
+	const { authError, signInWithGoogle, signInWithEmail, signUpWithEmail } = useContext(AuthContext);
+	const [inputs, setInputs] = useState({
+		email: "",
+		password: ""
+	});
+	
+	const handleChange = e => {
+		const { name, value } = e.target;
+		setInputs(prev => ({...prev, [name]: value }));
+	}
+	
+	const handleClick = e => {
+		const { email, password } = inputs;
+		/*** Add validation ***/
+		const { name } = e.target;
+		if (name === "register") {
+			signUpWithEmail(email, password);
+		}
+		signInWithEmail(email, password);
+	}
+	
     return (
         <LandingContainer>
             <img src={logo} alt='OP Veteran VetFest logo' />
             <h3>OP Veteran</h3>
             <h1>VetFest Registration</h1>
             <h2>Register or sign in with</h2>
-            <GoogleLoginButton className={'google'} />
-            <Input className={'email-input'} labelText={'Email'} placeholder={'placeholder'} />
-            <Input className={'pass-input'} labelText={'Password'} placeholder={'placeholder'} />
+            <GoogleLoginButton className={'google'} onClick={signInWithGoogle} />
+            <Input className={'email-input'} labelText={'Email'} placeholder={'placeholder'} 
+				type="email" name="email" value={inputs.email} onChange={handleChange}
+			/>
+            <Input className={'pass-input'} labelText={'Password'} placeholder={'placeholder'} 
+				type="password" name="password" value={inputs.password} onChange={handleChange}
+			/>
             <div className={'button-wrapper'}>
-                <Button buttonText={'Register'} buttonStyle={'primary'} />
-                <Button buttonText={'Sign in'} buttonStyle={'secondary'} />
+                <Button buttonText={'Register'} buttonStyle={'primary'} onClick={handleClick} name="register" />
+                <Button buttonText={'Sign in'} buttonStyle={'secondary'} onClick={handleClick} name="signin" />
             </div>
 
         </LandingContainer>

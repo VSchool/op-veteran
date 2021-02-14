@@ -2,10 +2,10 @@ import { useContext } from "react";
 import styled from 'styled-components'
 import { Switch, Route } from 'react-router-dom'
 import { AuthContext } from "./context/AuthProvider";
-import UserProvider from "./context/UserProvider";
+import UserProvider, { UserContext } from "./context/UserProvider";
 // import Playground from './Playground'
 import { Landing, Vendor, Admin, Playground } from './pages'
-
+import { DEV_ROUTES } from "./constants";
 
 const AppContainer = styled.div`
   box-sizing: border-box;
@@ -18,12 +18,22 @@ const AppContainer = styled.div`
 export default function App() {
 	const { auth } = useContext(AuthContext);
 	
-	if (!auth) {
-		return (
-			<AppContainer>
-				<Landing />
-			</AppContainer>
-		);
+	if (!DEV_ROUTES) {
+		if (!auth) {
+			return (
+				<AppContainer>
+					<Landing />
+				</AppContainer>
+			);
+		} else {
+			return (
+				<UserProvider>
+					<AppContainer>
+						<UserViews />
+					</AppContainer>
+				</UserProvider>
+			);
+		}
 	}
   return (
     <AppContainer>
@@ -48,4 +58,15 @@ export default function App() {
 	</UserProvider>
     </AppContainer>
   )
+}
+
+function UserViews() {
+	const { user } = useContext(UserContext);
+	
+	if (!user) {
+		return <h1>Loading...</h1>;
+	} else if (user.isAdmin) {
+		return <Admin />;
+	}
+	return <Vendor />;
 }
