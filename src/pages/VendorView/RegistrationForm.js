@@ -74,7 +74,6 @@ export default function RegistrationForm() {
             <FormInput label={'Some random question.'} className={'form-input'} />
             <ProgressBar complete={75} className={'progress-bar'} />
             <StatusMessage className={'status-message'} message={'Congrats!  You have created an account on O.P. Veteran. Now, please continue the registration.'} />
-
         </RegistrationContainer>
     )
 }
