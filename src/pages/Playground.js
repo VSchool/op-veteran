@@ -7,6 +7,7 @@ import { Input } from '../components/Input'
 import { FormInput } from '../components/FormInput'
 import ProgressBar from '../components/ProgressBar'
 import StatusMessage from '../components/StatusMessage'
+import { SponsorshipCard } from '../components/SponsorshipCard'
 
 const PlaygroundContainer = styled.div`
     box-sizing: border-box;
@@ -47,7 +48,10 @@ export default function Playground() {
         <PlaygroundContainer>
             <h1>Playground</h1>
 
-            <h2>Form Input</h2>
+            <h2>Sponsorship Card</h2>
+            <SponsorshipCard />
+
+            <h2>Status Message</h2>
             <StatusMessage message={'Congrats!  You have created an account on O.P. Veteran. Now, please continue the registration.'} />
 
             <h2>Progress Bar</h2>
