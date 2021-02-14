@@ -28,10 +28,10 @@ const MessageContainer = styled.div`
 `
 
 export default function StatusMessage(props) {
-    const { message } = props
+    const { message, className } = props
 
     return (
-        <MessageContainer>
+        <MessageContainer className={className}>
             <p>{message}</p>
         </MessageContainer>
     )

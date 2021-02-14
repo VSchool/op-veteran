@@ -57,6 +57,12 @@ const VendorPageContainer = styled.div`
         bottom: 56px;
         right: 24px;
     }
+
+    & > .status-message {
+        position: absolute;
+        top: 104px;
+        left: calc(50% - 328px/2);
+    }
 `
 
 export default function Vendor() {
@@ -67,7 +73,7 @@ export default function Vendor() {
             <p className={'subtitle'}>Before selecting your booth, let's get some more point of contact information.</p>
             <FormInput label={'Some random question.'} className={'form-input'} />
             <ProgressBar complete={75} className={'progress-bar'} />
-            <StatusMessage message={'Congrats!  You have created an account on O.P. Veteran. Now, please continue the registration.'} />
+            <StatusMessage className={'status-message'} message={'Congrats!  You have created an account on O.P. Veteran. Now, please continue the registration.'} />
         </VendorPageContainer>
     )
 }
