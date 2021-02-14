@@ -22,8 +22,6 @@ const InputContainer = styled.div`
         font-weight: 600;
         font-size: 16px;
         line-height: 24px;
-        display: flex;
-        align-items: center;
         color: #545454;
         // border: 1px dotted blue;
     }
@@ -46,7 +44,6 @@ const InputContainer = styled.div`
     }
 
     & > .wrapper {
-        // box-sizing: border-box;
         position: absolute;
         top: 28px;
         left: 0px;
@@ -86,7 +83,6 @@ const InputContainer = styled.div`
         bottom: 0px;
         right: 0px;
     }
-
 `
 
 export default function FormInput(props) {

@@ -48,7 +48,6 @@ const InputContainer = styled.div`
             line-height: 24px;
             letter-spacing: 0.01em;
             color: #545454;
-            // background: #E5E5E5;
             border: none;
             outline: none;
             border-radius: 2px;

@@ -12,13 +12,11 @@ const StyledButton = styled.button`
     line-height: 24px;
     display: flex;
     align-items: center;
-    text-align: right;
     color: #618572;
     background: #FFFFFF;
     border: none;
     outline: none;
     // border: 1px dotted blue;
-
 
     & > img {
         box-sizing: border-box;

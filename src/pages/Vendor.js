@@ -18,7 +18,6 @@ const VendorPageContainer = styled.div`
         left: calc(50% - 328px/2);
         width: 328px;
         max-height: 64px;
-        // overflow: hidden;
         font-family: Open Sans;
         font-style: normal;
         font-weight: bold;
@@ -58,7 +57,7 @@ export default function Vendor() {
             <Header />
             <h1>Vendor Page</h1>
             <p className={'subtitle'}>Before selecting your booth, let's get some more point of contact information.</p>
-            <FormInput className={'form-input'} />
+            <FormInput label={'Some random question.'} className={'form-input'} />
         </VendorPageContainer>
     )
 }
