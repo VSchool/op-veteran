@@ -4,9 +4,6 @@ import googleLogo from '../assets/icons/google-icon.svg'
 
 const StyledButton = styled.button`
     box-sizing: border-box;
-    position: absolute;
-    top: 336px;
-    left: calc(50% - 56px/2);
     width: 56px;
     height: 56px;
     border-radius: 100%;
@@ -25,6 +22,7 @@ const StyledButton = styled.button`
     }
 `
 
-export default function GoogleLoginButton() {
-    return <StyledButton><img src={googleLogo} alt={'Google logo'} /></StyledButton>
+export default function GoogleLoginButton(props) {
+    const { className } = props
+    return <StyledButton className={className}><img src={googleLogo} alt={'Google logo'} /></StyledButton>
 }

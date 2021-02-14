@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-// import Playground from './Playground'
+import Playground from './Playground'
 import { Landing } from './pages'
 
 const AppContainer = styled.div`
@@ -15,8 +15,8 @@ export default function App() {
 
   return (
     <AppContainer>
-      {/* <Playground /> */}
-      <Landing />
+      <Playground />
+      {/* <Landing /> */}
     </AppContainer>
   )
 }

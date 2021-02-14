@@ -25,6 +25,16 @@ const PlaygroundContainer = styled.div`
         font-family: 'Open Sans';
         color: #545454;
     }
+
+    & > p {
+        margin: 0px 0px 8px 0px;
+        font-family: 'Open Sans';
+        color: #545454;
+    }
+
+    & > .google {
+        position: relative; 
+    }
 `
 
 export default function Playground() {
@@ -34,11 +44,14 @@ export default function Playground() {
             <br/>
             <h2>{'Button'}</h2>
             <br />
+            <p>{'primary'}</p>
             <Button buttonText={'Primary'} buttonStyle={'primary'} />
             <br />
+            <p>{'secondary'}</p>
             <Button buttonText={'Secondary'} buttonStyle={'secondary'} />
             <br />
-            <GoogleLoginButton />
+            <p>{'google'}</p>
+            <GoogleLoginButton className={'google'} />
         </PlaygroundContainer>
     )
 }

@@ -71,6 +71,12 @@ const LandingContainer = styled.div`
         color: #545454;
         // border: 1px dotted orange;
     }
+
+    & > .google {
+        position: absolute; 
+        top: 336px;
+        left: calc(50% - 56px/2);
+    }
 `
 
 export default function Landing() {
@@ -80,7 +86,7 @@ export default function Landing() {
             <h3>OP Veteran</h3>
             <h1>VetFest Registration</h1>
             <h2>Register or sign in with</h2>
-            <GoogleLoginButton />
+            <GoogleLoginButton className={'google'} />
         </LandingContainer>
     )
 }
