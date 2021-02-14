@@ -1,7 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
+import { Switch, Route } from 'react-router-dom'
 import Playground from './Playground'
-import { Landing, Vendor } from './pages'
+import { Landing, Vendor, Admin } from './pages'
 
 
 const AppContainer = styled.div`
@@ -16,9 +17,19 @@ export default function App() {
 
   return (
     <AppContainer>
-      {/* <Playground /> */}
-      {/* <Landing /> */}
-      <Vendor />
+      <Switch>
+        <Route exact path='/'>
+          <Landing />
+        </Route>
+
+        <Route path='/vendor'>
+          <Vendor />
+        </Route>
+
+        <Route path='/admin'>
+          <Admin />
+        </Route>
+      </Switch>
     </AppContainer>
   )
 }
