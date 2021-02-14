@@ -6,6 +6,7 @@ import GoogleLoginButton from './components/GoogleLoginButton'
 import { Input } from './components/Input'
 import { FormInput } from './components/FormInput'
 import ProgressBar from './components/ProgressBar'
+import StatusMessage from './components/StatusMessage'
 
 const PlaygroundContainer = styled.div`
     box-sizing: border-box;
@@ -45,6 +46,9 @@ export default function Playground() {
     return (
         <PlaygroundContainer>
             <h1>Playground</h1>
+
+            <h2>Form Input</h2>
+            <StatusMessage message={'Congrats!  You have created an account on O.P. Veteran. Now, please continue the registration.'} />
 
             <h2>Progress Bar</h2>
             <ProgressBar complete={75} />

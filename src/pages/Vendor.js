@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { Header } from '../components/Header'
 import { FormInput } from '../components/FormInput'
 import ProgressBar from '../components/ProgressBar'
+import StatusMessage from '../components/StatusMessage'
 
 const VendorPageContainer = styled.div`
     box-sizing: border-box;
@@ -66,6 +67,7 @@ export default function Vendor() {
             <p className={'subtitle'}>Before selecting your booth, let's get some more point of contact information.</p>
             <FormInput label={'Some random question.'} className={'form-input'} />
             <ProgressBar complete={75} className={'progress-bar'} />
+            <StatusMessage message={'Congrats!  You have created an account on O.P. Veteran. Now, please continue the registration.'} />
         </VendorPageContainer>
     )
 }
