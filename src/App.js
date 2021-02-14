@@ -1,7 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 import Playground from './Playground'
-import { Landing } from './pages'
+import { Landing, Vendor } from './pages'
+
 
 const AppContainer = styled.div`
   box-sizing: border-box;
@@ -16,7 +17,8 @@ export default function App() {
   return (
     <AppContainer>
       {/* <Playground /> */}
-      <Landing />
+      {/* <Landing /> */}
+      <Vendor />
     </AppContainer>
   )
 }
