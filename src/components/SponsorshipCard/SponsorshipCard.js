@@ -63,7 +63,7 @@ export default function SponsorshipCard() {
             <p className={'place'}>Perk desc</p>
             <h2 className={'price'}>{'$99,999'}</h2>
             <div className={'divider'}></div>
-            <Button buttonText={'Select this level'} buttonStyle={'primary'} />
+            <Button buttonText={'Select this level'} buttonStyle={'text'} />
         </CardContainer>
     )
 }

@@ -16,21 +16,24 @@ const StyledButton = styled.button`
     letter-spacing: 0.25px;
     color: ${props => props.color};
     background: ${props => props.background};
-    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.14), 0px 1px 18px rgba(0, 0, 0, 0.12), 0px 3px 5px rgba(0, 0, 0, 0.2);
-    border: 2px solid #618572;
+    box-shadow: ${props => props.boxShadow};
+    // box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.14), 0px 1px 18px rgba(0, 0, 0, 0.12), 0px 3px 5px rgba(0, 0, 0, 0.2);
+    // border: 2px solid #618572;
+    border: ${props => props.border};
     border-radius: 2px;
     outline: none;
 `
 
 export default function Button(props) {
     const { buttonText, buttonStyle } = props
-    const { background, border, fontColor } = setStyle(buttonStyle)
+    const { background, border, fontColor, boxShadow } = setStyle(buttonStyle)
 
     return (
         <StyledButton
             background={background} 
             border={border} 
             color={fontColor}
+            boxShadow={boxShadow}
         >
             {buttonText}
         </StyledButton>
