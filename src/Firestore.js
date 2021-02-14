@@ -1,10 +1,10 @@
 import firebase from "./Firebase";
 
-const firestore = firebase.firestore();
+const Firestore = firebase.firestore();
 
 /* Create a new user document from an Authentication user */
 export function createUser(auth) {
-	const ref = firestore.doc(`Users/${auth.email}`);
+	const ref = Firestore.doc(`Users/${auth.email}`);
 	ref.set({
 		email: auth.email,
 		name: auth.displayName || "",
@@ -14,4 +14,4 @@ export function createUser(auth) {
 	});
 }
 
-export default firestore;
+export default Firestore;

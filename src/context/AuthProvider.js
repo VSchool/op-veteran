@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import { auth, googleSignIn, emailSignIn, emailSignup, signOut } from "../Firebase";
+import { Auth, googleSignIn, emailSignIn, emailSignup, signOut } from "../Firebase";
 
 export const AuthContext = createContext();
 
@@ -8,7 +8,7 @@ export default function AuthProvider({children}) {
 	const [authError, setAuthError] = useState(null);
 	
 	useEffect(() => {
-		auth.onAuthStateChanged(user => setAuth(user));
+		Auth.onAuthStateChanged(user => setAuth(user));
 	}, []);
 	
 	/* Add more suffisticated error handling later */

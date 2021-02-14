@@ -1,20 +1,20 @@
-import { createContext, useContext, useEffect, useRef, useState } from "react";
-import { firestore, createNewUser } from "../Firestore";
+import { createContext, useContext, useEffect, useState } from "react";
+import Firestore, { createUser } from "../Firestore";
 import { AuthContext } from "./AuthProvider";
 
 export const UserContext = createContext();
 
-const userRef = null;
+let userRef = null;
 
 export default function({children}) {
 	const { auth } = useContext(AuthContext);
 	const [user, setUser] = useState(null);
 	
 	useEffect(() => {
-		userRef = firestore.doc(`Users/${auth.email}`);
+		userRef = Firestore.doc(`Users/${auth.email}`);
 		const unsub = userRef.onSnapshot(doc => {
 			if (!doc.exists) {
-				createNewUser(auth);
+				createUser(auth);
 			} else {
 				setUser(doc.data());
 			}

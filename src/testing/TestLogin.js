@@ -3,7 +3,7 @@ import { AuthContext } from "../context/AuthProvider";
 
 export default function TestLogin() {
 	const { signInWithGoogle, signInWithEmail, signUpWithEmail, authError } = useContext(AuthContext);
-	const [fields, setFields] = useState{
+	const [fields, setFields] = useState({
 		email: "",
 		password: ""
 	});
@@ -16,15 +16,16 @@ export default function TestLogin() {
 	const handleClick = e => {
 		const { name } = e.target;
 		if (name === "signup") {
-			signUpWithEmail(email, password);
+			signUpWithEmail(fields.email, fields.password);
 		} else {
-			signInWithEmail(email, password);
+			signInWithEmail(fields.email, fields.password);
 		}
 	}
 	
 	return (
-		<form onSubmit={e => e.preventDefault()}>
+		<>
 		<button onClick={signInWithGoogle}>Sign In With Google</button>
+		<form onSubmit={e => e.preventDefault()}>
 		<p>OR</p>
 			<label>
 				Email: 
@@ -35,8 +36,9 @@ export default function TestLogin() {
 				<input type="password" name="password" value={fields.password} onChange={handleChange} required />
 			</label>
 			<button name="signup" onClick={handleClick}>Register</button>
-			<button name="signin" onClick={handleclick}>Login</button>
+			<button name="signin" onClick={handleClick}>Login</button>
 		</form>
+		</>
 	);
 	
 }
