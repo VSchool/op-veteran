@@ -1,13 +1,12 @@
-import React from 'react';
 import ReactDOM from 'react-dom';
-import Counter from './context/Counter'
+import AuthProvider from "./context/AuthProvider";
 import App from './App';
 
 function Index() {
   return (
-    <Counter>
+    <AuthProvider>
       <App />
-    </Counter>
+    </AuthProvider>
   )
 }
 
