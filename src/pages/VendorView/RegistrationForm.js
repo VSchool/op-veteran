@@ -1,23 +1,23 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Header } from '../../components/Header'
-import RegistrationForm from './RegistrationForm'
-// import { FormInput } from '../../components/FormInput'
-// import ProgressBar from '../../components/ProgressBar'
-// import StatusMessage from '../../components/StatusMessage'
+import { FormInput } from '../../components/FormInput'
+import ProgressBar from '../../components/ProgressBar'
+import StatusMessage from '../../components/StatusMessage'
 
-const VendorPageContainer = styled.div`
+const RegistrationContainer = styled.div`
     box-sizing: border-box;
-    width: 100%;
-    height: 100%;
-    position: relative;
-    border: 2px solid dodgerblue;
+    position: absolute;
+    top: 88px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    // border: 2px solid blue;
 
     & > h1 {
         box-sizing: border-box;
         margin: 0px;
         position: absolute;
-        top: 192px;
+        top: 104px;
         left: calc(50% - 328px/2);
         width: 328px;
         max-height: 64px;
@@ -34,7 +34,7 @@ const VendorPageContainer = styled.div`
         box-sizing: border-box;
         margin: 0px;
         position: absolute;
-        top: 272px;
+        top: 176px;
         left: calc(50% - 328px/2);
         width: 328px;
         max-height: 40px;
@@ -49,7 +49,7 @@ const VendorPageContainer = styled.div`
 
     & > .form-input {
         position: absolute;
-        top: 376px;
+        top: 280px;
         left: calc(50% - 328px/2);
     }
 
@@ -61,20 +61,20 @@ const VendorPageContainer = styled.div`
 
     & > .status-message {
         position: absolute;
-        top: 104px;
+        top: 16px;
         left: calc(50% - 328px/2);
     }
 `
 
-export default function Vendor() {
+export default function RegistrationForm() {
     return (
-        <VendorPageContainer>
-            <Header />
-            <RegistrationForm />
-            {/* <p className={'subtitle'}>Before selecting your booth, let's get some more point of contact information.</p> */}
-            {/* <FormInput label={'Some random question.'} className={'form-input'} /> */}
-            {/* <ProgressBar complete={75} className={'progress-bar'} /> */}
-            {/* <StatusMessage className={'status-message'} message={'Congrats!  You have created an account on O.P. Veteran. Now, please continue the registration.'} /> */}
-        </VendorPageContainer>
+        <RegistrationContainer>
+            <h1>Welcome, {'Frank'}.</h1>
+            <p className={'subtitle'}>Before selecting your booth, let's get some more point of contact information.</p>
+            <FormInput label={'Some random question.'} className={'form-input'} />
+            <ProgressBar complete={75} className={'progress-bar'} />
+            <StatusMessage className={'status-message'} message={'Congrats!  You have created an account on O.P. Veteran. Now, please continue the registration.'} />
+
+        </RegistrationContainer>
     )
 }
