@@ -3,9 +3,11 @@ import styled from 'styled-components'
 
 import { Button } from './components/Button'
 import GoogleLoginButton from './components/GoogleLoginButton'
+import { Input } from './components/Input'
 
 const PlaygroundContainer = styled.div`
     box-sizing: border-box;
+    padding: 0px 24px 0px 24px;
     width: 100%;
     min-height: 100%;
     border: 2px solid blue;
@@ -20,7 +22,7 @@ const PlaygroundContainer = styled.div`
     }
 
     & > h2 {
-        margin: 0px;
+        margin: 40px 0px 0px 0px;
         font-size: 32px;
         font-family: 'Open Sans';
         color: #545454;
@@ -41,17 +43,22 @@ export default function Playground() {
     return (
         <PlaygroundContainer>
             <h1>Playground</h1>
-            <br/>
-            <h2>{'Button'}</h2>
-            <br />
+            <h2>Button</h2>
+
             <p>{'primary'}</p>
             <Button buttonText={'Primary'} buttonStyle={'primary'} />
             <br />
+
             <p>{'secondary'}</p>
             <Button buttonText={'Secondary'} buttonStyle={'secondary'} />
             <br />
+
             <p>{'google'}</p>
             <GoogleLoginButton className={'google'} />
+
+            <h2>Input</h2>
+            <Input />
+
         </PlaygroundContainer>
     )
 }
