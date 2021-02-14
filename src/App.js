@@ -1,19 +1,23 @@
 import React from 'react'
 import styled from 'styled-components'
-import Playground from './Playground'
+// import Playground from './Playground'
+import { Landing } from './pages'
 
 const AppContainer = styled.div`
+box-sizing: border-box;
+
   width: 100%;
   height: 100vh;
   position: relative;
-  border: 1px solid lightcoral;
+  // border: 1px solid lightcoral;
 `
 
 export default function App() {
 
   return (
     <AppContainer>
-      <Playground />
+      {/* <Playground /> */}
+      <Landing />
     </AppContainer>
   )
 }
