@@ -86,12 +86,14 @@ const InputContainer = styled.div`
     }
 `
 
-export default function Input() {
+export default function Input(props) {
+    const { labelText, placeholder } = props
+    
     return (
         <InputContainer>
-            <p className={'label'}>{'Label'}</p>
+            <p className={'label'}>{labelText}</p>
             <div className={'wrapper'}>
-                <input />
+                <input placeholder={placeholder} />
                 <img src={warningIcon} alt={'Invalid text entered'} />
             </div>
             <p className={'helper-text'}>{'Helper text'}</p>

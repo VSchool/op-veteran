@@ -57,7 +57,7 @@ export default function Playground() {
             <GoogleLoginButton className={'google'} />
 
             <h2>Input</h2>
-            <Input />
+            <Input labelText={'Label'} placeholder={'placeholder'} />
 
         </PlaygroundContainer>
     )
