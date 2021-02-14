@@ -90,12 +90,12 @@ const InputContainer = styled.div`
 `
 
 export default function FormInput(props) {
-    const { label } = props
+    const { label, className } = props
     return (
-        <InputContainer>
+        <InputContainer className={className}>
             <p className={'label'}>{label}</p>
             <div className={'wrapper'}>
-                <input placeholder={'hello'} />
+                <input />
                 <img src={warningIcon} alt={'Invalid text entered.'} />
             </div>
             <p className={'helper-text'}>{'Helper text'}</p>

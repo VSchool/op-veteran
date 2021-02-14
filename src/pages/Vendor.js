@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Header } from '../components/Header'
+import { FormInput } from '../components/FormInput'
 
 const VendorPageContainer = styled.div`
     box-sizing: border-box;
@@ -43,6 +44,12 @@ const VendorPageContainer = styled.div`
         color: #545454;
         // border: 1px solid dodgerblue;
     }
+
+    & > .form-input {
+        position: absolute;
+        top: 376px;
+        left: calc(50% - 328px/2);
+    }
 `
 
 export default function Vendor() {
@@ -51,6 +58,7 @@ export default function Vendor() {
             <Header />
             <h1>Vendor Page</h1>
             <p className={'subtitle'}>Before selecting your booth, let's get some more point of contact information.</p>
+            <FormInput className={'form-input'} />
         </VendorPageContainer>
     )
 }
