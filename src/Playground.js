@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { Button } from './components/Button'
 import GoogleLoginButton from './components/GoogleLoginButton'
 import { Input } from './components/Input'
+import { FormInput } from './components/FormInput'
 
 const PlaygroundContainer = styled.div`
     box-sizing: border-box;
@@ -58,6 +59,9 @@ export default function Playground() {
 
             <h2>Input</h2>
             <Input labelText={'Label'} placeholder={'placeholder'} />
+
+            <h2>Form Input</h2>
+            <FormInput label={'Label as a question'} />
 
         </PlaygroundContainer>
     )

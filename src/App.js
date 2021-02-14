@@ -16,9 +16,9 @@ export default function App() {
 
   return (
     <AppContainer>
-      {/* <Playground /> */}
+      <Playground />
       {/* <Landing /> */}
-      <Vendor />
+      {/* <Vendor /> */}
     </AppContainer>
   )
 }
