@@ -27,7 +27,6 @@ const InputContainer = styled.div`
     }
 
     & > .wrapper {
-        // box-sizing: border-box;
         position: absolute;
         top: 28px;
         left: 8px;
@@ -36,7 +35,6 @@ const InputContainer = styled.div`
         display: flex;
         justify-content: space-between;
         align-items: center;
-        // border: 1px dashed green;
         border-bottom: 1px solid #545454;
 
         & > input {
@@ -48,13 +46,12 @@ const InputContainer = styled.div`
             font-weight: normal;
             font-size: 15px;
             line-height: 24px;
-            // display: flex;
-            // align-items: center;
             letter-spacing: 0.01em;
             color: #545454;
-            // background: lightgray;
+            // background: #E5E5E5;
             border: none;
             outline: none;
+            border-radius: 2px;
         }
 
         & > img {
@@ -77,8 +74,6 @@ const InputContainer = styled.div`
         font-weight: 300;
         font-size: 12px;
         line-height: 16px;
-        display: flex;
-        align-items: center;
         letter-spacing: 0.02em;
         color: #EA7C7C; 
         visibility: hidden;       
@@ -87,13 +82,13 @@ const InputContainer = styled.div`
 `
 
 export default function Input(props) {
-    const { labelText, placeholder } = props
+    const { labelText, placeholder, className } = props
     
     return (
-        <InputContainer>
+        <InputContainer className={className}>
             <p className={'label'}>{labelText}</p>
             <div className={'wrapper'}>
-                <input placeholder={placeholder} />
+                <input />
                 <img src={warningIcon} alt={'Invalid text entered'} />
             </div>
             <p className={'helper-text'}>{'Helper text'}</p>

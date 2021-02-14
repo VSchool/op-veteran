@@ -1,7 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
-// import { Button } from '../components/Button'
+import { Button } from '../components/Button'
 import GoogleLoginButton from '../components/GoogleLoginButton'
+import { Input } from '../components/Input'
 import logo from '../assets/images/vetfest-logo.png'
 
 const LandingContainer = styled.div`
@@ -77,6 +78,30 @@ const LandingContainer = styled.div`
         top: 336px;
         left: calc(50% - 56px/2);
     }
+
+    & > .email-input {
+        position: absolute;
+        top: 496px;
+        left: calc(50% - 328px/2);
+    }
+
+    & > .pass-input {
+        position: absolute;
+        top: 584px;
+        left: calc(50% - 328px/2);
+    }
+
+    & > .button-wrapper {
+        box-sizing: border-box;
+        padding: 0px 16px 0px 16px;
+        position: absolute;
+        top: 684px;
+        left: calc(50% - 328px/2);
+        width: 328px;
+        display: flex;
+        justify-content: space-between;
+        // border: 1px solid red;
+    }
 `
 
 export default function Landing() {
@@ -87,6 +112,13 @@ export default function Landing() {
             <h1>VetFest Registration</h1>
             <h2>Register or sign in with</h2>
             <GoogleLoginButton className={'google'} />
+            <Input className={'email-input'} labelText={'Email'} placeholder={'placeholder'} />
+            <Input className={'pass-input'} labelText={'Password'} placeholder={'placeholder'} />
+            <div className={'button-wrapper'}>
+                <Button buttonText={'Register'} buttonStyle={'primary'} />
+                <Button buttonText={'Sign in'} buttonStyle={'secondary'} />
+            </div>
+
         </LandingContainer>
     )
 }
