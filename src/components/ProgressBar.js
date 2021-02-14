@@ -47,10 +47,10 @@ const BarContainer = styled.div`
 `
 
 export default function ProgressBar(props) {
-    const { complete } = props
+    const { complete, className } = props
 
     return (
-        <BarContainer>
+        <BarContainer className={className}>
             <p>{`${complete}% completed`}</p>
             <div className={'container-div'}>
                 <div className={'fill-div'}></div>

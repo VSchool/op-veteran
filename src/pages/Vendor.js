@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Header } from '../components/Header'
 import { FormInput } from '../components/FormInput'
+import ProgressBar from '../components/ProgressBar'
 
 const VendorPageContainer = styled.div`
     box-sizing: border-box;
@@ -49,6 +50,12 @@ const VendorPageContainer = styled.div`
         top: 376px;
         left: calc(50% - 328px/2);
     }
+
+    & > .progress-bar {
+        position: absolute;
+        bottom: 56px;
+        right: 24px;
+    }
 `
 
 export default function Vendor() {
@@ -58,6 +65,7 @@ export default function Vendor() {
             <h1>Vendor Page</h1>
             <p className={'subtitle'}>Before selecting your booth, let's get some more point of contact information.</p>
             <FormInput label={'Some random question.'} className={'form-input'} />
+            <ProgressBar complete={75} className={'progress-bar'} />
         </VendorPageContainer>
     )
 }
