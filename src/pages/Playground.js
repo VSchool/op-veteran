@@ -1,13 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
-
 import { Button } from '../components/Button'
 import GoogleLoginButton from '../components/GoogleLoginButton'
 import { Input } from '../components/Input'
 import { FormInput } from '../components/FormInput'
 import ProgressBar from '../components/ProgressBar'
 import StatusMessage from '../components/StatusMessage'
-import { SponsorshipCard } from '../components/SponsorshipCard'
+import { SponsorshipCard, ListItem } from '../components/SponsorshipCard'
 
 const PlaygroundContainer = styled.div`
     box-sizing: border-box;
@@ -47,6 +46,9 @@ export default function Playground() {
     return (
         <PlaygroundContainer>
             <h1>Playground</h1>
+
+            <h2>Card List Item</h2>
+            <ListItem />
 
             <h2>Sponsorship Card</h2>
             <SponsorshipCard />

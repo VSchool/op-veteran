@@ -1,6 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Button } from '../../components/Button'
+import ListItem from './ListItem'
+import { sponsorshipLevels, perkList } from './utils'
 
 const CardContainer = styled.div`
     box-sizing: border-box;
@@ -69,6 +71,14 @@ const CardContainer = styled.div`
         right: 24px;
         height: 2px;
         background: #F4F4F4;
+    }
+
+    & > .item {
+        position: absolute;
+        top: 88px;
+        left: 24px;
+        right: 24px;
+        border: 1px dotted blue;
     }
     // DELETE THIS WHEN DONE
     & > .place1 {
@@ -164,17 +174,26 @@ const CardContainer = styled.div`
 `
 
 export default function SponsorshipCard() {
+
+    for (const perk in perkList) {
+        console.log(perk.valueOf())
+    }
+
+    console.log(perkList)
+
+
     return (
         <CardContainer>
             <h4>{'Title'}</h4>
             <h5>Level sponsorship</h5>
             <div className={'divider'}></div>
-            <p className={'place1'}>Perk desc</p>
+            <ListItem className={'item'} />
+            {/* <p className={'place1'}>Perk desc</p>
             <p className={'place2'}>Perk desc</p>
             <p className={'place3'}>Perk desc</p>
             <p className={'place4'}>Perk desc</p>
             <p className={'place5'}>Perk desc</p>
-            <p className={'place6'}>Perk desc</p>
+            <p className={'place6'}>Perk desc</p> */}
             <h2 className={'price'}>{'$99,999'}</h2>
             <div className={'divider2'}></div>
             <Button className={'sponsorship-button'} buttonText={'Select this level'} buttonStyle={'text'} />

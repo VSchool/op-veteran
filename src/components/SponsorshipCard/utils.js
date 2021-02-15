@@ -1,0 +1,65 @@
+export const perkList = {
+    perkList1: 'Recognition on website',
+    perkList2: 'Annoucement at event',
+    perkList3: 'Logo on shirts',
+    perkList4: 'OP Veteran swag at event',
+    perkList5: 'Booth at event',
+    perkList6: 'Some other perk'
+}
+
+export const sponsorshipLevels = [
+    {
+        sponsorshipLevel: 'Paladin',
+        perkOne: true,
+        perkTwo: true,
+        perkThree: true,
+        perkFour: true,
+        perkFive: true,
+        perkSix: true,
+    },
+    {
+        sponsorshipLevel: 'Abrams',
+        perkOne: true,
+        perkTwo: true,
+        perkThree: true,
+        perkFour: true,
+        perkFive: true,
+        perkSix: false,
+    },
+    {
+        sponsorshipLevel: 'Stryker',
+        perkOne: true,
+        perkTwo: true,
+        perkThree: true,
+        perkFour: true,
+        perkFive: false,
+        perkSix: false,
+    },
+    {
+        sponsorshipLevel: 'Bradley',
+        perkOne: true,
+        perkTwo: true,
+        perkThree: true,
+        perkFour: false,
+        perkFive: false,
+        perkSix: false,
+    },
+    {
+        sponsorshipLevel: 'AMTRAK',
+        perkOne: true,
+        perkTwo: true,
+        perkThree: false,
+        perkFour: false,
+        perkFive: false,
+        perkSix: false,
+    },
+    {
+        sponsorshipLevel: 'WLA',
+        perkOne: true,
+        perkTwo: false,
+        perkThree: false,
+        perkFour: false,
+        perkFive: false,
+        perkSix: false,
+    },
+]
