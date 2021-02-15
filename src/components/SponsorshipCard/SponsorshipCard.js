@@ -176,7 +176,7 @@ const CardContainer = styled.div`
 export default function SponsorshipCard() {
 
     for (const perk in perkList) {
-        console.log(perk.valueOf())
+        console.log()
     }
 
     console.log(perkList)
