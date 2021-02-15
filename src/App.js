@@ -18,22 +18,21 @@ const AppContainer = styled.div`
 export default function App() {
 	const { auth } = useContext(AuthContext);
 	
-	if (!DEV_ROUTES) {
-		if (!auth) {
-			return (
+	if (!auth) {
+		return (
+			<AppContainer>
+				<Landing />
+			</AppContainer>
+		);
+	}
+	if (!DEV_ROUTES && auth) {
+		 return (
+			<UserProvider>
 				<AppContainer>
-					<Landing />
+					<UserViews />
 				</AppContainer>
-			);
-		} else {
-			return (
-				<UserProvider>
-					<AppContainer>
-						<UserViews />
-					</AppContainer>
-				</UserProvider>
-			);
-		}
+			</UserProvider>
+		);
 	}
   return (
     <AppContainer>
