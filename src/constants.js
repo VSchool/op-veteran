@@ -1,1 +1,1 @@
-export const DEV_ROUTES = true;
+export const DEV_ROUTES = false;

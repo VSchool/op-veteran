@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { Switch, Route } from 'react-router-dom'
 import { AuthContext } from "./context/AuthProvider";
 import UserProvider, { UserContext } from "./context/UserProvider";
+// import BoothProvider from "./context/BoothProvider";
 // import Playground from './Playground'
 import { Landing, Vendor, Admin, Playground } from './pages'
 import { DEV_ROUTES } from "./constants";
