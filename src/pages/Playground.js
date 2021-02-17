@@ -7,9 +7,11 @@ import { FormInput } from '../components/FormInput'
 import ProgressBar from '../components/ProgressBar'
 import StatusMessage from '../components/StatusMessage'
 import { SponsorshipCard, ListItem } from '../components/SponsorshipCard'
+import { VendorCard } from '../components/VendorCard'
 
 const PlaygroundContainer = styled.div`
     box-sizing: border-box;
+    position: relative;
     padding: 0px 24px 0px 24px;
     width: 100%;
     min-height: 100%;
@@ -46,6 +48,9 @@ export default function Playground() {
     return (
         <PlaygroundContainer>
             <h1>Playground</h1>
+
+            <h2>Card List Item</h2>
+            <VendorCard />
 
             <h2>Card List Item</h2>
             <ListItem />
