@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { setStyle } from './utils'
 
 const StyledButton = styled.button`
+    box-sizing: border-box;
     width: 136px;
     height: 40px;
     display: flex;

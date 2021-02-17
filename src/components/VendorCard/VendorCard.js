@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { Button } from '../Button'
 import closedIcon from '../../assets/icons/card-closed-icon.svg'
 import radioSelected from '../../assets/icons/radio-selected-icon.svg'
 import radioUnselected from '../../assets/icons/radio-unselected-icon.svg'
@@ -11,8 +12,10 @@ const CardContainer = styled.div`
     top: 0px;
     left: 0px;
     right: 0px;
-    height: 330px;
-    border: 1px dotted black;
+    height: 328px;
+    background: #FFFFFF;
+    box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.14), 0px 3px 14px rgba(0, 0, 0, 0.12), 0px 4px 5px rgba(0, 0, 0, 0.2);
+    // border: 1px dotted black;
 
     & > .heading-wrapper {
         box-sizing: border-box;
@@ -21,7 +24,7 @@ const CardContainer = styled.div`
         left: 0px;
         right: 0px;
         height: 48px;
-        border: 1px dashed orange;
+        // border: 1px dashed orange;
 
         & > h5 {
             box-sizing: border-box;
@@ -39,7 +42,7 @@ const CardContainer = styled.div`
             display: flex;
             align-items: center;
             color: #545454;
-            border: 1px dotted dodgerblue;
+            // border: 1px dotted dodgerblue;
         }
 
         & > h4 {
@@ -57,7 +60,7 @@ const CardContainer = styled.div`
             line-height: 24px;
             text-align: center;
             color: #545454;
-            border: 1px dotted dodgerblue;
+            // border: 1px dotted dodgerblue;
         }
     
         & > img {
@@ -66,8 +69,7 @@ const CardContainer = styled.div`
             top: calc(50% - 24px/2);
             right: 12px;
             width: 24px;
-            border: 1px dotted dodgerblue;
-    
+            // border: 1px dotted dodgerblue;
         }    
     }
 
@@ -78,7 +80,25 @@ const CardContainer = styled.div`
         left: 0px;
         right: 0px;
         height: 280px;
-        border: 1px dashed lightgreen;
+        // border: 1px dashed lightgreen;
+
+        & > .divider-1 {
+            position: absolute;
+            top: 0px;
+            left: 16px;
+            right: 16px;
+            height: 2px;
+            background: #F4F4F4;
+        }
+
+        & > .divider-2 {
+            position: absolute;
+            top: 232px;
+            left: 16px;
+            right: 16px;
+            height: 2px;
+            background: #F4F4F4;
+        }
 
         & > h6 {
             box-sizing: border-box;
@@ -94,7 +114,7 @@ const CardContainer = styled.div`
             display: flex;
             align-items: center;
             color: #545454;
-            border: 1px dotted dodgerblue;
+            // border: 1px dotted dodgerblue;
         }
 
         & > .radio-vendor  {
@@ -103,7 +123,7 @@ const CardContainer = styled.div`
             top: 20px;
             left: 140px;
             width: 16px;
-            border: 1px dotted dodgerblue;
+            // border: 1px dotted dodgerblue;
         }
 
         & > .radio-event  {
@@ -112,7 +132,7 @@ const CardContainer = styled.div`
             top: 20px;
             left: 236px;
             width: 16px;
-            border: 1px dotted dodgerblue;
+            // border: 1px dotted dodgerblue;
         }
 
         & > .radio-label-vendor {
@@ -129,7 +149,7 @@ const CardContainer = styled.div`
             display: flex;
             align-items: center;
             color: #545454;
-            border: 1px dotted dodgerblue;
+            // border: 1px dotted dodgerblue;
         }
 
         & > .radio-label-event {
@@ -146,7 +166,7 @@ const CardContainer = styled.div`
             display: flex;
             align-items: center;
             color: #545454;
-            border: 1px dotted dodgerblue;
+            // border: 1px dotted dodgerblue;
         }
 
         & > .details {
@@ -161,7 +181,7 @@ const CardContainer = styled.div`
             display: flex;
             align-items: center;
             color: #545454;
-            border: 1px dotted dodgerblue;
+            // border: 1px dotted dodgerblue;
         }
 
         & > .detail-1 {
@@ -212,6 +232,14 @@ const CardContainer = styled.div`
             left: 16px;
             right: 16px;
         }
+
+        & > .text-button {
+            position: absolute;
+            top: 236px;
+            left: calc(50% - 200px/2);
+            width: 200px;
+            // border: 1px dotted dodgerblue;
+        }
     }
 `
 
@@ -224,6 +252,7 @@ export default function VendorCard() {
                 <img src={closedIcon} alt={'Click for more details.'} />
             </div>
             <div className={'details-wrapper'}>
+                <div className={'divider-1'}>{''}</div>
                 <h6>View details:</h6>
                 <img className={'radio-vendor'} src={radioSelected} alt={'Radio button'} />
                 <p className={'radio-label-vendor'}>Vendor</p>
@@ -239,6 +268,8 @@ export default function VendorCard() {
                 <p className={'details detail-6'}>{'Austin, TX'}</p>
                 <p className={'details detail-7'}>{'78611'}</p>
 
+                <div className={'divider-2'}>{''}</div>
+                <Button className={'text-button'} buttonText={'Change booth number'} buttonStyle={'text'} />
             </div>
         </CardContainer>
     )
