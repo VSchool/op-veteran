@@ -1,22 +1,20 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Button } from '../Button'
+import { setOpenState, setStyling, toggleDetailsView, fakeData } from './utils'
 import closedIcon from '../../assets/icons/card-closed-icon.svg'
 import radioSelected from '../../assets/icons/radio-selected-icon.svg'
 import radioUnselected from '../../assets/icons/radio-unselected-icon.svg'
 
 const CardContainer = styled.div`
-    // box-sizing: border-box;
     position: relative;
     top: 0px;
     left: 0px;
     right: 0px;
-    // height: 48px;
-    // margin-bottom: 8px;
     height: ${props => props.height};
     background: #FFFFFF;
-    // border: 1px dotted black;
     z-index: 0;
+    // border: 1px dotted black;
 
     &:hover {
         z-index: 1;
@@ -87,8 +85,6 @@ const CardContainer = styled.div`
         left: 0px;
         right: 0px;
         height: 280px;
-        // visibility: visible;
-        // background:lightray;
         // border: 1px dashed lightgreen;
 
         & > .divider-1 {
@@ -255,58 +251,11 @@ const CardContainer = styled.div`
 export default function VendorCard() {
     const [isOpen, setIsOpen] = useState(false)
     const [detailsView, setDetailsView] = useState('vendor')
-
     const { visibility, containerHeight } = setStyling(isOpen)
-
-    function setOpenState() {
-        if (isOpen === false) {
-            setIsOpen(() => true)
-        } else if (isOpen === true) {
-            setIsOpen(() => false)
-        }
-    }
-
-    function setStyling(status) {
-        if (status === false) {
-            return {
-                visibility: `hidden`,
-                containerHeight: `48px`
-            }
-        } else if (status === true) {
-            return {
-                visibility: `visible`,
-                containerHeight: `328px`
-            }
-        }
-    }
-
-    function toggleDetailsView(status, setter) {
-        if (status === 'vendor') {
-            setter(() => 'event')
-        } else if (status === 'event') {
-            setter(() => 'vendor')
-        }
-    }
-
-
-    const fakeData = {
-        company: 'Bunty Soap Company',
-        booth: 'A01',
-        name: 'Frank Hamer',
-        phone: '444-444-4444',
-        email: 'fajldsjf@email.com',
-        address: '1234 main street',
-        suite: '#555',
-        cityState: 'Austin, TX',
-        zipcode: '78611',
-        veteranOwned: 'no',
-        nonprofit: 'yes',
-        poweredBooth: 'yes'
-    }
 
     return (
         <CardContainer height={containerHeight}>
-            <div className={'heading-wrapper'} onClick={() => setOpenState()}>
+            <div className={'heading-wrapper'} onClick={() => setOpenState(isOpen, setIsOpen)}>
                 <h5>{fakeData.company}</h5>
                 <h4>{fakeData.booth}</h4>
                 <img src={closedIcon} alt={'Click for more details.'} />
@@ -314,13 +263,10 @@ export default function VendorCard() {
             <div className={'details-wrapper'} style={{visibility: visibility}}>
                 <div className={'divider-1'}>{''}</div>
                 <h6>View details:</h6>
-
                 <img className={'radio-vendor'} src={radioSelected} alt={'Radio button'} onClick={() => toggleDetailsView(detailsView, setDetailsView)} />
                 <p className={'radio-label-vendor'}>Vendor</p>
-
                 <img className={'radio-event'} src={radioUnselected} alt={'Radio button'} />
                 <p className={'radio-label-event'}>Event</p>
-
                 <p className={'details detail-1'}>{fakeData.name}</p>
                 <p className={'details detail-2'}>{fakeData.phone}</p>
                 <p className={'details detail-3'}>{fakeData.email}</p>
@@ -328,7 +274,6 @@ export default function VendorCard() {
                 <p className={'details detail-5'}>{fakeData.suite}</p>
                 <p className={'details detail-6'}>{fakeData.cityState}</p>
                 <p className={'details detail-7'}>{fakeData.zipcode}</p>
-
                 <div className={'divider-2'}>{''}</div>
                 <Button className={'text-button'} buttonText={'Change booth number'} buttonStyle={'text'} />
             </div>
