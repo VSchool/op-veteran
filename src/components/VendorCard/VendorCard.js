@@ -5,7 +5,6 @@ import closedIcon from '../../assets/icons/card-closed-icon.svg'
 import radioSelected from '../../assets/icons/radio-selected-icon.svg'
 import radioUnselected from '../../assets/icons/radio-unselected-icon.svg'
 
-
 const CardContainer = styled.div`
     // box-sizing: border-box;
     position: relative;
@@ -16,7 +15,6 @@ const CardContainer = styled.div`
     // margin-bottom: 8px;
     height: ${props => props.height};
     background: #FFFFFF;
-    // box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.14), 0px 3px 14px rgba(0, 0, 0, 0.12), 0px 4px 5px rgba(0, 0, 0, 0.2);
     // border: 1px dotted black;
     z-index: 0;
 
@@ -256,6 +254,7 @@ const CardContainer = styled.div`
 
 export default function VendorCard() {
     const [isOpen, setIsOpen] = useState(false)
+    const [detailsView, setDetailsView] = useState('vendor')
 
     const { visibility, containerHeight } = setStyling(isOpen)
 
@@ -281,29 +280,54 @@ export default function VendorCard() {
         }
     }
 
+    function toggleDetailsView(status, setter) {
+        if (status === 'vendor') {
+            setter(() => 'event')
+        } else if (status === 'event') {
+            setter(() => 'vendor')
+        }
+    }
+
+
+    const fakeData = {
+        company: 'Bunty Soap Company',
+        booth: 'A01',
+        name: 'Frank Hamer',
+        phone: '444-444-4444',
+        email: 'fajldsjf@email.com',
+        address: '1234 main street',
+        suite: '#555',
+        cityState: 'Austin, TX',
+        zipcode: '78611',
+        veteranOwned: 'no',
+        nonprofit: 'yes',
+        poweredBooth: 'yes'
+    }
+
     return (
         <CardContainer height={containerHeight}>
             <div className={'heading-wrapper'} onClick={() => setOpenState()}>
-                <h5>{'Bunty Soap Company'}</h5>
-                <h4>{'A01'}</h4>
+                <h5>{fakeData.company}</h5>
+                <h4>{fakeData.booth}</h4>
                 <img src={closedIcon} alt={'Click for more details.'} />
             </div>
             <div className={'details-wrapper'} style={{visibility: visibility}}>
                 <div className={'divider-1'}>{''}</div>
                 <h6>View details:</h6>
-                <img className={'radio-vendor'} src={radioSelected} alt={'Radio button'} />
+
+                <img className={'radio-vendor'} src={radioSelected} alt={'Radio button'} onClick={() => toggleDetailsView(detailsView, setDetailsView)} />
                 <p className={'radio-label-vendor'}>Vendor</p>
 
                 <img className={'radio-event'} src={radioUnselected} alt={'Radio button'} />
                 <p className={'radio-label-event'}>Event</p>
 
-                <p className={'details detail-1'}>{'Frank Galikanokus'}</p>
-                <p className={'details detail-2'}>{'512-555-1212'}</p>
-                <p className={'details detail-3'}>{'f.galikanokus@email.com'}</p>
-                <p className={'details detail-4'}>{'1234 Hero Lane'}</p>
-                <p className={'details detail-5'}>{'Suite #555'}</p>
-                <p className={'details detail-6'}>{'Austin, TX'}</p>
-                <p className={'details detail-7'}>{'78611'}</p>
+                <p className={'details detail-1'}>{fakeData.name}</p>
+                <p className={'details detail-2'}>{fakeData.phone}</p>
+                <p className={'details detail-3'}>{fakeData.email}</p>
+                <p className={'details detail-4'}>{fakeData.address}</p>
+                <p className={'details detail-5'}>{fakeData.suite}</p>
+                <p className={'details detail-6'}>{fakeData.cityState}</p>
+                <p className={'details detail-7'}>{fakeData.zipcode}</p>
 
                 <div className={'divider-2'}>{''}</div>
                 <Button className={'text-button'} buttonText={'Change booth number'} buttonStyle={'text'} />
