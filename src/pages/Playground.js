@@ -26,6 +26,13 @@ const PlaygroundContainer = styled.div`
         color: #545454;
     }
 
+    & > .wrapper {
+        // box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        // border: 1px dotted orange;
+    }
+
     & > h2 {
         margin: 40px 0px 0px 0px;
         font-size: 32px;
@@ -50,21 +57,26 @@ export default function Playground() {
             <h1>Playground</h1>
 
             <h2>Card List Item</h2>
-            <VendorCard />
+            <div className={'wrapper'}>
+                <VendorCard />
+                <VendorCard />
+                <VendorCard />
+            </div>
 
-            <h2>Card List Item</h2>
-            <ListItem />
 
-            <h2>Sponsorship Card</h2>
-            <SponsorshipCard />
+            {/* <h2>Card List Item</h2>
+            <ListItem /> */}
 
-            <h2>Status Message</h2>
-            <StatusMessage message={'Congrats!  You have created an account on O.P. Veteran. Now, please continue the registration.'} />
+            {/* <h2>Sponsorship Card</h2>
+            <SponsorshipCard /> */}
 
-            <h2>Progress Bar</h2>
-            <ProgressBar complete={75} />
+            {/* <h2>Status Message</h2>
+            <StatusMessage message={'Congrats!  You have created an account on O.P. Veteran. Now, please continue the registration.'} /> */}
 
-            <h2>Button</h2>
+            {/* <h2>Progress Bar</h2>
+            <ProgressBar complete={75} /> */}
+
+            {/* <h2>Button</h2>
 
             <p>{'primary'}</p>
             <Button buttonText={'Primary'} buttonStyle={'primary'} />
@@ -75,13 +87,13 @@ export default function Playground() {
             <br />
 
             <p>{'google'}</p>
-            <GoogleLoginButton className={'google'} />
+            <GoogleLoginButton className={'google'} /> */}
 
-            <h2>Input</h2>
-            <Input labelText={'Label'} placeholder={'placeholder'} />
+            {/* <h2>Input</h2>
+            <Input labelText={'Label'} placeholder={'placeholder'} /> */}
 
-            <h2>Form Input</h2>
-            <FormInput label={'Label as a question'} />
+            {/* <h2>Form Input</h2>
+            <FormInput label={'Label as a question'} /> */}
 
         </PlaygroundContainer>
     )

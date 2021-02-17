@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Button } from '../Button'
 import closedIcon from '../../assets/icons/card-closed-icon.svg'
@@ -7,15 +7,23 @@ import radioUnselected from '../../assets/icons/radio-unselected-icon.svg'
 
 
 const CardContainer = styled.div`
-    box-sizing: border-box;
+    // box-sizing: border-box;
     position: relative;
     top: 0px;
     left: 0px;
     right: 0px;
-    height: 328px;
+    // height: 48px;
+    // margin-bottom: 8px;
+    height: ${props => props.height};
     background: #FFFFFF;
-    box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.14), 0px 3px 14px rgba(0, 0, 0, 0.12), 0px 4px 5px rgba(0, 0, 0, 0.2);
+    // box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.14), 0px 3px 14px rgba(0, 0, 0, 0.12), 0px 4px 5px rgba(0, 0, 0, 0.2);
     // border: 1px dotted black;
+    z-index: 0;
+
+    &:hover {
+        z-index: 1;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.14), 0px 4px 5px rgba(0, 0, 0, 0.12), 0px 1px 10px rgba(0, 0, 0, 0.2);
+    }
 
     & > .heading-wrapper {
         box-sizing: border-box;
@@ -24,6 +32,7 @@ const CardContainer = styled.div`
         left: 0px;
         right: 0px;
         height: 48px;
+        background: #FFFFFF;
         // border: 1px dashed orange;
 
         & > h5 {
@@ -80,6 +89,8 @@ const CardContainer = styled.div`
         left: 0px;
         right: 0px;
         height: 280px;
+        // visibility: visible;
+        // background:lightray;
         // border: 1px dashed lightgreen;
 
         & > .divider-1 {
@@ -244,14 +255,40 @@ const CardContainer = styled.div`
 `
 
 export default function VendorCard() {
+    const [isOpen, setIsOpen] = useState(false)
+
+    const { visibility, containerHeight } = setStyling(isOpen)
+
+    function setOpenState() {
+        if (isOpen === false) {
+            setIsOpen(() => true)
+        } else if (isOpen === true) {
+            setIsOpen(() => false)
+        }
+    }
+
+    function setStyling(status) {
+        if (status === false) {
+            return {
+                visibility: `hidden`,
+                containerHeight: `48px`
+            }
+        } else if (status === true) {
+            return {
+                visibility: `visible`,
+                containerHeight: `328px`
+            }
+        }
+    }
+
     return (
-        <CardContainer>
-            <div className={'heading-wrapper'}>
+        <CardContainer height={containerHeight}>
+            <div className={'heading-wrapper'} onClick={() => setOpenState()}>
                 <h5>{'Bunty Soap Company'}</h5>
                 <h4>{'A01'}</h4>
                 <img src={closedIcon} alt={'Click for more details.'} />
             </div>
-            <div className={'details-wrapper'}>
+            <div className={'details-wrapper'} style={{visibility: visibility}}>
                 <div className={'divider-1'}>{''}</div>
                 <h6>View details:</h6>
                 <img className={'radio-vendor'} src={radioSelected} alt={'Radio button'} />
