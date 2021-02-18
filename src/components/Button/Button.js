@@ -31,7 +31,7 @@ export default function Button(props) {
 
     return (
         <StyledButton
-            className={className}
+            // className={className}
             background={background} 
             border={border} 
             color={fontColor}
