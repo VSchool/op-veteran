@@ -23,6 +23,6 @@ const StyledButton = styled.button`
 `
 
 export default function GoogleLoginButton(props) {
-    const { className } = props
-    return <StyledButton className={className}><img src={googleLogo} alt={'Google logo'} /></StyledButton>
+    const { className, onClick } = props
+    return <StyledButton className={className}><img src={googleLogo} alt={'Google logo'} onClick={onClick} /></StyledButton>
 }

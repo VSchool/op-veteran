@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
-import { handleSignOutAndClose } from './utils'
+import { AuthContext } from "../../context/AuthProvider";
 import exitIcon from '../../assets/icons/exit-icon.svg'
 import logo from '../../assets/images/vetfest-logo.png'
 import userIcon from '../../assets/icons/avatar-icon.svg'
@@ -37,10 +37,11 @@ const HeaderContainer = styled.div`
 `
 
 export default function Header() {
+	const { logout } = useContext(AuthContext);
 
     return (
         <HeaderContainer>
-            <img src={exitIcon} alt={'Click to exit.'} className={'exit-icon'} onClick={() => handleSignOutAndClose()} />
+            <img src={exitIcon} alt={'Click to exit.'} className={'exit-icon'} onClick={logout} />
             <img src={logo} alt={'OP Veteran VetFest logo.'} className={'header-logo'} />
             <img src={userIcon} alt={'User is logged in.'} className={'avatar-icon'} />
         </HeaderContainer>
