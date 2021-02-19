@@ -6,7 +6,6 @@ import UserProvider, { UserContext } from "./context/UserProvider";
 // import BoothProvider from "./context/BoothProvider";
 // import Playground from './Playground'
 import { Landing, Vendor, Admin, Playground } from './pages'
-import { DEV_ROUTES } from "./constants";
 
 const AppContainer = styled.div`
   box-sizing: border-box;
@@ -26,18 +25,26 @@ export default function App() {
 			</AppContainer>
 		);
 	}
-	if (!DEV_ROUTES && auth) {
-		 return (
-			<UserProvider>
-				<AppContainer>
-					<UserViews />
-				</AppContainer>
-			</UserProvider>
-		);
+	return (
+		<UserProvider>
+			<AppContainer>
+				<UserViews />
+			</AppContainer>
+		</UserProvider>
+	);
+}
+
+function UserViews() {
+	const { user, isAdmin, isDev } = useContext(UserContext);
+	
+	if (!user) {
+		return <h1>Loading...</h1>;
+	} else if (isAdmin) {
+		return <Admin />
+	} else if (!isDev) {
+		return <Vendor />
 	}
-  return (
-    <AppContainer>
-      <UserProvider>
+	return (
 		<Switch>
 			<Route exact path='/'>
 			<Landing />
@@ -55,18 +62,5 @@ export default function App() {
 			<Playground />
 			</Route>
 		</Switch>
-	</UserProvider>
-    </AppContainer>
   )
-}
-
-function UserViews() {
-	const { user } = useContext(UserContext);
-	
-	if (!user) {
-		return <h1>Loading...</h1>;
-	} else if (user.isAdmin) {
-		return <Admin />;
-	}
-	return <Vendor />;
 }

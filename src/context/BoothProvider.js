@@ -1,10 +1,10 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import Firestore from "../Firestore";
+import firestore from "../database";
 import { UserContext } from "./UserProvider";
-import boothData from "../testing/booths.json";
+// import boothData from "../testing/booths.json";
 
-const boothRef = Firestore.collection("Booths");
-const batch = Firestore.batch();
+const boothRef = firestore.collection("Booths");
+const batch = firestore.batch();
 
 export const BoothContext = createContext();
 export default function BoothProvider({children}) {
@@ -38,6 +38,8 @@ export default function BoothProvider({children}) {
 		
 		return unsub;
 	}, [setBooths]);
+	
+	
 	
 	return (
 		<BoothContext.Provider value={{ booths }}>
