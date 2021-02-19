@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { Header } from '../../components/Header'
 
 const AdminContainer = styled.div`
     border: 1px solid blue;
@@ -8,7 +9,7 @@ const AdminContainer = styled.div`
 export default function Admin() {
     return (
         <AdminContainer>
-            <p>Admin Component</p>
+            <Header />
         </AdminContainer>
     )
 }
