@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Header } from '../../components/Header'
+import AdminSearch from  '../../components/AdminSearch'
 
 const AdminContainer = styled.div`
     box-sizing: border-box;
@@ -51,6 +52,7 @@ export default function Admin() {
             <h1>{`Welcome, Admin.`}</h1>
             <p className={'subtitle'}>{'Here is a current list, and map, of vendors registered for Vet Fest.'}</p>
             <div className={'diagram-placeholder'}><h2>Diagram placeholder</h2></div>
+            <AdminSearch />
         </AdminContainer>
     )
 }
