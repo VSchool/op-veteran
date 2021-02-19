@@ -11,7 +11,7 @@ const RegistrationContainer = styled.div`
     bottom: 0px;
     left: 0px;
     right: 0px;
-    // border: 2px solid blue;
+    // border: 2px solid red;
 
     & > h1 {
         box-sizing: border-box;

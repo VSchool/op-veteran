@@ -5,6 +5,7 @@ import checkmarkIcon from '../../assets/icons/card-checkmark-icon.svg'
 const ItemContainer = styled.div`
     box-sizing: border-box;
     position: relative;
+    // width: 100%;
     height: 24px;
     // border: 1px dotted black;
 

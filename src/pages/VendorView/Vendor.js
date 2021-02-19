@@ -18,7 +18,6 @@ export default function Vendor() {
             <Header />
             {/* <RegistrationForm /> */}
             <SponsorshipSelection />
-        
         </VendorPageContainer>
     )
 }

@@ -6,9 +6,10 @@ import { sponsorshipLevels, perkList } from './utils'
 
 const CardContainer = styled.div`
     box-sizing: border-box;
-    position: relative;
-    width: 312px;
-    min-height: 392px;
+    padding: 16px 24px 16px 24px;
+    min-width: 312px;
+    height: 416px;
+    margin: 0px 16px 0px 0px;
     background: #FFFFFF;
     box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.14), 0px 2px 2px rgba(0, 0, 0, 0.12), 0px 1px 3px rgba(0, 0, 0, 0.2);
     border-radius: 8px;
@@ -17,10 +18,6 @@ const CardContainer = styled.div`
     & > h4 {
         box-sizing: border-box;
         margin: 0px;
-        position: absolute;
-        top: 16px;
-        left: 24px;
-        right: 24px;
         height: 24px;
         font-family: Open Sans;
         font-style: normal;
@@ -37,11 +34,7 @@ const CardContainer = styled.div`
 
     & > h5 {
         box-sizing: border-box;
-        margin: 0px;
-        position: absolute;
-        top: 40px;
-        left: 24px;
-        right: 24px;
+        margin: 0px 0px 16px 0px;
         height: 16px;
         font-family: Helvetica Neue;
         font-style: normal;
@@ -56,104 +49,24 @@ const CardContainer = styled.div`
     }
 
     & > .divider {
-        position: absolute;
-        top: 72px;
-        left: 24px;
-        right: 24px;
+        margin-top: 0px;
+        margin-bottom: 16px;
+        width: 100%;
         height: 2px;
         background: #F4F4F4;
     }
 
     & > .divider2 {
-        position: absolute;
-        top: 336px;
-        left: 24px;
-        right: 24px;
+        margin: 0px 0px 16px 0px;
+        width: 100%;
         height: 2px;
         background: #F4F4F4;
     }
 
-    & > .item {
-        position: absolute;
-        top: 88px;
-        left: 24px;
-        right: 24px;
-        border: 1px dotted blue;
-    }
-    // DELETE THIS WHEN DONE
-    & > .place1 {
-        box-sizing: border-box;
-        position: absolute;
-        top: 88px;
-        left: 24px;
-        right: 24px;
-        margin: 0px;
-        height: 24px;
-        // border: 1px dotted dodgerblue;
-    }
-
-    & > .place2{
-        box-sizing: border-box;
-        position: absolute;
-        top: 120px;
-        left: 24px;
-        right: 24px;
-        margin: 0px;
-        height: 24px;
-        // border: 1px dotted dodgerblue;
-    }
-
-    & > .place3{
-        box-sizing: border-box;
-        position: absolute;
-        top: 152px;
-        left: 24px;
-        right: 24px;
-        margin: 0px;
-        height: 24px;
-        // border: 1px dotted dodgerblue;
-    }
-
-    & > .place4{
-        box-sizing: border-box;
-        position: absolute;
-        top: 184px;
-        left: 24px;
-        right: 24px;
-        margin: 0px;
-        height: 24px;
-        // border: 1px dotted dodgerblue;
-    }
-
-    & > .place5{
-        box-sizing: border-box;
-        position: absolute;
-        top: 216px;
-        left: 24px;
-        right: 24px;
-        margin: 0px;
-        height: 24px;
-        // border: 1px dotted dodgerblue;
-    }
-
-    & > .place6{
-        box-sizing: border-box;
-        position: absolute;
-        top: 248px;
-        left: 24px;
-        right: 24px;
-        margin: 0px;
-        height: 24px;
-        // border: 1px dotted dodgerblue;
-    }
-
     & > .price {
         box-sizing: border-box;
-        position: absolute;
-        top: 288px;
-        left: 24px;
-        right: 24px;
-        margin: 0px;
+        margin: 24px 0px 16px 0px;
+        width: 100%;
         font-family: Open Sans;
         font-style: normal;
         font-weight: bold;
@@ -166,28 +79,47 @@ const CardContainer = styled.div`
     }
 
     & > .sponsorship-button {
-        position: absolute;
-        top: 346px;
+        position: relative;
         left: calc(50% - 136px/2);
+        margin-top: 0px;
         // border: 1px dotted red;
+    }
+
+    & > .items-container {
+        box-sizing: border-box;
+        width: 100%;
+        height: 184px;
+        margin: 0px 0px 0px 0px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        // border: 1px solid orange;
+
+        & > .item {
+            box-sizing: border-box;
+            // border: 1px solid red;
+        }
     }
 `
 
-export default function SponsorshipCard() {
-
-    // for (const perk in perkList) {
-    //     console.log()
-    // }
-
-    // console.log(perkList)
-
+export default function SponsorshipCard(props) {
+    const { className } = props
 
     return (
-        <CardContainer>
+        <CardContainer className={className}>
             <h4>{'Title'}</h4>
             <h5>Level sponsorship</h5>
             <div className={'divider'}></div>
-            <ListItem className={'item'} />
+            <div className={'items-container'}>
+                <ListItem className={'item'} />
+                <ListItem className={'item'} />
+                <ListItem className={'item'} />
+                <ListItem className={'item'} />
+                <ListItem className={'item'} />
+                <ListItem className={'item'} />
+            </div>
+
             {/* <p className={'place1'}>Perk desc</p>
             <p className={'place2'}>Perk desc</p>
             <p className={'place3'}>Perk desc</p>
