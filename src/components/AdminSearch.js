@@ -1,41 +1,38 @@
 import React from 'react';
 import styled from 'styled-components'
+import searchIcon from '../assets/icons/search-icon.svg'
 
-const StyledInput = styled.input`
+const InputContainer = styled.div`
     box-sizing: border-box;
+    position: relative;
     width: 328px;
     height: 40px;
-    font-family: Open Sans;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 15px;
-    line-height: 24px;
-    display: flex;
-    align-items: center;
-    letter-spacing: 0.01em;
-    color: #545454;
     border: 1px solid #545454;
     border-radius: 2px;
 
-    &:focus {
-        outline: 2px solid #799C8A;
-        // background: blue;
+    & > input {
+        box-sizing: border-box;
+        // width: 120px;
+        height: 24px;
+        border: 1px dashed dodgerblue;
     }
 
-    &::placeholder {
-        font-family: Open Sans;
-        font-style: normal;
-        font-weight: normal;
-        font-size: 15px;
-        line-height: 24px;
-        display: flex;
-        align-items: center;
-        letter-spacing: 0.01em;
-        color: #545454;
-        opacity: 50%;
+    & > img {
+        box-sizing: border-box;
+        // position: absolute;
+        // top: calc(50% - 24px/2);
+        // right: 16px;
+        height: 24px;
+        border: 1px dashed dodgerblue;
     }
 `
 
 export default function AdminSearch() {
-    return <StyledInput placeholder={'placeholder'}></StyledInput>
+    return (
+        <InputContainer>
+            <input placeholder={'placeholder'} />
+            <img src={searchIcon} alt={'Search icon'} />
+        </InputContainer>
+    )
+    
 }
