@@ -34,13 +34,21 @@ export default function({children}) {
 		}).catch(err => console.error(err));
 	}, [setIsAdmin, setIsDev]);
 	
+	const updateUser = data => {
+		userRef.update(data).catch(err => console.error(err));
+	}
 	
+	const reserveBooth = id => {
+		userRef.update({ reservation: id }).catch(err => console.error(err));
+	}
 	
 	return (
 		<UserContext.Provider value={{
 			user,
 			isAdmin,
-			isDev
+			isDev,
+			updateUser,
+			reserveBooth
 		}}>
 			{children}
 		</UserContext.Provider>

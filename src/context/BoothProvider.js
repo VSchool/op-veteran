@@ -8,8 +8,9 @@ const batch = firestore.batch();
 
 export const BoothContext = createContext();
 export default function BoothProvider({children}) {
-	const { user } = useContext(UserContext);
+	const { user, reserveBooth: reserve } = useContext(UserContext);
 	const [booths, setBooths] = useState([]);
+	const [selectedBooth, setSelectedBooth] = useState(null);
 	
 	// useEffect(() => {
 		// boothData.forEach(b => {
@@ -39,10 +40,55 @@ export default function BoothProvider({children}) {
 		return unsub;
 	}, [setBooths]);
 	
+	useEffect(() => {
+		if (selectedBooth) {
+			setSelectedBooth(prev => booths[prev.id]);
+		}
+	}, [booths, setSelectedBooth]);
 	
+	const selectBooth = id => {
+		setSelectedBooth(booths[id]);
+	}
+	
+	const deselectBooth = () => {
+		setSelectedBooth(null);
+	}
+	
+	const createBooth = num => {
+		boothRef.doc(`a${num}`).set({
+			id: `a${num}`,
+			x: 0,
+			y: 0,
+			reserved: false
+		}).catch(err => console.error(err));
+	}
+	
+	const setBoothPosition = (id, x, y) => {
+		boothRef.doc(id).update({ x, y })
+			.catch(err => console.error(err));
+	}
+	
+	const deleteBooth = id => {
+		boothRef.doc(id).delete().catch(err => console.error(err));
+	}
+	
+	const reserveBooth = () => {
+		boothRef.doc(selectedBooth.id).update({ reservied: true })
+			.catch(err => console.error(err));
+		reserve(selectedBooth.id);
+	}
 	
 	return (
-		<BoothContext.Provider value={{ booths }}>
+		<BoothContext.Provider value={{
+			booths,
+			selectedBooth,
+			selectBooth,
+			deselectBooth,
+			createBooth,
+			setBoothPosition,
+			deleteBooth,
+			reserveBooth
+		}}>
 			{children}
 		</BoothContext.Provider>
 	);
