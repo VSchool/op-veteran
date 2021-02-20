@@ -26,16 +26,13 @@ export default function({children}) {
 	}, [setUser]);
 	
 	useEffect(() => {
-		if (!user) {
-			return;
-		}
-		checkPermissions(auth.uuid).then(data => {
+		checkPermissions(auth.uid).then(data => {
 			if (data) {
 				setIsAdmin(data.isAdmin);
 				setIsDev(data.isDev);
 			}
 		}).catch(err => console.error(err));
-	}, [user?.email, setIsAdmin, setIsDev]);
+	}, [setIsAdmin, setIsDev]);
 	
 	
 	

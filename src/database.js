@@ -13,8 +13,8 @@ export function createUser(auth) {
 	});
 }
 
-export function checkPermissions(uuid) {
-	return firestore.doc(`Permissions/${uuid}`).get().then(doc => {
+export function checkPermissions(uid) {
+	return firestore.doc(`Permissions/${uid}`).get().then(doc => {
 		if (doc.exists) {
 			return doc.data();
 		}
