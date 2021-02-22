@@ -1,0 +1,43 @@
+[
+	{
+		"question": "What is your first name",
+		"type": "input",
+		"vendorProp": "firstName",
+		"required": true
+	},
+	{
+		"question": "What is your last name?",
+		"type": "input",
+		"vendorProp": "lastName",
+		"required": true
+	},
+	{
+		"question": "What is the name of your company/organization?",
+		"type": "input",
+		"vendorProp": "organization"
+	},
+	{
+		"question": "Is your company/organization veteran owned?",
+		"type": "yes-no",
+		"vendorProp": "veteranOwned",
+		"required": true
+	},
+	{
+		"question": "How many people will man the booth?",
+		"type": "select",
+		"vendorProp": "occupants",
+		"required": true,
+		"options": [
+			"1",
+			"2",
+			"3+",
+			"Not sure"
+		]
+	},
+	{
+		"question": "Will you need a powered booth?",
+		"type": "yes-no",
+		"vendorProp": "powered",
+		"required": true
+	}
+]
