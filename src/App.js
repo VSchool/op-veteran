@@ -10,9 +10,9 @@ import { Landing, Vendor, Admin, Playground } from './pages'
 const AppContainer = styled.div`
   box-sizing: border-box;
   width: 100%;
-  height: 100vh;
+//   height: 3040px;
   position: relative;
-  // border: 1px solid lightcoral;
+//   border: 1px solid lightcoral;
 `
 
 export default function App() {
