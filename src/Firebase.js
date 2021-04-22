@@ -4,6 +4,7 @@ import "firebase/database";
 import "firebase/firestore";
 import "firebase/storage";
 
+
 const Firebase = firebase.initializeApp({
 	apiKey: "AIzaSyCs--Y464NA0UNY00kp-0G5g07_qDoPH5U",
 	authDomain: "op-veterans-dev.firebaseapp.com",
@@ -19,6 +20,7 @@ export const Storage = Firebase.storage();
 export function googleSignIn(handleErrors) {
 	const provider = new firebase.auth.GoogleAuthProvider();
 	Auth.signInWithPopup(provider)
+		.then(resp=>console.log(resp.user.photoURL))
 		.catch(err => handleErrors(err));
 }
 

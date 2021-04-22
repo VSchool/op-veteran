@@ -3,18 +3,25 @@ import styled from 'styled-components'
 import { setStyle } from './utils'
 
 const StyledButton = styled.button`
-    box-sizing: border-box;
-    width: 136px;
-    height: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: Open Sans;
+    font-family: Roboto;
     font-style: normal;
-    font-weight: normal;
+    font-weight: 500;
     font-size: 16px;
+    line-height: 20px;
+    /* identical to box height, or 125% */
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    text-align: center;
+
+/* Primary/White */
+
+    box-sizing: border-box;
+    
+    height: 40px;
     line-height: 24px;
     letter-spacing: 0.25px;
+    margin: 8px;
     color: ${props => props.color};
     background: ${props => props.background};
     box-shadow: ${props => props.boxShadow};
@@ -23,11 +30,18 @@ const StyledButton = styled.button`
     border: ${props => props.border};
     border-radius: 2px;
     outline: none;
+    &:hover{
+        background-color: ${props=>props.hoverBackground};
+    }
+    &:active{
+        background: ${props=>props.activeBackground};
+        border: ${props=>props.activeBorder};
+    }
 `
 
 export default function Button(props) {
     const { buttonText, buttonStyle, ...buttonProps } = props
-    const { background, border, fontColor } = setStyle(buttonStyle)
+    const { background, border, fontColor, hoverBackground, activeBackground, activeBorder } = setStyle(buttonStyle)
 
     return (
         <StyledButton
@@ -35,6 +49,9 @@ export default function Button(props) {
             background={background} 
             border={border} 
             color={fontColor}
+            hoverBackground={hoverBackground}
+            activeBackground={activeBackground}
+            activeBorder={activeBorder}
 				{...buttonProps}
         >
             {buttonText}

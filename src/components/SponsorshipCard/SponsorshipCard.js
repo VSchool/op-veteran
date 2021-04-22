@@ -7,14 +7,16 @@ import { sponsorshipLevels, perkList } from './utils'
 const CardContainer = styled.div`
     box-sizing: border-box;
     padding: 16px 24px 16px 24px;
-    min-width: 312px;
+    //min-width: 312px;
     height: 416px;
-    margin: 0px 16px 0px 0px;
+    margin: 8px 0px 8px 0px;
     background: #FFFFFF;
     box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.14), 0px 2px 2px rgba(0, 0, 0, 0.12), 0px 1px 3px rgba(0, 0, 0, 0.2);
     border-radius: 8px;
     // border: 1px dotted black;
-
+    @media only screen and (min-width: 600px){
+            margin: 0px 8px 0px 8px;
+        }
     & > h4 {
         box-sizing: border-box;
         margin: 0px;
@@ -104,20 +106,20 @@ const CardContainer = styled.div`
 `
 
 export default function SponsorshipCard(props) {
-    const { className } = props
-
+    const { className, name, perks, changeState, states} = props
+    console.log(perks)
+    const listItems = perks.map((perk=><ListItem key={`${name}${perk.wording}`} className={'item'} wording={perk.wording} valid={perk.valid}/>))
+    const handleSelect = (e) =>{
+        e.preventDefault()
+        changeState(states.SELECT)
+    }
     return (
         <CardContainer className={className}>
-            <h4>{'Title'}</h4>
+            <h4>{name}</h4>
             <h5>Level sponsorship</h5>
             <div className={'divider'}></div>
             <div className={'items-container'}>
-                <ListItem className={'item'} />
-                <ListItem className={'item'} />
-                <ListItem className={'item'} />
-                <ListItem className={'item'} />
-                <ListItem className={'item'} />
-                <ListItem className={'item'} />
+                {listItems}
             </div>
 
             {/* <p className={'place1'}>Perk desc</p>
@@ -128,7 +130,7 @@ export default function SponsorshipCard(props) {
             <p className={'place6'}>Perk desc</p> */}
             <h2 className={'price'}>{'$99,999'}</h2>
             <div className={'divider2'}></div>
-            <Button className={'sponsorship-button'} buttonText={'Select this level'} buttonStyle={'text'} />
+            <Button className={'sponsorship-button'} buttonText={'Select this level'} buttonStyle={'text'} onClick={handleSelect}/>
         </CardContainer>
     )
 }

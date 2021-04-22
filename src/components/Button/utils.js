@@ -1,24 +1,39 @@
 export function setStyle(style) {
     if (style === 'primary') {
         return {
-            background: `#618572`,
+            background: `#7A9E8B`,
             border: `2px solid #618572`,
             fontColor: `#FFFFFF`,
-            boxShadow: `0px 6px 10px rgba(0, 0, 0, 0.14), 0px 1px 18px rgba(0, 0, 0, 0.12), 0px 3px 5px rgba(0, 0, 0, 0.2)`,
+            hoverBackground: `#6C937E`,
+            activeBackground: `#567665`,
+            activeBorder: `2px solid #70C297`
         }
     } else if (style === 'secondary') {
         return {
             background: `#FFFFFF`,
-            border: `2px solid #618572`,
-            fontColor: `#618572`,
-            boxShadow: `0px 6px 10px rgba(0, 0, 0, 0.14), 0px 1px 18px rgba(0, 0, 0, 0.12), 0px 3px 5px rgba(0, 0, 0, 0.2)`,
+            border: `2px solid #7A9E8B`,
+            fontColor: `#7A9E8B`,
+            hoverBackground: `#F7F7F7`,
+            activeBackground: `#F7F7F7`,
+            activeBorder: `2px solid #70C297`
         }
     } else if (style === 'text') {
         return {
             background: `none`,
             border: `none`,
             fontColor: `#618572`,
-            boxShadow: `none`
+            boxShadow: `none`,
+            activeBorder: `2px solid #70C297`
         }
+    }
+    else if (style === 'google'){
+        return {
+        background: `#FFFFFF`,
+        border: `2px solid #7A9E8B`,
+        fontColor: `#7A9E8B`,
+        hoverBackground: `#F7F7F7`,
+        activeBackground: `#F7F7F7`,
+        activeBorder: `2px solid #70C297`
+        }   
     }
 }

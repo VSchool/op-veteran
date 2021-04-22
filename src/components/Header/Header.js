@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import styled from 'styled-components'
 import { AuthContext } from "../../context/AuthProvider";
+import { UserContext } from "../../context/UserProvider";
 import exitIcon from '../../assets/icons/exit-icon.svg'
 import logo from '../../assets/images/vetfest-logo.png'
 import userIcon from '../../assets/icons/avatar-icon.svg'
@@ -32,18 +33,20 @@ const HeaderContainer = styled.div`
         top: 32px;
         right: 12px;
         width: 40px;
+        border-radius: 50%;
         // border: 1px dotted orange;
     }
 `
 
 export default function Header() {
 	const { logout } = useContext(AuthContext);
-
+    const {user}=useContext(UserContext);
+    console.log(user.userImg)
     return (
         <HeaderContainer>
             <img src={exitIcon} alt={'Click to exit.'} className={'exit-icon'} onClick={logout} />
             <img src={logo} alt={'OP Veteran VetFest logo.'} className={'header-logo'} />
-            <img src={userIcon} alt={'User is logged in.'} className={'avatar-icon'} />
+            <img src={user.userImg === "" ? userIcon : user.userImg} alt={'User is logged in.'} className={'avatar-icon'} />
         </HeaderContainer>
     )
 }
