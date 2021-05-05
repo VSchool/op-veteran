@@ -4,42 +4,28 @@ import checkmarkIcon from '../../assets/icons/card-checkmark-icon.svg'
 import uncheckmarkIcon from '../../assets/icons/card-uncheckmark-icon.svg'
 
 const ItemContainer = styled.div`
-    box-sizing: border-box;
-    position: relative;
-    // width: 100%;
+ 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     height: 24px;
-    padding: 20px;
-    // border: 1px dotted black;
+    padding: 2px;
+ `
+const Name = styled.p`
+  
+    height: 24px;
+    margin: 0px;
+    font-family: Open Sans;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 20px;
+    color: #545454;
+`
 
-    & > p {
-        box-sizing: border-box;
-        position: absolute;
-        top: 0px;
-        left: 0px;
-        right: 52px;
-        height: 24px;
-        margin: 0px;
-        font-family: OpenSans;
-        font-style: normal;
-        font-weight: 400;
-        font-size: 15px;
-        line-height: 20px;
-        display: flex;
-        align-items: center;
-        letter-spacing: 0.015em;
-        color: #545454;
-        // border: 1px dotted dodgerblue;
-    }
-
-    & > img {
-        box-sizing: border-box;
-        position: absolute;
-        top: 0px;
-        right: 0px;
-        height: 24px;
-        // width: 16px;
-        // border: 1px dotted dodgerblue;
-    }
+const Checkmark = styled.img`
+    box-sizing: border-box;
+    height: 24px;
 `
 
 export default function ListItem(props) {
@@ -47,9 +33,9 @@ export default function ListItem(props) {
 
     return (
         <ItemContainer style={{opacity: valid ? 1: 0.4}}>
-            <p>{wording}</p>
+            <Name>{wording}</Name>
             { valid ? 
-            <img src={checkmarkIcon} alt={'Checkmark icon'} /> : <img src={uncheckmarkIcon} alt={"Uncheckmark icon"}/>}
+            <Checkmark src={checkmarkIcon} alt={'Checkmark icon'} /> : null}
         </ItemContainer>
     )
 }

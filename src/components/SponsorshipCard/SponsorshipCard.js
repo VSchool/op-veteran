@@ -1,136 +1,97 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import styled from 'styled-components'
 import { Button } from '../../components/Button'
 import ListItem from './ListItem'
-import { sponsorshipLevels, perkList } from './utils'
+import {UserContext} from '../../context/UserProvider'
+import {VendorContext} from '../../context/VendorProvider'
+
+
 
 const CardContainer = styled.div`
-    box-sizing: border-box;
-    padding: 16px 24px 16px 24px;
-    //min-width: 312px;
-    height: 416px;
-    margin: 8px 0px 8px 0px;
+    width: 100%;
+    margin: 8px;
     background: #FFFFFF;
-    box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.14), 0px 2px 2px rgba(0, 0, 0, 0.12), 0px 1px 3px rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
-    // border: 1px dotted black;
-    @media only screen and (min-width: 600px){
-            margin: 0px 8px 0px 8px;
-        }
-    & > h4 {
-        box-sizing: border-box;
-        margin: 0px;
-        height: 24px;
+    border-radius: 4px;
+    border: 2px solid #EAEAEA;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    `
+
+    const Header = styled.h1`
         font-family: Open Sans;
         font-style: normal;
-        font-weight: bold;
-        font-size: 18px;
-        line-height: 24px;
-        display: flex;
-        align-items: center;
-        letter-spacing: 0.03em;
-        text-transform: uppercase;
+        font-weight: normal;
+        font-size: 17px;
         color: #545454;
-        // border: 1px dotted dodgerblue;
-    }
-
-    & > h5 {
-        box-sizing: border-box;
-        margin: 0px 0px 16px 0px;
+    `
+   const Subheader = styled.h3`
         height: 16px;
-        font-family: Helvetica Neue;
-        font-style: normal;
-        font-weight: 300;
-        font-size: 12px;
-        line-height: 16px;
-        display: flex;
-        align-items: center;
-        letter-spacing: 0.015em;
-        color: #545454;
-        // border: 1px dotted dodgerblue;
-    }
-
-    & > .divider {
-        margin-top: 0px;
-        margin-bottom: 16px;
-        width: 100%;
-        height: 2px;
-        background: #F4F4F4;
-    }
-
-    & > .divider2 {
-        margin: 0px 0px 16px 0px;
-        width: 100%;
-        height: 2px;
-        background: #F4F4F4;
-    }
-
-    & > .price {
-        box-sizing: border-box;
-        margin: 24px 0px 16px 0px;
-        width: 100%;
         font-family: Open Sans;
         font-style: normal;
-        font-weight: bold;
-        font-size: 28px;
-        line-height: 32px;
-        text-align: center;
-        letter-spacing: 0.03em;
-        color: #696969;
-        // border: 1px dotted dodgerblue;
-    }
+        font-weight: normal;
+        font-size: 13px;
+        line-height: 16px;
+        color: #545454;
+   `
 
-    & > .sponsorship-button {
-        position: relative;
-        left: calc(50% - 136px/2);
-        margin-top: 0px;
-        // border: 1px dotted red;
-    }
+   const Hr = styled.hr`
+    margin: auto;
+    margin-top: ${props=>props.top ? props.top : "8px"};
+    margin-bottom: ${props=>props.bottom ? props.botton : "8px"};
+    background-color: #F4F4F4;
+    width: 90%;
+   `
 
-    & > .items-container {
-        box-sizing: border-box;
+const Price = styled.h1`
+    font-family: Open Sans;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 27px;
+    line-height: 36px;
+    text-align: center;
+    letter-spacing: 0.02em;
+    color: #696969;
+    margin-top: 20px;
+`
+
+    const SponsorshipButton = styled(Button)`
+        margin: 16px auto;
+        padding: 4px 8px; 
+    `
+
+    const Perks = styled.div`
+        
         width: 100%;
-        height: 184px;
-        margin: 0px 0px 0px 0px;
-        width: 100%;
+        //height: 184px;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
         // border: 1px solid orange;
-
-        & > .item {
-            box-sizing: border-box;
-            // border: 1px solid red;
-        }
-    }
 `
 
 export default function SponsorshipCard(props) {
     const { className, name, perks, changeState, states} = props
-    console.log(perks)
+  
+    const {user, updateUser} = useContext(UserContext)
+    const {vendor, updateCurrentVendor} = useContext(VendorContext)
     const listItems = perks.map((perk=><ListItem key={`${name}${perk.wording}`} className={'item'} wording={perk.wording} valid={perk.valid}/>))
-    const handleSelect = (e) =>{
+    const handleClick = (e) =>{
         e.preventDefault()
+        updateCurrentVendor({sponsorship: {level: name, finalized: false}})
         changeState(states.SELECT)
     }
     return (
         <CardContainer className={className}>
-            <h4>{name}</h4>
-            <h5>Level sponsorship</h5>
-            <div className={'divider'}></div>
-            <div className={'items-container'}>
+            <Header>{name}</Header>
+            <Subheader>Level sponsorship</Subheader>
+            <Hr className={'divider'} top="20px" bottom="12px"></Hr>
+            <Price className={'price'}>{'$99,999'}</Price>
+            <Perks className={'items-container'}>
                 {listItems}
-            </div>
-
-            {/* <p className={'place1'}>Perk desc</p>
-            <p className={'place2'}>Perk desc</p>
-            <p className={'place3'}>Perk desc</p>
-            <p className={'place4'}>Perk desc</p>
-            <p className={'place5'}>Perk desc</p>
-            <p className={'place6'}>Perk desc</p> */}
-            <h2 className={'price'}>{'$99,999'}</h2>
-            <div className={'divider2'}></div>
-            <Button className={'sponsorship-button'} buttonText={'Select this level'} buttonStyle={'text'} onClick={handleSelect}/>
+            </Perks>
+            <Hr className={'divider2'} top="22px" bottom="16px"></Hr>
+            <SponsorshipButton className={'sponsorship-button'} buttonText={'Select this level'} buttonStyle={'secondary'} onClick={handleClick}/>
         </CardContainer>
     )
 }

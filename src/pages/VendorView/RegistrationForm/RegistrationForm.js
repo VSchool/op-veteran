@@ -1,9 +1,10 @@
-import React, {useContext, useState, useEffect} from 'react'
+import React, {useContext, useState, useEffect, useRef} from 'react'
 import styled from 'styled-components'
-import { FormInput } from '../../../components/FormInput'
+import {FormInput} from '../../../components/FormInput'
 import ProgressBar from '../../../components/ProgressBar'
 import StatusMessage from '../../../components/StatusMessage'
 import {UserContext} from '../../../context/UserProvider'
+import {VendorContext} from '../../../context/VendorProvider'
 import {Input} from '../../../components/Input'
 import {Button} from '../../../components/Button'
 import {TextArea} from '../../../components/TextArea'
@@ -16,100 +17,178 @@ import {
   ButtonWrapper,
   FormWrapper,
   Wrapper,
-  Row
+  Row,
+  Container
 } from "../../../Elements/basic";
-import { CheckBox } from '../../../components/CheckBox'
-
-    const RegistrationContainer = styled.div`
-        box-sizing: border-box;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-evenly;
-        //align-items: center;
-        //grid-template-rows: 1fr 1fr;
-        height: 100%;
-        width: 100%;
-        padding: 0 24px 88px 24px; 
-    `
-
+import {CheckBox} from '../../../components/CheckBox'
 
 export default function RegistrationForm(props) {
   const {user, updateUser} = useContext(UserContext)
-    const [input, setInput] = useState({
-      name: user.name === "" ? "" : user.name, 
-      vendor: "",
-      description: "",
-      phone: "",
-      street: "",
-      city: "",
-      apt: "",
-      state: "",
-      zip: "",
-      vetOwned: true,
-      nonprofit: false
-    })
-    const [page, setPage] = useState(0)
-
-    const {changeState, states} = props
-    
-    const handleChange = (e)=>{
-      const {name, value} = e.target
-      
-      setInput(prev=>{
-        return {
-          ...prev,
-          [name]: value
-        }
-      })
+  const {vendor, matchVendor, createVendor} = useContext(VendorContext)
+  
+  useEffect(() => {
+    matchVendor()
+  }, [])
+  useEffect(() => {
+    if (vendor){
+      changeState(states.SPONSOR)
     }
-    const handleClick = (e)=>{
-      e.preventDefault()
-      if (page === 0) setPage(1)
-      else {
-        updateUser(input)
-        changeState(states.SPONSOR)
+  }, [vendor])
+  const [input, setInput] = useState({
+    name: user.name ? user.name : "",
+    organization: "",
+    description: "",
+    phone: "",
+    apt: "",
+    street: "",
+    apt: "",
+    city: "",
+    zip: "",
+    state: "",
+    nonprofit: false,
+    vetOwned: false
+  })
+ 
+  const {changeState, states} = props
+  const handleChange = (e) => {
+    const {name, value} = e.target
+    setInput(prev => {
+      return {
+        ...prev,
+        [name]: value
       }
+    })
+  }
+  const handleClick = (e) => {
+    e.preventDefault()
+    const vendorData = {
+      address: {
+        street: input.street,
+        apt: input.apt,
+        city: input.city,
+        state: input.state,
+        zip: input.zip
+      },
+      rep: input.name,
+      repEmail: user.email,
+      description: input.description,
+      organization: input.organization,
+      booth: {
+        primary: {
+          name: null,
+          finalized: false
+        },
+        secondary: {
+          name: null, 
+          finalized: false
+        }
+      },
+      sponsorship: {
+        level: null, 
+        finalized: false
+      },
+      logo: null, 
+      
     }
-    const handleCheck = (e)=>{
-      const {name, checked} = e.target
-      console.log(e.target)
-        setInput(prev=>{
-          return {
-            ...prev,
-            [name]: checked
-          }
-        })
-    }
+    createVendor(vendorData)
+    changeState(states.SPONSOR)
+  }
+  const handleCheck = (e) => {
+    const {name, checked} = e.target
+    console.log(e.target)
+    setInput(prev => {
+      return {
+        ...prev,
+        [name]: checked
+      }
+    })
+  }
 
-    return (
-        <RegistrationContainer>
-            <HeaderWrapper>
-              <Subheader>Registration Form</Subheader>
-              <Header>Point of Contact</Header>
-            </HeaderWrapper>
-              {page === 0 ? 
-            <FormWrapper>
-              <Input labelText="Name" name="name" type="text" value={input.name} onChange={handleChange}/>
-              <Input labelText="Name of organization" name="vendor" type="text" value={input.vendor} onChange={handleChange}/>
-              <TextArea labelText="Brief description of organization" name="description" rows="4" value={input.description} onChange={handleChange}></TextArea>
-              <Input type="phone" labelText="Phone" name="phone" value={input.phone} onChange={handleChange}/>
-              <Button buttonText="Continue" buttonStyle="primary" onClick={handleClick}/>
-            </FormWrapper> :
-            <FormWrapper>
-              <Input labelText="Address" name="street" type="text" value={input.street} onChange={handleChange}/>
-              <Input labelText="City" name="city" type="text" value={input.city} onChange={handleChange}/>
-              <Input labelText="State" name="state" type="text" min="2" max="2" value={input.state} onChange={handleChange}/>
-              <Row coloumms="3">
-              <Input type="text" labelText="Apt or suite" name="apt" value={input.apt} onChange={handleChange}/>
-              <Input type="text" labelText="State" name="state" value={input.state} onChange={handleChange}/>
-              <Input type="text" labelText="Zipcode" name="zip" value={input.zip} onChange={handleChange}/>
-              </Row>
-              <CheckBox labelText="Organization is veteran owned" name="vetOwned" checked={input.vetOwned} onChange={handleCheck}/>
-              <CheckBox labelText="Organization is a nonprofit" name="nonprofit" checked={input.nonprofit} onChange={handleCheck}/>
-              <Button buttonText="Continue" buttonStyle="primary" onClick={handleClick}/>
-            </FormWrapper>
-            }
-            <StatusMessage className={'status-message'} message={'Welcome to O.P. Veteran. Now, please continue the registration.'} />
-        </RegistrationContainer>
-    )
+  return (
+    <Container>
+      <HeaderWrapper>
+        <Subheader>Registration Form</Subheader>
+        <Header>Point of Contact</Header>
+      </HeaderWrapper>
+      <FormWrapper>
+        <Input
+          autocomplete="name"
+          labelText="Name"
+          name="name"
+          type="text"
+          value={input.name}
+          onChange={handleChange}/>
+        <Input
+          labelText="Name of organization"
+          autocomplete="organization"
+          name="organization"
+          type="text"
+          value={input.organization}
+          onChange={handleChange}/>
+        <TextArea
+          labelText="Brief description of organization"
+          name="description"
+          rows="4"
+          value={input.description}
+          onChange={handleChange}></TextArea>
+        <Input
+          type="phone"
+          autocomplete="tel"
+          labelText="Phone"
+          name="phone"
+          value={input.phone}
+          onChange={handleChange}/>
+        <Input
+          labelText="Address"
+          autocomplete="street-address"
+          name="street"
+          type="text"
+          value={input.street}
+          onChange={handleChange}/>
+        <Input
+          labelText="City"
+          name="city"
+          autocomplete="address-level1"
+          type="text"
+          value={input.city}
+          onChange={handleChange}/>
+        <Row coloumms="3">
+          <Input
+            type="text"
+            labelText="Apt or suite"
+            name="apt"
+            value={input.apt}
+            onChange={handleChange}/>
+          <Input
+            type="text"
+            labelText="State"
+            name="state"
+            autocomplete="address-level2"
+            value={input.state}
+            onChange={handleChange}/>
+          <Input
+            type="text"
+            labelText="Zipcode"
+            name="zip"
+            auto-complete="postal-code"
+            value={input.zip}
+            onChange={handleChange}/>
+        </Row>
+        <CheckBox
+          labelText="Organization is veteran owned"
+          name="vetOwned"
+          checked={input.vetOwned}
+          onChange={handleCheck}/>
+        <CheckBox
+          labelText="Organization is a nonprofit"
+          name="nonprofit"
+          checked={input.nonprofit}
+          onChange={handleCheck}/>
+        <Button buttonText="Continue" buttonStyle="primary" onClick={handleClick}/>
+      </FormWrapper>
+      <StatusMessage
+        className={'status-message'}
+        message={'Welcome to O.P. Veteran. Now, please continue the registration.'}/>
+    </Container>
+  )
 }

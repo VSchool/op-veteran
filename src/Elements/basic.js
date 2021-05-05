@@ -51,6 +51,7 @@ const Header = styled.div`
   color: #545454;
 `;
 const HeaderWrapper = styled.div`
+
 `;
 const ButtonWrapper = styled.div`
   display: flex;
@@ -60,8 +61,9 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  align-items: center;
+  align-items: ${props=>props.alignment ? props.alignment : "center"};
   margin-bottom: 75px;
+  overflow: hidden;
 `;
 const FormWrapper = styled.form`
   box-sizing:border-box;
@@ -88,7 +90,18 @@ const Label = styled.label`
     line-height: 24px;
     color: #545454;
 `
-
+const Container = styled.div`
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  //align-items: center;
+  //grid-template-rows: 1fr 1fr;
+  height: ${props=>props.height ? props.height : "100%"};
+  width: ${props=>props.width ? props.width : "clamp(300px, 100%, 400px)"};
+    margin: auto;
+  padding: 0 24px 16px 24px; 
+` 
 //const Input = styled.input``
 
-export {LandingContainer, Logo, Subheader, Header, HeaderWrapper, ButtonWrapper, Wrapper, FormWrapper, Icon, Row, Label}
+export {LandingContainer, Logo, Subheader, Header, HeaderWrapper, ButtonWrapper, Wrapper, FormWrapper, Icon, Row, Label, Container}

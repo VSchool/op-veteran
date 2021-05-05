@@ -3,7 +3,9 @@ import styled from 'styled-components'
 import {Switch, Route} from 'react-router-dom'
 import {AuthContext} from "./context/AuthProvider";
 import UserProvider, {UserContext} from "./context/UserProvider";
-// import BoothProvider from "./context/BoothProvider"; import Playground from
+import VendorProvider, {VendorContext} from "./context/VendorProvider";
+import BoothProvider from "./context/BoothProvider"; 
+//import Playground from
 // './Playground'
 import {Landing, Vendor, Admin, Playground} from './pages'
 import RegisterAccount from './pages/RegisterAccount'
@@ -11,7 +13,7 @@ const AppContainer = styled.div `
   box-sizing: border-box;
   width: 100%;
   height: 100vh;
-  overflow: hidden;
+  //overflow: hidden;
  //																				 display: grid;
   //grid-template-rows: 88px 1fr;
   
@@ -32,9 +34,13 @@ export default function App() {
   }
   return (
     <UserProvider>
-      <AppContainer>
-        <UserViews/>
-      </AppContainer>
+      <VendorProvider>
+      <BoothProvider>
+        <AppContainer>
+          <UserViews/>
+        </AppContainer>
+      </BoothProvider>
+      </VendorProvider>
     </UserProvider>
   );
 }

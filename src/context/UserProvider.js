@@ -1,6 +1,6 @@
-import { createContext, useContext, useEffect, useState } from "react";
-import firestore, { createUser, checkPermissions } from "../database";
-import { AuthContext } from "./AuthProvider";
+import { createContext, useContext, useEffect, useState } from "react"
+import firestore, { createUser, checkPermissions } from "../database"
+import { AuthContext } from "./AuthProvider"
 
 export const UserContext = createContext();
 

@@ -4,17 +4,23 @@ import { Header } from '../../components/Header'
 import RegistrationForm from './RegistrationForm/RegistrationForm'
 import SponsorshipSelection from './SponsorshipSelection/SponsorshipSelection'
 import {UserContext} from '../../context/UserProvider'
-import {Map} from '../../components/Map'
+import {VendorContext} from '../../context/VendorProvider'
+import {BoothSelection} from '../../pages/VendorView/BoothSelection'
+import {Map} from '../../pages/VendorView/BoothSelection/Sections/Map'
+import { BoothCreation } from './BoothCreation.js'
+
 const VendorPageContainer = styled.div`
     box-sizing: border-box;
-    width: 100%;
+   width: 100%;
     height: 100%;
+    //margin: auto;
     //position: relative;
     // border: 2px solid dodgerblue;
 `
 
 export default function Vendor() {
     const {user} = useContext(UserContext)
+    const {vendor, matchVendor} = useContext(VendorContext)
     const [state, setState] = useState("register")
   
     const states = {
@@ -40,7 +46,7 @@ export default function Vendor() {
             state == states.SPONSOR ?
                 <SponsorshipSelection changeState={changeState} states={states}/> :
             state == states.SELECT ?
-                <Map changeState={changeState} states={states}/> :
+               <BoothSelection />:
             null}
         </VendorPageContainer>
     )
