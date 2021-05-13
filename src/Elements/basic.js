@@ -62,9 +62,10 @@ const Wrapper = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: ${props=>props.alignment ? props.alignment : "center"};
+  padding: ${props=>props.padding ? props.padding : "0px"};
   margin-bottom: 75px;
-  overflow: hidden;
-`;
+  overflow: ${props=>!props.showOverflow ? "hidden" : "scroll"};
+`
 const FormWrapper = styled.form`
   box-sizing:border-box;
   display: flex;

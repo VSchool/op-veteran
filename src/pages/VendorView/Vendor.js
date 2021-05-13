@@ -8,6 +8,7 @@ import {VendorContext} from '../../context/VendorProvider'
 import {BoothSelection} from '../../pages/VendorView/BoothSelection'
 import {Map} from '../../pages/VendorView/BoothSelection/Sections/Map'
 import { BoothCreation } from './BoothCreation.js'
+import CanvasProvider from '../../context/CanvasProvider'
 
 const VendorPageContainer = styled.div`
     box-sizing: border-box;
@@ -46,7 +47,9 @@ export default function Vendor() {
             state == states.SPONSOR ?
                 <SponsorshipSelection changeState={changeState} states={states}/> :
             state == states.SELECT ?
-               <BoothSelection />:
+            <CanvasProvider>
+               <BoothSelection />
+            </CanvasProvider> :
             null}
         </VendorPageContainer>
     )

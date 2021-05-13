@@ -4,9 +4,9 @@ import {Switch, Route} from 'react-router-dom'
 import {AuthContext} from "./context/AuthProvider";
 import UserProvider, {UserContext} from "./context/UserProvider";
 import VendorProvider, {VendorContext} from "./context/VendorProvider";
-import BoothProvider from "./context/BoothProvider"; 
-//import Playground from
-// './Playground'
+import BoothProvider from "./context/BoothProvider";
+import CanvasProvider from "./context/CanvasProvider";
+//import Playground from './Playground'
 import {Landing, Vendor, Admin, Playground} from './pages'
 import RegisterAccount from './pages/RegisterAccount'
 const AppContainer = styled.div `
@@ -33,15 +33,17 @@ export default function App() {
     );
   }
   return (
-    <UserProvider>
-      <VendorProvider>
-      <BoothProvider>
-        <AppContainer>
-          <UserViews/>
-        </AppContainer>
-      </BoothProvider>
-      </VendorProvider>
-    </UserProvider>
+    <BoothProvider>
+      <UserProvider>
+        <VendorProvider>
+        <CanvasProvider>
+          <AppContainer>
+            <UserViews/>
+          </AppContainer>
+        </CanvasProvider>
+        </VendorProvider>
+      </UserProvider>
+    </BoothProvider>
   );
 }
 

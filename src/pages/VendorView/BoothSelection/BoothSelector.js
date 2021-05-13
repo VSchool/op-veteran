@@ -7,7 +7,8 @@ import {UserContext} from '../../../context/UserProvider'
 import {VendorContext} from '../../../context/VendorProvider'
 import {BoothContext} from '../../../context/BoothProvider'
 import Section from './Sections/Section'
-import Map from '../BoothSelection/Sections/Map'
+import sections from './Sections/data'
+import Map from './Sections/Map'
 import firestore from '../../../database'
 
 import {
@@ -83,14 +84,24 @@ const BoothSelection = (props) => {
       </HeaderWrapper>
       <Stage width={stageSize.w} height={stageSize.h} scale={scale}>
         <Layer>
-          <Section
-                data={booths["Alpha"]}
+          {/* {booths ? <Section data={booths.Alpha} stageSize={stageSize} name="Alpha" changeLevel={changeLevel}/> :<Text text="loading..."/>}  */}
+          {currentSection !== "All Sections"
+            ? <Section
+                data={booths[currentSection]}
                 changeMode={changeMode}
                 modes={modes}
                 stageSize={stageSize}
-                name={"Alpha"}
-                />
-            
+                name={currentSection}
+                setCurrentRow={setCurrentRow}
+                setCurrentSection={setCurrentSection}/>
+            : <Map
+              mapData={booths}
+              stageSize={stageSize}
+              setCurrentSection={setCurrentSection}
+              setCurrentRow={setCurrentRow}
+              changeMode={changeMode}
+              modes={modes}
+           />}
         </Layer>
       </Stage>
     </Wrapper>

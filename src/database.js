@@ -12,6 +12,11 @@ export function createUser(auth) {
 		isRegistrationComplete: false
 	});
 }
+export function createBooth(id, data) {
+	const ref = firestore.doc(`Booths/${id}`)
+	ref.set(data)
+}
+
 
 export function checkPermissions(uid) {
 	return firestore.doc(`Permissions/${uid}`).get().then(doc => {

@@ -1,23 +1,21 @@
-import React, {useState} from 'react'
+import React, {useState, useContext} from 'react'
 import {Rect, Group, Text} from 'react-konva'
 import Konva from 'konva'
 import Booth from './Booth'
+import {BoothContext} from '../.../../../../../context/BoothProvider'
 
+const LETTERS = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
 const Row = (props)=>{
-    const {index, data} = props
-    const {booths, column, name} = data
-    const boothObjects = booths.map((booth, i)=><Booth key={i} index={i} data={booth}/>)
+    const {index, section, name, changeLevel, data} = props
+    
+    const boothObjects = data.map((booth, i)=> <Booth key={booth.id} index={i} changeLevel={changeLevel} data={booth}/>)
     return (
         <Group
-            x={column*144}
+            x={LETTERS.indexOf(name)*250}
             y={24}
+            width={250}
+            
         >
-            <Text 
-                x={16}
-                align="center"
-                fontSize={14}
-                text={"Lane\n"+name}
-            />
             {boothObjects}
         </Group>
     )}

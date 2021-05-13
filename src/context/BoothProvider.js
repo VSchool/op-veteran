@@ -8,68 +8,217 @@ const batch = firestore.batch();
 
 export const BoothContext = createContext();
 export default function ({children}) {
-  
+  const [booths,
+    setBooths] = useState({})
 
-  const pullMapDataFromFirestore = ()=>{
-    const boothArray = []             
+  const seedData = () => {
+    const sections = {
+      Alpha: {
+        A: [],
+        B: [],
+        C: [],
+        D: [],
+        E: [],
+        F: [],
+        G: [],
+        H: [],
+        I: []
+      },
+      Beta: {
+        A: [],
+        B: [],
+        C: [],
+        D: [],
+        E: [],
+        F: [],
+        G: [],
+        H: [],
+        I: []
+      },
+      Gama: {
+        A: [],
+        B: [],
+        C: [],
+        D: [],
+        E: [],
+        F: [],
+        G: [],
+        H: [],
+        I: []
+      },
+      Delta: {
+        A: [],
+        F: [],
+        J: [],
+        K: [],
+        L: []
+      }
+    }
+    const rows = [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I",
+      "J",
+      "K",
+      "L"
+    ]
+  }
+  
+  const pullMapDataFromFirestore = () => {
+    const boothArray = []
     boothRef
       .where("number", ">", 0)
       .get()
       .then(querySnapshop => {
         querySnapshop.forEach(doc => {
           boothArray.push(doc.data())
-        })}).catch(err=>console.log(err))
-        return boothArray}
-
-  const organizeMapData = (rawData)=>{
-        return rawData.reduce((obj, booth) => {
-            if (!obj.hasOwnProperty(booth.section)) {
-              obj[booth.section] = {}
-       
-            }
-            if (!obj[booth.section].hasOwnProperty(booth.row)) {
-              obj[booth.section][booth.row] = []
-
-            }
-            obj[booth.section][booth.row]
-              .push(booth)
-              return obj
-            }, {})}
-            
-
-
-    const createBooth = (data) => {
-      boothRef
-        .doc(`${data.row}${data.number}`)
-        .set({
-          id: `${data.row}${data.number}`,
-          ...data
         })
-        .catch(err => console.error(err));
-    }
-
-    const deleteBooth = id => {
-      boothRef
-        .doc(id)
-        .delete()
-        .catch(err => console.error(err));
-    }
-	
-    const reserveBooth = (id, vendor) => {
-      boothRef
-        .doc(id)
-        .update({vedor: vendor})
-        .catch(err => console.error(err));
-    }
-
-    return (
-      <BoothContext.Provider
-        value={{
-          createBooth,
-          pullMapDataFromFirestore,
-          organizeMapData
-      }}>
-        {children}
-      </BoothContext.Provider>
-    )
+        organizeMapData(boothArray)
+      })
+      .catch(err => console.log(err))
   }
+
+  const organizeMapData = (rawData) => {
+    const data = rawData.reduce((obj, booth) => {
+      if (!obj.hasOwnProperty(booth.section)) {
+        obj[booth.section] = {}
+
+      }
+      if (!obj[booth.section].hasOwnProperty(booth.row)) {
+        obj[booth.section][booth.row] = []
+
+      }
+      obj[booth.section][booth.row].push(booth)
+      return obj
+    }, {})
+    setBooths(data)
+  }
+
+  const createBooth = (data) => {
+    boothRef
+      .doc(`${data.row}${data.number}`)
+      .set({
+        id: `${data.row}${data.number}`,
+        ...data
+      })
+      .catch(err => console.error(err));
+  }
+
+  const updateBooth = (data) => {
+    boothRef
+      .doc(`${data.row}${data.number}`)
+      .update({
+        id: `${data.row}${data.number}`,
+        ...data
+      })
+      .catch(err => console.error(err));
+  }
+
+  const deleteBooth = id => {
+    boothRef
+      .doc(id)
+      .delete()
+      .catch(err => console.error(err));
+  }
+
+  const reserveBooth = (id, vendor) => {
+    boothRef
+      .doc(id)
+      .update({vedor: vendor})
+      .catch(err => console.error(err));
+  }
+
+  // const sections = {
+  //   Alpha: {
+  //     A: [],
+  //     B: [],
+  //     C: [],
+  //     D: [],
+  //     E: [],
+  //     F: [],
+  //     G: [],
+  //     H: [],
+  //     I: []
+  //   },
+  //   Beta: {
+  //     A: [],
+  //     B: [],
+  //     C: [],
+  //     D: [],
+  //     E: [],
+  //     F: [],
+  //     G: [],
+  //     H: [],
+  //     I: []
+  //   },
+  //   Gama: {
+  //     A: [],
+  //     B: [],
+  //     C: [],
+  //     D: [],
+  //     E: [],
+  //     F: [],
+  //     G: [],
+  //     H: [],
+  //     I: []
+  //   },
+  //   Delta: {
+  //     A: [],
+  //     F: [],
+  //     J: [],
+  //     K: [],
+  //     L: []
+  //   }
+  // }
+
+  const seedBooths = () => {
+    const letters = [
+      "A",
+      "B",
+      "C",
+      "D"
+    ]
+    const greekLetters = ["Gama"]
+  for (let section of greekLetters) {
+    for (let row of letters) {
+      for (let i = 1; i < 8; i++) {
+        let number = i + (13)
+       const obj = {
+          row,
+          number,
+          section,
+          restriction: false,
+          hasElectricity: false,
+          vendor: null
+        }
+   deleteBooth(`${obj.hasElectricity.row}${obj.number}`)
+      }
+    }
+  }
+}
+
+  useEffect(() => {
+
+    pullMapDataFromFirestore()
+  }, [])
+
+
+  return (
+    <BoothContext.Provider
+      value={{
+      booths,
+      createBooth,
+      updateBooth,
+      pullMapDataFromFirestore,
+      organizeMapData
+    }}>
+      {children}
+    </BoothContext.Provider>
+  )
+}
