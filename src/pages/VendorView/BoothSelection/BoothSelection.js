@@ -51,8 +51,7 @@ const BoothSelection = (props) => {
     currentRow,
     setCurrentRow
   } = useContext(CanvasContext)
-  const [mapData,
-    setMapData] = useState({})
+
   const {booths} = useContext(BoothContext)
   
   useEffect(() => {
@@ -84,7 +83,7 @@ const BoothSelection = (props) => {
       <Stage width={stageSize.w} height={stageSize.h} scale={scale}>
         <Layer>
           <Section
-                data={booths["Alpha"]}
+                data={booths}
                 changeMode={changeMode}
                 modes={modes}
                 stageSize={stageSize}

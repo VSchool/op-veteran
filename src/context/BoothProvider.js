@@ -11,65 +11,7 @@ export default function ({children}) {
   const [booths,
     setBooths] = useState({})
 
-  const seedData = () => {
-    const sections = {
-      Alpha: {
-        A: [],
-        B: [],
-        C: [],
-        D: [],
-        E: [],
-        F: [],
-        G: [],
-        H: [],
-        I: []
-      },
-      Beta: {
-        A: [],
-        B: [],
-        C: [],
-        D: [],
-        E: [],
-        F: [],
-        G: [],
-        H: [],
-        I: []
-      },
-      Gama: {
-        A: [],
-        B: [],
-        C: [],
-        D: [],
-        E: [],
-        F: [],
-        G: [],
-        H: [],
-        I: []
-      },
-      Delta: {
-        A: [],
-        F: [],
-        J: [],
-        K: [],
-        L: []
-      }
-    }
-    const rows = [
-      "A",
-      "B",
-      "C",
-      "D",
-      "E",
-      "F",
-      "G",
-      "H",
-      "I",
-      "J",
-      "K",
-      "L"
-    ]
-  }
-  
+ 
   const pullMapDataFromFirestore = () => {
     const boothArray = []
     boothRef
@@ -79,25 +21,9 @@ export default function ({children}) {
         querySnapshop.forEach(doc => {
           boothArray.push(doc.data())
         })
-        organizeMapData(boothArray)
+       setBooths(boothArray)
       })
       .catch(err => console.log(err))
-  }
-
-  const organizeMapData = (rawData) => {
-    const data = rawData.reduce((obj, booth) => {
-      if (!obj.hasOwnProperty(booth.section)) {
-        obj[booth.section] = {}
-
-      }
-      if (!obj[booth.section].hasOwnProperty(booth.row)) {
-        obj[booth.section][booth.row] = []
-
-      }
-      obj[booth.section][booth.row].push(booth)
-      return obj
-    }, {})
-    setBooths(data)
   }
 
   const createBooth = (data) => {
@@ -204,7 +130,6 @@ export default function ({children}) {
 }
 
   useEffect(() => {
-
     pullMapDataFromFirestore()
   }, [])
 
@@ -214,9 +139,7 @@ export default function ({children}) {
       value={{
       booths,
       createBooth,
-      updateBooth,
-      pullMapDataFromFirestore,
-      organizeMapData
+      updateBooth
     }}>
       {children}
     </BoothContext.Provider>

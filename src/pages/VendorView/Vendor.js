@@ -7,12 +7,12 @@ import {UserContext} from '../../context/UserProvider'
 import {VendorContext} from '../../context/VendorProvider'
 import {BoothSelection} from '../../pages/VendorView/BoothSelection'
 import {Map} from '../../pages/VendorView/BoothSelection/Sections/Map'
-import { BoothCreation } from './BoothCreation.js'
+import { BoothManagement } from '../VendorView/BoothManagement'
 import CanvasProvider from '../../context/CanvasProvider'
 
 const VendorPageContainer = styled.div`
     box-sizing: border-box;
-   width: 100%;
+   width: clamp(300px, 600px);
     height: 100%;
     //margin: auto;
     //position: relative;
@@ -48,7 +48,7 @@ export default function Vendor() {
                 <SponsorshipSelection changeState={changeState} states={states}/> :
             state == states.SELECT ?
             <CanvasProvider>
-               <BoothSelection />
+               <BoothManagement />
             </CanvasProvider> :
             null}
         </VendorPageContainer>
