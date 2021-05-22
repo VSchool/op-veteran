@@ -7,9 +7,8 @@ const Map = (props) => {
   const { scale, stageSize, setCurrentSection } = useContext(CanvasContext);
   const [mapImage] = useImage("https://liveshameless.com/map.jpg");
 const setAlpha=()=>{
-  console.log("setAlpha")
-  setCurrentSection("Alpha")
-  debugger
+  setCurrentSection(1)
+  
 }
   return (
     <Stage width={stageSize.w} height={stageSize.h} scale={scale}>

@@ -12,7 +12,7 @@ export default function({children}) {
 	const [vendor, setVendor] = useState([]);
 	const [currentVendorRef, setCurrentVendorRef] = useState(null)
 	useEffect(() => {
-		if (vendor){
+		if (vendor && vendor.length > 0) {
 			setCurrentVendorRef(vendorRef.doc(`${vendor.organization}`))
 		}
 	}, [vendor])
@@ -70,7 +70,29 @@ export default function({children}) {
 		vendorRef.doc(id).delete().catch(err => console.error(err));
 	}
 
-	const updateCurrentVendor = data => {
+	const updateCurrentVendor
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	= data => {
 		currentVendorRef.update(data).catch(err=>console.log(err))
 	}
 	

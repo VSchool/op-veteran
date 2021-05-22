@@ -110,26 +110,21 @@ export default function ({children}) {
       "C",
       "D"
     ]
-    const greekLetters = ["Gama"]
-  for (let section of greekLetters) {
     for (let row of letters) {
       for (let i = 1; i < 8; i++) {
-        let number = i + (13)
-       const obj = {
-          row,
-          number,
-          section,
-          restriction: false,
-          hasElectricity: false,
-          vendor: null
-        }
-   deleteBooth(`${obj.hasElectricity.row}${obj.number}`)
+       
+   updateBooth({
+     row, 
+     number: i, 
+     section: 1
+   })
       }
     }
   }
-}
+
 
   useEffect(() => {
+      
     pullMapDataFromFirestore()
   }, [])
 

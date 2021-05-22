@@ -25,13 +25,14 @@ import {CheckBox} from '../../../components/CheckBox'
 export default function RegistrationForm(props) {
   const {user, updateUser} = useContext(UserContext)
   const {vendor, matchVendor, createVendor} = useContext(VendorContext)
-  
+  const [showSponsorship, setShowSponsorship] = useState(false)
   useEffect(() => {
     matchVendor()
   }, [])
   useEffect(() => {
-    if (vendor){
-      changeState(states.SPONSOR)
+    if (vendor && vendor.repEmail ===user.email){
+      const nextState = (vendor.sponsorship.interested && !vendor.sponsorship.finalized) ? states.SPONSOR : states.SELECT
+      changeState(nextState)
     }
   }, [vendor])
   const [input, setInput] = useState({
@@ -46,7 +47,10 @@ export default function RegistrationForm(props) {
     zip: "",
     state: "",
     nonprofit: false,
-    vetOwned: false
+    vetOwned: false,
+    wantToSponsor: false,
+    needElectricity: false,
+    wantDoubleSpace: false
   })
  
   const {changeState, states} = props
@@ -59,6 +63,11 @@ export default function RegistrationForm(props) {
       }
     })
   }
+  const handleShowSponsorship = (e)=>{
+    e.preventDefault()
+    setShowSponsorship(true)
+  }
+
   const handleClick = (e) => {
     e.preventDefault()
     const vendorData = {
@@ -75,15 +84,18 @@ export default function RegistrationForm(props) {
       organization: input.organization,
       booth: {
         primary: {
+          needElectricity: input.needElectricity,
           name: null,
           finalized: false
         },
         secondary: {
+          requested: input.wantDoubleSpace,
           name: null, 
           finalized: false
         }
       },
       sponsorship: {
+        interested: input.wantToSponsor,
         level: null, 
         finalized: false
       },
@@ -91,7 +103,12 @@ export default function RegistrationForm(props) {
       
     }
     createVendor(vendorData)
+    if (input.wantToSponsor) {
     changeState(states.SPONSOR)
+    }
+    else{
+      changeState(states.SELECT)
+    }
   }
   const handleCheck = (e) => {
     const {name, checked} = e.target
@@ -184,11 +201,28 @@ export default function RegistrationForm(props) {
           name="nonprofit"
           checked={input.nonprofit}
           onChange={handleCheck}/>
+          <CheckBox
+          labelText="Will need electricity at booth\n(Additional fee of $50)"
+          name="needElectricity"
+          checked={input.needElectricity}
+          onChange={handleCheck}/>
+          <CheckBox
+          labelText="Prefer a double booth 10' x 20'\n(Additional fee of $50)"
+          name="wantDoubleSpace"
+          checked={input.wantDoubleSpace}
+          onChange={handleCheck}/>
+          <CheckBox
+          labelText="Interested in becoming a sponsor of VetFest"
+          name="wantToSponsor"
+          checked={input.wantToSponsor}
+          onChange={handleCheck}/>
+           <Button buttonText="See sponsorship levels and benifits" buttonStyle="text" onClick={handleShowSponsorship}/>
         <Button buttonText="Continue" buttonStyle="primary" onClick={handleClick}/>
       </FormWrapper>
       <StatusMessage
         className={'status-message'}
         message={'Welcome to O.P. Veteran. Now, please continue the registration.'}/>
+        {showSponsorship ? <></> : null}
     </Container>
   )
 }

@@ -15,22 +15,19 @@ const Booth = (props) => {
     restriction,
     name,
     id,
-    vendor
+    vendor, number
   } = data
 
   return (
-    <Group width={250} height={250} x={0} y={250 * index + 64}>
+    <Group width={250} height={250} x={0} y={250 * number + 64}>
       <Rect
         width={150}
         height={150}
         x={50}
         y={50}
-        fill={restriction === "paladin"
-        ? colors.red
-        : restriction === "abrams"
-          ? colors.blue
-          : colors.green}
-        cornerRadius={8}/> {hasElectricity
+        fill={colors.green}
+        cornerRadius={8}
+        /> {hasElectricity
         ? <Path
             x={(250 - 66) / 2}
             y={75}
@@ -54,8 +51,8 @@ const Booth = (props) => {
         height={100}
         text={id}
         fontSize={45}
-        x={0}
-        y={0}
+        x={100}
+        y={100}
         align="center"
         verticalAlign="middle"
         fill="black"/>

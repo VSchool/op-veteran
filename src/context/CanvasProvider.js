@@ -14,7 +14,7 @@ export default function({children}) {
         let container = document.querySelector('#root');
         let containerWidth = container.offsetWidth
         let containerHeight = container.offsetHeight
-        let scaleAmnt = Math.min(Math.max(containerWidth / stageSize.w, 0), .6)
+        let scaleAmnt = containerWidth < containerHeight ? Math.min(Math.max(containerWidth / stageSize.w, 0), .6) :  Math.min(Math.max(containerHeight / stageSize.h, 0), .6) 
         setScale({x: scaleAmnt, y: scaleAmnt})
     }
     useEffect(() => {

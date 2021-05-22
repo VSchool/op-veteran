@@ -9,7 +9,7 @@ import {BoothContext} from '../../../context/BoothProvider'
 import Booth from './Booth'
 import Map from './Map'
 import firestore from '../../../database'
-
+const letters =["A", "B", "C", "D"]
 
 const Row = (props) => {
   const [boothObjects,
@@ -26,15 +26,20 @@ const Row = (props) => {
   return (
     
     <Group
-      width={stageSize.w / boothObjects.length}
-      x={index * (stageSize.w / boothObjects.length)}
+      width={200}
+      height={1750}
+      x={ letters.indexOf(rowId) * 250}
       y={0}>
+          <Text 
+          text={rowId}
+          fontSize={64}
+          align="center"
+          x={0} y={0}
+          width={200}
+          />
       {boothObjects.map(booth =>< Booth key={booth.id} data = {
         booth
-      }
-      size = {
-        stageSize.w / boothObjects.length
-      } />)}
+      }/>)}
     </Group>
 
   )

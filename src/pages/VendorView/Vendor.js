@@ -22,14 +22,14 @@ const VendorPageContainer = styled.div`
 export default function Vendor() {
     const {user} = useContext(UserContext)
     const {vendor, matchVendor} = useContext(VendorContext)
-    const [state, setState] = useState("register")
-  
+    
     const states = {
         REGISTER: "register",
         SPONSOR: "sponsor",
         SELECT: "select",
         FINALIZE: "finalize",
     }
+    const [state, setState] = useState(states.REGISTER)
     
     const changeState = newState=> {
         if (newState){
