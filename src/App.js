@@ -13,7 +13,7 @@ const AppContainer = styled.div `
   box-sizing: border-box;
   width: 100%;
   height: 100vh;
-  //overflow: hidden;
+  overflow-X: hidden;
  //																				 display: grid;
   //grid-template-rows: 88px 1fr;
   

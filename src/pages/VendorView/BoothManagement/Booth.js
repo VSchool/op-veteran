@@ -21,7 +21,7 @@ const colors = {
   blue: "#4E92F9"
 }
 const Booth = (props) => {
-  const {data, size} = props
+  const {data, setCurrentBooth} = props
   const {
     food,
     hasElectricity,
@@ -31,15 +31,16 @@ const Booth = (props) => {
     vendor,
     number
   } = data
+  
 
-  const handleClick=()=>{console.log(id)}
+  const handleClick=()=>{setCurrentBooth(id)}
   return (
     <Group width={150} height={150} x={0} y={150 * (number-1)+64}>
       <Rect
-        width={100}
-        height={100}
-        x={25}
-        y={25}
+        width={120}
+        height={120}
+        x={15}
+        y={15}
         fill={restriction === "paladin"
         ? colors.red
         : restriction === "abrams"
@@ -56,7 +57,7 @@ const Booth = (props) => {
             l19.4-19.5V33.3C66.7,27.7,61.1,22.2,55.6,22.2z"
             fill={colors.yellow}/>
         : null}
-      <Rect width={200} height={200} x={0} y={0} fill="rgba(100,100,100,0)" onClick={handleClick}/>
+      <Rect width={150} height={150} x={0} y={0} fill="rgba(100,100,100,0)" onClick={handleClick}/>
 
     </Group>
   )

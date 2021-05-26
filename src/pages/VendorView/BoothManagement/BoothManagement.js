@@ -6,10 +6,11 @@ import {CanvasContext} from '../../../context/CanvasProvider'
 import {UserContext} from '../../../context/UserProvider'
 import {VendorContext} from '../../../context/VendorProvider'
 import {BoothContext} from '../../../context/BoothProvider'
-
+import BoothCard from '../../../components/BoothCard/BoothCard'
 import Map from './Map'
 import Section from './Section'
-import firestore from '../../../database'
+import {Button} from '../../../components/Button'
+
 import {
   LandingContainer,
   Logo,
@@ -25,7 +26,7 @@ import {
 
 const BoothManagement = (props) => {
   const {user} = useContext(UserContext)
-  const {vendor, updateCurrentVendor} = useContext(VendorContext)
+  const {currentVendor, updateCurrentVendor} = useContext(VendorContext)
   const {
     scale,
     setScale,
@@ -41,18 +42,22 @@ const BoothManagement = (props) => {
     currentBooth,
     setCurrentBooth
   } = useContext(CanvasContext)
-
-  
-
+  const {booths, reserveBooth} = useContext(BoothContext)
+  const handleClick = ()=>{setCurrentSection("")}
   return ( 
     currentSection === ""
       ? <Map/>
-      : <Section
+      : 
+      <>
+      <Button buttonText="Return to map" buttonStyle="text" onClick={handleClick}/>
+      <Section
           sectionId={currentSection}
           setSelectedSection={setCurrentSection}
           setSelectedBooth={setCurrentBooth}
         stageSize={stageSize}
         />
+    {currentBooth === null ? null : <BoothCard reserveBooth={reserveBooth} setCurrentBooth={setCurrentBooth} data={booths.filter(b=>b.id === currentBooth)[0]}/>}
+    </>
     )
 }
 export default BoothManagement

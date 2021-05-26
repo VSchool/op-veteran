@@ -24,17 +24,17 @@ import {CheckBox} from '../../../components/CheckBox'
 
 export default function RegistrationForm(props) {
   const {user, updateUser} = useContext(UserContext)
-  const {vendor, matchVendor, createVendor} = useContext(VendorContext)
+  const {currentVendor, matchVendor, createVendor} = useContext(VendorContext)
   const [showSponsorship, setShowSponsorship] = useState(false)
   useEffect(() => {
     matchVendor()
   }, [])
   useEffect(() => {
-    if (vendor && vendor.repEmail ===user.email){
-      const nextState = (vendor.sponsorship.interested && !vendor.sponsorship.finalized) ? states.SPONSOR : states.SELECT
+    if (currentVendor && currentVendor.repEmail ===user.email){
+      const nextState = (currentVendor.sponsorship.interested && !currentVendor.sponsorship.finalized) ? states.SPONSOR : states.SELECT
       changeState(nextState)
     }
-  }, [vendor])
+  }, [currentVendor])
   const [input, setInput] = useState({
     name: user.name ? user.name : "",
     organization: "",
@@ -70,7 +70,7 @@ export default function RegistrationForm(props) {
 
   const handleClick = (e) => {
     e.preventDefault()
-    const vendorData = {
+    const currentVendorData = {
       address: {
         street: input.street,
         apt: input.apt,
@@ -102,7 +102,7 @@ export default function RegistrationForm(props) {
       logo: null, 
       
     }
-    createVendor(vendorData)
+    createVendor(currentVendorData)
     if (input.wantToSponsor) {
     changeState(states.SPONSOR)
     }

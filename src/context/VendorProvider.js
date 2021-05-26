@@ -9,13 +9,13 @@ const batch = firestore.batch();
 export const VendorContext = createContext();
 export default function({children}) {
 	const { user, reserveBooth: reserve } = useContext(UserContext);
-	const [vendor, setVendor] = useState([]);
+	const [currentVendor, setCurrentVendor] = useState([]);
 	const [currentVendorRef, setCurrentVendorRef] = useState(null)
 	useEffect(() => {
-		if (vendor && vendor.length > 0) {
-			setCurrentVendorRef(vendorRef.doc(`${vendor.organization}`))
+		if (currentVendor && currentVendor.length > 0) {
+			setCurrentVendorRef(vendorRef.doc(`${currentVendor.organization}`))
 		}
-	}, [vendor])
+	}, [currentVendor])
 	// useEffect(() => {
 		// vendorData.forEach(b => {
 			// batch.set(vendorRef.doc(b.id), b);
@@ -54,7 +54,7 @@ export default function({children}) {
 		const query = vendorRef.where("repEmail", "==", user.email).get().then((querySnapshot)=>{
 			querySnapshot.forEach((doc) => {
 				
-				setVendor(doc.data())
+				setCurrentVendor(doc.data())
 		})
 	}).catch(err=>console.log(err))
 }
@@ -70,36 +70,14 @@ export default function({children}) {
 		vendorRef.doc(id).delete().catch(err => console.error(err));
 	}
 
-	const updateCurrentVendor
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	= data => {
-		currentVendorRef.update(data).catch(err=>console.log(err))
+	const updateCurrentVendor = data => {
+		vendorRef.doc(`${currentVendor.organization}`).update(data).catch(err=>console.log(err))
 	}
 	
 	
 	return (
 		<VendorContext.Provider value={{
-			vendor,
+			currentVendor,
 			createVendor,
 			deleteVendor,
 			matchVendor, 

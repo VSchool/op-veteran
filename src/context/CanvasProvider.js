@@ -26,7 +26,7 @@ export default function({children}) {
     }, [])
 	const [currentSection, setCurrentSection] = useState("")
     const [currentRow, setCurrentRow] = useState("")
-    const [currentBooth, setCurrentBooth] = useState("")
+    const [currentBooth, setCurrentBooth] = useState(null)
 	return (
 		<CanvasContext.Provider value={{
 			scale,

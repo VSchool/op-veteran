@@ -14,7 +14,8 @@ const VendorPageContainer = styled.div`
     box-sizing: border-box;
    width: clamp(300px, 600px);
     height: 100%;
-    //margin: auto;
+    margin: auto;
+    padding: 20px;
     //position: relative;
     // border: 2px solid dodgerblue;
 `

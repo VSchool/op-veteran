@@ -57,6 +57,7 @@ export default function ({children}) {
     boothRef
       .doc(id)
       .update({vedor: vendor})
+      .then(console.log(`booth ${id} has been reserved by ${vendor.organization}`))
       .catch(err => console.error(err));
   }
 
@@ -105,10 +106,10 @@ export default function ({children}) {
 
   const seedBooths = () => {
     const letters = [
-      "A",
-      "B",
-      "C",
-      "D"
+      "E",
+      "F",
+      "G",
+      "H"
     ]
     for (let row of letters) {
       for (let i = 1; i < 8; i++) {
@@ -134,7 +135,8 @@ export default function ({children}) {
       value={{
       booths,
       createBooth,
-      updateBooth
+      updateBooth,
+      reserveBooth
     }}>
       {children}
     </BoothContext.Provider>
