@@ -1,11 +1,11 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import styled from 'styled-components'
 import { AuthContext } from "../../context/AuthProvider";
 import { UserContext } from "../../context/UserProvider";
 import exitIcon from '../../assets/icons/exit-icon.svg'
 import logo from '../../assets/images/vetfest-logo.png'
 import userIcon from '../../assets/icons/avatar-icon.svg'
-
+import {Profile} from '../Profile'
 
 const HeaderContainer = styled.div`
     position: relative;
@@ -41,12 +41,17 @@ const HeaderContainer = styled.div`
 export default function Header() {
 	const { logout } = useContext(AuthContext);
     const {user}=useContext(UserContext);
+    const [showProfile, setShowProfile] = useState(false)
     console.log(user.userImg)
+    const handleClick = ()=>{
+        setShowProfile((prev)=>!prev)
+    }
     return (
         <HeaderContainer>
             <img src={exitIcon} alt={'Click to exit.'} className={'exit-icon'} onClick={logout} />
             <img src={logo} alt={'OP Veteran VetFest logo.'} className={'header-logo'} />
-            <img src={user.userImg === "" ? userIcon : user.userImg} alt={'User is logged in.'} className={'avatar-icon'} />
+            <img src={user.userImg === "" ? userIcon : user.userImg} alt={'User is logged in.'} className={'avatar-icon'} onClick={handleClick}/>
+            {showProfile ? <Profile/> : null}
         </HeaderContainer>
     )
 }

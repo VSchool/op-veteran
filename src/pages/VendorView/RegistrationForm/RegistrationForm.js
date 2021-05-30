@@ -202,17 +202,17 @@ export default function RegistrationForm(props) {
           checked={input.nonprofit}
           onChange={handleCheck}/>
           <CheckBox
-          labelText="Will need electricity at booth\n(Additional fee of $50)"
+          labelText="Will need electricity at booth (Additional fee of $50)"
           name="needElectricity"
           checked={input.needElectricity}
           onChange={handleCheck}/>
           <CheckBox
-          labelText="Prefer a double booth 10' x 20'\n(Additional fee of $50)"
+          labelText="Prefer a double booth 10' x 20'(Additional fee of $50)"
           name="wantDoubleSpace"
           checked={input.wantDoubleSpace}
           onChange={handleCheck}/>
           <CheckBox
-          labelText="Interested in becoming a sponsor of VetFest"
+          labelText="Interested in becoming a sponsor of O.P. Vetfest"
           name="wantToSponsor"
           checked={input.wantToSponsor}
           onChange={handleCheck}/>

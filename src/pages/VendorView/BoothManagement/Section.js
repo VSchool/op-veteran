@@ -42,8 +42,8 @@ const Section = (props)=>{
         setRowIds(ids)
       }, [])
     return (
-<Stage width={stageSize.w} height={stageSize.h} scale={scale} background="pink">
-<Layer>
+<Stage width={window.innerWidth} height={window.innerHeight} background="pink">
+<Layer width={stageSize.w*scale.x} height={stageSize.h*scale.y} scale={scale}>
   {rowIds.map((id, index)=><Row key={index} sectionId={sectionId} rowId={id} index={index} stageSize={stageSize} setCurrentBooth={setCurrentBooth} booths={booths}/>)}
 </Layer>
 </Stage>

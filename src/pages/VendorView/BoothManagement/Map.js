@@ -37,11 +37,11 @@ const Map = (props) => {
 
   return (
   
-    <Stage width={stageSize.w} height={stageSize.h} scale={scale}>
-      <Layer x={0} y={0}>
+    <Stage Width={window.innerWidth} height={window.innerHeight}>
+      <Layer width={stageSize.w * scale.x} height={stageSize.h* scale.y} scale={scale} x={0} y={0}>
         <Image image={mapImage} width={1024} height={1083} />
       </Layer>
-      <Layer x={0} y={0}>
+      <Layer width={stageSize.w * scale.x} height={stageSize.h* scale.y} scale={scale}  x={0} y={0}>
         <Group x={112} y={420} rotation={-20}>
           <SectionSelector x={0} y={0}   width={245} height={167} sectionId={0} setCurrentSection={setCurrentSection}/>
           <SectionSelector x={0} y={167} width={245} height={167} sectionId={1} setCurrentSection={setCurrentSection}/>
