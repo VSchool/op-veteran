@@ -5,6 +5,8 @@ import {AuthContext} from "./context/AuthProvider";
 import UserProvider, {UserContext} from "./context/UserProvider";
 import VendorProvider, {VendorContext} from "./context/VendorProvider";
 import BoothProvider from "./context/BoothProvider";
+import ShopifyProvider from "./context/ShopifyProvider";
+
 import CanvasProvider from "./context/CanvasProvider";
 //import Playground from './Playground'
 import {Landing, Vendor, Admin, Playground} from './pages'
@@ -13,7 +15,7 @@ const AppContainer = styled.div `
   box-sizing: border-box;
   width: 100%;
   height: 100vh;
-  overflow-X: hidden;
+  -X: hidden;
  //																				 display: grid;
   //grid-template-rows: 88px 1fr;
   
@@ -34,7 +36,8 @@ export default function App() {
   }
   return (
     <BoothProvider>
-      <UserProvider>
+   <ShopifyProvider>
+     <UserProvider>
         <VendorProvider>
         <CanvasProvider>
           <AppContainer>
@@ -43,6 +46,7 @@ export default function App() {
         </CanvasProvider>
         </VendorProvider>
       </UserProvider>
+   </ShopifyProvider>
     </BoothProvider>
   );
 }

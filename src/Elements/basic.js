@@ -27,7 +27,7 @@ const Logo = styled.img`
 
   // border: 1px dotted orange;
 `;
-
+const Paragraph = styled.p ``
 const Subheader = styled.div`
   font-family: Open Sans;
   font-style: normal;
@@ -64,7 +64,7 @@ const Wrapper = styled.div`
   align-items: ${props=>props.alignment ? props.alignment : "center"};
   padding: ${props=>props.padding ? props.padding : "0px"};
   margin-bottom: 75px;
-  overflow: ${props=>!props.showOverflow ? "hidden" : "scroll"};
+  : ${props=>!props.show ? "hidden" : "scroll"};
 `
 const FormWrapper = styled.form`
   box-sizing:border-box;
@@ -74,12 +74,13 @@ const FormWrapper = styled.form`
   padding: 0;
 `;
 const Icon = styled(FontAwesomeIcon)``
+
 const Row = styled.div`
-display: flex;
-width: 100%;
+  display: flex; 
+  width: 100%;
 //grid-template-columns: repeat(${props=>props.columns} 1fr)
-justify-content: center;
-align-items: center;
+    justify-content: center;
+  align-items: center;
 `
 const Label = styled.label`
     margin: 0;
@@ -104,5 +105,15 @@ const Container = styled.div`
   padding: 0 24px 16px 24px; 
 ` 
 //const Input = styled.input``
-
-export {LandingContainer, Logo, Subheader, Header, HeaderWrapper, ButtonWrapper, Wrapper, FormWrapper, Icon, Row, Label, Container}
+const Blur = styled.div`
+  width: ${props=>props.width};
+  height: ${props=>props.height};
+  z-index: 9;
+  filter: blur(5px);
+  position: absolute;
+  top:0;
+  bottom:0;
+  left: 0;
+  right: 0;
+`
+export {LandingContainer, Logo, Subheader, Header, HeaderWrapper, ButtonWrapper, Wrapper, FormWrapper, Icon, Row, Label, Container, Paragraph, Blur}

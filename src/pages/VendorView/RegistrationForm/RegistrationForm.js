@@ -5,9 +5,11 @@ import ProgressBar from '../../../components/ProgressBar'
 import StatusMessage from '../../../components/StatusMessage'
 import {UserContext} from '../../../context/UserProvider'
 import {VendorContext} from '../../../context/VendorProvider'
+import {BoothContext} from '../../../context/BoothProvider'
 import {Input} from '../../../components/Input'
 import {Button} from '../../../components/Button'
 import {TextArea} from '../../../components/TextArea'
+import Selection from "../../../components/Selection";
 import {
   LandingContainer,
   Logo,
@@ -18,24 +20,36 @@ import {
   FormWrapper,
   Wrapper,
   Row,
-  Container
+  Container,
+ 
 } from "../../../Elements/basic";
 import {CheckBox} from '../../../components/CheckBox'
-
+const Paragraph = styled.p `
+padding: 10px 5px;
+`
+const FileButton = styled.input`
+	/* width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1; */
+`
+const FileLable = styled.label`
+  font-size: 1.25em;
+    font-weight: 700;
+    color: white;
+    background-color: #4E92F9;
+    display: inline-block;
+    margin: 5px;
+`
 export default function RegistrationForm(props) {
   const {user, updateUser} = useContext(UserContext)
-  const {currentVendor, matchVendor, createVendor} = useContext(VendorContext)
+  const {seedBooths} = useContext(BoothContext)
+  const {currentVendor, matchVendor, createVendor, storeFile} = useContext(VendorContext)
   const [showSponsorship, setShowSponsorship] = useState(false)
-  useEffect(() => {
-    matchVendor()
-  }, [])
-  useEffect(() => {
-    if (currentVendor && currentVendor.repEmail ===user.email){
-      const nextState = (currentVendor.sponsorship.interested && !currentVendor.sponsorship.finalized) ? states.SPONSOR : states.SELECT
-      changeState(nextState)
-    }
-  }, [currentVendor])
-  const [input, setInput] = useState({
+  const {changeState, states} = props
+  const [input, setInput] = useState({ 
     name: user.name ? user.name : "",
     organization: "",
     description: "",
@@ -48,12 +62,23 @@ export default function RegistrationForm(props) {
     state: "",
     nonprofit: false,
     vetOwned: false,
+    isSponsor: false,
+    sponsorshipLevel: null,
     wantToSponsor: false,
     needElectricity: false,
-    wantDoubleSpace: false
+    wantDoubleSpace: false,
+    file:null
   })
+  useEffect(() => {
+    matchVendor()
+  }, [])
+  useEffect(() => {
+    if (currentVendor && currentVendor.repEmail ===user.email){
+      const nextState = (currentVendor.sponsorship.interested && !currentVendor.sponsorship.finalized) ? states.SPONSOR : states.SELECT
+      changeState(nextState)
+    }
+  }, [currentVendor])
  
-  const {changeState, states} = props
   const handleChange = (e) => {
     const {name, value} = e.target
     setInput(prev => {
@@ -68,8 +93,19 @@ export default function RegistrationForm(props) {
     setShowSponsorship(true)
   }
 
-  const handleClick = (e) => {
+  const handleChooseFile = (e) => {
+  
+    setInput(prev=>({...prev, file: e.target.files[0]}))
+  }
+
+const saveLogo = (file)=>{
+    const fileName =file.name
+    const extension = fileName.split('.')[1]
+    storeFile(file, `logos/${input.organization}/${input.organization}.${extension}`)    
+  }
+  const handleSubmit = async (e) => {
     e.preventDefault()
+    setShowSponsorship(input.wantToSponsor)
     const currentVendorData = {
       address: {
         street: input.street,
@@ -84,35 +120,37 @@ export default function RegistrationForm(props) {
       organization: input.organization,
       booth: {
         primary: {
-          needElectricity: input.needElectricity,
           name: null,
           finalized: false
         },
         secondary: {
-          requested: input.wantDoubleSpace,
           name: null, 
           finalized: false
         }
       },
       sponsorship: {
         interested: input.wantToSponsor,
-        level: null, 
-        finalized: false
+        level: input.sponsorshipLevel, 
+        finalized: input.isSponsor
       },
       logo: null, 
       
     }
-    createVendor(currentVendorData)
-    if (input.wantToSponsor) {
-    changeState(states.SPONSOR)
+    await createVendor(currentVendorData)
+    if (input.file) {
+    saveLogo(input.file)
     }
-    else{
-      changeState(states.SELECT)
-    }
+    
+  //   if (showSponsorship) {
+  //     changeState(states.SPONSOR)
+  //     }
+  // else{
+  //       changeState(states.SELECT)
+  //     }
   }
+  
   const handleCheck = (e) => {
     const {name, checked} = e.target
-    console.log(e.target)
     setInput(prev => {
       return {
         ...prev,
@@ -128,6 +166,7 @@ export default function RegistrationForm(props) {
         <Header>Point of Contact</Header>
       </HeaderWrapper>
       <FormWrapper>
+        
         <Input
           autocomplete="name"
           labelText="Name"
@@ -191,6 +230,10 @@ export default function RegistrationForm(props) {
             value={input.zip}
             onChange={handleChange}/>
         </Row>
+        <Row columns="2">
+        <Paragraph>Upload your organization's logo.</Paragraph>
+        <FileButton type="file" name="logo" onChange={handleChooseFile}/>
+        </Row>
         <CheckBox
           labelText="Organization is veteran owned"
           name="vetOwned"
@@ -201,28 +244,28 @@ export default function RegistrationForm(props) {
           name="nonprofit"
           checked={input.nonprofit}
           onChange={handleCheck}/>
-          <CheckBox
-          labelText="Will need electricity at booth (Additional fee of $50)"
-          name="needElectricity"
-          checked={input.needElectricity}
+        <CheckBox
+          labelText="Organization is a current sponsor of O.P. Vetfest"
+          name="isSponsor"
+          checked={input.isSponsor}
           onChange={handleCheck}/>
-          <CheckBox
-          labelText="Prefer a double booth 10' x 20'(Additional fee of $50)"
-          name="wantDoubleSpace"
-          checked={input.wantDoubleSpace}
-          onChange={handleCheck}/>
+        {input.isSponsor ? 
+        <Selection options={["WLA - $250", "AMTRAK - $500", "Bradley - $1000","Stryker - $2500", "Abrams - $5000", "Paladin - $10000"]} value={input.sponsorshipLevel} handleChange={handleChange}/> : null
+      }
+      {input.isSponsor ? null :
           <CheckBox
           labelText="Interested in becoming a sponsor of O.P. Vetfest"
           name="wantToSponsor"
           checked={input.wantToSponsor}
-          onChange={handleCheck}/>
+          onChange={handleCheck}/>}
            <Button buttonText="See sponsorship levels and benifits" buttonStyle="text" onClick={handleShowSponsorship}/>
-        <Button buttonText="Continue" buttonStyle="primary" onClick={handleClick}/>
+        <Button buttonText="Continue" buttonStyle="primary" onClick={handleSubmit}/>
       </FormWrapper>
       <StatusMessage
         className={'status-message'}
         message={'Welcome to O.P. Veteran. Now, please continue the registration.'}/>
         {showSponsorship ? <></> : null}
+      
     </Container>
   )
 }

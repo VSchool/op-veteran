@@ -7,7 +7,7 @@ import Konva from 'konva'
 export const CanvasContext = createContext();
 export default function({children}) {
     const [scale, setScale] = useState({x:1,y:1})
-    const [stageSize, setStageSize] = useState({w: 1024, h: 1280})
+    const [stageSize, setStageSize] = useState({w: 700, h: 900 })
    
     
     function fitStageIntoParentContainer() {

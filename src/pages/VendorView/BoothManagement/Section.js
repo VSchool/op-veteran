@@ -6,7 +6,7 @@ import {CanvasContext} from '../../../context/CanvasProvider'
 import {UserContext} from '../../../context/UserProvider'
 import {VendorContext} from '../../../context/VendorProvider'
 import {BoothContext} from '../../../context/BoothProvider'
-import Row from "./Row";
+import Row from "./Map/Row";
 
 
 const Section = (props)=>{

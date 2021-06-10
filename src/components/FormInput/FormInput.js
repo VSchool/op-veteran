@@ -2,7 +2,7 @@ import React, {useState, useRef, useEffect} from 'react'
 import styled from 'styled-components'
 import NextButton from './NextButton'
 import warningIcon from '../../assets/icons/warning-icon.svg'
-import Selection from './Selection'
+import Selection from '../Selection'
 const InputContainer = styled.form`
     box-sizing: border-box;
    // position: relative;

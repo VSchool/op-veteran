@@ -5,8 +5,6 @@ import RegistrationForm from './RegistrationForm/RegistrationForm'
 import SponsorshipSelection from './SponsorshipSelection/SponsorshipSelection'
 import {UserContext} from '../../context/UserProvider'
 import {VendorContext} from '../../context/VendorProvider'
-import {BoothSelection} from '../../pages/VendorView/BoothSelection'
-import {Map} from '../../pages/VendorView/BoothSelection/Sections/Map'
 import { BoothManagement } from '../VendorView/BoothManagement'
 import CanvasProvider from '../../context/CanvasProvider'
 
@@ -23,15 +21,15 @@ const VendorPageContainer = styled.div`
 export default function Vendor() {
     const {user} = useContext(UserContext)
     const {vendor, matchVendor} = useContext(VendorContext)
-    
     const states = {
         REGISTER: "register",
         SPONSOR: "sponsor",
         SELECT: "select",
         FINALIZE: "finalize",
+      
     }
     const [state, setState] = useState(states.REGISTER)
-    
+    const [showSponsorship, setShowSponsorship] = useState(false)
     const changeState = newState=> {
         if (newState){
             setState(newState)
@@ -44,9 +42,10 @@ export default function Vendor() {
         <VendorPageContainer>
             <Header  />
             {state == states.REGISTER ?
-                <RegistrationForm changeState={changeState} states={states} /> :
+                <RegistrationForm setShowSponsorship={setShowSponsorship} changeState={changeState} states={states} /> :
             state == states.SPONSOR ?
                 <SponsorshipSelection changeState={changeState} states={states}/> :
+           
             state == states.SELECT ?
             <CanvasProvider>
                <BoothManagement />
