@@ -40,7 +40,7 @@ const StyledButton = styled.button`
 `
 
 export default function Button(props) {
-    const { buttonText, buttonStyle, ...buttonProps } = props
+    const { buttonText, buttonStyle, disabled, ...buttonProps } = props
     const { background, border, fontColor, hoverBackground, activeBackground, activeBorder } = setStyle(buttonStyle)
 
     return (
@@ -52,6 +52,7 @@ export default function Button(props) {
             hoverBackground={hoverBackground}
             activeBackground={activeBackground}
             activeBorder={activeBorder}
+            disabled={disabled ? disabled : false}
 				{...buttonProps}
         >
             {buttonText}

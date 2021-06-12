@@ -3,6 +3,8 @@ import styled from 'styled-components'
 import {UserContext} from '../../context/UserProvider'
 import {VendorContext} from '../../context/VendorProvider'
 import {Button} from '../../components/Button'
+
+import StatusMessage from '../../components/StatusMessage'
 import {
   Wrapper,
   Header,
@@ -85,10 +87,12 @@ const ListItem = styled.li `
     `
 const Home = (props) => {
   const tasks = {}
-  const [showLogoUploader, setShowLogoUploader] = useState(false)
+  const [showLogoUploader,
+    setShowLogoUploader] = useState(false)
   const {states, changeState} = props
   const {user} = useContext(UserContext)
-  const [file, setFile] = useState(null)
+  const [file,
+    setFile] = useState(null)
   const {currentVendor, matchVendor, updateCurrentVendor, storeFile} = useContext(VendorContext)
   useEffect(() => {
     matchVendor()
@@ -102,12 +106,13 @@ const Home = (props) => {
     selectBooth: false,
     completeRegistration: false
   })
-  const saveLogo = (file)=>{
-    const fileName =file.name
+  const saveLogo = (file) => {
+    const fileName = file.name
     const extension = fileName.split('.')[1]
-    storeFile(file, `logos/${currentVendor.organization}/${currentVendor.organization}.${extension}`)    
+    storeFile(file, `logos/${currentVendor.organization}/${currentVendor.organization}.${extension}`)
   }
-  const handleLogoUpload=(e)=>{
+  const handleLogoUpload = (e) => {
+    setShowLogoUploader(false)
     saveLogo(file)
   }
   const handleClick = (e) => {
@@ -116,7 +121,7 @@ const Home = (props) => {
         changeState(states.REGISTER)
         break;
       case "Upload logo":
-          setShowLogoUploader(!setShowLogoUploader)
+        setShowLogoUploader(!setShowLogoUploader)
         break;
       case "Choose sponsorship":
         changeState(states.SPONSOR)
@@ -158,15 +163,29 @@ const Home = (props) => {
                 current={currentVendor && !currentVendor.logo}
                 onClick={(e) => {
                 if (currentVendor && !currentVendor.logo) 
-                 setShowLogoUploader(!showLogoUploader)
+                  setShowLogoUploader(!showLogoUploader)
               }}>
                 Upload logo
               </ListItem>
             : null}
-            {showLogoUploader ? <Container width="80%" ><FileUploader onChange={(e)=>{setFile(e.target.files[0])}} type="file"/><Button buttonText="Upload" buttonStyle="primary" onClick={(e)=>{saveLogo(file)}}>
-              Upload file
-            </Button>
-            </Container>:null}
+          {(currentVendor && !currentVendor.logo && showLogoUploader)
+            ? <Container width="80%"><FileUploader
+                onChange={(e) => {
+                setFile(e.target.files[0])
+              }}
+                type="file"/>
+                {file === null
+                  ? null
+                  : <Button
+                    buttonText="Upload"
+                    buttonStyle="primary"
+                    onClick={(e) => {
+                    saveLogo(file)
+                  }}>
+                    Upload file
+                  </Button>}
+              </Container>
+            : null}
           {(currentVendor.sponsorship && !currentVendor.sponsorship.level && currentVendor.sponsorship.interested)
             ? <ListItem
                 onClick={(e) => {
@@ -192,6 +211,7 @@ const Home = (props) => {
           </ListItem>
         </List>
       </TodoContainer>
+
     </Wrapper>
   )
 }
