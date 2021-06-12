@@ -23,9 +23,9 @@ import {
   Row,
   Container
 } from "../../../Elements/basic"
-const ModeButton = styled.button`
+const ModeButton = styled.button `
 `
-const Wrapper = styled.div`
+const Wrapper = styled.div `
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -34,10 +34,13 @@ const Wrapper = styled.div`
   height: clamp(600px, 70%, 900px);
 `
 const BoothManagement = (props) => {
-  const [mapMode, setMapMode] = useState(true)
-  const [showInfo, setShowInfo] = useState(false)
+  const [mapMode,
+    setMapMode] = useState(true)
+  const [showInfo,
+    setShowInfo] = useState(false)
   const {user} = useContext(UserContext)
   const {currentVendor, updateCurrentVendor} = useContext(VendorContext)
+  
   const {
     scale,
     setScale,
@@ -51,26 +54,42 @@ const BoothManagement = (props) => {
     currentRow,
     setCurrentRow,
     currentBooth,
-    setCurrentBooth
+    setCurrentBooth,
+    enterDiagramMode,
+    enterMapMode
   } = useContext(CanvasContext)
   const {booths, reserveBooth, pullMapDataFromFirestore} = useContext(BoothContext)
-  const handleClick = ()=>{setCurrentSection("")}
+  const handleClick = () => {
+    setCurrentSection("")
+  }
   useEffect(() => {
     pullMapDataFromFirestore();
-  },[])
-  return ( 
-    <>
-    <ModeButton onClick={(e)=>{
+  }, [])
+  return ( <> <ModeButton
+      onClick={(e) => {
       e.preventDefault();
       setMapMode(!mapMode)
-    }}>{mapMode ? "Switch to diagram view" : "Switch to map view"}</ModeButton>
-    {mapMode ?
-     <Map setShowInfo={setShowInfo} mapMode={mapMode} setMapMode={setMapMode}/>
-      : 
-      <Diagram mapMode={mapMode} setMapMode={setMapMode}/>}
-    {currentBooth === null ? null : <BoothCard reserveBooth={reserveBooth} setCurrentBooth={setCurrentBooth} data={booths.filter(b=>b.id === currentBooth)[0]}/>}
-  {showInfo ? <Legend/> : null}
-    </>
+    }}>{mapMode
+        ? "Switch to diagram view"
+        : "Switch to map view"}</ModeButton>
+    {
+    mapMode
+      ? <Map setShowInfo={setShowInfo} mapMode={mapMode} setMapMode={setMapMode}/>
+      : <Diagram mapMode={mapMode} setMapMode={setMapMode}/>
+  }
+  {
+    currentBooth === null
+      ? null
+      : <BoothCard
+      setCurrentBooth={setCurrentBooth}
+         reserveBooth={reserveBooth}
+          data={booths.filter(b => b.id === currentBooth)[0]}/>
+  }
+  {
+    showInfo
+      ? <Legend/>
+      : null
+  } </>
     )
 }
 export default BoothManagement

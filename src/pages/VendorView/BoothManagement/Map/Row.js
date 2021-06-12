@@ -19,7 +19,8 @@ const Row = (props) => {
     rowDatum,
     booths,
     mapMode,
-    setMapMode
+    setMapMode,
+    setCurrentBooth
   } = props
   const {x, y, theta} = rowDatum
  
@@ -28,7 +29,7 @@ const Row = (props) => {
   useEffect(() => {
     const filtered =  booths.filter(b => (b.row == rowId)) 
     filtered.sort((a, b) => a.number - b.number)
-    const comps = filtered.map(b =>< Booth data={b} key={`${b.row}${b.number}`}
+    const comps = filtered.map(b =>< Booth setCurrentBooth={setCurrentBooth} data={b} key={`${b.row}${b.number}`}
    />)
     setBoothObjects(comps)
   }, [mapMode])

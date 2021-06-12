@@ -8,7 +8,9 @@ export const CanvasContext = createContext();
 export default function({children}) {
     const [scale, setScale] = useState({x:1,y:1})
     const [stageSize, setStageSize] = useState({w: 1150 , h: 1083 })
-    
+    const [currentSection, setCurrentSection] = useState("")
+    const [currentRow, setCurrentRow] = useState("")
+    const [currentBooth, setCurrentBooth] = useState(null)
     const enterDiagramMode = () =>{
         setStageSize({w: 700, h: 700})
         fitStageIntoParentContainer()
@@ -32,9 +34,7 @@ export default function({children}) {
         window.addEventListener('resize', fitStageIntoParentContainer, {passive: true})
         return ()=> window.removeEventListener('resize', fitStageIntoParentContainer, {passive: true})
     }, [])
-	const [currentSection, setCurrentSection] = useState("")
-    const [currentRow, setCurrentRow] = useState("")
-    const [currentBooth, setCurrentBooth] = useState(null)
+	
 	return (
 		<CanvasContext.Provider value={{
 			scale,
@@ -47,7 +47,9 @@ export default function({children}) {
             currentRow,
             setCurrentRow,
             currentBooth,
-            setCurrentBooth
+            setCurrentBooth, 
+            enterDiagramMode,
+            enterMapMode
         }}>
 			{children}
 		</CanvasContext.Provider>

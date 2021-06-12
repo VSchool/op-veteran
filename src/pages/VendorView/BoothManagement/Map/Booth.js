@@ -35,7 +35,7 @@ const Booth = (props) => {
   
 
   const handleClick=()=>{
-    setCurrentBooth(data)}
+    setCurrentBooth(data.id)}
   
   return (
     <Group width={19} height={19} x={0} y={(number * 19)+ Math.floor((number-1)/7)*36} onClick={handleClick(data)}>

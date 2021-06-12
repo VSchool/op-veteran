@@ -47,6 +47,7 @@ export default function ({children}) {
       setDebounce(true)
     setTimeout(() => {
       setDebounce(false)
+      console.log("setting debounce")
     }, 1000);
     }
   }
@@ -81,8 +82,14 @@ export default function ({children}) {
       .delete()
       .catch(err => console.error(err));
   }
-
+  const holdBooth = (id, vendor) =>{
+    
+  }
   const reserveBooth = (id, vendor) => {
+    boothRef
+      .doc(id).get()
+      .then(boothQuery=>console.log(boothQuery.get("onHold")))
+      .catch(err => console.error(err))
     boothRef
       .doc(id)
       .update({vedor: vendor})

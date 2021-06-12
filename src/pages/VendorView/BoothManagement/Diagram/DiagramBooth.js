@@ -22,7 +22,7 @@ const colors = {
   blue: "#4E92F9"
 }
 const DiagramBooth = (props) => {
-  const {data, mapMode, setMapMode, updateBoothObjects} = props
+  const {data, mapMode, setMapMode, updateBoothObjects, setCurrentBooth} = props
   const {
     hasElectricity,
     restriction,
@@ -58,7 +58,7 @@ const DiagramBooth = (props) => {
             C41.7,17.2,38.2,13.7,34.8,13.8z"
             fill={colors.yellow}/>
         }
-      <Rect width={72} stroke="black" height={72} x={0} y={0} fill="rgba(100,100,100,0)" onClick={()=>{console.log(`${row}${number}`)}}/>
+      <Rect width={72} stroke="black" height={72} x={0} y={0} fill="rgba(100,100,100,0)" onClick={()=>{setCurrentBooth(id)}}/>
 
     </Group>
   )

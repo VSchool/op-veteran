@@ -26,7 +26,7 @@ const StageWrapper = styled.div `
 `
 
 const Diagram = (props) => {
-  const {scale, stageSize, setStageSize, setCurrentSection} = useContext(CanvasContext);
+  const {scale, stageSize, setStageSize, setCurrentSection, setCurrentBooth} = useContext(CanvasContext);
   const {booths, diagramData, rowData, rowsOfBooths, pullMapDataFromFirestore} = useContext(BoothContext);
 
   // const [mapImage] = useImage("https://liveshameless.com/map.jpg");
@@ -46,7 +46,7 @@ const Diagram = (props) => {
         for (let j = 0; j < rowLetters.length; j++){
           let rowId = rowLetters[j]
           if (diagramData[section][rowId]){
-            arrayOfRows.push(<DiagramRow rowDatum={diagramData[section][rowId]} rowId={rowId} sectionId={i} booths={booths} key={`${section}${rowId}`}/>)
+            arrayOfRows.push(<DiagramRow setCurrentBooth={setCurrentBooth} rowDatum={diagramData[section][rowId]} rowId={rowId} sectionId={i} booths={booths} key={`${section}${rowId}`}/>)
           
           }
       }

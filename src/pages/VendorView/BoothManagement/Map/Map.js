@@ -70,7 +70,7 @@ const SectionSelector = (props) => {
 }
 
 const Map = (props) => {
-  const {scale, stageSize, setStageSize, setCurrentSection} = useContext(CanvasContext);
+  const {scale, stageSize, setStageSize, setCurrentSection,  setCurrentBooth} = useContext(CanvasContext);
   const {booths, diagramData, rowData, rowsOfBooths, pullMapDataFromFirestore} = useContext(BoothContext);
   const [mapMode, setMapMode] = useState(false)
   // const [mapImage] = useImage("https://liveshameless.com/map.jpg");
@@ -83,7 +83,7 @@ const Map = (props) => {
   }
   const {setShowInfo} = props
   const buildRows = () => {
-      const arrayOfRows = [ 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N' ].map(rowId=><Row key={rowId} rowId={rowId} rowDatum={rowData[rowId]}  sectionId={0} setMapMode={setMapMode} booths={booths}/>) 
+      const arrayOfRows = [ 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N' ].map(rowId=><Row setCurrentBooth={setCurrentBooth} key={rowId} rowId={rowId} rowDatum={rowData[rowId]}  sectionId={0} setMapMode={setMapMode} booths={booths}/>) 
     
     
     setRowGroups(arrayOfRows)

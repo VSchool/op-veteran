@@ -103,6 +103,8 @@ const Container = styled.div`
   width: ${props=>props.width ? props.width : "clamp(300px, 100%, 400px)"};
     margin: auto;
   padding: 0 24px 16px 24px; 
+  overflow: hidden;
+   
 ` 
 //const Input = styled.input``
 const Blur = styled.div`
@@ -116,4 +118,7 @@ const Blur = styled.div`
   left: 0;
   right: 0;
 `
-export {LandingContainer, Logo, Subheader, Header, HeaderWrapper, ButtonWrapper, Wrapper, FormWrapper, Icon, Row, Label, Container, Paragraph, Blur}
+const FileUploader = styled.input`
+
+`
+export {LandingContainer, Logo, Subheader, Header, HeaderWrapper, ButtonWrapper, Wrapper, FormWrapper, Icon, Row, Label, Container, Paragraph, Blur, FileUploader}
