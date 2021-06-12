@@ -20,6 +20,8 @@ const Wrapper = styled.div `
     left:0;
     margin: auto;
     background: #fff;
+    z-index:88;
+    position:absolute;
  
     //text-shadow: 1px 1px 1px #000; 
 `

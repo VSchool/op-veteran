@@ -7,14 +7,22 @@ import Konva from 'konva'
 export const CanvasContext = createContext();
 export default function({children}) {
     const [scale, setScale] = useState({x:1,y:1})
-    const [stageSize, setStageSize] = useState({w: 700, h: 900 })
-   
+    const [stageSize, setStageSize] = useState({w: 1150 , h: 1083 })
     
+    const enterDiagramMode = () =>{
+        setStageSize({w: 700, h: 700})
+        fitStageIntoParentContainer()
+    }
+    const enterMapMode = () =>{
+        setStageSize({w: 1150, h: 1083})
+        fitStageIntoParentContainer()
+    }
     function fitStageIntoParentContainer() {
         let container = document.querySelector('#root');
         let containerWidth = container.offsetWidth
         let containerHeight = container.offsetHeight
-        let scaleAmnt = containerWidth < containerHeight ? Math.min(Math.max(containerWidth / stageSize.w, 0), .6) :  Math.min(Math.max(containerHeight / stageSize.h, 0), .6) 
+        //let scaleAmnt = containerWidth < containerHeight ? Math.min(Math.max(containerWidth / stageSize.w, 0), 1) :  Math.min(Math.max(containerHeight / stageSize.h, 0),1) 
+        let scaleAmnt = Math.min(Math.max(containerWidth / stageSize.w, 0), 1)
         setScale({x: scaleAmnt, y: scaleAmnt})
     }
     useEffect(() => {

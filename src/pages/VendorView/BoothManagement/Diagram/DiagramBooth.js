@@ -21,8 +21,8 @@ const colors = {
   yellow: "#FBBC05",
   blue: "#4E92F9"
 }
-const Booth = (props) => {
-  const {data, mapMode, setMapMode, updateBoothObjects, setCurrentBooth} = props
+const DiagramBooth = (props) => {
+  const {data, mapMode, setMapMode, updateBoothObjects} = props
   const {
     hasElectricity,
     restriction,
@@ -30,41 +30,38 @@ const Booth = (props) => {
     id,
     vendor,
     number,
-    section
+    section,
+    row
   } = data
   
 
-  const handleClick=()=>{
-    setCurrentBooth(data)}
-  
+
   return (
-    <Group width={19} height={19} x={0} y={(number * 19)+ Math.floor((number-1)/7)*36} onClick={handleClick(data)}>
+    <Group width={72} height={72} x={0} y={(number *72)}>
       <Rect
-        width={19}
-        height={19}
-        x={0}
-        y={0}
+        width={68}
+        height={68}
+        x={2}
+        y={2}
         fill={restriction === 1
         ? colors.red
         : restriction === 2
           ? colors.blue
           : colors.green}
         cornerRadius={2}/> 
-        {!hasElectricity ? null : 
-        
-        <Path
-            x={3}
-            y={0}
-            width={13}
-            height={19}
-            data="M9.2,3.6l0-3.6H7.3v3.6H3.7V0H1.8v3.6h0C0.9,3.5,0,4.4,0,5.3v4.9l3.2,3.1V16h4.6v-2.7l3.2-3.1V5.3
-            C11,4.4,10.1,3.5,9.2,3.6z"
-            fill={colors.yellow}/> 
+        {!hasElectricity ? null :
+        <Path x={15}
+            y={5}
+            width={42}
+            height={62}
+            data="M34.8,13.8l0-13.8h-7v13.8h-14V0h-7v13.8h0c-3.5,0-7,3.4-7,6.9v18.9L12,51.7V62h17.5V51.7l12.2-12.1V20.6
+            C41.7,17.2,38.2,13.7,34.8,13.8z"
+            fill={colors.yellow}/>
         }
-      <Rect width={19} stroke="black" height={19} x={0} y={0} fill="rgba(100,100,100,0)" />
+      <Rect width={72} stroke="black" height={72} x={0} y={0} fill="rgba(100,100,100,0)" onClick={()=>{console.log(`${row}${number}`)}}/>
 
     </Group>
   )
 }
 
-export default Booth
+export default DiagramBooth

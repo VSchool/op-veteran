@@ -8,6 +8,7 @@ import {VendorContext} from '../../../context/VendorProvider'
 import {BoothContext} from '../../../context/BoothProvider'
 import BoothCard from '../../../components/BoothCard/BoothCard'
 import Map from './Map/Map'
+import Diagram from './Diagram/Diagram'
 import Section from './Section'
 import {Button} from '../../../components/Button'
 import Legend from './Map/Legend'
@@ -22,6 +23,8 @@ import {
   Row,
   Container
 } from "../../../Elements/basic"
+const ModeButton = styled.button`
+`
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -31,6 +34,8 @@ const Wrapper = styled.div`
   height: clamp(600px, 70%, 900px);
 `
 const BoothManagement = (props) => {
+  const [mapMode, setMapMode] = useState(true)
+  const [showInfo, setShowInfo] = useState(false)
   const {user} = useContext(UserContext)
   const {currentVendor, updateCurrentVendor} = useContext(VendorContext)
   const {
@@ -55,20 +60,16 @@ const BoothManagement = (props) => {
   },[])
   return ( 
     <>
-    {currentSection === ""
-      ? <Map/>
+    <ModeButton onClick={(e)=>{
+      e.preventDefault();
+      setMapMode(!mapMode)
+    }}>{mapMode ? "Switch to diagram view" : "Switch to map view"}</ModeButton>
+    {mapMode ?
+     <Map setShowInfo={setShowInfo} mapMode={mapMode} setMapMode={setMapMode}/>
       : 
-      <>
-      <Button buttonText="Return to map" buttonStyle="text" onClick={handleClick}/>
-      <Section
-          sectionId={currentSection}
-          setSelectedSection={setCurrentSection}
-          setSelectedBooth={setCurrentBooth}
-        stageSize={stageSize}
-        />
+      <Diagram mapMode={mapMode} setMapMode={setMapMode}/>}
     {currentBooth === null ? null : <BoothCard reserveBooth={reserveBooth} setCurrentBooth={setCurrentBooth} data={booths.filter(b=>b.id === currentBooth)[0]}/>}
-    </>}
-    <Legend/>
+  {showInfo ? <Legend/> : null}
     </>
     )
 }

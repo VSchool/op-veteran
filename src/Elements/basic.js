@@ -64,7 +64,7 @@ const Wrapper = styled.div`
   align-items: ${props=>props.alignment ? props.alignment : "center"};
   padding: ${props=>props.padding ? props.padding : "0px"};
   margin-bottom: 75px;
-  : ${props=>!props.show ? "hidden" : "scroll"};
+  overflow: ${props=>!props.showOverflow ? "hidden" : "scroll"};
 `
 const FormWrapper = styled.form`
   box-sizing:border-box;

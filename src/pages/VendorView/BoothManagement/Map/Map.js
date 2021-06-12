@@ -7,16 +7,23 @@ import {
   Group,
   Image,
   Rect,
-  Path
+  Path,
+  Text
 } from "react-konva";
 import useImage from "use-image";
 import styled from 'styled-components'
 import BlankMapPathLayer from './BlankMapPathLayer'
 import Row from './Row'
-//import rowData from './mappingData'
 const SuperStage = styled(Stage)`
-border: 3px black solid;
-overflow: hidden;
+border: 3px solid black;
+width: 100vw;
+height: 100vw;
+position: absolute;
+left:0;
+right: 0;
+`
+const SuperLayer = styled(Layer)`
+border: 3px solid black;
 `
 const StageWrapper = styled.div `
   width: 100%;
@@ -74,52 +81,33 @@ const Map = (props) => {
     yellow: "#FBBC05",
     blue: "#4E92F9"
   }
+  const {setShowInfo} = props
   const buildRows = () => {
-    let arrayOfRows
-    if (mapMode){
-      arrayOfRows = [ 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N' ].map(rowId=><Row rowId={rowId} rowDatum={rowData[rowId]} mapMode={mapMode} sectionId={0} setMapMode={setMapMode} booths={booths}/>) 
-    }
-    else {
-      arrayOfRows = []
-      for (let i = 1; i < 8; i++){
-        let section = `section${i}`
-        console.log(diagramData[section])
-        const rowLetters = [ 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N' ]
-        for (let j = 0; j < rowLetters.length; j++){
-          let rowId = rowLetters[j]
-          if (diagramData[section][rowId]){
-            arrayOfRows.push(<Row rowDatum={diagramData[section][rowId]} rowId={rowId} sectionId={i} booths={booths} mapMode={mapMode} setMapMode={setMapMode} key={`${section}${rowId}`}/>)
-          }  
-        }
-        //     arrayOfRows.push(<Row rowDatum={diagramData[section][rowId]} rowId={rowId} sectionId={i} booths={booths} mapMode={mapMode} setMapMode={setMapMode} key={`${section}${rowId}`}/>)
-          }
-      }
+      const arrayOfRows = [ 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N' ].map(rowId=><Row key={rowId} rowId={rowId} rowDatum={rowData[rowId]}  sectionId={0} setMapMode={setMapMode} booths={booths}/>) 
+    
     
     setRowGroups(arrayOfRows)
   }
-  // const rowGroups = Object.keys(rowData).map(rowId=><Group key={rowId}
-  // x={rowData[rowId].x} y={rowData[rowId].y}
-  // rotation={rowData[rowId].theta}>{rowsOfBooths[rowId].map(b=><Rect
-  // key={`${rowId}${b.number}`} width={20} height={20} x={0}
-  // y={(20*(b.number-1))+(Math.floor(b.number/8)*42)} fill={(b.vendor &&
-  // b.vendor.organization) ? "#999" : b.restriction === 1 ? colors.red :
-  // b.restriction === 2   ? colors.blue   : colors.green}
-  // stroke={b.hasElectricity ? colors.yellow : null} strokeWidth={b.hasElectricity
-  // ? 1 : 0}/>)}</Group>)
+
   useEffect(async () => {
     await pullMapDataFromFirestore()
     buildRows()
-    // const rgroup = rowsOfBooths.A.map(b=><Rect x={0} y={b.number*20} width={20}
-    // height={20} fill={colors.green} stroke="#000" strokeWidth={1}/>)
-    // setRowGroups(prev=>[...prev, rgroup])
-
-  }, [mapMode])
+  }, [])
   return (
-    <SuperStage width={700 *scale.x} height={900 *scale.y}>
-      {mapMode ? <BlankMapPathLayer/> : null}
-      <Layer scale={scale} backround="red" width={mapMode ? 1024 : 2048} height={mapMode ? 1083: 4332} x={0} y={0}>
+    <SuperStage width={1024} height={1083} scale={scale} >
+      <BlankMapPathLayer/> 
+        <SuperLayer x={0} y={0}>
         { rowGroups
         }
+      </SuperLayer>
+      <Layer>
+        <Group x={50} y={900} onClick={()=>setShowInfo((prev=>!prev))}>
+          <Rect fill="palegoldenrod" width={150} height={75}     shadowColor='black'
+        shadowBlur= {10}
+        shadowOffset={{ x: 10, y: 10} }
+        shadowOpacity={0.5}/>
+        <Text text="info" width={150} height={75} align="center" verticalAlign="middle" fontSize={48}/>
+        </Group>
       </Layer>
     </SuperStage>
   );

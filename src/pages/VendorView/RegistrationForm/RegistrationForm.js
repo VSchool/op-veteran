@@ -72,12 +72,12 @@ export default function RegistrationForm(props) {
   useEffect(() => {
     matchVendor()
   }, [])
-  useEffect(() => {
-    if (currentVendor && currentVendor.repEmail ===user.email){
-      const nextState = (currentVendor.sponsorship.interested && !currentVendor.sponsorship.finalized) ? states.SPONSOR : states.SELECT
-      changeState(nextState)
-    }
-  }, [currentVendor])
+  // useEffect(() => {
+  //   if (currentVendor && currentVendor.repEmail ===user.email){
+  //     const nextState = (currentVendor.sponsorship.interested && !currentVendor.sponsorship.finalized) ? states.SPONSOR : states.SELECT
+  //     changeState(nextState)
+  //   }
+  // }, [currentVendor])
  
   const handleChange = (e) => {
     const {name, value} = e.target
@@ -139,15 +139,16 @@ const saveLogo = (file)=>{
     await createVendor(currentVendorData)
     if (input.file) {
     saveLogo(input.file)
-    }
     
-  //   if (showSponsorship) {
-  //     changeState(states.SPONSOR)
-  //     }
-  // else{
-  //       changeState(states.SELECT)
-  //     }
-  }
+    
+    
+    if (showSponsorship) {
+      changeState(states.SPONSOR)
+      }
+  else{
+        changeState(states.SELECT)
+      }
+  }}
   
   const handleCheck = (e) => {
     const {name, checked} = e.target

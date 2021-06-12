@@ -6,11 +6,11 @@ import {CanvasContext} from '../../../../context/CanvasProvider'
 import {UserContext} from '../../../../context/UserProvider'
 import {VendorContext} from '../../../../context/VendorProvider'
 import {BoothContext} from '../../../../context/BoothProvider'
-import Booth from './Booth'
-import Map from './Map'
+import DiagramBooth from './DiagramBooth'
+
 import firestore from '../../../../database'
 
-const Row = (props) => {
+const DiagramRow = (props) => {
   const [boothObjects,
     setBoothObjects] = useState([])
   const {
@@ -26,10 +26,21 @@ const Row = (props) => {
 
    
   useEffect(() => {
-    const filtered =  booths.filter(b => (b.row == rowId)) 
+    const filtered = mapMode ? booths.filter(b => (b.row == rowId)) :
+    booths.filter(b => (b.row == rowId && b.section == sectionId))
     filtered.sort((a, b) => a.number - b.number)
-    const comps = filtered.map(b =>< Booth data={b} key={`${b.row}${b.number}`}
-   />)
+    const comps = filtered.map(b =>< DiagramBooth key={b.id} data = {
+      b
+    }
+    key = {
+      b.id
+    }
+    setMapMode = {
+      setMapMode
+    }
+    mapMode = {
+      mapMode
+    } />)
     setBoothObjects(comps)
   }, [mapMode])
   const colors = {
@@ -48,4 +59,4 @@ const Row = (props) => {
   )
 }
 
-export default Row
+export default DiagramRow

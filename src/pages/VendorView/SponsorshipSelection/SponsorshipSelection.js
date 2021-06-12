@@ -42,13 +42,14 @@ const Holder = styled.div`
   padding: 8px;
   position: relative;
   display: flex;
-  flex-direction:  ${props=>props.portrait ? "row" : "column"};
+  flex-direction:  ${props=>props.portrait ? "column" : "row"};
+  overflow-y: scroll;   
   `
 const Slider = styled.div`
   width: fit-content;
   height: 100%;
   display: flex;
-  flex-direction: ${props=>props.portrait ? "column" : "Row "};
+  flex-direction: ${props=>props.portrait ? "column" : "row "};
   position: absolute;
 `
  

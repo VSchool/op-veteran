@@ -7,6 +7,7 @@ import {UserContext} from '../../context/UserProvider'
 import {VendorContext} from '../../context/VendorProvider'
 import { BoothManagement } from '../VendorView/BoothManagement'
 import CanvasProvider from '../../context/CanvasProvider'
+import Home from './Home'
 
 const VendorPageContainer = styled.div`
     box-sizing: border-box;
@@ -22,13 +23,14 @@ export default function Vendor() {
     const {user} = useContext(UserContext)
     const {vendor, matchVendor} = useContext(VendorContext)
     const states = {
+        HOME: "home",
         REGISTER: "register",
         SPONSOR: "sponsor",
         SELECT: "select",
         FINALIZE: "finalize",
       
     }
-    const [state, setState] = useState(states.REGISTER)
+    const [state, setState] = useState(states.HOME)
     const [showSponsorship, setShowSponsorship] = useState(false)
     const changeState = newState=> {
         if (newState){
@@ -41,7 +43,9 @@ export default function Vendor() {
     return (
         <VendorPageContainer>
             <Header  />
-            {state == states.REGISTER ?
+            {state == states.HOME ? 
+                <Home changeState={changeState} states={states}/> :
+            state == states.REGISTER ?
                 <RegistrationForm setShowSponsorship={setShowSponsorship} changeState={changeState} states={states} /> :
             state == states.SPONSOR ?
                 <SponsorshipSelection changeState={changeState} states={states}/> :

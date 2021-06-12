@@ -10,6 +10,9 @@ export const BoothContext = createContext();
 export default function ({children}) {
   const [booths,
     setBooths] = useState([])
+    /********************** */
+    const [debounce, setDebounce] = useState(false)
+    /******************** */
   const [rowsOfBooths, setRowsOfBooths] =useState({})
   const [sectionsOfRows, setSectionsOfRows] =useState({})
 
@@ -21,16 +24,14 @@ export default function ({children}) {
         setRowsOfBooths(prev=>({
           ...prev,
           [rowId]: boothsInRow
-
-          
         }))
-    
       }
         )
       console.log(Object.entries(rowsOfBooths))}
     }, [])
- 
+
   const pullMapDataFromFirestore = async () => {
+    if (!debounce){
     const boothArray = []
    const querySnapshop = await boothRef
       .where("number", "!=", null)
@@ -43,6 +44,11 @@ export default function ({children}) {
       } catch (error) {
         console.log(error)
       }
+      setDebounce(true)
+    setTimeout(() => {
+      setDebounce(false)
+    }, 1000);
+    }
   }
 
   const createBooth = (data) => {
@@ -87,24 +93,24 @@ export default function ({children}) {
   const rowData ={
     A: {
         x: 162,
-        y: 449,
+        y: 399,
         theta: -20 ,
   
     },
     B: {
         x: 222,
-        y: 414,
+        y: 364,
         theta: -20,
      
     },
     C: {
         x: 282,
-        y: 384,
+        y: 334,
         theta: -20 ,
     },
     D: {
         x: 297,
-        y:378 ,
+        y:328 ,
         theta: -20 
     },
     E: {
@@ -135,11 +141,11 @@ export default function ({children}) {
     },
     J: {
         x:354 ,
-        y: 914,
+        y: 894,
         theta: -28
     },
     K: {
-        x: 387,
+        x: 407,
         y: 898,
         theta: -120 
     },
@@ -155,79 +161,79 @@ export default function ({children}) {
     },
     N: {
         x: 625,
-        y: 673,
+        y: 653,
         theta: -23
     }
 }
   const diagramData ={
     section1: {
     A: {
-        x: 157,
-        y: 98,
+         x: 0,
+        y:98,
         theta: 0 ,
   
     },
     B: {
-        x: 260,
-        y: 98,
+        x: 103,
+        y:98,
         theta: 0,
      
     },
     C: {
-        x: 400,
-        y: 98,
+         x: 243,
+         y:98,
         theta: 0 ,
     },
     D: {
-        x: 483,
+         x: 326,
         y: 98 ,
         theta: 0 
     }
   },
     section3: {
     A: {
-        x: 157,
+         x: 0,
         y: 789,
         theta: 0 ,
   
     },
     B: {
-        x: 260,
+        x: 103,
         y: 789,
         theta: 0,
      
     },
     C: {
-        x: 400,
+         x: 243,
         y: 789,
         theta: 0 ,
     },
     D: {
-        x: 483,
+         x: 326,
         y: 789 ,
         theta: 0 
     }
   },
   section5: {
     A: {
-        x: 157,
+         x: 0,
         y: 1498,
         theta: 0 ,
   
     },
     B: {
-        x: 260,
+        x: 103,
         y: 1498,
         theta: 0,
      
     },
     C: {
-        x: 400,
+         x: 243,
         y: 1498,
         theta: 0 ,
     },
     D: {
-        x: 483,
+         x: 326,
         y: 1498 ,
         theta: 0 
     }
@@ -235,19 +241,19 @@ export default function ({children}) {
   section2: {
     E: {
         x: 780,
-        y: 98,
+        y:98,
         theta: 0 ,
   
     },
     F: {
         x: 915,
-        y: 98,
+        y:98,
         theta: 0,
      
     },
     G: {
         x: 1025,
-        y: 98,
+   y:98,
         theta: 0 ,
     },
     H: {
