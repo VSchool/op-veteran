@@ -62,9 +62,7 @@ const BoothManagement = (props) => {
   const handleClick = () => {
     setCurrentSection("")
   }
-  useEffect(() => {
-    pullMapDataFromFirestore();
-  }, [])
+  
   return ( <> <ModeButton
       onClick={(e) => {
       e.preventDefault();

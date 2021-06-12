@@ -30,28 +30,30 @@ export default function ({children}) {
       console.log(Object.entries(rowsOfBooths))}
     }, [])
 
-  const pullMapDataFromFirestore = async () => {
-    if (!debounce){
+  const pullMapDataFromFirestore =() => {
+    // if (!debounce){
+      if (booths && booths.length === 0) {
+        console.log('pullMapDataFromFirestore')
     const boothArray = []
-   const querySnapshop = await boothRef
+   boothRef
       .where("number", "!=", null)
-      .get()
-      try {       
+      .get().then((querySnapshop)=>{       
         querySnapshop.forEach(doc => {
           boothArray.push(doc.data())
         })
         setBooths(boothArray)
-      } catch (error) {
+      }).catch((error)=> {
         console.log(error)
-      }
-      setDebounce(true)
-    setTimeout(() => {
-      setDebounce(false)
-      console.log("setting debounce")
-    }, 1000);
+      })
     }
   }
-
+  
+//   setDebounce(true)
+// setTimeout(() => {
+//   setDebounce(false)
+//   console.log("setting debounce")
+// }, 1000);
+  
   const createBooth = (data) => {
     let id = data.row
     if (data.number <10){
