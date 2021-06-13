@@ -36,14 +36,15 @@ import {
 //         place-content: center;
 // `
 const Holder = styled.div`
-  height: ${props=>props.portrait ? "700px" : "500px"};
-  width:  ${props=>props.portrait ? "300px" : "80vw"};
-
-  padding: 8px;
+  height: ${props=>props.portrait ? "500px" : "500px"};
+  width:  ${props=>props.portrait ? "320px" : "80vw"};
+  margin: auto;
+  padding: 0px;
   position: relative;
   display: flex;
   flex-direction:  ${props=>props.portrait ? "column" : "row"};
-  overflow-y: scroll;   
+  overflow-y: ${props=>props.portrait ? "hidden" : "hidden"};
+  overflow-x: ${props=>props.portrait ? "hidden" : "scroll"};
   `
 const Slider = styled.div`
   width: fit-content;
@@ -51,6 +52,8 @@ const Slider = styled.div`
   display: flex;
   flex-direction: ${props=>props.portrait ? "column" : "row "};
   position: absolute;
+  overflow-y: ${props=>props.portrait ? "scroll" : "hidden"};
+  overflow-x: ${props=>props.portrait ? "hidden" : "scroll"};
 `
  
 export default function SponsorshipSelection(props) {
@@ -81,10 +84,10 @@ export default function SponsorshipSelection(props) {
   useEffect(() => {
   let container = document.querySelector('#root');
   let containerWidth = container.offsetWidth
-  if (containerWidth <400) {
+  if (containerWidth <500) {
     setPortrait(true)
   }
-  })
+  }, [])
   return (
     <Wrapper>
       <Container height="auto" width="auto">
@@ -93,11 +96,9 @@ export default function SponsorshipSelection(props) {
           message={"Thanks! Now let's find the correct sponsorship level for your organization."}/>
         <HeaderWrapper>
           <Header>{'Sponsorship level selection'}.</Header>
-          <Subheader className={'subtitle'}>Choose the right sponsorship package for your organization.
-          </Subheader>
         </HeaderWrapper>
-      <Holder>
-        <Slider>
+      <Holder portrait={portrait}>
+        <Slider portrait={portrait}>
           {sponsorships}
         </Slider>
       </Holder>
@@ -105,6 +106,8 @@ export default function SponsorshipSelection(props) {
     </Wrapper>
   )
 }
+          // <Subheader className={'subtitle'}>Choose the right sponsorship package for your organization.
+          // </Subheader>
 
       //<CardsContainer className={'cards-container'}>
       //   {sponsorships}

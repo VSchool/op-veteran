@@ -29,19 +29,23 @@ const Logo = styled.img`
 `;
 const Paragraph = styled.p ``
 const Subheader = styled.div`
-  font-family: Open Sans;
+  font-family: 'Open Sans';
   font-style: normal;
   font-weight: normal;
-  font-size: 16px;
-  line-height: 24px;
+  font-size:  1rem;
+  line-height: 1rem;
   color: #545454;
+  @media (min-width: 388px){
+    font-size: 1.2rem;
+    line-height: 1.2rem;
+  }
 `;
 const Header = styled.div`
-  font-family: Open Sans;
+  font-family: 'Open Sans';
   font-style: normal;
   font-weight: normal;
-  font-size: 27px;
-  line-height: 36px;
+  font-size: 1.2rem;
+  line-height: 1.3rem;
   /* or 133% */
 
   letter-spacing: 0.02em;
@@ -49,6 +53,10 @@ const Header = styled.div`
   /* Primary/Black */
 
   color: #545454;
+  @media (min-width: 388px){
+    font-size: 1.4rem;
+    line-height: 1.5rem;
+  }
 `;
 const HeaderWrapper = styled.div`
 
