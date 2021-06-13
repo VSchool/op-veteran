@@ -111,51 +111,9 @@ export const sponsorshipLevels = [
 ]
 
 /*
-
-WLA: $250
-basic level Social Media Announcement and Recognition at Event
-
-
-AMTRAK: $500
-Website Sponsorship, 
-Social Announcement, 
-Recognition at Event, 
-and Logo on Event Flyers
-
-
-Bradley: $1000
-Website Sponsorship Recognition, 
-Social Media Announcement, 
-Recognition at Event, 
-Logo on Event Flyers, 
-Logo on Event Shirts*, 
-Swag Distribution, 
-Vendor at Event*, and 
-Radio Endorsement
-
-
-Stryker: $2,500
-Website Sponsorship Recognition, 
-Social Media Announcement, 
-Recognition at Event, 
-Logo on Event Flyers, 
-Logo on Event Shirts*, 
-Swag Distribution, 
-Vendor at Event*, and 
-Radio Endorsement
-
-
-Abrams: $5,000
-Website Sponsorship Recognition, Social Media Announcement, Recognition at Event, Logo on Event Flyers, Logo on Event Shirts*, Swag Distribution, Vendor at Event* , Radio Endorsement, and Television Endorsement
-
-
-Paladin: $10,000
-Website Sponsorship Recognition, Social Media Announcement, Recognition at Event, Logo on Event Flyers, Logo on Event Shirts*, Swag Distribution, Vendor at Event*, Radio Endorsement, Television Endorsement, and Detailed Promotional Live Social Media video
-
+Additional level:
 
 MOAB: Contact Us
 A sponsorship tier customized through mutual agreement for the most generous of our community partners.
-
-
 
 */

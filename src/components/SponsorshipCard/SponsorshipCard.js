@@ -103,7 +103,7 @@ const Row = styled.div`
 //     position: absolute;
 // `
 export default function SponsorshipCard(props) {
-    const { className, name, perks, changeState, states, handlePayToday, handleContactMe} = props
+    const { className, name, price, perks, changeState, states, handlePayToday, handleContactMe} = props
     const {user, updateUser} = useContext(UserContext)
     const {addItemToCart, removeItemFromCart} = props
     const {vendor, updateCurrentVendor} = useContext(VendorContext)
@@ -129,6 +129,12 @@ export default function SponsorshipCard(props) {
         updateCurrentVendor({"sponsorship.status": "in cart", "level": name})
         changeState(states.SELECT)
     }
+
+    const formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+        minimumFractionDigits: 0
+    })
    
     return (
         
@@ -136,7 +142,7 @@ export default function SponsorshipCard(props) {
             <Header>{name}</Header>
             <Subheader>Level sponsorship</Subheader>
             <Hr className={'divider'} top="20px" bottom="12px"></Hr>
-            <Price className={'price'}>{'$99,999'}</Price>
+            <Price className={'price'}>{formatter.format(price)}</Price>
             <Perks className={'items-container'}>
                 {listItems}
             </Perks>

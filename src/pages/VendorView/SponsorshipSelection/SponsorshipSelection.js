@@ -73,6 +73,7 @@ export default function SponsorshipSelection(props) {
       changeState={changeState}
       states={states}
       name={level.name}
+      price={level.price}
       perks={level.perks}
       portrait={portrait}
       />
