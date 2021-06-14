@@ -1,0 +1,60 @@
+[
+	[
+		{
+			"question": "Your Name",
+			"type": "input",
+			"vendorProp": "name",
+			"required": true
+		},
+		{
+			"question": "Vendor Name",
+			"type": "input",
+			"vendorProp": "organization",
+			"required": true
+		},
+		{
+			"question": "Brief description of organization",
+			"type": "textArea",
+			"vendorProp": "description",
+			"required": true
+		},
+		{
+			"question": "Phone",
+			"type": "phone",
+			"vendorProp": "phone",
+			"required": true
+		}
+	],
+	[
+		{
+			"question": "Address",
+			"type": "text",
+			"vendorProp": "street",
+			"required": true
+		},
+		{},
+		{
+			"question": "Is your company/organization veteran owned?",
+			"type": "yes-no",
+			"vendorProp": "veteranOwned",
+			"required": true
+		},
+		{
+			"question": "How many people will man the booth?",
+			"type": "select",
+			"vendorProp": "occupants",
+			"required": true,
+			"options": [
+				"1",
+				"2",
+				"3+",
+				"Not sure"
+			]
+		},
+		{
+			"question": "Will you need a powered booth?",
+			"type": "yes-no",
+			"vendorProp": "powered",
+			"required": true
+		}
+	]

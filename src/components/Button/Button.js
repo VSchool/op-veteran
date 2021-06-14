@@ -3,27 +3,60 @@ import styled from 'styled-components'
 import { setStyle } from './utils'
 
 const StyledButton = styled.button`
-    width: 100%;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 20px;
+    /* identical to box height, or 125% */
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    padding: 5px 10px;
+    cursor: pointer;
+/* Primary/White */
+
+    box-sizing: border-box;
+    
     height: 40px;
-    font-size: 20px;
-    border: 2px solid #545454;
-    background: ${props => props.background};
+    line-height: 24px;
+    letter-spacing: 0.25px;
+    margin: 8px;
     color: ${props => props.color};
+    background: ${props => props.background};
+    box-shadow: ${props => props.boxShadow};
+    // box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.14), 0px 1px 18px rgba(0, 0, 0, 0.12), 0px 3px 5px rgba(0, 0, 0, 0.2);
+    // border: 2px solid #618572;
+    border: ${props => props.border};
+    border-radius: 2px;
     outline: none;
-
-    &:hover {
-        border: 2px solid lightblue;
+    &:hover{
+        background-color: ${props=>props.hoverBackground};
     }
-
-    &:active {
-        background: lightblue;
-        color: #FFFFFF;
+    &:active{
+        background: ${props=>props.activeBackground};
+        border: ${props=>props.activeBorder};
     }
 `
 
 export default function Button(props) {
-    const { buttonText, buttonStyle, onClick } = props
-    const { background, color } = setStyle(buttonStyle)
+    const { buttonText, buttonStyle, disabled, ...buttonProps } = props
+    const { background, border, fontColor, hoverBackground, activeBackground, activeBorder } = setStyle(buttonStyle)
 
-    return <StyledButton background={background} color={color} onClick={onClick}>{buttonText}</StyledButton>
+    return (
+        <StyledButton
+            // className={className}
+            background={background} 
+            border={border} 
+            color={fontColor}
+            hoverBackground={hoverBackground}
+            activeBackground={activeBackground}
+            activeBorder={activeBorder}
+            disabled={disabled ? disabled : false}
+				{...buttonProps}
+        >
+            {buttonText}
+        </StyledButton>
+    )
 }

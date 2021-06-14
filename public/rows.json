@@ -1,0 +1,16 @@
+[
+    {
+        "name": "A",
+        "startX": 10,
+        "startY": 10,
+        "rotation": 30,
+        "booths": 10
+    }
+    {
+        "name": "A",
+        "startX": 50,
+        "startY": 10,
+        "rotation": 30,
+        "booths": 5
+    }
+]

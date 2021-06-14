@@ -1,0 +1,16 @@
+[
+    {
+        "name": "A",
+        "special": null,
+        "startX": 0,
+        "startY": 0,
+        "width": "rows": [
+            {
+                "name": "A",
+                "startX": 10,
+                "startY": 10,
+                "booths": []
+            }
+        ]
+    }
+]

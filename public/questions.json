@@ -1,0 +1,38 @@
+[
+	{
+		"question": "What is your full name",
+		"type": "text",
+		"vendorProp": "fullName",
+		"required": true
+	},
+	{
+		"question": "What is the name of your company/organization?",
+		"type": "text",
+		"vendorProp": "organization",
+		"required": false
+	},
+	{
+		"question": "Is your company/organization veteran owned?",
+		"type": "yes-no",
+		"vendorProp": "veteranOwned",
+		"required": true
+	},
+	{
+		"question": "How many people will man the booth?",
+		"type": "select",
+		"vendorProp": "occupants",
+		"required": true,
+		"options": [
+			"1",
+			"2",
+			"3+",
+			"Not sure"
+		]
+	},
+	{
+		"question": "Will you need a powered booth?",
+		"type": "yes-no",
+		"vendorProp": "powered",
+		"required": true
+	}
+]
