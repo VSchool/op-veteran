@@ -47,7 +47,6 @@ export default function Landing() {
   const handleClick = (e) => {
     e.preventDefault();
     const { email, password } = inputs;
-    console.log(inputs);
     /*** Add validation ***/
     const { name } = e.target;
     if (e.target.innerText === "Register") {
@@ -67,7 +66,7 @@ export default function Landing() {
           <Header>VetFest Registration</Header>
         </HeaderWrapper>
         <FormWrapper name="landingform">
-          {/* <Input
+          <Input
             className="email"
             type="email"
             helperText={null}
@@ -100,7 +99,7 @@ export default function Landing() {
           />
           <Row>
             <p>or</p>
-          </Row> */}
+          </Row>
           <GoogleButton
             buttonStyle="secondary"
             buttonText="Sign in with "

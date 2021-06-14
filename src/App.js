@@ -46,8 +46,6 @@ export default function App() {
         </CanvasProvider>
         </VendorProvider>
       </UserProvider>
-9
->"}"
     </BoothProvider>
   );
 }
