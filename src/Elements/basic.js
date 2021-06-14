@@ -129,4 +129,19 @@ const Blur = styled.div`
 const FileUploader = styled.input`
 
 `
-export {LandingContainer, Logo, Subheader, Header, HeaderWrapper, ButtonWrapper, Wrapper, FormWrapper, Icon, Row, Label, Container, Paragraph, Blur, FileUploader}
+const CloseButton = styled.div`
+  cursor: pointer;
+  display: grid;
+  place-content: center;
+  width: 20px;
+  height: 20px;
+  padding: 2px;
+  background: firebrick;
+  border-radius: 2px;
+  color: white;
+  box-shadow: 0 0 8px rgba(35,35,35,.4);
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  `
+export {LandingContainer, CloseButton, Logo, Subheader, Header, HeaderWrapper, ButtonWrapper, Wrapper, FormWrapper, Icon, Row, Label, Container, Paragraph, Blur, FileUploader}

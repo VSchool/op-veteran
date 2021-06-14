@@ -11,11 +11,10 @@ import Home from './Home'
 
 const VendorPageContainer = styled.div`
     box-sizing: border-box;
-   width: clamp(300px,600px ,700px);
+   width: clamp(300px, 600px);
     height: 100%;
     margin: auto;
-    padding: 5px 20px;
-    background-color: #ecf0f1;
+    padding: 10px 20px;
     //position: relative;
     // border: 2px solid dodgerblue;
 `

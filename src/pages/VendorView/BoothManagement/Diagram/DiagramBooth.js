@@ -43,12 +43,14 @@ const DiagramBooth = (props) => {
         height={68}
         x={2}
         y={2}
+        stroke="black"
+        strokeWidth={2}
         fill={restriction === 1
         ? colors.red
         : restriction === 2
           ? colors.blue
           : colors.green}
-        cornerRadius={2}/> 
+        cornerRadius={4}/> 
         {!hasElectricity ? null :
         <Path x={15}
             y={5}
@@ -58,7 +60,7 @@ const DiagramBooth = (props) => {
             C41.7,17.2,38.2,13.7,34.8,13.8z"
             fill={colors.yellow}/>
         }
-      <Rect width={72} stroke="black" height={72} x={0} y={0} fill="rgba(100,100,100,0)" onClick={()=>{setCurrentBooth(id)}}/>
+      <Rect width={72} height={72} x={0} y={0} fill="rgba(100,100,100,0)" onClick={()=>{setCurrentBooth(id)}}/>
 
     </Group>
   )

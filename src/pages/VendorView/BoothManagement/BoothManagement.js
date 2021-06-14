@@ -38,6 +38,7 @@ const BoothManagement = (props) => {
     setMapMode] = useState(true)
   const [showInfo,
     setShowInfo] = useState(false)
+  const [organizedBooths, setOrganizedBooths] = useState([])
   const {user} = useContext(UserContext)
   const {currentVendor, updateCurrentVendor} = useContext(VendorContext)
   
@@ -58,15 +59,24 @@ const BoothManagement = (props) => {
     enterDiagramMode,
     enterMapMode
   } = useContext(CanvasContext)
-  const {booths, reserveBooth, pullMapDataFromFirestore} = useContext(BoothContext)
+  const {booths, reserveBooth, pullMapDataFromFirestore, organizeBoothData} = useContext(BoothContext)
   const handleClick = () => {
     setCurrentSection("")
   }
-  
+  useEffect(() => {
+    const data = organizeBoothData();
+    setOrganizedBooths(data)
+  }, [])
   return ( <> <ModeButton
       onClick={(e) => {
       e.preventDefault();
-      setMapMode(!mapMode)
+      if (mapMode){
+      setMapMode(false)
+      enterDiagramMode()
+      }else{
+      setMapMode(true)
+      enterMapMode()
+      }
     }}>{mapMode
         ? "Switch to diagram view"
         : "Switch to map view"}</ModeButton>
@@ -76,13 +86,12 @@ const BoothManagement = (props) => {
       : <Diagram mapMode={mapMode} setMapMode={setMapMode}/>
   }
   {
-    currentBooth === null
-      ? null
-      : <BoothCard
+    currentBooth ?
+       <BoothCard
       setCurrentBooth={setCurrentBooth}
          reserveBooth={reserveBooth}
           data={booths.filter(b => b.id === currentBooth)[0]}/>
-  }
+  : null}
   {
     showInfo
       ? <Legend/>

@@ -8,26 +8,26 @@ import Client from 'shopify-buy';
 
 const vendorRef = firestore.collection("vendors");
 const batch = firestore.batch();
+const products = {
+
+}
 export const VendorContext = createContext();
 export default function({children}) {
 	const { user, reserveBooth: reserve } = useContext(UserContext);
 	const [currentVendor, setCurrentVendor] = useState([]);
 	const [currentVendorRef, setCurrentVendorRef] = useState(null)
+	const [cart, setCart] = useState(null);
 	const client = Client.buildClient({
 	  domain: 'o-p-veteran.myshopify.com',
 	  storefrontAccessToken: '76c1fba5d995f6b7dbb1eb1c1c3c5745'
 	});
-	client.product.fetch("Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzYyNjI0MDg1NzcyMDk=").then((product=>{
-		
-			console.log(product)
-		
-		 
-	}))
-	client.checkout.create().then((checkout) => {
-		console.log(checkout.webUrl);
-	});
-	useEffect(() => {
 
+	useEffect(() => {
+		if (cart === null) {
+			client.checkout.create().then((checkout)=>{
+				setCart(checkout.id)
+			})
+		}
 		if (currentVendor && currentVendor.length > 0) {
 			setCurrentVendorRef(vendorRef.doc(`${currentVendor.organization}`))
 		}
@@ -65,6 +65,15 @@ export default function({children}) {
 	// 		setSelectedVendor(prev => vendors[prev.id]);
 	// 	}
 	// }, [vendors, setSelectedVendor]);
+
+	const addItemToCart = (itemHandle) =>{
+		client.product.fetchByHandle(itemHandle).then((product) => {
+			// Do something with the product
+			client.checkout.addLineItems(cart, product).then(checkout => {
+				console.log(checkout.webUrl)
+			})
+		})
+	}
 	const storeFile =  (file, path) => {
 		const storageRef = Storage.ref(path)
 		  storageRef.put(file).then((snapShot) =>{
@@ -105,7 +114,9 @@ export default function({children}) {
 			deleteVendor,
 			matchVendor, 
 			updateCurrentVendor,
-			storeFile
+			storeFile,
+			cart,
+			addItemToCart
 		}}>
 			{children}
 		</VendorContext.Provider>

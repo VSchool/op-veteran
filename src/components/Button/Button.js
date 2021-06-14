@@ -14,6 +14,7 @@ const StyledButton = styled.button`
     align-items: center;
     text-align: center;
     padding: 5px 10px;
+    cursor: pointer;
 /* Primary/White */
 
     box-sizing: border-box;

@@ -5,6 +5,7 @@ import App from './App';
 import './index.css'
 
 function Index() {
+
   return (
     <Router>
 		<AuthProvider>
@@ -15,5 +16,5 @@ function Index() {
 }
 
 ReactDOM.render(
-    <Index />, document.getElementById('root')
+    <Index/>, document.getElementById('root')
 );

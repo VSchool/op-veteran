@@ -8,7 +8,6 @@ import {
   LandingContainer,
   Logo,
   Subheader,
-  Header,
   HeaderWrapper,
   ButtonWrapper,
   FormWrapper,
@@ -35,16 +34,28 @@ import {
 //         gap: 8px; 
 //         place-content: center;
 // `
+const Header = styled.h1`
+text-align: center;
+color: #232323;
+font-size: 1.5rem;
+margin-bottom: 20px;
+@media (min-width: 450px){
+  font-size: 1.3rem;
+}
+`
+
+  
 const Holder = styled.div`
   height: ${props=>props.portrait ? "500px" : "500px"};
-  width:  ${props=>props.portrait ? "320px" : "80vw"};
+  width:  ${props=>props.portrait ? "300px" : "80vw"};
   margin: auto;
-  padding: 0px;
+  padding: 7px;
   position: relative;
   display: flex;
   flex-direction:  ${props=>props.portrait ? "column" : "row"};
   overflow-y: ${props=>props.portrait ? "hidden" : "hidden"};
   overflow-x: ${props=>props.portrait ? "hidden" : "scroll"};
+
   `
 const Slider = styled.div`
   width: fit-content;
@@ -59,19 +70,12 @@ const Slider = styled.div`
 export default function SponsorshipSelection(props) {
   const [data, setData] = useState(props.data)
   const {changeState, states} = props
-  const [cart, setCart] = useState([])  
+  
   const [portrait, setPortrait] = useState(false);
-  const addItemToCart = (item) =>{
-    setCart(prev=>[...prev, item])
-  }
-  const removeItemFromCart = (itemId) =>{
-  const filtered = cart.filter(i=>i.id !==itemId)
-  setCart(filtered) 
-  }
+  
   const sponsorships = sponsorshipLevels.map(level => {
     return <SponsorshipCard
-    addItemToCart={addItemToCart} 
-    removeItemFromCart ={removeItemFromCart}
+
       key={level.name}
       changeState={changeState}
       states={states}

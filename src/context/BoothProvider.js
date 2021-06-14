@@ -16,19 +16,13 @@ export default function ({children}) {
   const [rowsOfBooths, setRowsOfBooths] =useState({})
   const [sectionsOfRows, setSectionsOfRows] =useState({})
 
-    useEffect(() => {
+    const organizeBoothData = ()=>{
       if (booths && booths.length > 0) {
       Object.keys(rowData).forEach(rowId => {
         const boothsInRow = booths.filter(b=>b.row === rowId)
         boothsInRow.sort((a, b)=>parseInt(a.number) - parseInt(b.number))
-        setRowsOfBooths(prev=>({
-          ...prev,
-          [rowId]: boothsInRow
-        }))
-      }
-        )
-      console.log(Object.entries(rowsOfBooths))}
-    }, [])
+      return boothsInRow
+      })}}
 
   const pullMapDataFromFirestore =() => {
     // if (!debounce){
@@ -68,11 +62,11 @@ export default function ({children}) {
       .catch(err => console.error(err));
   }
 
-  const updateBooth = (data) => {
+  const updateBooth = (data, id) => {
     boothRef
-      .doc(`${data.row}${data.number}`)
+      .doc(id)
       .update({
-        id: `${data.row}${data.number}`,
+        id: id,
         ...data
       })
       .catch(err => console.error(err));
@@ -177,48 +171,48 @@ export default function ({children}) {
   const diagramData ={
     section1: {
     A: {
-         x: 0,
+         x: 80,
         y:98,
         theta: 0 ,
   
     },
     B: {
-        x: 103,
+        x: 183,
         y:98,
         theta: 0,
      
     },
     C: {
-         x: 243,
+         x: 323,
          y:98,
         theta: 0 ,
     },
     D: {
-         x: 326,
+         x: 406,
         y: 98 ,
         theta: 0 
     }
   },
     section3: {
     A: {
-         x: 0,
+         x: 80,
         y: 789,
         theta: 0 ,
   
     },
     B: {
-        x: 103,
+        x: 183,
         y: 789,
         theta: 0,
      
     },
     C: {
-         x: 243,
+         x: 323,
         y: 789,
         theta: 0 ,
     },
     D: {
-         x: 326,
+         x: 806,
         y: 789 ,
         theta: 0 
     }
@@ -428,7 +422,8 @@ useEffect(() => {
       reserveBooth, 
       pullMapDataFromFirestore,
       rowsOfBooths,
-      diagramData
+      diagramData,
+      organizeBoothData
     }}>
       {children}
     </BoothContext.Provider>

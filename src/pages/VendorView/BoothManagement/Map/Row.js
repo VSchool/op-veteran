@@ -29,20 +29,16 @@ const Row = (props) => {
   useEffect(() => {
     const filtered =  booths.filter(b => (b.row == rowId)) 
     filtered.sort((a, b) => a.number - b.number)
+    console.log(filtered[0].id)
     const comps = filtered.map(b =>< Booth setCurrentBooth={setCurrentBooth} data={b} key={`${b.row}${b.number}`}
    />)
     setBoothObjects(comps)
-  }, [mapMode])
-  const colors = {
-    green: "#799C8A",
-    red: "#EA7C7C",
-    yellow: "#FBBC05",
-    blue: "#4E92F9"
-  }
+  }, [])
+  
 
   return (
 
-    <Group x={x} y={y} rotation={theta} onClick={() => console.log(rowId)}>
+    <Group x={x} y={y} rotation={theta}>
       {boothObjects}
     </Group>
 

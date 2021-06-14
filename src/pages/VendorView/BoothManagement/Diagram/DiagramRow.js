@@ -22,37 +22,17 @@ const DiagramRow = (props) => {
     setMapMode
   } = props
   const {x, y, theta} = rowDatum
- 
 
-   
   useEffect(() => {
-    const filtered = mapMode ? booths.filter(b => (b.row == rowId)) :
-    booths.filter(b => (b.row == rowId && b.section == sectionId))
+    const filtered = booths.filter(b => (b.row == rowId && b.section == sectionId))
     filtered.sort((a, b) => a.number - b.number)
-    const comps = filtered.map(b =>< DiagramBooth key={b.id} data = {
-      b
-    }
-    key = {
-      b.id
-    }
-    setMapMode = {
-      setMapMode
-    }
-    mapMode = {
-      mapMode
-    } />)
+    const comps = filtered.map(b =><DiagramBooth key={b.id} data={b} key={b.id} />)
     setBoothObjects(comps)
-  }, [mapMode])
-  const colors = {
-    green: "#799C8A",
-    red: "#EA7C7C",
-    yellow: "#FBBC05",
-    blue: "#4E92F9"
-  }
+  }, [])
 
   return (
 
-    <Group x={x} y={y} rotation={theta} onClick={() => console.log(rowId)}>
+    <Group x={x} y={y} rotation={theta}>
       {boothObjects}
     </Group>
 

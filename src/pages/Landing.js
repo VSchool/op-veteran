@@ -33,6 +33,9 @@ export default function Landing() {
     e.preventDefault();
     signInWithGoogle();
   };
+  const ActionCodeSettings = {
+
+  }
   const handleChange = (e) => {
     const { name, value } = e.target;
     setInputs((prev) => ({
@@ -64,7 +67,7 @@ export default function Landing() {
           <Header>VetFest Registration</Header>
         </HeaderWrapper>
         <FormWrapper name="landingform">
-          <Input
+          {/* <Input
             className="email"
             type="email"
             helperText={null}
@@ -97,7 +100,7 @@ export default function Landing() {
           />
           <Row>
             <p>or</p>
-          </Row>
+          </Row> */}
           <GoogleButton
             buttonStyle="secondary"
             buttonText="Sign in with "

@@ -13,15 +13,15 @@ export default function({children}) {
     const [currentBooth, setCurrentBooth] = useState(null)
     const enterDiagramMode = () =>{
         setStageSize({w: 700, h: 700})
-        fitStageIntoParentContainer()
+        fitStageIntoParentContainer(2)
     }
     const enterMapMode = () =>{
-        setStageSize({w: 1150, h: 1083})
-        fitStageIntoParentContainer()
+        setStageSize({w: 1024, h: 1083})
+        fitStageIntoParentContainer(1)
     }
-    function fitStageIntoParentContainer() {
+    function fitStageIntoParentContainer(mod = 1) {
         let container = document.querySelector('#root');
-        let containerWidth = container.offsetWidth
+        let containerWidth = container.offsetWidth * mod
         let containerHeight = container.offsetHeight
         //let scaleAmnt = containerWidth < containerHeight ? Math.min(Math.max(containerWidth / stageSize.w, 0), 1) :  Math.min(Math.max(containerHeight / stageSize.h, 0),1) 
         let scaleAmnt = Math.min(Math.max(containerWidth / stageSize.w, 0), 1)
