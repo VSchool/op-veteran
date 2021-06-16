@@ -5,7 +5,7 @@ import { GoogleButton } from "../components/GoogleButton";
 import { Input } from "../components/Input";
 import logo from "../assets/images/vetfest-logo.png";
 import StatusMessage from "../components/StatusMessage";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import {
   LandingContainer,
   Logo,
@@ -17,6 +17,18 @@ import {
   Wrapper,
   Row,
 } from "../Elements/basic";
+import styled from 'styled-components'
+
+const ErrMsg = styled.p`
+  color: red; 
+  text-align: center; 
+  font-size: 80%;
+`
+
+const ToggleLink = styled.p`
+  text-align: center;
+  padding: 5px 0px;
+`
 
 /*
 init value: login:
@@ -47,8 +59,7 @@ export default function Landing() {
   }
 
   const handleConfirmPassword = () => {
-    if(inputs.password !== inputs.confirmPassword)
-      {
+    if(inputs.password !== inputs.confirmPassword){
         setErrMsg("Passwords dont match")
         return false
       }
@@ -113,7 +124,7 @@ export default function Landing() {
               onClick={handleClick}
               name="signin"
             />
-            <p onClick={() => setToggleLogin(prev => !prev)}>Not a member yet? Sign up</p>
+            <ToggleLink onClick={() => setToggleLogin(prev => !prev)}>Not a member yet? Sign up</ToggleLink>
           </> 
           :
           <> 
@@ -150,8 +161,8 @@ export default function Landing() {
               onClick={handleClick}
               name="register"
               />
-              <p>{errMsg}</p>
-              <p onClick={() => setToggleLogin(prev => !prev)}>Already a member? Login</p>
+              <ErrMsg>{errMsg}</ErrMsg>
+              <ToggleLink onClick={() => setToggleLogin(prev => !prev)}>Already a member? Login</ToggleLink>
           </>
           }
           <Row>
