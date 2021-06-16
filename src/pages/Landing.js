@@ -18,14 +18,22 @@ import {
   Row,
 } from "../Elements/basic";
 
+/*
+init value: login:
+*/
+
 export default function Landing() {
   const {
     authError,
+    setAuthErr,
     signInWithGoogle,
     signInWithEmail,
     signUpWithEmail,
   } = useContext(AuthContext);
-  const [inputs, setInputs] = useState({ email: "", password: "" });
+
+  const [inputs, setInputs] = useState({ email: "", password: "", confirmPassword: "" });
+  const [errMsg, setErrMsg] = useState("")
+  const [toggleLogin, setToggleLogin] = useState(true)
   const [state, setState] = useState(null);
   const states = { REGISTER: "register", SIGNUP: "signup" };
   const selectRegister = (e) => {};
@@ -33,15 +41,27 @@ export default function Landing() {
     e.preventDefault();
     signInWithGoogle();
   };
+
   const ActionCodeSettings = {
 
   }
+
+  const handleConfirmPassword = () => {
+    if(inputs.password !== inputs.confirmPassword)
+      {
+        setErrMsg("Passwords dont match")
+        return false
+      }
+    return true
+  }
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setInputs((prev) => ({
       ...prev,
       [name]: value,
     }));
+    setErrMsg("")
   };
 
   const handleClick = (e) => {
@@ -50,11 +70,12 @@ export default function Landing() {
     /*** Add validation ***/
     const { name } = e.target;
     if (e.target.innerText === "Register") {
-      signUpWithEmail(email, password);
+      handleConfirmPassword() && signUpWithEmail(email, password);
     } else if (e.target.innerText === "Sign in") {
       signInWithEmail(email, password);
     }
   };
+
   const history = useHistory(null);
   return (
     <LandingContainer>
@@ -66,37 +87,73 @@ export default function Landing() {
           <Header>VetFest Registration</Header>
         </HeaderWrapper>
         <FormWrapper name="landingform">
+          {toggleLogin ? 
+          <>
+            <Input
+              className="email"
+              type="email"
+              helperText={null}
+              labelText="E-mail"
+              name="email"
+              value={inputs.email}
+              onChange={handleChange}
+            />
+            <Input
+              className="password"
+              type="password"
+              helperText="8 characters"
+              labelText="Password"
+              name="password"
+              value={inputs.password}
+              onChange={handleChange}
+            />
+            <Button
+              buttonText={"Sign in"}
+              buttonStyle={"secondary"}
+              onClick={handleClick}
+              name="signin"
+            />
+            <p onClick={() => setToggleLogin(prev => !prev)}>Not a member yet? Sign up</p>
+          </> 
+          :
+          <> 
           <Input
-            className="email"
-            type="email"
-            helperText={null}
-            labelText="email"
-            name="email"
-            value={inputs.email}
-            onChange={handleChange}
-          />
-          <Input
-            className="password"
-            type="password"
-            helperText="8 characters"
-            labelText="password"
-            name="password"
-            value={inputs.value}
-            onChange={handleChange}
-          />
-
-          <Button
-            buttonText={"Register"}
-            buttonStyle={"primary"}
-            onClick={handleClick}
-            name="register"
-          />
-          <Button
-            buttonText={"Sign in"}
-            buttonStyle={"secondary"}
-            onClick={handleClick}
-            name="signin"
-          />
+              className="email"
+              type="email"
+              helperText={null}
+              labelText="E-mail"
+              name="email"
+              value={inputs.email}
+              onChange={handleChange}
+              />
+            <Input
+              className="password"
+              type="password"
+              helperText="8 characters"
+              labelText="Password"
+              name="password"
+              value={inputs.password}
+              onChange={handleChange}
+              />
+             <Input
+              className="password"
+              type="password"
+              helperText="8 characters"
+              labelText="Confirm Password"
+              name="confirmPassword"
+              value={inputs.confirmPassword}
+              onChange={handleChange}
+              />
+            <Button
+              buttonText={"Register"}
+              buttonStyle={"primary"}
+              onClick={handleClick}
+              name="register"
+              />
+              <p>{errMsg}</p>
+              <p onClick={() => setToggleLogin(prev => !prev)}>Already a member? Login</p>
+          </>
+          }
           <Row>
             <p>or</p>
           </Row>

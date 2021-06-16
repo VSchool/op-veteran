@@ -66,7 +66,6 @@ function UserViews() {
         <Landing/>
       </Route>
       <Route path="register">
-
         <RegisterAccount/>
       </Route>
       <Route path='/vendor'>
