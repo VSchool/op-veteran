@@ -12,6 +12,7 @@ import Diagram from './Diagram/Diagram'
 import Section from './Section'
 import {Button} from '../../../components/Button'
 import Legend from './Map/Legend'
+import StatusMessage from '../../../components/StatusMessage'
 import {
   LandingContainer,
   Logo,
@@ -34,6 +35,8 @@ const Wrapper = styled.div `
   height: clamp(600px, 70%, 900px);
 `
 const BoothManagement = (props) => {
+  const {states, changeState} = props
+  const [containerWidth, setContainerWidth] = useState(0)
   const [mapMode,
     setMapMode] = useState(true)
   const [showInfo,
@@ -41,7 +44,7 @@ const BoothManagement = (props) => {
   const [organizedBooths, setOrganizedBooths] = useState([])
   const {user} = useContext(UserContext)
   const {currentVendor, updateCurrentVendor} = useContext(VendorContext)
-  
+  const [secondary, setSecondary] = useState(false)
   const {
     scale,
     setScale,
@@ -57,14 +60,17 @@ const BoothManagement = (props) => {
     currentBooth,
     setCurrentBooth,
     enterDiagramMode,
-    enterMapMode
+    enterMapMode,
+    getContainerWidth
   } = useContext(CanvasContext)
-  const {booths, reserveBooth, pullMapDataFromFirestore, organizeBoothData} = useContext(BoothContext)
+  const {booths, reserveBooth, pullMapDataFromFirestore, organizeBoothData, statusCodes} = useContext(BoothContext)
   const handleClick = () => {
     setCurrentSection("")
   }
   useEffect(() => {
     const data = organizeBoothData();
+    const width = getContainerWidth()
+    setContainerWidth(width)
     setOrganizedBooths(data)
   }, [])
   return ( <> <ModeButton
@@ -82,12 +88,15 @@ const BoothManagement = (props) => {
         : "Switch to map view"}</ModeButton>
     {
     mapMode
-      ? <Map setShowInfo={setShowInfo} mapMode={mapMode} setMapMode={setMapMode}/>
-      : <Diagram mapMode={mapMode} setMapMode={setMapMode}/>
+      ? <Map containerWidth={containerWidth} setShowInfo={setShowInfo} mapMode={mapMode} setMapMode={setMapMode}/>
+      : <Diagram containerWidth={containerWidth} mapMode={mapMode} setMapMode={setMapMode}/>
   }
   {
     currentBooth ?
        <BoothCard
+       statusCodes={statusCodes}
+       states={states}
+       changeState={changeState}
       setCurrentBooth={setCurrentBooth}
          reserveBooth={reserveBooth}
           data={booths.filter(b => b.id === currentBooth)[0]}/>
@@ -96,7 +105,10 @@ const BoothManagement = (props) => {
     showInfo
       ? <Legend/>
       : null
-  } </>
+  } 
+  {secondary ? <StatusMessage /> : null}
+   
+  </>
     )
 }
 export default BoothManagement

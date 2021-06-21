@@ -15,7 +15,11 @@ export default function ({children}) {
     /******************** */
   const [rowsOfBooths, setRowsOfBooths] =useState({})
   const [sectionsOfRows, setSectionsOfRows] =useState({})
-
+  const statusCodes = {
+    OPEN: 0,
+    ONHOLD: 1,
+    RESERVED: 2
+  }
     const organizeBoothData = ()=>{
       if (booths && booths.length > 0) {
       Object.keys(rowData).forEach(rowId => {
@@ -23,7 +27,24 @@ export default function ({children}) {
         boothsInRow.sort((a, b)=>parseInt(a.number) - parseInt(b.number))
       return boothsInRow
       })}}
-
+    const makeId=(row, number)=>{
+      let id =row
+      if (number < 10){
+        id += "0"
+      }
+      id += number
+      return id
+      }
+const setNeighbors=()=>{
+  console.log("setting neighbors")
+  for (let booth of booths){
+    const updatedBooth = {...booth}
+    updatedBooth.vendor = null
+    updatedBooth.status = "open"
+  updateBooth(updatedBooth, booth.id)
+  console.log(`updated ${booth.id}`)
+  }
+}
   const pullMapDataFromFirestore =() => {
     // if (!debounce){
       if (booths && booths.length === 0) {
@@ -65,10 +86,7 @@ export default function ({children}) {
   const updateBooth = (data, id) => {
     boothRef
       .doc(id)
-      .update({
-        id: id,
-        ...data
-      })
+      .update(data)
       .catch(err => console.error(err));
   }
 
@@ -77,20 +95,12 @@ export default function ({children}) {
       .doc(id)
       .delete()
       .catch(err => console.error(err));
+    }
+  const reserveBooth = (vendor, id) => {
+    updateBooth({vendor: vendor, status: 2}, id)
   }
-  const holdBooth = (id, vendor) =>{
-    
-  }
-  const reserveBooth = (id, vendor) => {
-    boothRef
-      .doc(id).get()
-      .then(boothQuery=>console.log(boothQuery.get("onHold")))
-      .catch(err => console.error(err))
-    boothRef
-      .doc(id)
-      .update({vedor: vendor})
-      .then(console.log(`booth ${id} has been reserved by ${vendor.organization}`))
-      .catch(err => console.error(err));
+  const holdBooth = (vendor, id) => {
+    updateBooth({vendor: vendor, status: 1}, id)
   }
 
   const rowData ={
@@ -423,7 +433,9 @@ useEffect(() => {
       pullMapDataFromFirestore,
       rowsOfBooths,
       diagramData,
-      organizeBoothData
+      organizeBoothData,
+      setNeighbors, 
+      statusCodes
     }}>
       {children}
     </BoothContext.Provider>

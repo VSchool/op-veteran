@@ -19,7 +19,9 @@ const colors = {
   green: "#799C8A",
   red: "#EA7C7C",
   yellow: "#FBBC05",
-  blue: "#4E92F9"
+  blue: "#4E92F9", 
+  grey: "#ecf0f1",
+  white: "#def"
 }
 const Booth = (props) => {
   const {data, mapMode, setMapMode, updateBoothObjects, setCurrentBooth} = props
@@ -30,7 +32,8 @@ const Booth = (props) => {
     vendor,
     number,
     section,
-    row
+    row,
+    status
   } = data
   
 
@@ -50,7 +53,7 @@ const Booth = (props) => {
         height={19}
         x={0}
         y={0}
-        fill={restriction === 1
+        fill={status === 2 ? colors.white : status === 2 ? colors.grey : restriction === 1
         ? colors.red
         : restriction === 2
           ? colors.blue

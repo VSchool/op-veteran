@@ -80,23 +80,55 @@ const Hr = styled.hr `
     width: 90%;
    `
 const BoothCard = (props) => {
-  const {currentVendor, updateCurrentVendor} = useContext(VendorContext)
-  const {reserveBooth} =  useContext(BoothContext)
-  const {data, setCurrentBooth} = props
-  const {id, vendor, section, hasElectricity, row} = data
+  const {currentVendor, updateCurrentVendor, addBoothToCart} = useContext(VendorContext)
+  const {reserveBooth, holdBooth} =  useContext(BoothContext)
+  const {data, setCurrentBooth, states, changeState, statusCodes} = props
+  const {id, vendor, section, hasElectricity, row, restriction, status, neighbors} = data
   const handleClose = ()=>{
     setCurrentBooth(null)
   }
   const handleSelectBooth = (id)=>{
-    console.log(`selected booth ${id}`)
-    reserveBooth(id, {
+
+    const isPrimary = currentVendor.booth.primary.status === 0
+    addBoothToCart(isPrimary, id)
+    holdBooth({
       organization: currentVendor.organization,
       description: currentVendor.description,
       logo: currentVendor.logo
-    })
-    updateCurrentVendor({booth: {primary: id}})
+    },id)
+    setCurrentBooth(null)
+    checkNeighbors()
   }
-
+  const handlePrimaryClick = (e)=>{
+    e.preventDefault()
+    if (isAllowed()){
+      handleSelectBooth(id)
+    }
+    else {
+      const updatedVendor = {...currentVendor}
+      updatedVendor.sponsorship.interested = true
+      updateCurrentVendor(updatedVendor)
+      changeState(states.SPONSOR)
+    }
+  }
+  const checkNeighbors = ()=>{
+    let available = false
+    const options = neighbors.filter(neighbor => neighbor.status ===0)
+    if (options.length > 0){
+      
+    }
+  }
+  const isAllowed = ()=>{
+    if (restriction === 0) {
+      return true
+    }
+    else if (restriction === 2) {
+      return (currentVendor.sponsorship && (currentVendor.sponsorship.level === "Paladin" || currentVendor.sponsorship.level === "Abrams"))
+    }
+    else if (restriction === 1) {
+      return (currentVendor.sponsorship && (currentVendor.sponsorship.level === "Stryker" || currentVendor.sponsorship.level === "Bradley"))
+    }
+  }
   return (
     <CardContainer>
       <HeaderWrapper>
@@ -104,8 +136,7 @@ const BoothCard = (props) => {
         <Paragraph>Info & availability</Paragraph>
       </HeaderWrapper>
       <HeaderWrapper>
-        <Subheader>Section {section}
-          Row {row}</Subheader>
+        <Subheader>{`Section: ${section} | Row: ${row}`}</Subheader>
         {hasElectricity
           ? <Paragraph>Powered</Paragraph>
           : null}
@@ -122,7 +153,7 @@ const BoothCard = (props) => {
           <>
             <Subheader>Open</Subheader>
             <Paragraph>
-                This boothspace is available
+                This boothspace is available. {isAllowed() ? null : `This section is reserved for ${restriction == 2 ? "Paladin and Abrams ": "Stryker and Bradley "} level sponsors.`}
             </Paragraph>
           </>
         }
@@ -131,7 +162,7 @@ const BoothCard = (props) => {
             {(vendor && vendor === null) ? 
             <Button buttonStyle="primary" buttonText="Close" onClicks={handleClose}/> :
         <>
-            <Button buttonStyle="primary" buttonText="Select booth" onClick={()=>handleSelectBooth(id)}/>
+            <Button buttonStyle="primary" buttonText={isAllowed() ? "Select booth" : "View sponsorships"} onClick={handlePrimaryClick}/>
             <Button buttonStyle="secondary" buttonText="Cancel" onClick={handleClose}/>
         </> 
         }

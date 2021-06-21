@@ -11,10 +11,10 @@ import Home from './Home'
 
 const VendorPageContainer = styled.div`
     box-sizing: border-box;
-   width: clamp(300px, 600px);
+    width: 100%;
     height: 100%;
     margin: auto;
-    padding: 10px 20px;
+    padding: 0;
     //position: relative;
     // border: 2px solid dodgerblue;
 `
@@ -52,7 +52,7 @@ export default function Vendor() {
            
             state == states.SELECT ?
             <CanvasProvider>
-               <BoothManagement />
+               <BoothManagement states={states} changeState={changeState}/>
             </CanvasProvider> :
             null}
         </VendorPageContainer>

@@ -26,7 +26,6 @@ const CardContainer = styled.div`
   @media (min-width: 450px) {
   }
 `;
-
 const Header = styled.h1`
   font-family: Open Sans;
   font-style: normal;
@@ -124,10 +123,11 @@ export default function SponsorshipCard(props) {
   } = props;
   const { user, updateUser } = useContext(UserContext);
   const {} = props;
-  const { vendor, updateCurrentVendor, addItemToCart } = useContext(
+  const { currentVendor, updateCurrentVendor, addItemToCart, getSponsorshipVariantId} = useContext(
     VendorContext
   );
   const [selected, setSelected] = useState(false);
+  
   const listItems = perks.map((perk) => (
     <ListItem
       key={`${name}${perk.wording}`}
@@ -140,20 +140,17 @@ export default function SponsorshipCard(props) {
     setSelected((prev) => !prev);
   };
   const handleSelect = (e) => {
-    const status = e.target.innerText === "Pay Today" ? "in cart" : "pending";
-    const item =
-      e.target.innerText === "Pay Today"
-        ? "OP-Vetfest-booth"
-        : {
-            category: "sponsorship comitment",
-            name: name,
-            price: "$0",
-          };
+    e.preventDefault();
+    const status = e.target.innerText;
+    const item = status == "Pay Today" ? name : `${name}Promise` 
+    console.log(item)
     addItemToCart(item);
-    updateCurrentVendor({ "sponsorship.status": "in cart", level: name });
+    const updatedVendor = {...currentVendor}
+    updatedVendor.sponsorship.level = name
+    updatedVendor.sponsorship.status = "in cart"
+    updateCurrentVendor(updatedVendor);
     changeState(states.SELECT);
   };
-
   const formatter = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
@@ -174,11 +171,10 @@ export default function SponsorshipCard(props) {
         buttonStyle={"primary"}
         onClick={handleClick}
       />
-      :{" "}
+   
       {selected ? (
         <>
-          {" "}
-          <Blur width="288px" height="396px" />{" "}
+          <Blur width="288px" height="396px" />
           <ModalWrapper>
             <CloseButton
               onClick={(e) => {
@@ -208,5 +204,5 @@ export default function SponsorshipCard(props) {
         </>
       ) : null}
     </CardContainer>
-  );
+  )
 }

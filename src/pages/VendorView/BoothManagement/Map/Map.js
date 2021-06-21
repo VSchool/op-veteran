@@ -1,6 +1,7 @@
 import React, {useState, useContext, useEffect} from "react";
 import {CanvasContext} from "../../../../context/CanvasProvider";
 import {BoothContext} from "../../../../context/BoothProvider";
+import {VendorContext} from "../../../../context/VendorProvider";
 import {
   Stage,
   Layer,
@@ -14,14 +15,13 @@ import useImage from "use-image";
 import styled from 'styled-components'
 import BlankMapPathLayer from './BlankMapPathLayer'
 import Row from './Row'
+
 const SuperStage = styled(Stage)`
-border: 3px solid black;
-width: min(100vw,100vh);
-height: min(100vw,100vh);
-position: absolute;
-left:0;
-right: 0;
-overflow: hidden;
+  border: 3px solid black;
+  width: ${props=>props.containerWidth};
+  height: ${props=>props.containerWidth};
+  margin: auto;
+  overflow: hidden;
 `
 const SuperLayer = styled(Layer)`
 
@@ -71,8 +71,9 @@ const StageWrapper = styled.div `
 // }
 
 const Map = (props) => {
-  const {scale, stageSize, setStageSize, setCurrentSection,  setCurrentBooth} = useContext(CanvasContext);
+  const {scale, stageSize, setStageSize, setCurrentSection,  setCurrentBooth, enterMapMode} = useContext(CanvasContext);
   const {booths, diagramData, rowData, updateBooth, rowsOfBooths, pullMapDataFromFirestore} = useContext(BoothContext);
+
   const [mapMode, setMapMode] = useState(false)
   // const [mapImage] = useImage("https://liveshameless.com/map.jpg");
   const [rowGroups, setRowGroups] = useState([])
@@ -83,7 +84,7 @@ const Map = (props) => {
     blue: "#4E92F9"
   }
 
-  const {setShowInfo} = props
+  const {setShowInfo, containerWidth} = props
   const buildRows = () => {
       const arrayOfRows = [ 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N' ].map(rowId=><Row setCurrentBooth={setCurrentBooth} key={rowId} rowId={rowId} rowDatum={rowData[rowId]}  sectionId={0} setMapMode={setMapMode} booths={booths}/>) 
     setRowGroups(arrayOfRows)
@@ -91,10 +92,11 @@ const Map = (props) => {
 
   useEffect(() => {
     buildRows()
+    enterMapMode()
   }, [])
   return (
     
-    <SuperStage width={1024} height={1083} scale={scale} >
+    <SuperStage containerWidth={containerWidth} width={1024} height={1083} scale={scale}>
       <BlankMapPathLayer/> 
         <SuperLayer x={0} y={0}>
         { rowGroups

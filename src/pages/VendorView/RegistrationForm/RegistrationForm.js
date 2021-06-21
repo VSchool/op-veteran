@@ -61,12 +61,11 @@ export default function RegistrationForm(props) {
     zip: "",
     state: "",
     nonprofit: false,
+    governmental: false,
     vetOwned: false,
     isSponsor: false,
-    sponsorshipLevel: null,
+    sponsorshipLevel: "",
     wantToSponsor: false,
-    needElectricity: false,
-    wantDoubleSpace: false,
     file:null
   })
   useEffect(() => {
@@ -103,7 +102,7 @@ const saveLogo = (file)=>{
     const extension = fileName.split('.')[1]
     storeFile(file, `logos/${input.organization}/${input.organization}.${extension}`)    
   }
-  const handleSubmit = async (e) => {
+const handleSubmit = async (e) => {
     e.preventDefault()
     setShowSponsorship(input.wantToSponsor)
     const currentVendorData = {
@@ -116,22 +115,25 @@ const saveLogo = (file)=>{
       },
       rep: input.name,
       repEmail: user.email,
+      isGovernmental: input.governmental,
+      isNonprofit: input.nonprofit,
+      isVeteranOwned: input.vetOwned,
       description: input.description,
       organization: input.organization,
       booth: {
         primary: {
           name: null,
-          finalized: false
+          status: 0
         },
         secondary: {
           name: null, 
-          finalized: false
+          status: 0
         }
       },
       sponsorship: {
         interested: input.wantToSponsor,
-        level: input.sponsorshipLevel, 
-        finalized: input.isSponsor
+        level: input.isSponsor ? input.sponsorshipLevel : null, 
+        staus: input.isSponsor ? 2 : 0
       },
       logo: null, 
       
@@ -140,9 +142,7 @@ const saveLogo = (file)=>{
     if (input.file) {
     saveLogo(input.file)
     
-    
-    
-    if (showSponsorship) {
+    if (input.wantToSponsor) {
       changeState(states.SPONSOR)
       }
   else{
@@ -161,7 +161,7 @@ const saveLogo = (file)=>{
   }
 
   return (
-    <Container>
+    <Container height="fit-content">
       <HeaderWrapper>
         <Subheader>Registration Form</Subheader>
         <Header>Point of Contact</Header>
@@ -246,12 +246,17 @@ const saveLogo = (file)=>{
           checked={input.nonprofit}
           onChange={handleCheck}/>
         <CheckBox
+          labelText="Organization is a governmental organization"
+          name="governmental"
+          checked={input.governmental}
+          onChange={handleCheck}/>
+        <CheckBox
           labelText="Organization is a current sponsor of O.P. Vetfest"
           name="isSponsor"
           checked={input.isSponsor}
           onChange={handleCheck}/>
         {input.isSponsor ? 
-        <Selection options={["WLA - $250", "AMTRAK - $500", "Bradley - $1000","Stryker - $2500", "Abrams - $5000", "Paladin - $10000"]} value={input.sponsorshipLevel} handleChange={handleChange}/> : null
+        <Selection name="sponsorshipLevel" options={["WLA - $250", "AMTRAK - $500", "Bradley - $1000","Stryker - $2500", "Abrams - $5000", "Paladin - $10000"]} value={input.sponsorshipLevel} handleChange={handleChange}/> : null
       }
       {input.isSponsor ? null :
           <CheckBox
@@ -259,7 +264,7 @@ const saveLogo = (file)=>{
           name="wantToSponsor"
           checked={input.wantToSponsor}
           onChange={handleCheck}/>}
-           <Button buttonText="See sponsorship levels and benifits" buttonStyle="text" onClick={handleShowSponsorship}/>
+           {/* <Button buttonText="See sponsorship levels and benifits" buttonStyle="text" onClick={handleShowSponsorship}/> */}
         <Button buttonText="Continue" buttonStyle="primary" onClick={handleSubmit}/>
       </FormWrapper>
       <StatusMessage

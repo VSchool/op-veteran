@@ -6,7 +6,6 @@ import UserProvider, {UserContext} from "./context/UserProvider";
 import VendorProvider, {VendorContext} from "./context/VendorProvider";
 import BoothProvider from "./context/BoothProvider";
 
-
 import CanvasProvider from "./context/CanvasProvider";
 //import Playground from './Playground'
 import {Landing, Vendor, Admin, Playground} from './pages'
@@ -36,18 +35,15 @@ export default function App() {
   }
   return (
     <BoothProvider>
-
-     <UserProvider>
+      <UserProvider>
         <VendorProvider>
-        <CanvasProvider>
-          <AppContainer>
-            <UserViews/>
-          </AppContainer>
-        </CanvasProvider>
+          <CanvasProvider>
+            <AppContainer>
+              <UserViews/>
+            </AppContainer>
+          </CanvasProvider>
         </VendorProvider>
       </UserProvider>
-9
->"}"
     </BoothProvider>
   );
 }

@@ -2,8 +2,9 @@ import React, {useContext, useState, useEffect} from 'react'
 import styled from 'styled-components'
 import {UserContext} from '../../context/UserProvider'
 import {VendorContext} from '../../context/VendorProvider'
+import {BoothContext} from '../../context/BoothProvider'
 import {Button} from '../../components/Button'
-
+import Modal from '../../components/Modal'
 import StatusMessage from '../../components/StatusMessage'
 import {
   Wrapper,
@@ -87,13 +88,17 @@ const ListItem = styled.li `
     `
 const Home = (props) => {
   const tasks = {}
+  const [modalMessage, setModalMessage] = useState(null)
+  const [modalOpen, setModalOpen] = useState(false)
   const [showLogoUploader,
     setShowLogoUploader] = useState(false)
   const {states, changeState} = props
   const {user} = useContext(UserContext)
   const [file,
     setFile] = useState(null)
-  const {currentVendor, matchVendor, updateCurrentVendor, storeFile} = useContext(VendorContext)
+  const {currentVendor, matchVendor, updateCurrentVendor, storeFile, checkProducts} = useContext(VendorContext)
+  const {updateBooth, booths, setNeighbors} = useContext(BoothContext)
+  
   useEffect(() => {
     matchVendor()
   }, [])
@@ -109,7 +114,7 @@ const Home = (props) => {
   const saveLogo = (file) => {
     const fileName = file.name
     const extension = fileName.split('.')[1]
-    storeFile(file, `logos/${currentVendor.organization}/${currentVendor.organization}.${extension}`)
+    storeFile(file, `logos/${currentVendor.organization}/${currentVendor.organization}.${extension}`) 
   }
   const handleLogoUpload = (e) => {
     setShowLogoUploader(false)
@@ -135,8 +140,20 @@ const Home = (props) => {
 
     }
   }
+  const changeBooths = (e)=>{
+    console.log("changing booths")
+    for (let booth of booths) {
+      if (booth.restriction !== 1 && booth.restriction !== 2){
+      const updatedBooth = {...booth}
+      updatedBooth.restriction = 0
+      updateBooth(updatedBooth, booth.id)
+      console.log(`updating booth ${booth.id}`)
+    }
+    }
+  }
   return (
     <Wrapper>
+
       <HeaderWrapper>
         <Header>Vendor Registration</Header>
       </HeaderWrapper>
@@ -149,12 +166,12 @@ const Home = (props) => {
             Create account
           </ListItem>
           <ListItem
-            complete={currentVendor}
-            current={currentVendor == []}
+            complete={currentVendor.organization}
+            current={currentVendor.length===0} 
             onClick={(e) => {
-            if (currentVendor != []) 
+            if (currentVendor.length===0) {
               handleClick(e)
-          }}>
+          }}}>
             Register vendor
           </ListItem >
           {(currentVendor && !currentVendor.logo)
@@ -199,14 +216,16 @@ const Home = (props) => {
             : null}
           <ListItem
             onClick={(e) => {
-            if (currentVendor.sponsorship && !currentVendor.sponsorship.level) 
               handleClick(e)
           }}
             complete={(currentVendor.booth && currentVendor.booth.primary.finalized)}
             current={(currentVendor.booth && !currentVendor.booth.primary.finalized)}>
             Select booth
           </ListItem>
-          <ListItem>
+          <ListItem
+          onclick={(e) => {
+            handleClick(e)
+          }}>
             Finalize registration
           </ListItem>
         </List>
