@@ -145,7 +145,7 @@ const saveLogo = (file)=>{
     if (showSponsorship) {
       changeState(states.SPONSOR)
       }
-  else{
+    else{
         changeState(states.SELECT)
       }
   }}

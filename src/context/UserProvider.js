@@ -12,8 +12,6 @@ export default function({children}) {
 	const [isAdmin, setIsAdmin] = useState(false);
 	const [isDev, setIsDev] = useState(false);
 	
-	
-  
 	useEffect(() => {
 		userRef = firestore.doc(`Users/${auth.email}`);
 		const unsub = userRef.onSnapshot(doc => {

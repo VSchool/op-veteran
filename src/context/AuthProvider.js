@@ -8,7 +8,11 @@ export default function AuthProvider({children}) {
 	const [authError, setAuthError] = useState(null);
 	
 	useEffect(() => {
-		Auth.onAuthStateChanged(user => setAuth(user));
+		Auth.onAuthStateChanged(user => {
+			if (user)
+				!user.emailVerified ? Auth.signOut() : setAuth(user)
+		})
+			
 	}, []);
 	
 	/* Add more suffisticated error handling later */
@@ -24,7 +28,7 @@ export default function AuthProvider({children}) {
 	
 	const signInWithEmail = (email, password) => {
 		setAuthError(null);
-		emailSignIn(email, password, handleErrors);
+		emailSignIn(email, password, handleErrors)
 	}
 	
 	const signUpWithEmail = (email, password) => {
@@ -41,6 +45,7 @@ export default function AuthProvider({children}) {
 			auth,
 			authError,
 			setAuthError,
+			handleErrors,
 			signInWithGoogle,
 			signInWithEmail,
 			signUpWithEmail,
