@@ -62,17 +62,6 @@ export default function Landing() {
 
   }
 
-  // useEffect(() => {
-	// 	Auth.onAuthStateChanged(user => {
-	// 		console.log("auth provider user: ", user)
-	// 		if(!user.emailVerified){
-	// 			console.log("email is not verified")
-	// 		}
-	// 		else
-	// 			setAuth(user)});
-	// }, []);
-	
-
   const handleConfirmPassword = () => {
     if(inputs.password !== inputs.confirmPassword){
         setErrMsg("Passwords dont match")
@@ -97,12 +86,12 @@ export default function Landing() {
     const { name } = e.target;
     if (e.target.innerText === "Register") {
       handleConfirmPassword() && signUpWithEmail(email, password)
-      console.log("landing page auth: ", auth)
-      if (auth !== null){
+      if (authError === null){
         setInputs({ email: "", password: "", confirmPassword: "" })
         setNotification("Thank you! Check your email to verify your account and complete registration")
         setToggleLogin(prev=>!prev)
       }
+      console.log("landing page auth: ", auth)
     } else if (e.target.innerText === "Sign in") {
       signInWithEmail(email, password)
     }
