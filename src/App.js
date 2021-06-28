@@ -5,12 +5,11 @@ import {AuthContext} from "./context/AuthProvider";
 import UserProvider, {UserContext} from "./context/UserProvider";
 import VendorProvider, {VendorContext} from "./context/VendorProvider";
 import BoothProvider from "./context/BoothProvider";
-
-
 import CanvasProvider from "./context/CanvasProvider";
 //import Playground from './Playground'
 import {Landing, Vendor, Admin, Playground} from './pages'
 import RegisterAccount from './pages/RegisterAccount'
+
 const AppContainer = styled.div `
   box-sizing: border-box;
   width: 100%;
@@ -25,8 +24,13 @@ const AppContainer = styled.div `
 //   border: 1px solid lightcoral;
 `
 
+/*
+if not auth
+*/
+
 export default function App() {
   const {auth} = useContext(AuthContext);
+  console.log("App.js auth log: ", auth)
   if (!auth) {
     return (
       <AppContainer>
@@ -36,7 +40,6 @@ export default function App() {
   }
   return (
     <BoothProvider>
-
      <UserProvider>
         <VendorProvider>
         <CanvasProvider>
@@ -46,8 +49,6 @@ export default function App() {
         </CanvasProvider>
         </VendorProvider>
       </UserProvider>
-9
->"}"
     </BoothProvider>
   );
 }
@@ -68,7 +69,6 @@ function UserViews() {
         <Landing/>
       </Route>
       <Route path="register">
-
         <RegisterAccount/>
       </Route>
       <Route path='/vendor'>
