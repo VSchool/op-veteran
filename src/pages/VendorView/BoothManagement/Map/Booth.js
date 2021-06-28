@@ -24,7 +24,7 @@ const colors = {
   white: "#def"
 }
 const Booth = (props) => {
-  const {data, mapMode, setMapMode, updateBoothObjects, setCurrentBooth} = props
+  const {data, mapMode, setMapMode, updateBoothObjects, setCurrentBooth, size} = props
   const {
     hasElectricity,
     restriction,
@@ -49,11 +49,11 @@ const Booth = (props) => {
   return (
     <Group width={19} height={19} x={0} y={(number * 19)+ Math.floor((number-1)/7)*36} onClick={()=>{handleClick()}}>
       <Rect
-        width={19}
-        height={19}
+        width={size ? size : 19}
+        height={size ? size : 19}
         x={0}
         y={0}
-        fill={status === 2 ? colors.white : status === 2 ? colors.grey : restriction === 1
+        fill={status === 2 ? colors.white : status === 1 ? colors.grey : restriction === 1
         ? colors.red
         : restriction === 2
           ? colors.blue

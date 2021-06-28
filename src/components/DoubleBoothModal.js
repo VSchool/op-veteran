@@ -6,8 +6,9 @@ import {Button} from '../components/Button'
 
 const ButtonWrapper = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill(minmax(35%,50%)));
-  justify-content: space-between;
+  grid-template-columns: 1fr 1fr;
+  // repeat(auto-fill(minmax(35%,50%)));
+  justify-content: space-around;
   align-items: center;
   margin: 10px auto;
   
@@ -26,7 +27,9 @@ const MessageContainer = styled.div`
     right: 0;
     bottom: 0;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
+    justify-content: center;
+    
     background: rgba(35,65, 80, 1);
     border: 2px solid #4E92F9;
     box-sizing: border-box;
@@ -35,8 +38,8 @@ const MessageContainer = styled.div`
     padding: 12px 16px;
     margin: auto;
     position: fixed;
-    width: ${props => props.width ? props.width : "clamp(200px, 400px,80vw)"};
-    height: ${props => props.height ? props.height : "clamp(300px,80%, 80vh)"};
+    width: ${props => props.width ? props.width : "clamp(200px, 300px,80vw)"};
+    height: ${props => props.height ? props.height : "clamp(300px,400px, 80vh)"};
     overflow: hidden;
     z-index: 90;
     transition: all 1s ease-in-out;`
@@ -64,7 +67,7 @@ const MessageContainer = styled.div`
         font-size: 16px;
         line-height: 18px;
         letter-spacing: 0.25px;
-        color: #545454;
+        color: #ecf0f1;
         // border: 1px dotted blue;
 `
 const Icon = styled(MdReport)`  
@@ -78,7 +81,7 @@ export default function DoubleBoothModal(props) {
   const {options} = props
   const [isOpen, setIsOpen] = useState(false)
   const { message, open, close, visible, buttons=[]} = options
-  const buttonObjects = buttons.map((but=><Button buttonText={but.text} buttonStyle={but.style} onClick={but.callback}/>))
+  const buttonObjects = buttons.map((button=><Button buttonText={button.text} buttonStyle={button.style} onClick={button.callback}/>))
     return (
         
         <MessageContainer height={open ? null : "50px"} visible={visible}>

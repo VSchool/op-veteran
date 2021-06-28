@@ -13,6 +13,7 @@ import Section from './Section'
 import {Button} from '../../../components/Button'
 import Legend from './Map/Legend'
 import StatusMessage from '../../../components/StatusMessage'
+import DoubleBoothModal from '../../../components/DoubleBoothModal'
 import {
   LandingContainer,
   Logo,
@@ -26,6 +27,7 @@ import {
 } from "../../../Elements/basic"
 const ModeButton = styled.button `
 `
+
 const Wrapper = styled.div `
   display: flex;
   flex-direction: column;
@@ -35,16 +37,22 @@ const Wrapper = styled.div `
   height: clamp(600px, 70%, 900px);
 `
 const BoothManagement = (props) => {
+  const closeModal = ()=>{setModalOptions(prev=>({...prev, isOpen: false}))}
+  const [modalOptions, setModalOptions] = useState({options: {neighbors: [], isOpen: false, callback: closeModal, visible: false}})
   const {states, changeState} = props
-  const [containerWidth, setContainerWidth] = useState(0)
+  const [containerWidth,
+    setContainerWidth] = useState(0)
   const [mapMode,
     setMapMode] = useState(true)
   const [showInfo,
     setShowInfo] = useState(false)
-  const [organizedBooths, setOrganizedBooths] = useState([])
+  const [organizedBooths,
+    setOrganizedBooths] = useState([])
   const {user} = useContext(UserContext)
   const {currentVendor, updateCurrentVendor} = useContext(VendorContext)
-  const [secondary, setSecondary] = useState(false)
+  const [secondary,
+    setSecondary] = useState(false)
+  const [modalIsOpen, setModalIsOpen] = useState(false)
   const {
     scale,
     setScale,
@@ -64,51 +72,66 @@ const BoothManagement = (props) => {
     getContainerWidth
   } = useContext(CanvasContext)
   const {booths, reserveBooth, pullMapDataFromFirestore, organizeBoothData, statusCodes} = useContext(BoothContext)
-  const handleClick = () => {
-    setCurrentSection("")
-  }
+
   useEffect(() => {
     const data = organizeBoothData();
     const width = getContainerWidth()
     setContainerWidth(width)
     setOrganizedBooths(data)
   }, [])
-  return ( <> <ModeButton
+  
+  return (
+    
+    <> 
+    <DoubleBoothModal options={modalOptions}/>
+  <ModeButton
       onClick={(e) => {
       e.preventDefault();
-      if (mapMode){
-      setMapMode(false)
-      enterDiagramMode()
-      }else{
-      setMapMode(true)
-      enterMapMode()
+      if (mapMode) {
+        setMapMode(false)
+        enterDiagramMode()
+      } else {
+        setMapMode(true)
+        enterMapMode()
       }
     }}>{mapMode
         ? "Switch to diagram view"
         : "Switch to map view"}</ModeButton>
     {
     mapMode
-      ? <Map containerWidth={containerWidth} setShowInfo={setShowInfo} mapMode={mapMode} setMapMode={setMapMode}/>
-      : <Diagram containerWidth={containerWidth} mapMode={mapMode} setMapMode={setMapMode}/>
+      ? <Map
+          setModalOptions={setModalOptions}
+          containerWidth={containerWidth}
+          setShowInfo={setShowInfo}
+          mapMode={mapMode}
+          setMapMode={setMapMode}/>
+      : <Diagram
+          containerWidth={containerWidth}
+          mapMode={mapMode}
+          setMapMode={setMapMode}/>
   }
   {
-    currentBooth ?
-       <BoothCard
-       statusCodes={statusCodes}
-       states={states}
-       changeState={changeState}
-      setCurrentBooth={setCurrentBooth}
-         reserveBooth={reserveBooth}
+    currentBooth
+      ? <BoothCard
+          setModalOptions={setModalOptions}
+          statusCodes={statusCodes}
+          states={states}
+          changeState={changeState}
+          setCurrentBooth={setCurrentBooth}
+          reserveBooth={reserveBooth}
           data={booths.filter(b => b.id === currentBooth)[0]}/>
-  : null}
+      : null
+  }
   {
     showInfo
       ? <Legend/>
       : null
-  } 
-  {secondary ? <StatusMessage /> : null}
-   
-  </>
+  }
+  {
+    secondary
+      ? <StatusMessage/>
+      : null
+  } </>
     )
 }
 export default BoothManagement

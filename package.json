@@ -11,7 +11,7 @@
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.7.1",
     "firebase": "^8.2.7",
-    "graphql": "^15.5.0",
+    "graphql": "^15.5.1",
     "konva": "^7.2.5",
     "konva-react": "^0.1.0",
     "p5": "^1.3.1",

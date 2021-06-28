@@ -46,7 +46,7 @@ const FileLable = styled.label`
 export default function RegistrationForm(props) {
   const {user, updateUser} = useContext(UserContext)
   const {seedBooths} = useContext(BoothContext)
-  const {currentVendor, matchVendor, createVendor, storeFile} = useContext(VendorContext)
+  const {currentVendor, matchVendor, createVendor, storeFile, createCart} = useContext(VendorContext)
   const [showSponsorship, setShowSponsorship] = useState(false)
   const {changeState, states} = props
   const [input, setInput] = useState({ 
@@ -68,9 +68,7 @@ export default function RegistrationForm(props) {
     wantToSponsor: false,
     file:null
   })
-  useEffect(() => {
-    matchVendor()
-  }, [])
+
   // useEffect(() => {
   //   if (currentVendor && currentVendor.repEmail ===user.email){
   //     const nextState = (currentVendor.sponsorship.interested && !currentVendor.sponsorship.finalized) ? states.SPONSOR : states.SELECT
@@ -105,50 +103,17 @@ const saveLogo = (file)=>{
 const handleSubmit = async (e) => {
     e.preventDefault()
     setShowSponsorship(input.wantToSponsor)
-    const currentVendorData = {
-      address: {
-        street: input.street,
-        apt: input.apt,
-        city: input.city,
-        state: input.state,
-        zip: input.zip
-      },
-      rep: input.name,
-      repEmail: user.email,
-      isGovernmental: input.governmental,
-      isNonprofit: input.nonprofit,
-      isVeteranOwned: input.vetOwned,
-      description: input.description,
-      organization: input.organization,
-      booth: {
-        primary: {
-          name: null,
-          status: 0
-        },
-        secondary: {
-          name: null, 
-          status: 0
-        }
-      },
-      sponsorship: {
-        interested: input.wantToSponsor,
-        level: input.isSponsor ? input.sponsorshipLevel : null, 
-        staus: input.isSponsor ? 2 : 0
-      },
-      logo: null, 
-      
-    }
-    await createVendor(currentVendorData)
+    createVendor(input)
     if (input.file) {
     saveLogo(input.file)
-    
+    }
     if (input.wantToSponsor) {
       changeState(states.SPONSOR)
       }
   else{
         changeState(states.SELECT)
       }
-  }}
+  }
   
   const handleCheck = (e) => {
     const {name, checked} = e.target

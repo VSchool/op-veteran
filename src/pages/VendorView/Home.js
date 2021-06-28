@@ -157,6 +157,7 @@ const Home = (props) => {
       <HeaderWrapper>
         <Header>Vendor Registration</Header>
       </HeaderWrapper>
+      
       <TodoContainer>
         <List>
           <Header2>
