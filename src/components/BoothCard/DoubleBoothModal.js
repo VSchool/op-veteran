@@ -1,10 +1,10 @@
 import React, {useState} from 'react'
 import styled, {keyframes} from 'styled-components'
 import {MdReport} from 'react-icons/md'
-import { CloseButton } from "../Elements/basic"
-import {Button} from '../components/Button'
+import {CloseButton} from "../../Elements/basic"
+import {Button} from '../Button'
 
-const ButtonWrapper = styled.div`
+const ButtonWrapper = styled.div `
   display: grid;
   grid-template-columns: 1fr 1fr;
   // repeat(auto-fill(minmax(35%,50%)));
@@ -13,15 +13,17 @@ const ButtonWrapper = styled.div`
   margin: 10px auto;
   
 `
-const entrance = keyframes`
+const entrance = keyframes `
     0% {top: -150px;}
     20% {top: 100px;}
     80% {top: 100px;}
     100% {top: -150px;}
 `
 
-const MessageContainer = styled.div`
-    display: ${props=>props.visible ? "flex" : "none"};
+const MessageContainer = styled.div `
+    display: ${props => props.visible
+  ? "flex"
+  : "none"};
     top: 0px;
     left: 0;
     right: 0;
@@ -38,26 +40,30 @@ const MessageContainer = styled.div`
     padding: 12px 16px;
     margin: auto;
     position: fixed;
-    width: ${props => props.width ? props.width : "clamp(200px, 300px,80vw)"};
-    height: ${props => props.height ? props.height : "clamp(300px,400px, 80vh)"};
+    width: ${props => props.width
+    ? props.width
+    : "clamp(200px, 300px,80vw)"};
+    height: ${props => props.height
+      ? props.height
+      : "clamp(300px,400px, 80vh)"};
     overflow: hidden;
     z-index: 90;
     transition: all 1s ease-in-out;`
-    //animation: ${entrance} 4s ease-in;
-    /* box-sizing: border-box;
+//animation: ${entrance} 4s ease-in;
+/* box-sizing: border-box;
     position: relative;
     width: 328px;
     padding: 8px 16px 8px 16px;
     min-height: 32px;
     background: #FFFFFF;
     border: 2px solid #545454; */
-    /* box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.14), 0px 3px 14px rgba(0, 0, 0, 0.12), 0px 4px 5px rgba(0, 0, 0, 0.2); */
-    /* border-radius: 2px; */
-    /* @media only screen and (min-width: 600px){
+/* box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.14), 0px 3px 14px rgba(0, 0, 0, 0.12), 0px 4px 5px rgba(0, 0, 0, 0.2); */
+/* border-radius: 2px; */
+/* @media only screen and (min-width: 600px){
         width: 528px;
         left: calc(50% - 528px/2);
 */
-   const Text = styled.p`
+const Text = styled.p `
         box-sizing: border-box;
         margin: 0px;
         padding: 0px 10px;
@@ -78,25 +84,31 @@ const Icon = styled(MdReport)`
 `
 
 export default function DoubleBoothModal(props) {
-  const {options} = props
-  const [isOpen, setIsOpen] = useState(false)
-  const { message, open, close, visible, buttons=[]} = options
-  const buttonObjects = buttons.map((button=><Button buttonText={button.text} buttonStyle={button.style} onClick={button.callback}/>))
-    return (
-        
-        <MessageContainer height={open ? null : "50px"} visible={visible}>
-        
-            <CloseButton
-              onClick={close}
-            >
-              X
-            </CloseButton>
- 
-            <Text>{open ? message : "Click for instructions"}</Text>
-            {buttons.length ? <ButtonWrapper>{buttonObjects}</ButtonWrapper> : null}
-         
-        </MessageContainer>
-    
-    )
-}
+  
+  const [isOpen,
+    setIsOpen] = useState(false)
+  const {open, close, visible, options, handleSelectBooth, states, changeState} = props
+  const handleClick = (e) => {
+    e.preventDefault()
+    const boothId = e.target.innerText
+    handleSelectBooth(boothId, true)
+    close()
+    changeState(states.FINALIZE)
+  }
 
+  const buttons = options.map(booth =><Button buttonText={booth} buttonStyle="primary" onClick={handleClick}/>)
+  
+  return (
+    <MessageContainer visible={visible}>
+      <Text>Please select the adjacent booth you'd like to add.
+      </Text>
+      {buttons.length
+        ? <ButtonWrapper>{buttons}</ButtonWrapper>
+        : null}
+      <Button
+        buttonStyle="secondary"
+        buttonText="Continue with single booth"
+        onClick={close} column="1/3" row="2/3" />
+    </MessageContainer>
+  )
+}

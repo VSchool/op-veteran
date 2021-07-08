@@ -50,7 +50,8 @@ export default function RegistrationForm(props) {
   const [showSponsorship, setShowSponsorship] = useState(false)
   const {changeState, states} = props
   const [input, setInput] = useState({ 
-    name: user.name ? user.name : "",
+    firstName: "",
+    lastName: "",
     organization: "",
     description: "",
     phone: "",
@@ -66,7 +67,8 @@ export default function RegistrationForm(props) {
     isSponsor: false,
     sponsorshipLevel: "",
     wantToSponsor: false,
-    file:null
+    file:null,
+    repEmail: user.email
   })
 
   // useEffect(() => {
@@ -134,11 +136,18 @@ const handleSubmit = async (e) => {
       <FormWrapper>
         
         <Input
-          autocomplete="name"
-          labelText="Name"
-          name="name"
+          autocomplete="frst"
+          labelText="First name"
+          name="firstName"
           type="text"
-          value={input.name}
+          value={input.firstName}
+          onChange={handleChange}/>
+        <Input
+          autocomplete="last"
+          labelText="Last name"
+          name="lastName"
+          type="text"
+          value={input.lastName}
           onChange={handleChange}/>
         <Input
           labelText="Name of organization"

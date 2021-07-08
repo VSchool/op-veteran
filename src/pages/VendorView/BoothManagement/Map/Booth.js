@@ -47,10 +47,9 @@ const Booth = (props) => {
     setCurrentBooth(id)}
   
   return (
-    <Group width={19} height={19} x={0} y={(number * 19)+ Math.floor((number-1)/7)*36} onClick={()=>{handleClick()}}>
+    <Group width={size ? size : 19} height={size ? size : 19} x={0} y={size ? size * number + Math.floor((number-1)/7)*24 : (number * 19)+ Math.floor((number-1)/7)*24} onClick={()=>{handleClick()}}>
       <Rect
-        width={size ? size : 19}
-        height={size ? size : 19}
+        width={size ? size : 19} height={size ? size : 19}
         x={0}
         y={0}
         fill={status === 2 ? colors.white : status === 1 ? colors.grey : restriction === 1
@@ -70,7 +69,7 @@ const Booth = (props) => {
             C11,4.4,10.1,3.5,9.2,3.6z"
             fill={colors.yellow}/> 
         }
-      <Rect width={19} stroke="black" height={19} x={0} y={0} fill="rgba(100,100,100,0)" />
+      <Rect width={size ? size : 19} height={size ? size : 19} stroke="black"  x={0} y={0} fill="rgba(100,100,100,0)" />
 
     </Group>
   )

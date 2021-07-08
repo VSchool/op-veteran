@@ -39,14 +39,31 @@ export default function ({children}) {
     id += number
     return id
   }
-
+  const newBooths=()=>{
+    const rows= ['O', 'P', 'Q', 'R']
+    for (let b=0;b<rows.length;b++){
+      for (let i=1; i< rowData[rows[b]].booths+1; i++){
+        createBooth({
+          hasElectricity: false,
+          number: i,
+          row: rows[b],
+          neighbors: [],
+          restriction: 0,
+          section: 0, 
+          status: 0,
+          vendor: null,
+          id: makeId(rows[b], i)
+        })
+      }
+    }
+  }
   const createBooth = (data) => {
     let id = data.row
     if (data.number < 10) {
       id += "0"
     }
     id += data.number
-    boothRef
+    boothRef.doc(id)
       .set({
       ...data
     })
@@ -65,7 +82,6 @@ export default function ({children}) {
       .update(data)
       .catch(err => console.error(err));
   }
-
   const deleteBooth = id => {
     boothRef
       .doc(id)
@@ -97,8 +113,8 @@ export default function ({children}) {
       theta: -20
     },
     C: {
-      x: 282,
-      y: 334,
+      x: 275,
+      y: 337,
       theta: -20
     },
     D: {
@@ -156,8 +172,33 @@ export default function ({children}) {
       x: 625,
       y: 653,
       theta: -23
+    },
+    O: {
+      x: 115,
+      y: 193,
+      theta: -45,
+      booths: 2
+    },
+    P: {
+      x: 185,
+      y: 205,
+      theta: -0,
+      booths: 2
+    },
+    Q: {
+      x: 214,
+      y: 122,
+      theta: -39,
+      booths: 4
+    },
+    R: {
+      x: 342,
+      y: 167,
+      theta: 60,
+      booths: 2
     }
   }
+  
   const diagramData = {
     section1: {
       A: {
@@ -332,14 +373,14 @@ export default function ({children}) {
         y: 2198,
         theta: 0
       }
-    }
 
-  }
+  }}
 
   useEffect(() => {
+    
     let unsub
+    const boothArray = []
     if (booths && booths.length === 0) {
-      const boothArray = []
       //.where("number", "!=", null)
     return boothRef.where("number", "!=", null)
         .onSnapshot((querySnapshot) => {
@@ -365,7 +406,8 @@ export default function ({children}) {
       organizeBoothData,
       statusCodes,
       resetBooth,
-      holdBooth
+      holdBooth,
+      newBooths
     }}>
       {children}
     </BoothContext.Provider>

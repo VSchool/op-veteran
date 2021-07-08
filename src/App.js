@@ -38,9 +38,11 @@ export default function App() {
       <UserProvider>
         <VendorProvider>
           <CanvasProvider>
+          <CanvasProvider>
             <AppContainer>
               <UserViews/>
             </AppContainer>
+            </CanvasProvider>
           </CanvasProvider>
         </VendorProvider>
       </UserProvider>

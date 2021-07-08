@@ -13,21 +13,28 @@ import Section from './Section'
 import {Button} from '../../../components/Button'
 import Legend from './Map/Legend'
 import StatusMessage from '../../../components/StatusMessage'
-import DoubleBoothModal from '../../../components/DoubleBoothModal'
+import DoubleBoothModal from '../../../components/BoothCard/DoubleBoothModal'
 import {
   LandingContainer,
   Logo,
   Subheader,
   Header,
   HeaderWrapper,
-  ButtonWrapper,
   FormWrapper,
   Row,
   Container
 } from "../../../Elements/basic"
 const ModeButton = styled.button `
+padding: 10px;
+background-color: ${props => props.bgcolor};
+margin: 10px;
 `
-
+const ButtonWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content:space-around;
+  align-items: center;
+`
 const Wrapper = styled.div `
   display: flex;
   flex-direction: column;
@@ -38,7 +45,8 @@ const Wrapper = styled.div `
 `
 const BoothManagement = (props) => {
   const closeModal = ()=>{setModalOptions(prev=>({...prev, isOpen: false}))}
-  const [modalOptions, setModalOptions] = useState({options: {neighbors: [], isOpen: false, callback: closeModal, visible: false}})
+  const [showTrees, setShowTrees] = useState(true);
+  const [modalOptions, setModalOptions] = useState({handleSelectBooth: null, options: [], isOpen: false,  visible: false, close: closeModal})
   const {states, changeState} = props
   const [containerWidth,
     setContainerWidth] = useState(0)
@@ -83,8 +91,10 @@ const BoothManagement = (props) => {
   return (
     
     <> 
-    <DoubleBoothModal options={modalOptions}/>
+    <DoubleBoothModal states={states} changeState={changeState} isOpen={modalOptions.isOpen} close={modalOptions.close} visible={modalOptions.visible} options={modalOptions.options} handleSelectBooth={modalOptions.handleSelectBooth}/>
+  <ButtonWrapper>
   <ModeButton
+  bgcolor="palegoldenrod"
       onClick={(e) => {
       e.preventDefault();
       if (mapMode) {
@@ -94,12 +104,23 @@ const BoothManagement = (props) => {
         setMapMode(true)
         enterMapMode()
       }
-    }}>{mapMode
+    }}>
+    {mapMode
         ? "Switch to diagram view"
         : "Switch to map view"}</ModeButton>
+    <ModeButton   bgcolor="palegreen" onClick={(e)=>{
+      e.preventDefault()
+      setShowTrees(!showTrees)
+      }}>{showTrees ? "Hide Trees" : "Show Trees"}</ModeButton>
+      <ModeButton bgcolor="paleblue" onClick={(e)=>{
+        e.preventDefault()
+        setShowInfo(!showInfo)}}>{showInfo ? "Hide instructions" : "Show instructions"}</ModeButton>
+      
+  </ButtonWrapper>
     {
     mapMode
       ? <Map
+          showTrees = {showTrees}
           setModalOptions={setModalOptions}
           containerWidth={containerWidth}
           setShowInfo={setShowInfo}

@@ -17,6 +17,7 @@ const StyledButton = styled.button`
     cursor: pointer;
 /* Primary/White */
     grid-column: ${props => props.column ? props.column : null};
+    grid-row: ${props => props.row ? props.row : null};
     box-sizing: border-box;
     
     height: 40px;

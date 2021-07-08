@@ -29,7 +29,7 @@ const Row = (props) => {
   useEffect(() => {
     const filtered =  booths.filter(b => (b.row == rowId)) 
     filtered.sort((a, b) => a.number - b.number)
-    const comps = filtered.map(b =>< Booth setCurrentBooth={setCurrentBooth} data={b} key={`${b.row}${b.number}`}
+    const comps = filtered.map(b =>< Booth setCurrentBooth={setCurrentBooth} size={19} data={b} key={`${b.row}${b.number}`}
    />)
     setBoothObjects(comps)
   }, [])

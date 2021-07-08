@@ -74,9 +74,14 @@ const Hr = styled.hr`
   width: 90%;
 `;
 const BoothCard = (props) => {
-  const { currentVendor, updateCurrentVendor, addBoothToCart } = useContext(
-    VendorContext
-  );
+  const {
+    currentVendor,
+    updateCurrentVendor,
+    addPrimaryBoothToCart,
+    addSecondaryBoothToCart,
+    primaryMode,
+    setPrimaryMode,
+  } = useContext(VendorContext);
   const { reserveBooth, holdBooth, booths } = useContext(BoothContext);
   const {
     data,
@@ -96,34 +101,34 @@ const BoothCard = (props) => {
     status,
     neighbors,
   } = data;
+
   const handleClose = () => {
     setCurrentBooth(null);
   };
-  const handleSelectBooth = (isPrimary) => {
-    addBoothToCart(isPrimary, id);
-    const whichBooth = isPrimary ? "booth.primary" : "booth.secondary";
-    updateCurrentVendor({
-      [whichBooth]: {
-        id: id,
-        status: 1,
-      },
-    });
 
+  const handleSelectBooth = (_id, secondary=false) => {
+    if (secondary) {
+    addSecondaryBoothToCart(_id);
+    }
+    else{
+    addPrimaryBoothToCart(_id);
+    }
     holdBooth(
       {
         organization: currentVendor.organization,
         description: currentVendor.description,
         logo: currentVendor.logo,
       },
-      id
+      _id
     );
-    setCurrentBooth(null);
+    handleClose()
     checkNeighbors();
   };
+  
   const handlePrimaryClick = (e) => {
     e.preventDefault();
     if (isAllowed()) {
-      handleSelectBooth(true);
+      handleSelectBooth(id);
     } else {
       const updatedVendor = {
         ...currentVendor,
@@ -143,59 +148,13 @@ const BoothCard = (props) => {
     }, []);
     console.log(options);
     if (options.length > 0) {
-      let buttons = [];
-      for (let b of options) {
-        buttons.push({
-          text: b,
-          style: "primary",
-          callback: (e) => {
-            handleSelectBooth(false);
-            setModalOptions({
-              options: {
-                open: false,
-                visible: false,
-                message: "",
-                buttons: [],
-                close: () => {
-                  setModalOptions((prev) => {
-                    const obj = { ...prev };
-                    obj.object.open = false;
-                    obj.object.visible = false;
-                    setModalOptions(obj);
-                  });
-                },
-              },
-            });
-          },
-        });
-      }
-      buttons.push({
-        text: "Continue with single booth",
-        style: "text",
-        callback: (e) => {
-          setModalOptions((prev) => ({
-            ...prev,
-            open: false,
-            visible: false,
-          }));
-        },
-      });
-      setModalOptions({
-        message: "Would you like a to reserve a double booth (10' x 20')?",
+      setModalOptions((prev)=>({...prev,
         visible: true,
-        open: true,
-        close: () => {
-          setModalOptions((prev) => {
-            const obj = { ...prev };
-            obj.object.open = false;
-            obj.object.visible = false;
-            setModalOptions(obj);
-          });
-        },
-        buttons: buttons,
-      });
-    }
-  };
+        isOpen: true,
+        options: options,
+        handleSelectBooth: handleSelectBooth,
+        }))}}
+
   const isAllowed = () => {
     if (restriction === 0) {
       return true;

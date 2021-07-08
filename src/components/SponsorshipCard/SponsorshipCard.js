@@ -145,10 +145,10 @@ export default function SponsorshipCard(props) {
     const item = status == "Pay Today" ? name : `${name}Promise` 
     console.log(item)
     addItemToCart(item);
-    const updatedVendor = {...currentVendor}
-    updatedVendor.sponsorship.level = name
-    updatedVendor.sponsorship.status = "in cart"
-    updateCurrentVendor(updatedVendor);
+    // const updatedVendor = {...currentVendor}
+    // updatedVendor?.sponsorship.level = name
+    // updatedVendor?.sponsorship.status = 1
+    updateCurrentVendor({"sponsorship.level": name, "sponsorship.status": 1});
     changeState(states.SELECT);
   };
   const formatter = new Intl.NumberFormat("en-US", {

@@ -42,7 +42,6 @@ export default function Header() {
 	const { logout } = useContext(AuthContext);
     const {user}=useContext(UserContext);
     const [showProfile, setShowProfile] = useState(false)
-    console.log(user.userImg)
     const handleClick = ()=>{
         setShowProfile((prev)=>!prev)
     }

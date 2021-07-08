@@ -18,7 +18,7 @@ import BlankMapPathLayer from './BlankMapPathLayer'
 import Row from './Row'
 import treeData from "./treeData";
 const SuperStage = styled(Stage)`
-  border: 3px solid black;
+
   width: ${props => props.containerWidth};
   height: ${props => props.containerWidth};
   margin: auto;
@@ -72,51 +72,18 @@ const Map = (props) => {
   radius = {
     tree.size / 2
   }
-  fill = "rgba(35, 150, 10, .4)" />)
-  const [mapMode,
-    setMapMode] = useState(false)
+  fill = "rgba(35, 150, 10, .7)" />)
+  const [mapMode, setMapMode] = useState(false)
   // const [mapImage] = useImage("https://liveshameless.com/map.jpg");
-  const [rowGroups,
-    setRowGroups] = useState([])
+  const [rowGroups, setRowGroups] = useState([])
   const colors = {
     green: "#799C8A",
     red: "#EA7C7C",
     yellow: "#FBBC05",
     blue: "#4E92F9"
   }
-  const [xo,
-    setXo] = useState(0)
-  const [yo,
-    setYo] = useState(0)
-  const handleKeyDown = (e) => {
-    const key = e.code
-    switch (key) {
-      case "ArrowDown":
-        setYo(yo + 1)
-        break;
-      case "ArrowUp":
-        setYo(yo - 1)
-        break;
-      case "ArrowLeft":
-        setXo(xo - 1)
-        break;
-      case "ArrowRight":
-        setXo(xo + 1)
-        break;
-    }
-    console.log(key)
-    console.log(xo)
-    console.log(yo)
-  }
-  // useEffect(() => {
-  //   window.addEventListener('keydown', handleKeyDown)
-  //   return () => {
-  //     window.removeEventListener('keydown', handleKeyDown)
-  //   },
-  //   []
-  // })
-
-  const {setShowInfo, containerWidth, setModalOptions} = props
+  
+  const {setShowInfo, containerWidth, setModalOptions, showTrees} = props
   const buildRows = () => {
     const arrayOfRows = [
       'A',
@@ -132,28 +99,20 @@ const Map = (props) => {
       'K',
       'L',
       'M',
-      'N'
-    ].map(rowId =>< Row setCurrentBooth = {
-      setCurrentBooth
-    }
-    key = {
+      'N',
+      'O',
+      'P',
+      'Q',
+      'R'
+    ].map(rowId =>< Row key = {
       rowId
     }
-    rowId = {
-      rowId
-    }
-    rowDatum = {
-      rowData[rowId]
-    }
-    sectionId = {
-      0
-    }
-    setMapMode = {
-      setMapMode
-    }
-    booths = {
-      booths
-    } />)
+    setCurrentBooth = {setCurrentBooth} 
+    rowId = {rowId}
+    rowDatum = {rowData[rowId]}
+    sectionId = {0}
+    setMapMode = {setMapMode}
+    booths = {booths} />)
     setRowGroups(arrayOfRows)
   }
 
@@ -161,18 +120,22 @@ const Map = (props) => {
     buildRows()
     enterMapMode()
   }, [])
-  return (
 
+  return (
     <SuperStage
       containerWidth={containerWidth}
       width={1024}
       height={1083}
       scale={scale}>
       <BlankMapPathLayer/>
+      {showTrees ? 
+      <Layer globalCompositeOperation="lighten">
+        <Group width={1024} height={1083} x={40} y={215}>{treeCircles}</Group>
+      </Layer> : null}
       <SuperLayer x={0} y={0}>
         {rowGroups}
       </SuperLayer>
-      <Layer>
+      {/* <Layer>
         <Group x={50} y={900} onClick={() => setShowInfo((prev => !prev))}>
           <Rect
             fill="palegoldenrod"
@@ -191,12 +154,10 @@ const Map = (props) => {
             height={75}
             align="center"
             verticalAlign="middle"
+
             fontSize={48}/>
         </Group>
-      </Layer>
-      <Layer>
-        <Group width={1024} height={1083} x={10} y={185}>{treeCircles}</Group>
-      </Layer>
+      </Layer> */}
     </SuperStage>
 
   );
