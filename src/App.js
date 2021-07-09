@@ -10,6 +10,7 @@ import CanvasProvider from "./context/CanvasProvider";
 //import Playground from './Playground'
 import {Landing, Vendor, Admin, Playground} from './pages'
 import RegisterAccount from './pages/RegisterAccount'
+
 const AppContainer = styled.div `
   box-sizing: border-box;
   width: 100%;
@@ -24,8 +25,13 @@ const AppContainer = styled.div `
 //   border: 1px solid lightcoral;
 `
 
+/*
+if not auth
+*/
+
 export default function App() {
   const {auth} = useContext(AuthContext);
+  console.log("App.js auth log: ", auth)
   if (!auth) {
     return (
       <AppContainer>

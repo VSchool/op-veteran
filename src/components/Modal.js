@@ -20,27 +20,25 @@ const entrance = keyframes`
 `
 
 const MessageContainer = styled.div`
-    display: ${props=>props.visible ? "flex" : "none"};
-    top: 0px;
+    display: flex;
+    top: -100px;
     left: 0;
     right: 0;
-    bottom: 0;
-    flex-direction: column;
+    flex-direction: row;
     align-items: flex-start;
-    background: rgba(35,65, 80, 1);
+    background: rgba(35,65, 80, 0.4);
     border: 2px solid #4E92F9;
     box-sizing: border-box;
     box-shadow: 0px 8px 10px rgba(84, 84, 84, 0.14), 0px 3px 14px rgba(84, 84, 84, 0.12), 0px 4px 5px rgba(84, 84, 84, 0.2);
     border-radius: 4px;
     padding: 12px 16px;
-    margin: auto;
     position: fixed;
-    width: ${props => props.width ? props.width : "clamp(200px, 400px,80vw)"};
-    height: ${props => props.height ? props.height : "clamp(300px,80%, 80vh)"};
+    width: ${props => props.width ? props.width : "clamp(300px, 600px,80vw)"};
+    height: ${props => props.height ? props.height : "clamp(400px,800px, 80vh)"};
     overflow: hidden;
-    z-index: 90;
-    transition: all 1s ease-in-out;`
-    //animation: ${entrance} 4s ease-in;
+    z-index: 9;
+    transition: all 1s ease-in-out;
+    animation: ${entrance} 4s ease-in;`
     /* box-sizing: border-box;
     position: relative;
     width: 328px;
@@ -74,26 +72,23 @@ const Icon = styled(MdReport)`
     padding: 4px auto;
 `
 
-export default function DoubleBoothModal(props) {
-  const {options} = props
-  const [isOpen, setIsOpen] = useState(false)
-  const { message, open, close, visible, buttons=[]} = options
-  const buttonObjects = buttons.map((but=><Button buttonText={but.text} buttonStyle={but.style} onClick={but.callback}/>))
+export default function Modal(props) {
+    const { message, modalOpen, className, setModalOpen} = props
+     
     return (
+        <>
         
-        <MessageContainer height={open ? null : "50px"} visible={visible}>
-        
+        <MessageContainer height={modalOpen ? null : "50px"} className={className}>
+            <Icon/>
             <CloseButton
-              onClick={close}
+              onClick={(e) => {
+                setModalOpen(false);
+              }}
             >
               X
             </CloseButton>
- 
-            <Text>{open ? message : "Click for instructions"}</Text>
-            {buttons.length ? <ButtonWrapper>{buttonObjects}</ButtonWrapper> : null}
-         
+            <Text>{modalOpen ? message : "Click for instructions"}</Text>
         </MessageContainer>
-    
+    </>
     )
 }
-

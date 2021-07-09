@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthProvider";
+import { Auth } from "../Firebase"
 import { Button } from "../components/Button";
 import { GoogleButton } from "../components/GoogleButton";
 import { Input } from "../components/Input";
@@ -37,8 +38,10 @@ init value: login:
 
 export default function Landing() {
   const {
+    auth,
     authError,
     setAuthErr,
+    handleErrors,
     signInWithGoogle,
     signInWithEmail,
     signUpWithEmail,
@@ -46,6 +49,7 @@ export default function Landing() {
 
   const [inputs, setInputs] = useState({ email: "", password: "", confirmPassword: "" });
   const [errMsg, setErrMsg] = useState("")
+  const [notification, setNotification] = useState("")
   const [toggleLogin, setToggleLogin] = useState(true)
   const [state, setState] = useState(null);
   const states = { REGISTER: "register", SIGNUP: "signup" };
@@ -72,7 +76,7 @@ export default function Landing() {
     setInputs((prev) => ({
       ...prev,
       [name]: value,
-    }));
+    }))
     setErrMsg("")
   };
 
@@ -82,9 +86,15 @@ export default function Landing() {
     /*** Add validation ***/
     const { name } = e.target;
     if (e.target.innerText === "Register") {
-      handleConfirmPassword() && signUpWithEmail(email, password);
+      handleConfirmPassword() && signUpWithEmail(email, password)
+      if (authError === null){
+        setInputs({ email: "", password: "", confirmPassword: "" })
+        setNotification("Thank you! Check your email to verify your account and complete registration")
+        setToggleLogin(prev=>!prev)
+      }
+      console.log("landing page auth: ", auth)
     } else if (e.target.innerText === "Sign in") {
-      signInWithEmail(email, password);
+      signInWithEmail(email, password)
     }
   };
 
@@ -92,6 +102,7 @@ export default function Landing() {
   return (
     <LandingContainer>
       {authError ? <StatusMessage message={authError} /> : null}
+      {notification ? <StatusMessage message={notification} /> : null}
       <Logo src={logo} alt="OP Veteran VetFest logo" />
       <Wrapper>
         <HeaderWrapper>

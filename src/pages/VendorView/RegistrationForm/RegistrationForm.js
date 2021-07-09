@@ -112,7 +112,7 @@ const handleSubmit = async (e) => {
     if (input.wantToSponsor) {
       changeState(states.SPONSOR)
       }
-  else{
+    else{
         changeState(states.SELECT)
       }
   }

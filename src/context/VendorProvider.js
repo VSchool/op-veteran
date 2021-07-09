@@ -51,8 +51,10 @@ export default function VendorProvider({children}) {
   const getCartItems = () => {
     return (client.checkout.fetch(currentVendor.cartId))
   }
-  const emptyCart = firebase.functions().httpsCallable('emptyCart')
-
+  const clearCart = firebase.functions().httpsCallable('emptyCart')
+  const emptyCart  = (id)=>{
+    clearCart({id})
+  }
   const updateCurrentVendor = data => {
     // const updatedVendor = {   ...currentVendor,   ...data }
     if (!currentVendor) {
