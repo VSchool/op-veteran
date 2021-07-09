@@ -3,6 +3,7 @@ import "firebase/auth";
 import "firebase/database";
 import "firebase/firestore";
 import "firebase/storage";
+import "firebase/functions";
 
 
 const Firebase = firebase.initializeApp({
@@ -16,7 +17,6 @@ const Firebase = firebase.initializeApp({
 
 export const Auth = Firebase.auth();
 export const Storage = Firebase.storage();
-
 export function googleSignIn(handleErrors) {
 	const provider = new firebase.auth.GoogleAuthProvider();
 	Auth.signInWithPopup(provider)

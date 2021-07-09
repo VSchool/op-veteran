@@ -95,7 +95,7 @@ const Home = (props) => {
   const {user} = useContext(UserContext)
   const [file,
     setFile] = useState(null)
-  const {currentVendor, matchVendor, updateCurrentVendor, storeFile, checkProducts, getCartItems, getOrderStatus} = useContext(VendorContext)
+  const {currentVendor, matchVendor, updateCurrentVendor, storeFile, checkProducts, getCartItems, getOrderStatus, emptyCart} = useContext(VendorContext)
   const {updateBooth, booths, setNeighbors, newBooths, resetBooth} = useContext(BoothContext)
   
   useEffect(() => {
@@ -164,7 +164,9 @@ const Home = (props) => {
       <HeaderWrapper>
         <Header>Vendor Registration</Header>
       </HeaderWrapper>
-      <button onClick={getOrderStatus}>go</button>
+      <button onClick={(e)=>{
+        emptyCart({id: currentVendor.cartId}).then(result=>console.log(result)).catch(err=>console.log(err))
+      }}>go</button>
       <TodoContainer>
         <List>
           <Header2>

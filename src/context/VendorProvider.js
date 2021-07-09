@@ -3,8 +3,14 @@ import firestore from "../database";
 import Firebase, {Storage} from '../Firebase'
 import {UserContext} from "./UserProvider";
 import {BoothContext} from "./BoothProvider";
-// import vendorData from "../testing/vendors.json";
+// import vendorData from "../testing/vendors.json";  
 import Client from 'shopify-buy/index.unoptimized.umd';
+import firebase from "firebase/app";
+import "firebase/auth";
+import "firebase/database";
+import "firebase/firestore";
+import "firebase/storage";
+import "firebase/functions";
 
 const vendorRef = firestore.collection("vendors");
 const batch = firestore.batch();
@@ -45,6 +51,8 @@ export default function VendorProvider({children}) {
   const getCartItems = () => {
     return (client.checkout.fetch(currentVendor.cartId))
   }
+  const emptyCart = firebase.functions().httpsCallable('emptyCart')
+
   const updateCurrentVendor = data => {
     // const updatedVendor = {   ...currentVendor,   ...data }
     if (!currentVendor) {
@@ -308,7 +316,8 @@ export default function VendorProvider({children}) {
         setPrimaryMode,
         getCartItems,
         openCart,
-        getOrderStatus
+        getOrderStatus,
+        emptyCart
       }}>
         {children}
       </VendorContext.Provider>
