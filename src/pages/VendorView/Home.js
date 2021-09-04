@@ -95,7 +95,7 @@ const Home = (props) => {
   const {user} = useContext(UserContext)
   const [file,
     setFile] = useState(null)
-  const {currentVendor, matchVendor, updateCurrentVendor, storeFile, checkProducts, getCartItems, getOrderStatus, emptyCart} = useContext(VendorContext)
+  const {currentVendor, run, matchVendor, updateCurrentVendor, storeFile, checkProducts, getCartItems, getOrderStatus, clearCart} = useContext(VendorContext)
   const {updateBooth, booths, setNeighbors, newBooths, resetBooth} = useContext(BoothContext)
   
   useEffect(() => {
@@ -113,7 +113,9 @@ const Home = (props) => {
   const saveLogo = (file) => {
     const fileName = file.name
     const extension = fileName.split('.')[1]
-    storeFile(file, `logos/${currentVendor?.organization}/${currentVendor?.organization}.${extension}`) 
+    const newFileName = currentVendor?.organization.replace(/ /g,'')
+    console.log(newFileName)
+    storeFile(file, `logos/${newFileName}/${newFileName}.${extension}`) 
   }
   const handleLogoUpload = (e) => {
     setShowLogoUploader(false)
@@ -164,9 +166,6 @@ const Home = (props) => {
       <HeaderWrapper>
         <Header>Vendor Registration</Header>
       </HeaderWrapper>
-      <button onClick={(e)=>{
-        emptyCart({id: currentVendor.cartId}).then(result=>console.log(result)).catch(err=>console.log(err))
-      }}>go</button>
       <TodoContainer>
         <List>
           <Header2>

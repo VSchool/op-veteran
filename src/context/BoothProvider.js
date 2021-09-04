@@ -196,6 +196,11 @@ export default function ({children}) {
       y: 167,
       theta: 60,
       booths: 2
+    },
+    S: {
+      x: 457,
+      y: 928,
+      theta: -120
     }
   }
   
@@ -377,8 +382,7 @@ export default function ({children}) {
   }}
 
   useEffect(() => {
-    
-    let unsub
+  let unsub
     const boothArray = []
     if (booths && booths.length === 0) {
       //.where("number", "!=", null)

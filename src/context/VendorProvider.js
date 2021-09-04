@@ -3,7 +3,7 @@ import firestore from "../database";
 import Firebase, {Storage} from '../Firebase'
 import {UserContext} from "./UserProvider";
 import {BoothContext} from "./BoothProvider";
-// import vendorData from "../testing/vendors.json";  
+// import vendorData from "../testing/vendors.json";
 import Client from 'shopify-buy/index.unoptimized.umd';
 import firebase from "firebase/app";
 import "firebase/auth";
@@ -11,7 +11,7 @@ import "firebase/database";
 import "firebase/firestore";
 import "firebase/storage";
 import "firebase/functions";
-
+import axios from "axios"
 const vendorRef = firestore.collection("vendors");
 const batch = firestore.batch();
 const products = {
@@ -50,10 +50,6 @@ export default function VendorProvider({children}) {
 
   const getCartItems = () => {
     return (client.checkout.fetch(currentVendor.cartId))
-  }
-  const clearCart = firebase.functions().httpsCallable('emptyCart')
-  const emptyCart  = (id)=>{
-    clearCart({id})
   }
   const updateCurrentVendor = data => {
     // const updatedVendor = {   ...currentVendor,   ...data }
@@ -232,25 +228,27 @@ export default function VendorProvider({children}) {
   const addPrimaryBoothToCart = (boothId) => {
     const booth = booths.find(b => b.id === boothId)
     if (["Paladin", "Stryker", "Abrams", "Bradley"].includes(currentVendor.sponsorship.level)) {
-      addItemToCart("freeBooth").then(()=>{
+      addItemToCart("freeBooth").then(() => {
+        if (booth.hasElectricity) {
+          addItemToCart("electricity").then(checkout => checkout.addDiscount(currentVendor.cartId, "sponsoredBoothElectricity"))
+        }
+      }).catch(err => console.log(err))
+    } else if (currentVendor.isNonprofit || currentVendor.isGovernmental || currentVendor.isVeteranOwned) {
+      addItemToCart("freeBooth").then(() => {
         if (booth.hasElectricity) {
           addItemToCart("electricity")
-            .then(checkout => checkout.addDiscount(currentVendor.cartId, "sponsoredBoothElectricity"))}})
-            .catch(err => console.log(err))
-    } else if (currentVendor.isNonprofit || currentVendor.isGovernmental || currentVendor.isVeteranOwned) {
-      addItemToCart("freeBooth")
-        .then(()=>{if (booth.hasElectricity) {
-          addItemToCart("electricity")
             .then(checkout => console.log(checkout))
             .catch(err => console.log(err))
-        }}).catch(err => console.log(err))
+        }
+      }).catch(err => console.log(err))
     } else {
-      addItemToCart("standardBooth")
-        .then(()=>{if (booth.hasElectricity) {
+      addItemToCart("standardBooth").then(() => {
+        if (booth.hasElectricity) {
           addItemToCart("electricity")
             .then(checkout => console.log(checkout))
             .catch(err => console.log(err))
-        }}).catch(err => console.log(err))
+        }
+      }).catch(err => console.log(err))
     }
 
     updateCurrentVendor({
@@ -271,7 +269,7 @@ export default function VendorProvider({children}) {
             addItemToCart("electricity")
           }
         })
-        .then((checkout) =>checkout.addDiscount(currentVendor.cartId, "sponsoredBoothElectricity"))
+        .then((checkout) => checkout.addDiscount(currentVendor.cartId, "sponsoredBoothElectricity"))
         .catch(err => console.log(err))
     } else if (currentVendor.isNonprofit || currentVendor.isGovernmental || currentVendor.isVeteranOwned) {
       addItemToCart("doubleBooth").then(() => {
@@ -284,44 +282,50 @@ export default function VendorProvider({children}) {
         if (booth.hasElectricity) {
           addItemToCart("electricity").then((checkout) => console.log(checkout)).catch(err => console.log(err))
         }
-      }).catch(err => console.log(err))}
-      updateCurrentVendor({
-        "booth.secondary": {
-          id: boothId,
-          status: 1
-        }
-      });
+      }).catch(err => console.log(err))
     }
-    const getOrderStatus = ()=>{
-   client.checkout.fetch(currentVendor.cartId).then((checkout) => {
-     const lineItems = checkout.lineItems
-     const toRemove = lineItems.map((item) => item.id)
-     client.checkout.removeLineItems(currentVendor.cartId, toRemove).then(() =>console.log("removed"))
-   })
-    }
-    return (
-      <VendorContext.Provider
-        value={{
-        currentVendor,
-        createVendor,
-        deleteVendor,
-        matchVendor,
-        updateCurrentVendor,
-        storeFile,
-        cart,
-        addItemToCart,
-        addPrimaryBoothToCart,
-        addSecondaryBoothToCart,
-        createCart,
-        checkProducts,
-        primaryMode,
-        setPrimaryMode,
-        getCartItems,
-        openCart,
-        getOrderStatus,
-        emptyCart
-      }}>
-        {children}
-      </VendorContext.Provider>
-    )
+    updateCurrentVendor({
+      "booth.secondary": {
+        id: boothId,
+        status: 1
+      }
+    });
   }
+  const getOrderStatus = () => {
+    client
+      .checkout
+      .fetch(currentVendor.cartId)
+      .then((checkout) => {
+        const lineItems = checkout.lineItems
+        const toRemove = lineItems.map((item) => item.id)
+        client
+          .checkout
+          .removeLineItems(currentVendor.cartId, toRemove)
+          .then(() => console.log("removed"))
+      })
+  }
+  return (
+    <VendorContext.Provider
+      value={{
+      currentVendor,
+      createVendor,
+      deleteVendor,
+      matchVendor,
+      updateCurrentVendor,
+      storeFile,
+      cart,
+      addItemToCart,
+      addPrimaryBoothToCart,
+      addSecondaryBoothToCart,
+      createCart,
+      checkProducts,
+      primaryMode,
+      setPrimaryMode,
+      getCartItems,
+      openCart,
+      getOrderStatus
+    }}>
+      {children}
+    </VendorContext.Provider>
+  )
+}

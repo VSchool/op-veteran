@@ -14,8 +14,12 @@
   },
   "main": "index.js",
   "dependencies": {
+    "@google-cloud/firestore": "4.13.2",
+    "@shopify/react-graphql": "^7.1.0",
+    "apollo-client": "^2.6.10",
     "firebase-admin": "^9.8.0",
     "firebase-functions": "^3.14.1",
+    "graphql": "^14.7.0",
     "shopify-buy": "^2.11.0"
   },
   "devDependencies": {

@@ -1,25 +1,27 @@
 const functions = require("firebase-functions");
-const Client = require("shopify-buy/index.unoptimized.umd");
+const firebase = require("firebase");
+const admin = require("firebase-admin");
 
-exports.emptyCart = functions.https.onCall((data, context) => {
-  const client = Client.buildClient(
-      {
-        domain: "o-p-veteran.myshopify.com",
-        storefrontAccessToken: "76c1fba5d995f6b7dbb1eb1c1c3c5745",
-      },
-  );
-  const id = data.id;
-  if (typeof id != "string") {
-    throw new functions.https.HttpsError("incorrect id",
-        `id was of type ${typeof id}`);
-  }
-  client.checkout.fetch(id).then((checkout) => {
-    const lineItems = checkout.lineItems;
-    const toRemove = lineItems.map((item) => item.id);
-    console.log("New Message written");
-    return {removable: toRemove};
-  }).catch((err) => {
-    throw new functions.https.HttpsError("unknown", err.message);
-  });
+const Firebase = firebase.initializeApp({
+	apiKey: "AIzaSyCs--Y464NA0UNY00kp-0G5g07_qDoPH5U",
+	authDomain: "op-veterans-dev.firebaseapp.com",
+	projectId: "op-veterans-dev",
+	storageBucket: "op-veterans-dev.appspot.com",
+	messagingSenderId: "1051774604446",
+	appId: "1:1051774604446:web:86911cc8aeda5a9636d78f"
 });
 
+const firestore = firebase.firestore();
+admin.initializeApp();
+
+const vendorRef = firestore.collection("vendors");
+
+exports.test = functions.https.onCall((data, context)=>(
+  {message: `A: ${data.a} | B: ${data.b} | C: ${data.c}`}
+));
+
+exports.removeCart = functions.https.onCall((data, context)=>{
+  return vendorRef.doc.update({
+    cartId: null,
+  });
+});
