@@ -54,7 +54,7 @@ export default function VendorProvider({children}) {
     // })
     // .catch(err => console.log(err))
   }
-  
+
   const updateCurrentVendor = data => {
     // const updatedVendor = {   ...currentVendor,   ...data }
     if (!currentVendor) {
@@ -262,7 +262,6 @@ export default function VendorProvider({children}) {
             .then(checkout => console.log(checkout))
             .catch(err => console.log(err))
         }
-        // Need else statement here to account for single booth without electricity to add item to cart
       }).catch(err => console.log(err))
     }
 

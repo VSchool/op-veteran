@@ -38,7 +38,6 @@ const Booth = (props) => {
   
 
   const handleClick=()=>{
-    console.log(status)
     let id = row
     if (number < 10){
       id += "0"
