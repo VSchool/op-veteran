@@ -101,12 +101,14 @@ const BoothCard = (props) => {
     status,
     neighbors,
   } = data;
+  console.log(data)
 
   const handleClose = () => {
     setCurrentBooth(null);
   };
 
   const handleSelectBooth = (_id, secondary=false) => {
+    console.log(_id)
     if (secondary) {
     addSecondaryBoothToCart(_id);
     }
@@ -139,14 +141,12 @@ const BoothCard = (props) => {
     }
   };
   const checkNeighbors = () => {
-    let available = false;
     const options = booths.reduce((response, b) => {
       if (neighbors.includes(b.id) && (b.status === 0 || b.status === "open")) {
         response.push(b.id);
       }
       return response;
     }, []);
-    console.log(options);
     if (options.length > 0) {
       setModalOptions((prev)=>({...prev,
         visible: true,
@@ -156,22 +156,14 @@ const BoothCard = (props) => {
         }))}}
 
   const isAllowed = () => {
+    if(vendor) return false
     if (restriction === 0) {
       return true;
-    } else if (restriction === 2) {
-      return (
-        currentVendor.sponsorship &&
-        (currentVendor.sponsorship.level === "Paladin" ||
-          currentVendor.sponsorship.level === "Abrams")
-      );
-    } else if (restriction === 1) {
-      return (
-        currentVendor.sponsorship &&
-        (currentVendor.sponsorship.level === "Stryker" ||
-          currentVendor.sponsorship.level === "Bradley")
-      );
+    } else {
+      return false;
     }
   };
+
   return (
     <CardContainer>
       <HeaderWrapper>

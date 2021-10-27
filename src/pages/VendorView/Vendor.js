@@ -54,6 +54,7 @@ export default function Vendor() {
 
 return (
   <VendorPageContainer>
+    {/* <Finalize/> */}
     <Header/> {state === states.HOME
       ? <Home changeState={changeState} states={states}/>
       : state === states.REGISTER

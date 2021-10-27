@@ -26,7 +26,7 @@ export default function({children}) {
         //let scaleAmnt = containerWidth < containerHeight ? Math.min(Math.max(containerWidth / stageSize.w, 0), 1) :  Math.min(Math.max(containerHeight / stageSize.h, 0),1) 
         let scaleAmnt = Math.min(Math.max(containerWidth / stageSize.w, 0), 1)
         setScale({x: scaleAmnt, y: scaleAmnt})
-        console.log(`container: ${containerWidth} | stage.w: ${stageSize.w} | scaleAmnt: ${scaleAmnt}`)
+        // console.log(`container: ${containerWidth} | stage.w: ${stageSize.w} | scaleAmnt: ${scaleAmnt}`)
     }
     const getContainerWidth = () => {
         let container = document.querySelector('#root');

@@ -36,21 +36,25 @@ const products = {
 export const VendorContext = createContext()
 
 export default function VendorProvider({children}) {
-  const [primaryMode,
-    setPrimaryMode] = useState(true)
-  const [holdingCell,
-    setHoldingCell] = useState([])
+  const [primaryMode, setPrimaryMode] = useState(true)
+  const [holdingCell, setHoldingCell] = useState([])
   const {user, reserveBooth: reserve} = useContext(UserContext);
-  const [currentVendor,
-    setCurrentVendor] = useState(null);
+  const [currentVendor,setCurrentVendor] = useState(null);
   const {booths, statusCodes, resetBooth} = useContext(BoothContext)
-  const [cart,
-    setCart] = useState(null);
+  const [cart, setCart] = useState(null);
   const client = Client.buildClient({domain: 'o-p-veteran.myshopify.com', storefrontAccessToken: '76c1fba5d995f6b7dbb1eb1c1c3c5745'});
 
+  // This should work if we can get the cartId properly.  Doesnt appear its in the currentVendor data becasue createCart function is never called 
   const getCartItems = () => {
-    return (client.checkout.fetch(currentVendor.cartId))
+    console.log(currentVendor)
+    // client.checkout.fetch(currentVendor.cartId)
+    // .then(res => {
+    //   console.log(res)
+    //   return res
+    // })
+    // .catch(err => console.log(err))
   }
+  
   const updateCurrentVendor = data => {
     // const updatedVendor = {   ...currentVendor,   ...data }
     if (!currentVendor) {
@@ -61,6 +65,9 @@ export default function VendorProvider({children}) {
       .update(data)
       .catch(err => console.log(err))
   }
+
+  // This funciton is unused and is the root of the Shopify problem because its not saving the cart ID 
+    // Need to figure out where to integrate it. On the RegistrationForm component would likely make the most sense.
   const createCart = (data) => {
     client
       .checkout
@@ -104,12 +111,14 @@ export default function VendorProvider({children}) {
   // setSelectedVendor]);
 
   const openCart = () => {
+    // This Doesnt work becasue I cant get a valid cartId
     console.log("opening cart")
     client
       .checkout
       .fetch(currentVendor.cartId)
       .then(checkout => window.open(checkout.webUrl))
   }
+
   const addItemToCart = (item) => {
     return client
       .checkout
@@ -150,6 +159,9 @@ export default function VendorProvider({children}) {
         })
     }
   }
+
+
+  // Need to use the createCart function before this is called for this function to work so we can have a cartId and checkout.id
   const createVendor = (data) => {
     const shippingAddress = {
       address1: data.street,
@@ -169,7 +181,7 @@ export default function VendorProvider({children}) {
       .create({shippingAddress, email})
       .then((checkout => {
         const currentVendorData = {
-          cartId: checkout.id,
+          cartId: checkout.id, // Doesnt appear this info saved?
           cartUrl: checkout.webUrl,
           address: {
             street: data.street,
@@ -226,7 +238,9 @@ export default function VendorProvider({children}) {
   // [currentVendor])
 
   const addPrimaryBoothToCart = (boothId) => {
+    console.log(booths)
     const booth = booths.find(b => b.id === boothId)
+    console.log(booth)
     if (["Paladin", "Stryker", "Abrams", "Bradley"].includes(currentVendor.sponsorship.level)) {
       addItemToCart("freeBooth").then(() => {
         if (booth.hasElectricity) {
@@ -248,6 +262,7 @@ export default function VendorProvider({children}) {
             .then(checkout => console.log(checkout))
             .catch(err => console.log(err))
         }
+        // Need else statement here to account for single booth without electricity to add item to cart
       }).catch(err => console.log(err))
     }
 

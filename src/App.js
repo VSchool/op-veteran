@@ -31,7 +31,7 @@ if not auth
 
 export default function App() {
   const {auth} = useContext(AuthContext);
-  console.log("App.js auth log: ", auth)
+  // console.log("App.js auth log: ", auth)
   if (!auth) {
     return (
       <AppContainer>

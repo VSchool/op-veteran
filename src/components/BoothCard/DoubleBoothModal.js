@@ -1,4 +1,3 @@
-import React, {useState} from 'react'
 import styled, {keyframes} from 'styled-components'
 import {MdReport} from 'react-icons/md'
 import {CloseButton} from "../../Elements/basic"
@@ -83,11 +82,16 @@ const Icon = styled(MdReport)`
     padding: 4px auto;
 `
 
-export default function DoubleBoothModal(props) {
+export default function DoubleBoothModal({
+  close, 
+  visible, 
+  options, 
+  handleSelectBooth, 
+  states, 
+  changeState
+}) {
   
-  const [isOpen,
-    setIsOpen] = useState(false)
-  const {open, close, visible, options, handleSelectBooth, states, changeState} = props
+
   const handleClick = (e) => {
     e.preventDefault()
     const boothId = e.target.innerText
@@ -96,19 +100,17 @@ export default function DoubleBoothModal(props) {
     changeState(states.FINALIZE)
   }
 
-  const buttons = options.map(booth =><Button buttonText={booth} buttonStyle="primary" onClick={handleClick}/>)
+  const buttons = options.map(booth => <Button buttonText={booth} buttonStyle="primary" onClick={handleClick}/>)
   
   return (
     <MessageContainer visible={visible}>
       <Text>Please select the adjacent booth you'd like to add.
       </Text>
-      {buttons.length
-        ? <ButtonWrapper>{buttons}</ButtonWrapper>
-        : null}
+      {buttons.length && <ButtonWrapper>{buttons}</ButtonWrapper> }
       <Button
         buttonStyle="secondary"
         buttonText="Continue with single booth"
-        onClick={close} column="1/3" row="2/3" />
+        onClick={handleClick} column="1/3" row="2/3" />
     </MessageContainer>
   )
 }
