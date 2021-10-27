@@ -238,9 +238,7 @@ export default function VendorProvider({children}) {
   // [currentVendor])
 
   const addPrimaryBoothToCart = (boothId) => {
-    console.log(booths)
     const booth = booths.find(b => b.id === boothId)
-    console.log(booth)
     if (["Paladin", "Stryker", "Abrams", "Bradley"].includes(currentVendor.sponsorship.level)) {
       addItemToCart("freeBooth").then(() => {
         if (booth.hasElectricity) {
