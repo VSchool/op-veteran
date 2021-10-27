@@ -101,14 +101,12 @@ const BoothCard = (props) => {
     status,
     neighbors,
   } = data;
-  console.log(data)
 
   const handleClose = () => {
     setCurrentBooth(null);
   };
 
   const handleSelectBooth = (_id, secondary=false) => {
-    console.log(_id)
     if (secondary) {
     addSecondaryBoothToCart(_id);
     }
