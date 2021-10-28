@@ -46,7 +46,13 @@ const FileLable = styled.label`
 export default function RegistrationForm(props) {
   const {user, updateUser} = useContext(UserContext)
   const {seedBooths} = useContext(BoothContext)
-  const {currentVendor, matchVendor, createVendor, storeFile, createCart} = useContext(VendorContext)
+  const {
+    currentVendor, 
+    matchVendor, 
+    createVendor, 
+    storeFile, 
+    createCart // This function needs to be called to create a shopify cartId. Use it in the handleSubmit function here or at the begining of the createVendor function in the VendorProvider.  This is currently untested 
+  } = useContext(VendorContext)
   const [showSponsorship, setShowSponsorship] = useState(false)
   const {changeState, states} = props
   const [input, setInput] = useState({ 
@@ -93,7 +99,6 @@ export default function RegistrationForm(props) {
   }
 
   const handleChooseFile = (e) => {
-  
     setInput(prev=>({...prev, file: e.target.files[0]}))
   }
 
@@ -107,14 +112,14 @@ const handleSubmit = async (e) => {
     setShowSponsorship(input.wantToSponsor)
     createVendor(input)
     if (input.file) {
-    saveLogo(input.file)
+      saveLogo(input.file)
     }
     if (input.wantToSponsor) {
       changeState(states.SPONSOR)
       }
     else{
-        changeState(states.SELECT)
-      }
+      changeState(states.SELECT)
+    }
   }
   
   const handleCheck = (e) => {

@@ -90,16 +90,26 @@ const ItemQuantity = styled.p`
 `;
 
 const Finalize = (props) => {
-  const { currentVendor, getCartItems, cart, openCart } = useContext(VendorContext);
+  // const { currentVendor, getCartItems, cart, openCart } = useContext(VendorContext);
+  const { currentVendor, openCart, getCartItems} = useContext(VendorContext);
   const [cartItems, setCartItems] = useState([])
-useEffect(() => {
-  getCartItems().then(items=> {
-    // const elements = items.map((item) => <ItemTitle key={item.title}> {item.title} </ItemTitle>)
-    // setCartItems(elements)
-    items.lineItems.forEach((item)=>{
-      console.table(item.variant)
-    })
-}, [])})
+
+  // This was the original code which breaks
+// useEffect(() => {
+//   getCartItems().then(items=> {
+//     // const elements = items.map((item) => <ItemTitle key={item.title}> {item.title} </ItemTitle>)
+//     // setCartItems(elements)
+//     items.lineItems.forEach((item)=>{
+//       console.table(item.variant)
+//     })
+// }, [])})
+
+// This is for testing
+// useEffect(() => {
+//   getCartItems()
+// }, [currentVendor])
+
+// console.log(currentVendor)
   return (
     <CardContainer>
       <Wrapper>
@@ -107,8 +117,8 @@ useEffect(() => {
         <List>
           {cartItems}
         </List>
-        <a onClick={(e)=>console.log(e.target)} href={currentVendor.cartUrl} target="_blank">Open Cart</a>
-        {/* <Button buttonText="Continue to checkout" buttonStyle="primary" onClick={openCart}/> */}
+        {/* <a onClick={(e)=>console.log(e.target)} href={currentVendor.cartUrl} target="_blank">Open Cart</a> */}
+        <Button buttonText="Continue to checkout" buttonStyle="primary" onClick={openCart}/>
       </Wrapper>
     </CardContainer>
   );
