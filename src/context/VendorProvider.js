@@ -69,27 +69,104 @@ export default function VendorProvider({children}) {
   // This funciton is unused and is the root of the Shopify problem because its not saving the cart ID 
     // Need to figure out where to integrate it. On the RegistrationForm component would likely make the most sense.
   const createCart = (data) => {
+    console.log("createCart function called with data: ", data)
     client
       .checkout
       .create({
         shippingAddress: {
-          address1: data.address.street,
-          address2: data.address.apt,
-          city: data.address.city,
+          address1: data.street,
+          address2: data.apt,
+          city: data.city,
           company: data.organization,
           country: 'United States',
-          firstName: data.first,
-          lastName: data.last,
+          firstName: data.firstName,
+          lastName: data.lastName,
           phone: data.phone,
-          province: data.address.state,
-          zip: data.address.zip
+          province: data.state,
+          zip: data.zip
         },
         email: data.repEmail
       })
       .then((checkout) => {
-        updateCurrentVendor({cartId: checkout.id})
+        console.log("From vendor provider: checkout", checkout)
+        console.log("From vendor provider: checkout ID", checkout.id)
+        createVendor({...data, cartId: checkout.id, cartUrl: checkout.webUrl})
+
+        // updateCurrentVendor({cartId: checkout.id})
       })
+      .catch(err => console.log(err))
   }
+
+    // Need to use the createCart function before this is called for this 
+  // function to work so we can have a cartId and checkout.id
+  // best to split into 2
+  const createVendor = (data) => {
+    // this gets called from createVendor so it works in conjuction with createCart.
+    // after createCart returns cart Id, it calls createVendor
+    const currentVendorData = {
+      cartId: data.cartId, // Doesnt appear this info saved?
+      cartUrl: data.cartUrl,
+      address: {
+        street: data.street,
+        apt: data.apt,
+        city: data.city,
+        state: data.state,
+        zip: data.zip
+      },
+      phone: data.phone,
+      rep: `${data.fisttName} ${data.lastName}`,
+      repEmail: user.email,
+      isGovernmental: data.governmental,
+      isNonprofit: data.nonprofit,
+      isVeteranOwned: data.vetOwned,
+      description: data.description,
+      organization: data.organization,
+      booth: {
+        primary: {
+          id: null,
+          status: 0
+        },
+        secondary: {
+          id: null,
+          status: 0
+        }
+      },
+      sponsorship: {
+        interested: data.wantToSponsor,
+        level: data.isSponsor
+          ? data.sponsorshipLevel
+          : null,
+        staus: data.isSponsor
+          ? 2
+          : 0
+      },
+      logo: null
+    }
+    vendorRef
+      .doc(data.organization)
+      .set(currentVendorData)
+      .then(() => matchVendor())
+      .catch(err => console.log(err));
+    // const shippingAddress = {
+    //   address1: data.street,
+    //   address2: data.apt,
+    //   city: data.city,
+    //   company: data.organization,
+    //   country: 'United States',
+    //   firstName: data.fisttName,
+    //   lastName: data.lastName,
+    //   phone: data.phone,
+    //   province: data.state,
+    //   zip: data.zip
+    // }
+    // const email = data.repEmail
+    // client
+    //   .checkout
+    //   .create({shippingAddress, email})
+    //   .then((checkout => {
+      // }))
+  }
+
   const checkProducts = () => {
     for (let product of Object.keys(products)) {
       client
@@ -160,72 +237,6 @@ export default function VendorProvider({children}) {
     }
   }
 
-
-  // Need to use the createCart function before this is called for this function to work so we can have a cartId and checkout.id
-  const createVendor = (data) => {
-    const shippingAddress = {
-      address1: data.street,
-      address2: data.apt,
-      city: data.city,
-      company: data.organization,
-      country: 'United States',
-      firstName: data.fisttName,
-      lastName: data.lastName,
-      phone: data.phone,
-      province: data.state,
-      zip: data.zip
-    }
-    const email = data.repEmail
-    client
-      .checkout
-      .create({shippingAddress, email})
-      .then((checkout => {
-        const currentVendorData = {
-          cartId: checkout.id, // Doesnt appear this info saved?
-          cartUrl: checkout.webUrl,
-          address: {
-            street: data.street,
-            apt: data.apt,
-            city: data.city,
-            state: data.state,
-            zip: data.zip
-          },
-          phone: data.phone,
-          rep: `${data.fisttName} ${data.lastName}`,
-          repEmail: user.email,
-          isGovernmental: data.governmental,
-          isNonprofit: data.nonprofit,
-          isVeteranOwned: data.vetOwned,
-          description: data.description,
-          organization: data.organization,
-          booth: {
-            primary: {
-              id: null,
-              status: 0
-            },
-            secondary: {
-              id: null,
-              status: 0
-            }
-          },
-          sponsorship: {
-            interested: data.wantToSponsor,
-            level: data.isSponsor
-              ? data.sponsorshipLevel
-              : null,
-            staus: data.isSponsor
-              ? 2
-              : 0
-          },
-          logo: null
-        }
-        vendorRef
-          .doc(data.organization)
-          .set(currentVendorData)
-          .then(() => matchVendor())
-          .catch(err => console.log(err));
-      }))
-  }
   const deleteVendor = id => {
     vendorRef
       .doc(id)
@@ -335,7 +346,8 @@ export default function VendorProvider({children}) {
       setPrimaryMode,
       getCartItems,
       openCart,
-      getOrderStatus
+      getOrderStatus,
+      client
     }}>
       {children}
     </VendorContext.Provider>

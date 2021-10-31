@@ -107,10 +107,15 @@ const saveLogo = (file)=>{
     const extension = fileName.split('.')[1]
     storeFile(file, `logos/${input.organization}/${input.organization}.${extension}`)    
   }
-const handleSubmit = async (e) => {
+
+  // async but no await?
+const handleSubmit = (e) => {
     e.preventDefault()
     setShowSponsorship(input.wantToSponsor)
-    createVendor(input)
+    // createVendor({...input})
+
+    console.log("from handlesubmit: ",{...input})
+    createCart({...input})
     if (input.file) {
       saveLogo(input.file)
     }
