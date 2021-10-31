@@ -2,6 +2,16 @@ import React, {useState} from 'react'
 import styled, {keyframes} from 'styled-components'
 import {MdReport} from 'react-icons/md'
 import { CloseButton } from "../Elements/basic"
+import {Button} from '../components/Button'
+
+const ButtonWrapper = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill(minmax(35%,50%)));
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px auto;
+  
+`
 const entrance = keyframes`
     0% {top: -150px;}
     20% {top: 100px;}

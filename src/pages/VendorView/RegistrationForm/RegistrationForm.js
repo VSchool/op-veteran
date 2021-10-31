@@ -46,11 +46,18 @@ const FileLable = styled.label`
 export default function RegistrationForm(props) {
   const {user, updateUser} = useContext(UserContext)
   const {seedBooths} = useContext(BoothContext)
-  const {currentVendor, matchVendor, createVendor, storeFile} = useContext(VendorContext)
+  const {
+    currentVendor, 
+    matchVendor, 
+    createVendor, 
+    storeFile, 
+    createCart // This function needs to be called to create a shopify cartId. Use it in the handleSubmit function here or at the begining of the createVendor function in the VendorProvider.  This is currently untested 
+  } = useContext(VendorContext)
   const [showSponsorship, setShowSponsorship] = useState(false)
   const {changeState, states} = props
   const [input, setInput] = useState({ 
-    name: user.name ? user.name : "",
+    firstName: "",
+    lastName: "",
     organization: "",
     description: "",
     phone: "",
@@ -61,17 +68,15 @@ export default function RegistrationForm(props) {
     zip: "",
     state: "",
     nonprofit: false,
+    governmental: false,
     vetOwned: false,
     isSponsor: false,
-    sponsorshipLevel: null,
+    sponsorshipLevel: "",
     wantToSponsor: false,
-    needElectricity: false,
-    wantDoubleSpace: false,
-    file:null
+    file:null,
+    repEmail: user.email
   })
-  useEffect(() => {
-    matchVendor()
-  }, [])
+
   // useEffect(() => {
   //   if (currentVendor && currentVendor.repEmail ===user.email){
   //     const nextState = (currentVendor.sponsorship.interested && !currentVendor.sponsorship.finalized) ? states.SPONSOR : states.SELECT
@@ -94,7 +99,6 @@ export default function RegistrationForm(props) {
   }
 
   const handleChooseFile = (e) => {
-  
     setInput(prev=>({...prev, file: e.target.files[0]}))
   }
 
@@ -103,52 +107,25 @@ const saveLogo = (file)=>{
     const extension = fileName.split('.')[1]
     storeFile(file, `logos/${input.organization}/${input.organization}.${extension}`)    
   }
-  const handleSubmit = async (e) => {
+
+  // async but no await?
+const handleSubmit = (e) => {
     e.preventDefault()
     setShowSponsorship(input.wantToSponsor)
-    const currentVendorData = {
-      address: {
-        street: input.street,
-        apt: input.apt,
-        city: input.city,
-        state: input.state,
-        zip: input.zip
-      },
-      rep: input.name,
-      repEmail: user.email,
-      description: input.description,
-      organization: input.organization,
-      booth: {
-        primary: {
-          name: null,
-          finalized: false
-        },
-        secondary: {
-          name: null, 
-          finalized: false
-        }
-      },
-      sponsorship: {
-        interested: input.wantToSponsor,
-        level: input.sponsorshipLevel, 
-        finalized: input.isSponsor
-      },
-      logo: null, 
-      
-    }
-    await createVendor(currentVendorData)
+    // createVendor({...input})
+
+    console.log("from handlesubmit: ",{...input})
+    createCart({...input})
     if (input.file) {
-    saveLogo(input.file)
-    
-    
-    
-    if (showSponsorship) {
+      saveLogo(input.file)
+    }
+    if (input.wantToSponsor) {
       changeState(states.SPONSOR)
       }
     else{
-        changeState(states.SELECT)
-      }
-  }}
+      changeState(states.SELECT)
+    }
+  }
   
   const handleCheck = (e) => {
     const {name, checked} = e.target
@@ -161,7 +138,7 @@ const saveLogo = (file)=>{
   }
 
   return (
-    <Container>
+    <Container height="fit-content">
       <HeaderWrapper>
         <Subheader>Registration Form</Subheader>
         <Header>Point of Contact</Header>
@@ -169,11 +146,18 @@ const saveLogo = (file)=>{
       <FormWrapper>
         
         <Input
-          autocomplete="name"
-          labelText="Name"
-          name="name"
+          autocomplete="frst"
+          labelText="First name"
+          name="firstName"
           type="text"
-          value={input.name}
+          value={input.firstName}
+          onChange={handleChange}/>
+        <Input
+          autocomplete="last"
+          labelText="Last name"
+          name="lastName"
+          type="text"
+          value={input.lastName}
           onChange={handleChange}/>
         <Input
           labelText="Name of organization"
@@ -246,12 +230,17 @@ const saveLogo = (file)=>{
           checked={input.nonprofit}
           onChange={handleCheck}/>
         <CheckBox
+          labelText="Organization is a governmental organization"
+          name="governmental"
+          checked={input.governmental}
+          onChange={handleCheck}/>
+        <CheckBox
           labelText="Organization is a current sponsor of O.P. Vetfest"
           name="isSponsor"
           checked={input.isSponsor}
           onChange={handleCheck}/>
         {input.isSponsor ? 
-        <Selection options={["WLA - $250", "AMTRAK - $500", "Bradley - $1000","Stryker - $2500", "Abrams - $5000", "Paladin - $10000"]} value={input.sponsorshipLevel} handleChange={handleChange}/> : null
+        <Selection name="sponsorshipLevel" options={["WLA - $250", "AMTRAK - $500", "Bradley - $1000","Stryker - $2500", "Abrams - $5000", "Paladin - $10000"]} value={input.sponsorshipLevel} handleChange={handleChange}/> : null
       }
       {input.isSponsor ? null :
           <CheckBox
@@ -259,7 +248,7 @@ const saveLogo = (file)=>{
           name="wantToSponsor"
           checked={input.wantToSponsor}
           onChange={handleCheck}/>}
-           <Button buttonText="See sponsorship levels and benifits" buttonStyle="text" onClick={handleShowSponsorship}/>
+           {/* <Button buttonText="See sponsorship levels and benifits" buttonStyle="text" onClick={handleShowSponsorship}/> */}
         <Button buttonText="Continue" buttonStyle="primary" onClick={handleSubmit}/>
       </FormWrapper>
       <StatusMessage

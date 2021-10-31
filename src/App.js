@@ -5,6 +5,7 @@ import {AuthContext} from "./context/AuthProvider";
 import UserProvider, {UserContext} from "./context/UserProvider";
 import VendorProvider, {VendorContext} from "./context/VendorProvider";
 import BoothProvider from "./context/BoothProvider";
+
 import CanvasProvider from "./context/CanvasProvider";
 //import Playground from './Playground'
 import {Landing, Vendor, Admin, Playground} from './pages'
@@ -30,7 +31,7 @@ if not auth
 
 export default function App() {
   const {auth} = useContext(AuthContext);
-  console.log("App.js auth log: ", auth)
+  // console.log("App.js auth log: ", auth)
   if (!auth) {
     return (
       <AppContainer>
@@ -40,13 +41,15 @@ export default function App() {
   }
   return (
     <BoothProvider>
-     <UserProvider>
+      <UserProvider>
         <VendorProvider>
-        <CanvasProvider>
-          <AppContainer>
-            <UserViews/>
-          </AppContainer>
-        </CanvasProvider>
+          <CanvasProvider>
+          <CanvasProvider>
+            <AppContainer>
+              <UserViews/>
+            </AppContainer>
+            </CanvasProvider>
+          </CanvasProvider>
         </VendorProvider>
       </UserProvider>
     </BoothProvider>

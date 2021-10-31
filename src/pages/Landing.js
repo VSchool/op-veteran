@@ -29,6 +29,7 @@ const ErrMsg = styled.p`
 const ToggleLink = styled.p`
   text-align: center;
   padding: 5px 0px;
+  cursor: pointer;
 `
 
 /*

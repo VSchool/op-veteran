@@ -13,10 +13,10 @@ const Selector = (props)=>{
     // const handleChange = (e)=>{
     //     setValue(e.target.value)
     // }
-    const {options, value, handleChange} = props
+    const {options, value, handleChange, name} = props
     const optionObjects = options.map(o=><Option key={o} value={o}>{o}</Option>)
     return ( 
-        <Select onChange={handleChange} value={value}>
+        <Select name={name} onChange={handleChange} value={value}>
             {optionObjects}
         </Select>
     )

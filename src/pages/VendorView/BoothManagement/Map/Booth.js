@@ -19,10 +19,12 @@ const colors = {
   green: "#799C8A",
   red: "#EA7C7C",
   yellow: "#FBBC05",
-  blue: "#4E92F9"
+  blue: "#4E92F9", 
+  grey: "#ecf0f1",
+  white: "#def"
 }
 const Booth = (props) => {
-  const {data, mapMode, setMapMode, updateBoothObjects, setCurrentBooth} = props
+  const {data, mapMode, setMapMode, updateBoothObjects, setCurrentBooth, size} = props
   const {
     hasElectricity,
     restriction,
@@ -30,7 +32,8 @@ const Booth = (props) => {
     vendor,
     number,
     section,
-    row
+    row,
+    status
   } = data
   
 
@@ -44,13 +47,12 @@ const Booth = (props) => {
     setCurrentBooth(id)}
   
   return (
-    <Group width={19} height={19} x={0} y={(number * 19)+ Math.floor((number-1)/7)*36} onClick={()=>{handleClick()}}>
+    <Group width={size ? size : 19} height={size ? size : 19} x={0} y={size ? size * number + Math.floor((number-1)/7)*24 : (number * 19)+ Math.floor((number-1)/7)*24} onClick={()=>{handleClick()}}>
       <Rect
-        width={19}
-        height={19}
+        width={size ? size : 19} height={size ? size : 19}
         x={0}
         y={0}
-        fill={restriction === 1
+        fill={status === 2 ? colors.white : status === 1 ? colors.grey : restriction === 1
         ? colors.red
         : restriction === 2
           ? colors.blue
@@ -67,7 +69,7 @@ const Booth = (props) => {
             C11,4.4,10.1,3.5,9.2,3.6z"
             fill={colors.yellow}/> 
         }
-      <Rect width={19} stroke="black" height={19} x={0} y={0} fill="rgba(100,100,100,0)" />
+      <Rect width={size ? size : 19} height={size ? size : 19} stroke="black"  x={0} y={0} fill="rgba(100,100,100,0)" />
 
     </Group>
   )
