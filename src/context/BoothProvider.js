@@ -8,13 +8,10 @@ const batch = firestore.batch();
 
 export const BoothContext = createContext();
 export default function ({children}) {
-  const [booths,
-    setBooths] = useState([])
+  const [booths, setBooths] = useState([])
   
-  const [rowsOfBooths,
-    setRowsOfBooths] = useState({})
-  const [sectionsOfRows,
-    setSectionsOfRows] = useState({})
+  const [rowsOfBooths, setRowsOfBooths] = useState({})
+  const [sectionsOfRows,  setSectionsOfRows] = useState({})
   const statusCodes = {
     OPEN: 0,
     ONHOLD: 1,

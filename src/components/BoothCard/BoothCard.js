@@ -108,10 +108,10 @@ const BoothCard = (props) => {
 
   const handleSelectBooth = (_id, secondary=false) => {
     if (secondary) {
-    addSecondaryBoothToCart(_id);
+      addSecondaryBoothToCart(_id);
     }
     else{
-    addPrimaryBoothToCart(_id);
+      addPrimaryBoothToCart(_id);
     }
     holdBooth(
       {

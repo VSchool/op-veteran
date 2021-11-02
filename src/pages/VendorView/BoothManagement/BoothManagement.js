@@ -48,18 +48,13 @@ const BoothManagement = (props) => {
   const [showTrees, setShowTrees] = useState(true);
   const [modalOptions, setModalOptions] = useState({handleSelectBooth: null, options: [], isOpen: false,  visible: false, close: closeModal})
   const {states, changeState} = props
-  const [containerWidth,
-    setContainerWidth] = useState(0)
-  const [mapMode,
-    setMapMode] = useState(true)
-  const [showInfo,
-    setShowInfo] = useState(false)
-  const [organizedBooths,
-    setOrganizedBooths] = useState([])
+  const [containerWidth, setContainerWidth] = useState(0)
+  const [mapMode, setMapMode] = useState(true)
+  const [showInfo, setShowInfo] = useState(false)
+  const [organizedBooths, setOrganizedBooths] = useState([])
   const {user} = useContext(UserContext)
   const {currentVendor, updateCurrentVendor} = useContext(VendorContext)
-  const [secondary,
-    setSecondary] = useState(false)
+  const [secondary, setSecondary] = useState(false)
   const [modalIsOpen, setModalIsOpen] = useState(false)
   const {
     scale,

@@ -41,18 +41,18 @@ export default function VendorProvider({children}) {
   const {user, reserveBooth: reserve} = useContext(UserContext);
   const [currentVendor,setCurrentVendor] = useState(null);
   const {booths, statusCodes, resetBooth} = useContext(BoothContext)
-  const [cart, setCart] = useState(null);
+  const [cartItems, setCartItems] = useState(null);
   const client = Client.buildClient({domain: 'o-p-veteran.myshopify.com', storefrontAccessToken: '76c1fba5d995f6b7dbb1eb1c1c3c5745'});
 
   // This should work if we can get the cartId properly.  Doesnt appear its in the currentVendor data becasue createCart function is never called 
   const getCartItems = () => {
-    console.log(currentVendor)
-    // client.checkout.fetch(currentVendor.cartId)
-    // .then(res => {
-    //   console.log(res)
-    //   return res
-    // })
-    // .catch(err => console.log(err))
+    // console.log("urrent vendor from getCartItems: ", currentVendor)
+    client.checkout.fetch(currentVendor.cartId)
+    .then(res => {
+      console.log("fetched cart items!!", res)
+      setCartItems(res.lineItems)
+    })
+    .catch(err => console.log(err))
   }
 
   const updateCurrentVendor = data => {
@@ -114,7 +114,7 @@ export default function VendorProvider({children}) {
         zip: data.zip
       },
       phone: data.phone,
-      rep: `${data.fisttName} ${data.lastName}`,
+      rep: `${data.firstName} ${data.lastName}`,
       repEmail: user.email,
       isGovernmental: data.governmental,
       isNonprofit: data.nonprofit,
@@ -249,6 +249,7 @@ export default function VendorProvider({children}) {
   // [currentVendor])
 
   const addPrimaryBoothToCart = (boothId) => {
+    console.log("this is the current booth selection id: ", boothId)
     const booth = booths.find(b => b.id === boothId)
     if (["Paladin", "Stryker", "Abrams", "Bradley"].includes(currentVendor.sponsorship.level)) {
       addItemToCart("freeBooth").then(() => {
@@ -336,7 +337,7 @@ export default function VendorProvider({children}) {
       matchVendor,
       updateCurrentVendor,
       storeFile,
-      cart,
+      cartItems,
       addItemToCart,
       addPrimaryBoothToCart,
       addSecondaryBoothToCart,

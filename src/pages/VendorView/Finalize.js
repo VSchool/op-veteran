@@ -16,13 +16,10 @@ const CardContainer = styled.div`
   background: #ffffff;
   display: flex;
   flex-direction: column;
-  padding: 10px;
   justify-content: space-between;
   position: fixed;
+  padding: 10px;
   top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
 `;
 const ButtonWrapper = styled.div`
   display: flex;
@@ -75,12 +72,11 @@ const Hr = styled.hr`
   width: 90%;
 `;
 const List = styled.ul`
-  display: grid;
-  grid-template-columns: 3fr 1fr;
+  display: flex;
+  flex-direction: row;
   margin: auto;
 `;
 const ItemTitle = styled.li`
-  grid-column: 1/2;
 `;
 const ItemPrice = styled.p`
   grid-column: 2/3;
@@ -91,8 +87,8 @@ const ItemQuantity = styled.p`
 
 const Finalize = (props) => {
   // const { currentVendor, getCartItems, cart, openCart } = useContext(VendorContext);
-  const { currentVendor, openCart, getCartItems} = useContext(VendorContext);
-  const [cartItems, setCartItems] = useState([])
+  const { currentVendor, openCart, getCartItems, cartItems} = useContext(VendorContext);
+  // const [cartItems, setCartItems] = useState([])
 
   // This was the original code which breaks
 // useEffect(() => {
@@ -105,21 +101,23 @@ const Finalize = (props) => {
 // }, [])})
 
 // This is for testing
-// useEffect(() => {
-//   getCartItems()
-// }, [currentVendor])
+useEffect(() => {
+  getCartItems()
+}, [currentVendor])
 
 // console.log(currentVendor)
   return (
     <CardContainer>
-      <Wrapper>
+      {/* <Wrapper> */}
         <Head>Cart</Head>
-        <List>
-          {cartItems}
-        </List>
+          {cartItems.map(item => <article key={item}>
+            <p>Product: {item.title}</p>
+            <p>ID: {item.id}</p>
+            <p>Quantity: {item.quantity}</p>
+          </article>)}
         {/* <a onClick={(e)=>console.log(e.target)} href={currentVendor.cartUrl} target="_blank">Open Cart</a> */}
         <Button buttonText="Continue to checkout" buttonStyle="primary" onClick={openCart}/>
-      </Wrapper>
+      {/* </Wrapper> */}
     </CardContainer>
   );
 };
