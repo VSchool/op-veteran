@@ -7,7 +7,7 @@ import { Wrapper, Container } from "../../Elements/basic";
 import {Button} from '../../components/Button'
 
 const CardContainer = styled.div`
-  width: clamp(300px, 90%, 1000px);
+  width: 400px;
   height: fit-content;
   margin: auto;
   box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.14), 0px 3px 14px rgba(0, 0, 0, 0.12),
@@ -17,7 +17,6 @@ const CardContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  position: fixed;
   padding: 10px;
   top: 0;
 `;
@@ -87,7 +86,7 @@ const ItemQuantity = styled.p`
 
 const Finalize = (props) => {
   // const { currentVendor, getCartItems, cart, openCart } = useContext(VendorContext);
-  const { currentVendor, openCart, getCartItems, cartItems} = useContext(VendorContext);
+  const { currentVendor, openCart, getCartItems, cartItems, changeQuantity} = useContext(VendorContext);
   // const [cartItems, setCartItems] = useState([])
 
   // This was the original code which breaks
@@ -105,15 +104,16 @@ useEffect(() => {
   getCartItems()
 }, [currentVendor])
 
-// console.log(currentVendor)
+console.log("finalize page: currentVendor ", cartItems)
   return (
     <CardContainer>
       {/* <Wrapper> */}
         <Head>Cart</Head>
-          {cartItems.map(item => <article key={item}>
+          {cartItems?.map(item => <article key={item}>
             <p>Product: {item.title}</p>
-            <p>ID: {item.id}</p>
+            {/* <p>ID: {item.id}</p> */}
             <p>Quantity: {item.quantity}</p>
+          <button onClick={()=>changeQuantity(item.id, item.quantity)}>Remove</button>
           </article>)}
         {/* <a onClick={(e)=>console.log(e.target)} href={currentVendor.cartUrl} target="_blank">Open Cart</a> */}
         <Button buttonText="Continue to checkout" buttonStyle="primary" onClick={openCart}/>

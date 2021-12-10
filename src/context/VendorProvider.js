@@ -44,12 +44,15 @@ export default function VendorProvider({children}) {
   const [cartItems, setCartItems] = useState(null);
   const client = Client.buildClient({domain: 'o-p-veteran.myshopify.com', storefrontAccessToken: '76c1fba5d995f6b7dbb1eb1c1c3c5745'});
 
-  // This should work if we can get the cartId properly.  Doesnt appear its in the currentVendor data becasue createCart function is never called 
+  // This should work if we can get the cartId properly.  Doesnt appear its in the 
+  // currentVendor data becasue createCart function is never called 
   const getCartItems = () => {
     // console.log("urrent vendor from getCartItems: ", currentVendor)
+
+    //
     client.checkout.fetch(currentVendor.cartId)
     .then(res => {
-      console.log("fetched cart items!!", res)
+      console.log("dec 7: fetched cart items!!", res.lineItems)
       setCartItems(res.lineItems)
     })
     .catch(err => console.log(err))
@@ -104,7 +107,7 @@ export default function VendorProvider({children}) {
     // this gets called from createVendor so it works in conjuction with createCart.
     // after createCart returns cart Id, it calls createVendor
     const currentVendorData = {
-      cartId: data.cartId, // Doesnt appear this info saved?
+      cartId: data.cartId, // Doesnt appear this info saved? // THIS IS CHECKOUT ID
       cartUrl: data.cartUrl,
       address: {
         street: data.street,
@@ -194,6 +197,28 @@ export default function VendorProvider({children}) {
       .checkout
       .fetch(currentVendor.cartId)
       .then(checkout => window.open(checkout.webUrl))
+  }
+
+  const changeQuantity = (itemId, currentQuantity) => {
+
+    /*
+    
+    const lineItemsToUpdate = [
+  {id: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0Lzc4NTc5ODkzODQ=', quantity: 2}
+];
+
+// Update the line item on the checkout (change the quantity or variant)
+client.checkout.updateLineItems(checkoutId, lineItemsToUpdate).then((checkout) => {
+  // Do something with the updated checkout
+  console.log(checkout.lineItems); // Quantity of line item 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0Lzc4NTc5ODkzODQ=' updated to 2
+});
+
+    */
+   let newQuantity = currentQuantity-1
+    client.checkout.updateLineItems(currentVendor.cartId, {id: itemId, quantity: newQuantity})
+      .then((checkout)=>{
+        setCartItems(checkout.lineItems)
+      })
   }
 
   const addItemToCart = (item) => {
@@ -338,6 +363,7 @@ export default function VendorProvider({children}) {
       updateCurrentVendor,
       storeFile,
       cartItems,
+      changeQuantity,
       addItemToCart,
       addPrimaryBoothToCart,
       addSecondaryBoothToCart,

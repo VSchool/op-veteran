@@ -2,6 +2,7 @@ import React, {useState,  useContext} from 'react'
 import styled from 'styled-components'
 import {VendorContext} from "../../context/VendorProvider";
 import {UserContext} from "../../context/UserProvider";
+import Finalize from '../../pages/VendorView/Finalize';
 
 const Wrapper = styled.div`
      min-width: 311px;
@@ -48,7 +49,7 @@ const Profile = (props) =>{
                 <Paragraph>Name: {info.rep}</Paragraph>
                 <Paragraph>Organization: {info.organization}</Paragraph>
                 <Paragraph>Sponsorship: {info.sponsorship.level}</Paragraph>
-                
+                <Finalize/>
         </Wrapper>
     )
 }
