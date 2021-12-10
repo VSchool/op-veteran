@@ -106,6 +106,7 @@ const BoothCard = (props) => {
     setCurrentBooth(null);
   };
 
+  // this needs lots of refactoring 
   const handleSelectBooth = (_id, secondary=false) => {
     if (secondary) {
       addSecondaryBoothToCart(_id);
