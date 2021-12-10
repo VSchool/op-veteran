@@ -7,7 +7,7 @@ import Konva from 'konva'
 export const CanvasContext = createContext();
 export default function({children}) {
     const [scale, setScale] = useState({x:1,y:1})
-    const [stageSize, setStageSize] = useState({w: 1150 , h: 1083 })
+    const [stageSize, setStageSize] = useState({w: 1024 , h: 1083 })
     const [currentSection, setCurrentSection] = useState("")
     const [currentRow, setCurrentRow] = useState("")
     const [currentBooth, setCurrentBooth] = useState(null)
@@ -21,12 +21,21 @@ export default function({children}) {
     }
     function fitStageIntoParentContainer(mod = 1) {
         let container = document.querySelector('#root');
-        let containerWidth = container.offsetWidth * mod
+        let containerWidth = container.offsetWidth
         let containerHeight = container.offsetHeight
         //let scaleAmnt = containerWidth < containerHeight ? Math.min(Math.max(containerWidth / stageSize.w, 0), 1) :  Math.min(Math.max(containerHeight / stageSize.h, 0),1) 
         let scaleAmnt = Math.min(Math.max(containerWidth / stageSize.w, 0), 1)
         setScale({x: scaleAmnt, y: scaleAmnt})
+        // console.log(`container: ${containerWidth} | stage.w: ${stageSize.w} | scaleAmnt: ${scaleAmnt}`)
     }
+    const getContainerWidth = () => {
+        let container = document.querySelector('#root');
+        let containerWidth = container.offsetWidth
+        let containerHeight = (container.offsetHeight * .8)
+        return Math.min(containerWidth, containerHeight)
+         }
+    
+    
     useEffect(() => {
         fitStageIntoParentContainer()
     }, [])
@@ -49,7 +58,8 @@ export default function({children}) {
             currentBooth,
             setCurrentBooth, 
             enterDiagramMode,
-            enterMapMode
+            enterMapMode,
+            getContainerWidth
         }}>
 			{children}
 		</CanvasContext.Provider>

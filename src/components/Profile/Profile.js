@@ -2,6 +2,7 @@ import React, {useState,  useContext} from 'react'
 import styled from 'styled-components'
 import {VendorContext} from "../../context/VendorProvider";
 import {UserContext} from "../../context/UserProvider";
+import Finalize from '../../pages/VendorView/Finalize';
 
 const Wrapper = styled.div`
      min-width: 311px;
@@ -16,9 +17,7 @@ const Wrapper = styled.div`
     justify-content: space-between;
     position: fixed;
     top:0;
-    bottom: 0;
-    left: 0;
-    right:0;
+    z-index: 999; 
     
 
 `
@@ -45,9 +44,13 @@ const Profile = (props) =>{
         sponsorship: currentVendor.sponsorship,
     })
     return (
-<Wrapper>
-        <Paragraph>Name: {info.rep}</Paragraph>
-</Wrapper>
+        <Wrapper>
+                <Logo src={info.logo}/>
+                <Paragraph>Name: {info.rep}</Paragraph>
+                <Paragraph>Organization: {info.organization}</Paragraph>
+                <Paragraph>Sponsorship: {info.sponsorship.level}</Paragraph>
+                <Finalize/>
+        </Wrapper>
     )
 }
 
