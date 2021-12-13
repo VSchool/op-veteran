@@ -41,9 +41,9 @@ const HeaderContainer = styled.div`
 
 
 `       
-const sideNav = styled.div`
+const SideNav = styled.div`
     height: 100%;
-    width: 0;
+    width: 250px;
     position: fixed;
     z-index: 1;
     top: 0;
@@ -72,31 +72,45 @@ const sideNav = styled.div`
         right: 25px;
         font-size: 36px;
         margin-left: 50px;
+        cursor: pointer;
     }
 
     @media screen and (max-height: 450px) {
         .sidenav {padding-top: 15px;}
         .sideNavLink {font-size: 18px;}
-      }
+    }
 `
 
+
 export default function Header() {
+    const [sideToggle, setSideToggle] = useState(true)
+    const handleSideBarToggle = () => {
+        setSideToggle(prevState => !prevState)
+        console.log(sideToggle)
+    }
+
 	const { logout } = useContext(AuthContext);
     const {user}=useContext(UserContext);
     const [showProfile, setShowProfile] = useState(false)
     const handleClick = ()=>{
         setShowProfile((prev)=>!prev)
     }
+
     return (
         <HeaderContainer>
-            <IoReturnDownBackOutline 
-                style={{
-                    boxSizing: 'border-box', 
-                    width: '35px', 
-                    height: '35px', 
-                    alignSelf: 'center' 
-                }} 
-            />
+            { 
+                sideToggle ?
+                <span style={{fontSize:'30px',cursor:'pointer'}} onclick={() => handleSideBarToggle()}>&#9776; open</span>
+                :
+                <SideNav id='mySideNav'>
+                    <a alt="close" id="closebtn" onclick={handleSideBarToggle}>&times;</a>
+                    <a href='#' className='sideNavLink'>Test</a>
+                    <a href='#' className='sideNavLink'>Test</a>
+                    <a href='#' className='sideNavLink'>Test</a>
+                </SideNav>
+            }
+
+
             <img 
                 src={logo} 
                 alt={'OP Veteran VetFest logo.'} 
@@ -112,3 +126,12 @@ export default function Header() {
         </HeaderContainer>
     )
 }
+
+            {/* <IoReturnDownBackOutline 
+                style={{
+                    boxSizing: 'border-box', 
+                    width: '35px', 
+                    height: '35px', 
+                    alignSelf: 'center' 
+                }} 
+            /> */}
