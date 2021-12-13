@@ -10,14 +10,18 @@ import {Profile} from '../Profile'
 const HeaderContainer = styled.div`
     position: relative;
     height: 88px;
-    // border: 1px dotted black;
+    padding: 20px;
+    box-shadow:
+    inset 0 -3em 3em rgba(0,0,0,0.1),
+          0 0  0 2px rgb(58, 80, 68),
+          0.3em 0.3em 1em rgba(0,0,0,0.4);
+    
 
     & > .exit-icon {
         position: absolute;
         top: 32px;
         left: 12px;
         width: 40px;
-        // border: 1px dotted blue;
     }
 
     & > .header-logo {
@@ -25,7 +29,6 @@ const HeaderContainer = styled.div`
         top: 32px;
         left: calc(50% - 160px/2);
         width: 160px;
-        // border: 1px dotted orange;
     }
 
     & > .avatar-icon {
@@ -34,7 +37,6 @@ const HeaderContainer = styled.div`
         right: 12px;
         width: 40px;
         border-radius: 50%;
-        // border: 1px dotted orange;
     }
 `
 
@@ -47,7 +49,7 @@ export default function Header() {
     }
     return (
         <HeaderContainer>
-            <img src={exitIcon} alt={'Click to exit.'} className={'exit-icon'} onClick={logout} />
+            {/* <img src={exitIcon} alt={'Click to exit.'} className={'exit-icon'} onClick={logout} /> */}
             <img src={logo} alt={'OP Veteran VetFest logo.'} className={'header-logo'} />
             <img src={user.userImg === "" ? userIcon : user.userImg} alt={'User is logged in.'} className={'avatar-icon'} onClick={handleClick}/>
             {showProfile ? <Profile/> : null}
