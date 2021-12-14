@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import {VendorContext} from "../../context/VendorProvider";
 import {UserContext} from "../../context/UserProvider";
 import Finalize from '../../pages/VendorView/Finalize';
+import firestore from "../../database"
 
 const Wrapper = styled.div`
      min-width: 311px;
@@ -43,6 +44,19 @@ const Profile = (props) =>{
         repEmail: currentVendor.repEmail,
         sponsorship: currentVendor.sponsorship,
     })
+    const boothRef = firestore.collection("Booths");
+
+    /* Delete this later, just for testing*/
+    const resetBooths = () => { 
+        boothRef.get().then(function(querySnapshot) {
+            querySnapshot.forEach(function(doc) {
+                doc.ref.update({
+                    status: 0,
+                    vendor: null
+                });
+            });
+        }).catch(err => console.log(err))
+    }
     return (
         <Wrapper>
                 <Logo src={info.logo}/>
@@ -50,8 +64,11 @@ const Profile = (props) =>{
                 <Paragraph>Organization: {info.organization}</Paragraph>
                 <Paragraph>Sponsorship: {info.sponsorship.level}</Paragraph>
                 <Finalize/>
+                <button onClick={resetBooths}>Reset Booths</button>
         </Wrapper>
     )
 }
+
+
 
 export default Profile
