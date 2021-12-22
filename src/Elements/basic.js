@@ -59,7 +59,7 @@ const Header = styled.div`
   }
 `;
 const HeaderWrapper = styled.div`
-
+  margin-top: 30px;
 `;
 const ButtonWrapper = styled.div`
   display: flex;
