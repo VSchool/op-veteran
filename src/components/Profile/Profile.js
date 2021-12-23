@@ -2,6 +2,7 @@ import React, {useState,  useContext} from 'react'
 import styled from 'styled-components'
 import {VendorContext} from "../../context/VendorProvider";
 import {UserContext} from "../../context/UserProvider";
+import { CanvasContext } from '../../context/CanvasProvider';
 import Finalize from '../../pages/VendorView/Finalize';
 import firestore from "../../database"
 
@@ -33,6 +34,8 @@ const Logo = styled.img`
 const Profile = (props) =>{
     const {currentVendor, updateCurrentVendor} = useContext(VendorContext)
     const {user, updateUser} = useContext(UserContext)
+    const {currentBooth} = useContext(CanvasContext)
+    
     const [info, setInfo] = useState({
         organization: currentVendor.organization,
         description: currentVendor.description,
@@ -47,6 +50,7 @@ const Profile = (props) =>{
     const boothRef = firestore.collection("Booths");
 
     /* Delete this later, just for testing*/
+    /* for testing purposes because you can add more than 2 booths at a time */
     const resetBooths = () => { 
         boothRef.get().then(function(querySnapshot) {
             querySnapshot.forEach(function(doc) {
@@ -60,10 +64,12 @@ const Profile = (props) =>{
     return (
         <Wrapper>
                 <Logo src={info.logo}/>
+                <Paragraph>Current Booth: {currentBooth}</Paragraph>
                 <Paragraph>Name: {info.rep}</Paragraph>
                 <Paragraph>Organization: {info.organization}</Paragraph>
                 <Paragraph>Sponsorship: {info.sponsorship.level}</Paragraph>
                 <Finalize/>
+                {/* for testing purposes because you can add more than 2 booths at a time */}
                 <button onClick={resetBooths}>Reset Booths</button>
         </Wrapper>
     )

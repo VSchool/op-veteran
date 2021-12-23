@@ -221,13 +221,14 @@ client.checkout.updateLineItems(checkoutId, lineItemsToUpdate).then((checkout) =
       })
   }
 
-  const addItemToCart = (item) => {
+  const addItemToCart = (item, boothId) => {
     return client
       .checkout
       .addLineItems(currentVendor.cartId, [
         {
           variantId: products[item],
-          quantity: 1
+          quantity: 1, 
+          customAttributes: [{key: "boothID", value: boothId}]
         }
       ])
   }
@@ -274,10 +275,11 @@ client.checkout.updateLineItems(checkoutId, lineItemsToUpdate).then((checkout) =
   // [currentVendor])
 
   const addPrimaryBoothToCart = (boothId) => {
-    console.log("this is the current booth selection id: ", boothId)
+    console.log("this is the current booth selection id from addPrimaryBoothCart: ", boothId)
+    //currentBooth should hold the whole booth instead of just the ID to avoid always holding
     const booth = booths.find(b => b.id === boothId)
     if (["Paladin", "Stryker", "Abrams", "Bradley"].includes(currentVendor.sponsorship.level)) {
-      addItemToCart("freeBooth").then(() => {
+      addItemToCart("freeBooth", boothId).then(() => {
         if (booth.hasElectricity) {
           addItemToCart("electricity").then(checkout => checkout.addDiscount(currentVendor.cartId, "sponsoredBoothElectricity"))
         }
@@ -285,13 +287,13 @@ client.checkout.updateLineItems(checkoutId, lineItemsToUpdate).then((checkout) =
     } else if (currentVendor.isNonprofit || currentVendor.isGovernmental || currentVendor.isVeteranOwned) {
       addItemToCart("freeBooth").then(() => {
         if (booth.hasElectricity) {
-          addItemToCart("electricity")
+          addItemToCart("electricity", boothId)
             .then(checkout => console.log(checkout))
             .catch(err => console.log(err))
         }
       }).catch(err => console.log(err))
     } else {
-      addItemToCart("standardBooth").then(() => {
+      addItemToCart("standardBooth", boothId).then(() => {
         if (booth.hasElectricity) {
           addItemToCart("electricity")
             .then(checkout => console.log(checkout))
@@ -300,18 +302,18 @@ client.checkout.updateLineItems(checkoutId, lineItemsToUpdate).then((checkout) =
       }).catch(err => console.log(err))
     }
 
-    updateCurrentVendor({
-      "booth.primary": {
-        id: boothId,
-        status: 1
-      }
-    });
+    // updateCurrentVendor({
+    //   "booth.primary": {
+    //     id: boothId,
+    //     status: 1
+    //   }
+    // });
   }
 
   const addSecondaryBoothToCart = (boothId) => {
     const booth = booths.find(b => b.id === boothId)
     if (["Paladin", "Stryker", "Abrams", "Bradley"].includes(currentVendor.sponsorship.level)) {
-      addItemToCart("doubleBooth")
+      addItemToCart("doubleBooth", boothId)
         .then(checkout => checkout.addDiscount(currentVendor.cartId, "sponsoredDoubleBooth"))
         .then(() => {
           if (booth.hasElectricity) {
@@ -321,24 +323,24 @@ client.checkout.updateLineItems(checkoutId, lineItemsToUpdate).then((checkout) =
         .then((checkout) => checkout.addDiscount(currentVendor.cartId, "sponsoredBoothElectricity"))
         .catch(err => console.log(err))
     } else if (currentVendor.isNonprofit || currentVendor.isGovernmental || currentVendor.isVeteranOwned) {
-      addItemToCart("doubleBooth").then(() => {
+      addItemToCart("doubleBooth", boothId).then(() => {
         if (booth.hasElectricity) {
           addItemToCart("electricity").then((checkout) => console.log(checkout))
         }
       }).catch(err => console.log(err))
     } else {
-      addItemToCart("doubleBooth").then(() => {
+      addItemToCart("doubleBooth", boothId).then(() => {
         if (booth.hasElectricity) {
           addItemToCart("electricity").then((checkout) => console.log(checkout)).catch(err => console.log(err))
         }
       }).catch(err => console.log(err))
     }
-    updateCurrentVendor({
-      "booth.secondary": {
-        id: boothId,
-        status: 1
-      }
-    });
+    // updateCurrentVendor({
+    //   "booth.secondary": {
+    //     id: boothId,
+    //     status: 1
+    //   }
+    // });
   }
   const getOrderStatus = () => {
     client
