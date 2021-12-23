@@ -302,12 +302,13 @@ client.checkout.updateLineItems(checkoutId, lineItemsToUpdate).then((checkout) =
       }).catch(err => console.log(err))
     }
 
-    // updateCurrentVendor({
-    //   "booth.primary": {
-    //     id: boothId,
-    //     status: 1
-    //   }
-    // });
+    // may have to refactor this part 
+    updateCurrentVendor({
+      "booth.primary": {
+        id: boothId,
+        status: 1
+      }
+    });
   }
 
   const addSecondaryBoothToCart = (boothId) => {
@@ -335,12 +336,14 @@ client.checkout.updateLineItems(checkoutId, lineItemsToUpdate).then((checkout) =
         }
       }).catch(err => console.log(err))
     }
-    // updateCurrentVendor({
-    //   "booth.secondary": {
-    //     id: boothId,
-    //     status: 1
-    //   }
-    // });
+    
+    // may have to refactor this part 
+    updateCurrentVendor({
+      "booth.secondary": {
+        id: boothId,
+        status: 1
+      }
+    });
   }
   const getOrderStatus = () => {
     client

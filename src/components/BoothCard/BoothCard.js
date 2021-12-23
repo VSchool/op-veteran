@@ -114,14 +114,16 @@ const BoothCard = (props) => {
     else{
       addPrimaryBoothToCart(_id);
     }
-    // holdBooth(
-    //   {
-    //     organization: currentVendor.organization,
-    //     description: currentVendor.description,
-    //     logo: currentVendor.logo,
-    //   },
-    //   _id
-    // );
+
+    // might have to move this somewhere else
+    holdBooth(
+      {
+        organization: currentVendor.organization,
+        description: currentVendor.description,
+        logo: currentVendor.logo,
+      },
+      _id
+    );
     handleClose()
     checkNeighbors();
   };
@@ -152,7 +154,10 @@ const BoothCard = (props) => {
         isOpen: true,
         options: options,
         handleSelectBooth: handleSelectBooth,
-        }))}}
+        })
+      )
+    }
+  }
 
   const isAllowed = () => {
     if(vendor) return false
