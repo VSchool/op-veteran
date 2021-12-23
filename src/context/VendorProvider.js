@@ -295,7 +295,7 @@ client.checkout.updateLineItems(checkoutId, lineItemsToUpdate).then((checkout) =
     } else {
       addItemToCart("standardBooth", boothId).then(() => {
         if (booth.hasElectricity) {
-          addItemToCart("electricity")
+          addItemToCart("electricity", boothId)
             .then(checkout => console.log(checkout))
             .catch(err => console.log(err))
         }
