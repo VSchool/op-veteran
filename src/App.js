@@ -71,7 +71,7 @@ function UserViews() {
       <Route exact path='/'>
         <Landing/>
       </Route>
-      <Route path="register">
+      <Route path="/register">
         <RegisterAccount/>
       </Route>
       <Route path='/vendor'>

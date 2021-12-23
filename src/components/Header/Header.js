@@ -6,6 +6,7 @@ import logo from '../../assets/images/vetfest-logo.png'
 import userIcon from '../../assets/icons/avatar-icon.svg'
 import {Profile} from '../Profile'
 import {IoReturnDownBackOutline} from 'react-icons/io5'
+import { Link, useHistory } from 'react-router-dom';
 
 const HeaderContainer = styled.div`
     position: relative;
@@ -13,7 +14,7 @@ const HeaderContainer = styled.div`
     padding: 20px;
     box-shadow:
     inset 0 -3em 3em rgba(0,0,0,0.1),
-          0 0  0 2px rgb(58, 80, 68),
+          0 0  0 2px rgb(29, 38, 40),
           0.3em 0.3em 1em rgba(0,0,0,0.4);
     
 
@@ -83,39 +84,56 @@ const SideNav = styled.div`
 
 
 export default function Header() {
-    const [sideToggle, setSideToggle] = useState(true)
-    const handleSideBarToggle = () => {
-        setSideToggle(prevState => !prevState)
-        console.log(sideToggle)
-    }
-
-	const { logout } = useContext(AuthContext);
+    
+    const { logout } = useContext(AuthContext);
     const {user}=useContext(UserContext);
     const [showProfile, setShowProfile] = useState(false)
     const handleClick = ()=>{
         setShowProfile((prev)=>!prev)
     }
+    const [sideToggle, setSideToggle] = useState(true)
 
+    const handleSideBarToggle = () => {
+        setSideToggle(prevState => !prevState)
+        console.log(sideToggle)
+    }
+
+    const history = useHistory()
     return (
         <HeaderContainer>
             { 
                 sideToggle ?
-                <span style={{fontSize:'30px',cursor:'pointer'}} onclick={() => handleSideBarToggle()}>&#9776; open</span>
+                <div style={{alignContent: 'center', justifyContent: 'center'}}>
+                    <IoReturnDownBackOutline 
+                        style={{
+                            boxSizing: 'border-box', 
+                            width: '35px', 
+                            height: '35px', 
+                            cursor: 'pointer'
+                        }}
+                        onClick={() => history.goBack()} 
+                    /> 
+                            <span 
+                                style={{fontSize:'30px',cursor:'pointer', padding: '10px'}} 
+                                onClick={handleSideBarToggle}
+                            >
+                                &#9776; open
+                            </span>
+                </div>
                 :
                 <SideNav id='mySideNav'>
-                    <a alt="close" id="closebtn" onclick={handleSideBarToggle}>&times;</a>
+                    <a alt="close" id="closebtn" onClick={handleSideBarToggle}>&times;</a>
                     <a href='#' className='sideNavLink'>Test</a>
                     <a href='#' className='sideNavLink'>Test</a>
                     <a href='#' className='sideNavLink'>Test</a>
                 </SideNav>
             }
-
-
-            <img 
-                src={logo} 
-                alt={'OP Veteran VetFest logo.'} 
-                className={'header-logo'} 
-            />
+            <Link className={'header-logo'} to='/'>
+                <img 
+                    src={logo} 
+                    alt={'OP Veteran VetFest logo.'} 
+                />
+            </Link>
             <img 
                 src={user.userImg === "" ? userIcon : user.userImg} 
                 alt={'User is logged in.'} 
@@ -127,11 +145,3 @@ export default function Header() {
     )
 }
 
-            {/* <IoReturnDownBackOutline 
-                style={{
-                    boxSizing: 'border-box', 
-                    width: '35px', 
-                    height: '35px', 
-                    alignSelf: 'center' 
-                }} 
-            /> */}
