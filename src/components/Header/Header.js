@@ -5,7 +5,7 @@ import { UserContext } from "../../context/UserProvider";
 import logo from '../../assets/images/vetfest-logo.png'
 import userIcon from '../../assets/icons/avatar-icon.svg'
 import {Profile} from '../Profile'
-import {IoReturnDownBackOutline} from 'react-icons/io5'
+import {IoReturnDownBackOutline, IoCloseOutline} from 'react-icons/io5'
 import { Link, useHistory } from 'react-router-dom';
 
 const HeaderContainer = styled.div`
@@ -61,19 +61,26 @@ const SideNav = styled.div`
         color: #818181;
         display: block;
         transition: 0.3s;
+        cursor: pointer;
     }
 
     & > .sideNavLink:hover {
         color: #f1f1f1;
     }
 
-    & > #closeBtn {
+    & > .closeBtn {
         position: absolute;
         top: 0;
         right: 25px;
+        padding: 10px;
         font-size: 36px;
         margin-left: 50px;
         cursor: pointer;
+        color: #818181;
+    }
+
+    & > .closeBtn:hover {
+        color: #f1f1f1;
     }
 
     @media screen and (max-height: 450px) {
@@ -82,15 +89,13 @@ const SideNav = styled.div`
     }
 `
 
-
-export default function Header() {
+export default function Header(props) {
     
     const { logout } = useContext(AuthContext);
+    const { states, changeState } = props
     const {user}=useContext(UserContext);
     const [showProfile, setShowProfile] = useState(false)
-    const handleClick = ()=>{
-        setShowProfile((prev)=>!prev)
-    }
+    const handleClick = () => { setShowProfile((prev)=>!prev) }
     const [sideToggle, setSideToggle] = useState(true)
 
     const handleSideBarToggle = () => {
@@ -99,6 +104,7 @@ export default function Header() {
     }
 
     const history = useHistory()
+
     return (
         <HeaderContainer>
             { 
@@ -121,11 +127,15 @@ export default function Header() {
                             </span>
                 </div>
                 :
+                // Drawer menu -- toggle different component render states. See Vendor component render logic.
                 <SideNav id='mySideNav'>
-                    <a alt="close" id="closebtn" onClick={handleSideBarToggle}>&times;</a>
-                    <a href='#' className='sideNavLink'>Test</a>
-                    <a href='#' className='sideNavLink'>Test</a>
-                    <a href='#' className='sideNavLink'>Test</a>
+                    <span className='closeBtn' alt="close" onClick={handleSideBarToggle}><IoCloseOutline /></span>
+                    {/* The 'Home' link is not working right now */}
+                    <span className='sideNavLink' onClick={() => changeState(states.HOME)}>Home</span>
+                    <span className='sideNavLink' onClick={() => changeState(states.REGISTER)}>Register</span>
+                    <span className='sideNavLink' onClick={() => changeState(states.SPONSOR)}>Sponsor Tiers</span>
+                    <span className='sideNavLink' onClick={() => changeState(states.SELECT)}>Booth Select</span>
+                    <span className='sideNavLink' onClick={() => changeState(states.FINALIZE)}>Finalize</span>
                 </SideNav>
             }
             <Link className={'header-logo'} to='/'>

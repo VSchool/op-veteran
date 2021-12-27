@@ -30,10 +30,9 @@ export default function Vendor() {
     SELECT: 3,
     FINALIZE: 4
   }
-  const [state,
-    setState] = useState(states.HOME)
-  const [showSponsorship,
-    setShowSponsorship] = useState(false)
+  const [state, setState] = useState(states.HOME)
+  const [showSponsorship, setShowSponsorship] = useState(false)
+
   const changeState = newState => {
     if (newState) {
       setState(newState)
@@ -55,7 +54,7 @@ export default function Vendor() {
 return (
   <VendorPageContainer>
     {/* <Finalize/>  Added here for faster testing and debgging of the problem component */}
-    <Header/> {state === states.HOME
+    <Header states={states} changeState={changeState}/> {state === states.HOME
       ? <Home changeState={changeState} states={states}/>
       : state === states.REGISTER
         ? <RegistrationForm
