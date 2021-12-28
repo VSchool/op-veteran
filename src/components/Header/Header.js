@@ -83,9 +83,39 @@ const SideNav = styled.div`
         color: #f1f1f1;
     }
 
+    & > .logout {
+        display: flex;
+        height: 1500px;
+        align: center;
+        justify: center;
+        padding: 8px 8px 8px 32px;
+        text-decoration: none;
+        font-size: 25px;
+        color: #818181;
+        display: block;
+        transition: 0.3s;
+        cursor: pointer;
+    }
+
     @media screen and (max-height: 450px) {
         .sidenav {padding-top: 15px;}
         .sideNavLink {font-size: 18px;}
+    }
+`
+
+const LogOut = styled.span`
+    display: flex;
+    height: 50%;
+    align-items: center;
+
+    & > h1 {
+        padding: 8px 8px 8px 32px;
+        text-decoration: none;
+        font-size: 25px;
+        color: #818181;
+        display: block;
+        transition: 0.3s;
+        cursor: pointer;
     }
 `
 
@@ -109,23 +139,12 @@ export default function Header(props) {
         <HeaderContainer>
             { 
                 sideToggle ?
-                <div style={{alignContent: 'center', justifyContent: 'center'}}>
-                    <IoReturnDownBackOutline 
-                        style={{
-                            boxSizing: 'border-box', 
-                            width: '35px', 
-                            height: '35px', 
-                            cursor: 'pointer'
-                        }}
-                        onClick={() => history.goBack()} 
-                    /> 
                             <span 
                                 style={{fontSize:'30px',cursor:'pointer', padding: '10px'}} 
                                 onClick={handleSideBarToggle}
                             >
-                                &#9776; open
+                                &#9776;
                             </span>
-                </div>
                 :
                 // Drawer menu -- toggle different component render states. See Vendor component render logic.
                 <SideNav id='mySideNav'>
@@ -136,6 +155,10 @@ export default function Header(props) {
                     <span className='sideNavLink' onClick={() => changeState(states.SPONSOR)}>Sponsor Tiers</span>
                     <span className='sideNavLink' onClick={() => changeState(states.SELECT)}>Booth Select</span>
                     <span className='sideNavLink' onClick={() => changeState(states.FINALIZE)}>Finalize</span>
+
+                    <LogOut>
+                        <h1 onClick={logout}>Logout</h1>
+                    </LogOut>
                 </SideNav>
             }
             <Link className={'header-logo'} to='/'>
