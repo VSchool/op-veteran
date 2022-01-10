@@ -5,7 +5,7 @@ import { UserContext } from "../../context/UserProvider";
 import logo from '../../assets/images/vetfest-logo.png'
 import userIcon from '../../assets/icons/avatar-icon.svg'
 import {Profile} from '../Profile'
-import {IoReturnDownBackOutline, IoCloseOutline} from 'react-icons/io5'
+import {IoChevronBackSharp, IoCloseOutline} from 'react-icons/io5'
 import { Link, useHistory } from 'react-router-dom';
 
 const HeaderContainer = styled.div`
@@ -139,22 +139,38 @@ export default function Header(props) {
         <HeaderContainer>
             { 
                 sideToggle ?
-                            <span 
-                                style={{fontSize:'30px',cursor:'pointer', padding: '10px'}} 
-                                onClick={handleSideBarToggle}
-                            >
-                                &#9776;
-                            </span>
+                <>
+                    <span 
+                        style={{cursor: 'pointer'}}
+                        onClick={history.goBack()}
+                    >
+                        <IoChevronBackSharp />
+                    </span>
+                    <span 
+                        style={{fontSize:'30px',cursor:'pointer', padding: '10px'}} 
+                        onClick={handleSideBarToggle}
+                    >
+                        &#9776;
+                    </span>
+                </>
                 :
                 // Drawer menu -- toggle different component render states. See Vendor component render logic.
                 <SideNav id='mySideNav'>
                     <span className='closeBtn' alt="close" onClick={handleSideBarToggle}><IoCloseOutline /></span>
                     {/* The 'Home' link is not working right now */}
                     <span className='sideNavLink' onClick={() => changeState(states.HOME)}>Home</span>
-                    <span className='sideNavLink' onClick={() => changeState(states.REGISTER)}>Register</span>
-                    <span className='sideNavLink' onClick={() => changeState(states.SPONSOR)}>Sponsor Tiers</span>
-                    <span className='sideNavLink' onClick={() => changeState(states.SELECT)}>Booth Select</span>
-                    <span className='sideNavLink' onClick={() => changeState(states.FINALIZE)}>Finalize</span>
+                    <Link to='/registration' className='sideNavLink'>
+                        <span onClick={() => changeState(states.REGISTER)}>Register</span>
+                    </Link>
+                    <Link to='sponsorship' className='sideNavLink'>
+                        <span onClick={() => changeState(states.SPONSOR)}>Sponsor Tiers</span>
+                    </Link>
+                    <Link to='/booth' className='sideNavLink'>
+                        <span onClick={() => changeState(states.SELECT)}>Booth Select</span>
+                    </Link>
+                    <Link to='/finalize' className='sideNavLink'>
+                        <span onClick={() => changeState(states.FINALIZE)}>Finalize</span>
+                    </Link>
 
                     <LogOut>
                         <h1 onClick={logout}>Logout</h1>
