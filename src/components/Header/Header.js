@@ -13,9 +13,9 @@ const HeaderContainer = styled.div`
     height: 88px;
     padding: 20px;
     box-shadow:
-    inset 0 -3em 3em rgba(0,0,0,0.1),
-          0 0  0 2px rgb(29, 38, 40),
-          0.3em 0.3em 1em rgba(0,0,0,0.4);
+    inset 0 -3em 3em rgb(209, 209, 209),
+    0 0  0 2px rgba(0,0,0,0.4),
+    0.3em 0.3em 1em rgba(0,0,0,0.4);
     
 
     & > .exit-icon {

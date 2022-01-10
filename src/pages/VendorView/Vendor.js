@@ -9,6 +9,7 @@ import {BoothManagement} from '../VendorView/BoothManagement'
 import CanvasProvider from '../../context/CanvasProvider'
 import Home from './Home'
 import Finalize from './Finalize'
+import { Footer } from '../../components/Footer/Footer'
 
 const VendorPageContainer = styled.div `
     box-sizing: border-box;
@@ -67,7 +68,7 @@ return (
             ? <BoothManagement states={states} changeState={changeState}/>
             : <Finalize/>
               }
-
+    <Footer/>
   </VendorPageContainer>
 )
 }

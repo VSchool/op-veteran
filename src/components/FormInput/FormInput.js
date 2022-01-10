@@ -118,7 +118,7 @@ export default function FormInput(props) {
                 </> 
                 : type === "yes-no" ? <>
                 <lable>Yes <input 
-                 checked={input === "yes"} onChange={handleChange} type="radio" value="yes" name={vendorProp} /> </lable>
+                checked={input === "yes"} onChange={handleChange} type="radio" value="yes" name={vendorProp} /> </lable>
                 <lable>No <input checked={input === "no"} onChange={handleChange} ref={focusRef} type="radio" value="no" name={vendorProp} /> </lable>
                 </> : 
                 <>
