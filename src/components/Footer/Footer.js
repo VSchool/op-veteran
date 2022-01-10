@@ -29,13 +29,11 @@ export const Footer = () => {
     font-weight: bold
     `
 
-
-    // setup to hide on canvas/booth picker view
     return(
         <FooterContainer>
             <StyledLink href='https://www.opveteran.org/pages/o-p-vetfest'> About Us </StyledLink>
             <StyledLink href='mailto:denny.katona@opveteran.org'> Contact </StyledLink>
-            <a> © 2022, O.P. Veteran Powered by Shopify </a>
+            <p> © 2022, O.P. Veteran Powered by Shopify </p>
             <span>
                 <StyledLink href='https://www.facebook.com/opveteran' target='_blank'> <StyledIcon className="bi bi-facebook">  </StyledIcon> </StyledLink>
                 <StyledLink href='https://www.instagram.com/o.p.veteran' target='_blank'> <StyledIcon className="bi bi-instagram"/> </StyledLink>
