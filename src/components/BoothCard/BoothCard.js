@@ -75,6 +75,8 @@ const Hr = styled.hr`
 `;
 const BoothCard = (props) => {
   const {
+    addPrimaryBoothToLocalCart, 
+    addSecondaryBoothToLocalCart,    
     currentVendor,
     updateCurrentVendor,
     addPrimaryBoothToCart,
@@ -109,21 +111,23 @@ const BoothCard = (props) => {
   // this needs lots of refactoring 
   const handleSelectBooth = (_id, secondary=false) => {
     if (secondary) {
-      addSecondaryBoothToCart(_id);
+      //addSecondaryBoothToCart(_id);
+      addSecondaryBoothToLocalCart(_id)  
     }
     else{
-      addPrimaryBoothToCart(_id);
+      //addPrimaryBoothToCart(_id);
+      addPrimaryBoothToLocalCart(_id)  
     }
 
     // might have to move this somewhere else
-    holdBooth(
-      {
-        organization: currentVendor.organization,
-        description: currentVendor.description,
-        logo: currentVendor.logo,
-      },
-      _id
-    );
+    // holdBooth(
+    //   {
+    //     organization: currentVendor.organization,
+    //     description: currentVendor.description,
+    //     logo: currentVendor.logo,
+    //   },
+    //   _id
+    // );
     handleClose()
     checkNeighbors();
   };
@@ -131,6 +135,10 @@ const BoothCard = (props) => {
   const handlePrimaryClick = (e) => {
     e.preventDefault();
     if (isAllowed()) {
+      // idea: instead of calling handleSelectBooth,
+      // update currentBoothSelection and show that in
+      // cart, then have the option for the user to 
+      // add the two booths to their cart
       handleSelectBooth(id);
     } 
     // don't send user to vendors page

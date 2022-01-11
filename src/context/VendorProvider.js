@@ -44,6 +44,12 @@ export default function VendorProvider({children}) {
   const [cartItems, setCartItems] = useState(null);
   const client = Client.buildClient({domain: 'o-p-veteran.myshopify.com', storefrontAccessToken: '76c1fba5d995f6b7dbb1eb1c1c3c5745'});
 
+  // test
+  const [localCart, setLocalCart] = useState({
+    primaryBoothId: "", 
+    secondaryBoothId: ""
+  })
+
   // This should work if we can get the cartId properly.  Doesnt appear its in the 
   // currentVendor data becasue createCart function is never called 
   const getCartItems = () => {
@@ -274,6 +280,17 @@ client.checkout.updateLineItems(checkoutId, lineItemsToUpdate).then((checkout) =
   // setPrimaryMode(!currentVendor.booths.primary.status)        }  },
   // [currentVendor])
 
+  // test to check if it's okay to make localcart
+  const addPrimaryBoothToLocalCart = (boothId) => { 
+    console.log("TEST PRIMARY: only setting current local cart")
+    setLocalCart({primaryBoothId: boothId})
+  }
+
+  const addSecondaryBoothToLocalCart = (boothId) => { 
+    console.log("TEST SECONDARY: only setting current local cart")
+    setLocalCart(prevCart => ({...prevCart,secondaryBoothId: boothId}))
+  }
+
   const addPrimaryBoothToCart = (boothId) => {
     console.log("this is the current booth selection id from addPrimaryBoothCart: ", boothId)
     //currentBooth should hold the whole booth instead of just the ID to avoid always holding
@@ -372,6 +389,8 @@ client.checkout.updateLineItems(checkoutId, lineItemsToUpdate).then((checkout) =
       addItemToCart,
       addPrimaryBoothToCart,
       addSecondaryBoothToCart,
+      addPrimaryBoothToLocalCart, 
+      addSecondaryBoothToLocalCart,
       createCart,
       checkProducts,
       primaryMode,
@@ -379,7 +398,8 @@ client.checkout.updateLineItems(checkoutId, lineItemsToUpdate).then((checkout) =
       getCartItems,
       openCart,
       getOrderStatus,
-      client
+      client,
+      localCart
     }}>
       {children}
     </VendorContext.Provider>

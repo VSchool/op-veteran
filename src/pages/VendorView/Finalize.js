@@ -86,7 +86,7 @@ const ItemQuantity = styled.p`
 
 const Finalize = (props) => {
   // const { currentVendor, getCartItems, cart, openCart } = useContext(VendorContext);
-  const { currentVendor, openCart, getCartItems, cartItems, changeQuantity} = useContext(VendorContext);
+  const { currentVendor, openCart, getCartItems, cartItems, changeQuantity, localCart} = useContext(VendorContext);
   // const [cartItems, setCartItems] = useState([])
 
   // This was the original code which breaks
@@ -108,13 +108,20 @@ console.log("finalize page: currentVendor ", cartItems)
   return (
     <CardContainer>
       {/* <Wrapper> */}
+      <p>
+      Booth Selection: {localCart.primaryBoothId}
+      </p>      
+      <p>
+      Adjacent Booth Selection: {localCart.secondaryBoothId}
+      </p>
         <Head>Cart</Head>
-          {cartItems?.map(item => <article key={item}>
-            <p>Product: {item.title}</p>
-            {/* <p>ID: {item.id}</p> */}
-            <p>Quantity: {item.quantity}</p>
+        {cartItems?.map(item => <article key={item}>
+          <p>Product: {item.title}</p>
+          {/* <p>ID: {item.id}</p> */}
+          <p>Quantity: {item.quantity}</p>
           <button onClick={()=>changeQuantity(item.id, item.quantity)}>Remove</button>
-          </article>)}
+          </article>
+        )}
         {/* <a onClick={(e)=>console.log(e.target)} href={currentVendor.cartUrl} target="_blank">Open Cart</a> */}
         <Button buttonText="Continue to checkout" buttonStyle="primary" onClick={openCart}/>
       {/* </Wrapper> */}
