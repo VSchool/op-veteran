@@ -39,8 +39,6 @@ const HeaderContainer = styled.div`
         width: 40px;
         border-radius: 50%;
     }
-
-
 `       
 const SideNav = styled.div`
     height: 100%;

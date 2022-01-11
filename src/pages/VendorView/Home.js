@@ -168,7 +168,7 @@ const Home = (props) => {
       }, [])
 
               return (
-                <Wrapper>
+          <Wrapper>
 
       <HeaderWrapper>
         <Header>Vendor Registration</Header>

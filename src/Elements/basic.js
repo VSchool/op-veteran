@@ -66,12 +66,12 @@ const ButtonWrapper = styled.div`
   flex-direction: column;
 `;
 const Wrapper = styled.div`
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: ${props=>props.alignment ? props.alignment : "center"};
   padding: ${props=>props.padding ? props.padding : "0px"};
-  margin-bottom: 75px;
   overflow: ${props=>!props.showOverflow ? "hidden" : "scroll"};
 `
 const FormWrapper = styled.form`

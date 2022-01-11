@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 
-
 export const Footer = () => {
     const FooterContainer = styled.footer`
     box-shadow: inset
