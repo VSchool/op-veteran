@@ -170,10 +170,10 @@ const Home = (props) => {
               return (
           <Wrapper>
 
+      <TodoContainer>
       <HeaderWrapper>
         <Header>Vendor Registration</Header>
       </HeaderWrapper>
-      <TodoContainer>
         <List>
           <Header2>
             To do:
