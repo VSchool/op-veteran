@@ -44,10 +44,17 @@ const Booth = (props) => {
     }
     id += number
     console.log(`setting current booth to ${id}`)
-    setCurrentBooth(id)}
+    setCurrentBooth(id)
+  }
   
   return (
-    <Group width={size ? size : 19} height={size ? size : 19} x={0} y={size ? size * number + Math.floor((number-1)/7)*24 : (number * 19)+ Math.floor((number-1)/7)*24} onClick={()=>{handleClick()}}>
+    <Group 
+      width={size ? size : 19} 
+      height={size ? size : 19} 
+      x={0} 
+      y={size ? size * number + Math.floor((number-1)/7)*24 : (number * 19)+ Math.floor((number-1)/7)*24} 
+      onClick={()=>{handleClick()}}
+    >
       <Rect
         width={size ? size : 19} height={size ? size : 19}
         x={0}

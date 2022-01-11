@@ -132,14 +132,16 @@ const BoothCard = (props) => {
     e.preventDefault();
     if (isAllowed()) {
       handleSelectBooth(id);
-    } else {
-      const updatedVendor = {
-        ...currentVendor,
-      };
-      updatedVendor.sponsorship.interested = true;
-      updateCurrentVendor(updatedVendor);
-      changeState(states.SPONSOR);
-    }
+    } 
+    // don't send user to vendors page
+    // else {
+    //   const updatedVendor = {
+    //     ...currentVendor,
+    //   };
+    //   updatedVendor.sponsorship.interested = true;
+    //   updateCurrentVendor(updatedVendor);
+    //   changeState(states.SPONSOR);
+    // }
   };
   const checkNeighbors = () => {
     const options = booths.reduce((response, b) => {
