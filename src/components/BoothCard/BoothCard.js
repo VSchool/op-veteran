@@ -111,11 +111,11 @@ const BoothCard = (props) => {
   // this needs lots of refactoring 
   const handleSelectBooth = (_id, secondary=false) => {
     if (secondary) {
-      //addSecondaryBoothToCart(_id);
+      // addSecondaryBoothToCart(_id);
       addSecondaryBoothToLocalCart(_id)  
     }
     else{
-      //addPrimaryBoothToCart(_id);
+      // addPrimaryBoothToCart(_id);
       addPrimaryBoothToLocalCart(_id)  
     }
 
