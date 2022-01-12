@@ -108,22 +108,20 @@ console.log("finalize page: currentVendor ", cartItems)
   return (
     <CardContainer>
       {/* <Wrapper> */}
-      <p>
-      Booth Selection: {localCart.primaryBoothId}
-      </p>      
-      <p>
-      Adjacent Booth Selection: {localCart.secondaryBoothId}
-      </p>
-        <Head>Cart</Head>
-        {cartItems?.map(item => <article key={item}>
-          <p>Product: {item.title}</p>
-          {/* <p>ID: {item.id}</p> */}
-          <p>Quantity: {item.quantity}</p>
-          <button onClick={()=>changeQuantity(item.id, item.quantity)}>Remove</button>
-          </article>
-        )}
-        {/* <a onClick={(e)=>console.log(e.target)} href={currentVendor.cartUrl} target="_blank">Open Cart</a> */}
-        <Button buttonText="Continue to checkout" buttonStyle="primary" onClick={openCart}/>
+      <p>Booth Selection: {localCart.primaryBoothId}</p>      
+      <p>Adjacent Booth Selection: {localCart.secondaryBoothId}</p>
+
+      {/* Shopify Cart items list */}
+      {/* <Head>Cart</Head> */}
+      {/* {cartItems?.map(item => <article key={item}> */}
+        {/* <p>Product: {item.title}</p> */}
+        {/* <p>ID: {item.id}</p> */}
+        {/* <p>Quantity: {item.quantity}</p> */}
+        {/* <button onClick={()=>changeQuantity(item.id, item.quantity)}>Remove</button> */}
+        {/* </article> */}
+      {/* )} */}
+      {/* <a onClick={(e)=>console.log(e.target)} href={currentVendor.cartUrl} target="_blank">Open Cart</a> */}
+      <Button buttonText="Continue to checkout" buttonStyle="primary" onClick={openCart}/>
       {/* </Wrapper> */}
     </CardContainer>
   );
