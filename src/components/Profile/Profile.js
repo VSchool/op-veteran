@@ -51,16 +51,16 @@ const Profile = (props) =>{
 
     /* Delete this later, just for testing*/
     /* for testing purposes because you can add more than 2 booths at a time */
-    // const resetBooths = () => { 
-    //     boothRef.get().then(function(querySnapshot) {
-    //         querySnapshot.forEach(function(doc) {
-    //             doc.ref.update({
-    //                 status: 0,
-    //                 vendor: null
-    //             });
-    //         });
-    //     }).catch(err => console.log(err))
-    // }
+    const resetBooths = () => { 
+        boothRef.get().then(function(querySnapshot) {
+            querySnapshot.forEach(function(doc) {
+                doc.ref.update({
+                    status: 0,
+                    vendor: null
+                });
+            });
+        }).catch(err => console.log(err))
+    }
     return (
         <Wrapper>
                 <Logo src={info.logo}/>
@@ -70,7 +70,7 @@ const Profile = (props) =>{
                 <Paragraph>Sponsorship: {info.sponsorship.level}</Paragraph>
                 <Finalize/>
                 {/* for testing purposes because you can add more than 2 booths at a time */}
-                {/* <button onClick={resetBooths}>Reset Booths</button> */}
+                <button onClick={resetBooths}>For Testing only - Reset Booths</button>
         </Wrapper>
     )
 }

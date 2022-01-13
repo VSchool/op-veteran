@@ -108,18 +108,22 @@ console.log("finalize page: currentVendor ", cartItems)
   return (
     <CardContainer>
       {/* <Wrapper> */}
+      <Head>Local Cart Items</Head>
       <p>Booth Selection: {localCart.primaryBoothId}</p>      
       <p>Adjacent Booth Selection: {localCart.secondaryBoothId}</p>
-
+      
+      <br/><br/>
+      
       {/* Shopify Cart items list */}
-      {/* <Head>Cart</Head> */}
-      {/* {cartItems?.map(item => <article key={item}> */}
-        {/* <p>Product: {item.title}</p> */}
+      <Head>Shopift Cart Items</Head>
+      {cartItems?.map(item => <article key={item}>
+        <p>Product: {item.title}</p>
         {/* <p>ID: {item.id}</p> */}
-        {/* <p>Quantity: {item.quantity}</p> */}
-        {/* <button onClick={()=>changeQuantity(item.id, item.quantity)}>Remove</button> */}
-        {/* </article> */}
-      {/* )} */}
+        <p>Quantity: {item.quantity}</p>
+        <button onClick={()=>changeQuantity(item.id, item.quantity)}>Remove</button>
+        </article>
+      )} 
+      {/* End Shopify Cart ITems List */}
       {/* <a onClick={(e)=>console.log(e.target)} href={currentVendor.cartUrl} target="_blank">Open Cart</a> */}
       <Button buttonText="Continue to checkout" buttonStyle="primary" onClick={openCart}/>
       {/* </Wrapper> */}

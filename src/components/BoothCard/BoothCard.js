@@ -111,15 +111,15 @@ const BoothCard = (props) => {
   // this needs lots of refactoring 
   const handleSelectBooth = (_id, secondary=false) => {
     if (secondary) {
-      // addSecondaryBoothToCart(_id);
+      //addSecondaryBoothToCart(_id);
       addSecondaryBoothToLocalCart(_id)  
     }
     else{
-      // addPrimaryBoothToCart(_id);
+      //addPrimaryBoothToCart(_id);
       addPrimaryBoothToLocalCart(_id)  
     }
 
-    // might have to move this somewhere else
+    //might have to move this somewhere else
     // holdBooth(
     //   {
     //     organization: currentVendor.organization,
@@ -129,7 +129,7 @@ const BoothCard = (props) => {
     //   _id
     // );
     handleClose()
-    checkNeighbors();
+    checkNeighbors(); // might have to move this to else statement
   };
   
   const handlePrimaryClick = (e) => {
