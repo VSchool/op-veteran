@@ -1,4 +1,5 @@
 import React, {useContext, useState, useEffect} from 'react'
+import { useHistory } from 'react-router'
 import styled from 'styled-components'
 import {UserContext} from '../../context/UserProvider'
 import {VendorContext} from '../../context/VendorProvider'
@@ -22,7 +23,7 @@ const Header2 = styled.h2 `
     padding: 15px 15px;
     width: 100%;
     height: 2em;
-   box-shadow: 0 0px 10px rgba(0, 0, 0, 0.14);
+    box-shadow: 0 0px 10px rgba(0, 0, 0, 0.14);
     background-color: #232323;
     color: #ecf0f1;
 `
@@ -33,7 +34,6 @@ const TodoContainer = styled.div `
     align-items: center;
     margin: auto;
     padding: 20px 10px;
-   
     width:  clamp(300px, 75%, 800px);
     height: max-content;
 `
@@ -98,75 +98,82 @@ const Home = (props) => {
   const {currentVendor, run, matchVendor, updateCurrentVendor, storeFile, checkProducts, getCartItems, getOrderStatus, clearCart} = useContext(VendorContext)
   const {updateBooth, booths, setNeighbors, newBooths, resetBooth} = useContext(BoothContext)
   
-  useEffect(() => {
-    matchVendor()
-  }, [])
+  const history = useHistory()
+  
   const [items,
     setItems] = useState({
-    createAccount: true,
-    registerVendor: false,
-    uploadLogo: false,
-    sponsor: false,
-    selectBooth: false,
-    completeRegistration: false
-  })
-  const saveLogo = (file) => {
-    const fileName = file.name
-    const extension = fileName.split('.')[1]
-    const newFileName = currentVendor?.organization.replace(/ /g,'')
-    console.log(newFileName)
-    storeFile(file, `logos/${newFileName}/${newFileName}.${extension}`) 
-  }
-  const handleLogoUpload = (e) => {
-    setShowLogoUploader(false)
-    saveLogo(file)
-  }
-  const handleClick = (e) => {
-    switch (e.target.innerText) {
-      case "Register vendor":
-        changeState(states.REGISTER)
-        break;
-      case "Upload logo":
-        setShowLogoUploader(!setShowLogoUploader)
-        break;
-      case "Choose sponsorship":
-        changeState(states.SPONSOR)
-        break;
-      case "Select booth":
-        changeState(states.SELECT)
-        break;
-      case "Finalize registration":
-        console.log("Finalize registration")
-        changeState(states.FINALIZE)
-        break;
+      createAccount: true,
+      registerVendor: false,
+      uploadLogo: false,
+      sponsor: false,
+      selectBooth: false,
+      completeRegistration: false
+    })
+    const saveLogo = (file) => {
+      const fileName = file.name
+      const extension = fileName.split('.')[1]
+      const newFileName = currentVendor?.organization.replace(/ /g,'')
+      console.log(newFileName)
+      storeFile(file, `logos/${newFileName}/${newFileName}.${extension}`) 
+    }
+    const handleLogoUpload = (e) => {
+      setShowLogoUploader(false)
+      saveLogo(file)
+    }
+    const handleClick = (e) => {
+      switch (e.target.innerText) {
+        case "Register vendor":
+          changeState(states.REGISTER)
+          break;
+          case "Upload logo":
+            setShowLogoUploader(!setShowLogoUploader)
+            break;
+            case "Choose sponsorship":
+              changeState(states.SPONSOR)
+              break;
+              case "Select booth":
+                changeState(states.SELECT)
+                break;
+                case "Finalize registration":
+                  console.log("Finalize registration")
+                  changeState(states.FINALIZE)
+                  break;
+                  
+                }
+              }
+              console.log(currentVendor)
+              const register = () => {
+                // need to set conditional so can't access this page if already registered
+                  history.push('/register')
+                // changeState(states.REGISTER)
+              }
+              const finalize=() => {
+                console.log("Finalize registration")
+                changeState(states.FINALIZE)
+              }
+              const changeBooths = (e)=>{
+                console.log("changing booths")
+                for (let booth of booths) {
+                  if (booth?.restriction !== 1 && booth?.restriction !== 2){
+                    const updatedBooth = {...booth}
+                    updatedBooth.restriction = 0
+                    updateBooth(updatedBooth, booth?.id)
+                    console.log(`updating booth ${booth?.id}`)
+                  }
+                }
+              }
 
-    }
-  }
-  const register = ()=>{
-    changeState(states.REGISTER)
-  }
-  const finalize=() => {
-    console.log("Finalize registration")
-        changeState(states.FINALIZE)
-  }
-  const changeBooths = (e)=>{
-    console.log("changing booths")
-    for (let booth of booths) {
-      if (booth?.restriction !== 1 && booth?.restriction !== 2){
-      const updatedBooth = {...booth}
-      updatedBooth.restriction = 0
-      updateBooth(updatedBooth, booth?.id)
-      console.log(`updating booth ${booth?.id}`)
-    }
-    }
-  }
-  return (
-    <Wrapper>
+      useEffect(() => {
+        matchVendor()
+      }, [])
 
+              return (
+          <Wrapper>
+
+      <TodoContainer>
       <HeaderWrapper>
         <Header>Vendor Registration</Header>
       </HeaderWrapper>
-      <TodoContainer>
         <List>
           <Header2>
             To do:
@@ -241,7 +248,6 @@ const Home = (props) => {
           </ListItem>
         </List>
       </TodoContainer>
-
     </Wrapper>
   )
 }
