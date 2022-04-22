@@ -4,6 +4,8 @@ import { Button } from "../Button";
 import { CanvasContext } from "../../context/CanvasProvider";
 import { BoothContext } from "../../context/BoothProvider";
 import { VendorContext } from "../../context/VendorProvider";
+import {IoCloseOutline} from 'react-icons/io5'
+
 
 const CardContainer = styled.div`
   width: 311px;
@@ -22,6 +24,23 @@ const CardContainer = styled.div`
   bottom: 0;
   left: 0;
   right: 0;
+`;
+
+const CloseBtn = styled.div`
+  & > .closeBtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    padding: 10px;
+    font-size: 36px;
+    margin-left: 50px;
+    cursor: pointer;
+    color: #818181;
+  }
+
+  & > .closeBtn:hover {
+    color: #f1f1f1;
+  }
 `;
 const ButtonWrapper = styled.div`
   display: flex;
@@ -166,6 +185,9 @@ const BoothCard = (props) => {
   return (
     <CardContainer>
       <HeaderWrapper>
+        <CloseBtn>      
+          <span className='closeBtn' alt="close" onClick={handleClose}><IoCloseOutline /></span>
+        </CloseBtn>
         <Header>{`Booth ${id}`}</Header>
         <Paragraph>Info & availability</Paragraph>
       </HeaderWrapper>
