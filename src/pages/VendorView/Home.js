@@ -1,5 +1,4 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { useHistory } from 'react-router';
 import styled from 'styled-components';
 import { UserContext } from '../../context/UserProvider';
 import { VendorContext } from '../../context/VendorProvider';
@@ -7,6 +6,7 @@ import { BoothContext } from '../../context/BoothProvider';
 import { Button } from '../../components/Button';
 import Modal from '../../components/Modal';
 import StatusMessage from '../../components/StatusMessage';
+import { Link } from 'react-router-dom';
 import {
   Wrapper,
   Header,
@@ -98,8 +98,6 @@ const Home = (props) => {
   const { updateBooth, booths, setNeighbors, newBooths, resetBooth } =
     useContext(BoothContext);
 
-  const history = useHistory();
-
   const [items, setItems] = useState({
     createAccount: true,
     registerVendor: false,
@@ -108,6 +106,7 @@ const Home = (props) => {
     selectBooth: false,
     completeRegistration: false,
   });
+
   const saveLogo = (file) => {
     const fileName = file.name;
     const extension = fileName.split('.')[1];
@@ -115,36 +114,22 @@ const Home = (props) => {
     console.log(newFileName);
     storeFile(file, `logos/${newFileName}/${newFileName}.${extension}`);
   };
+
   const handleLogoUpload = (e) => {
     setShowLogoUploader(false);
     saveLogo(file);
   };
+
   const handleClick = (e) => {
     switch (e.target.innerText) {
-      case 'Register vendor':
-        changeState(states.REGISTER);
-        break;
       case 'Upload logo':
         setShowLogoUploader(!setShowLogoUploader);
         break;
-      case 'Choose sponsorship':
-        changeState(states.SPONSOR);
-        break;
-      case 'Select booth':
-        changeState(states.SELECT);
-        break;
-      case 'Finalize registration':
-        console.log('Finalize registration');
-        changeState(states.FINALIZE);
+      default:
         break;
     }
   };
   console.log(currentVendor);
-  const register = () => {
-    // need to set conditional so can't access this page if already registered
-    history.push('/register');
-    // changeState(states.REGISTER)
-  };
   const finalize = () => {
     console.log('Finalize registration');
     changeState(states.FINALIZE);
@@ -174,17 +159,14 @@ const Home = (props) => {
         <List>
           <Header2>To do:</Header2>
           <ListItem complete={true}>Create account</ListItem>
-          <ListItem
-            complete={currentVendor?.organization}
-            current={currentVendor === null}
-            onClick={(e) => {
-              if (currentVendor === null) {
-                register();
-              }
-            }}
-          >
-            Register vendor
-          </ListItem>
+          <Link to='/register'>
+            <ListItem
+              complete={currentVendor?.organization}
+              current={currentVendor === null}
+            >
+              Register vendor
+            </ListItem>
+          </Link>
           {currentVendor && !currentVendor?.logo ? (
             <ListItem
               complete={currentVendor && currentVendor?.logo}
@@ -239,24 +221,25 @@ const Home = (props) => {
               Choose sponsorship
             </ListItem>
           ) : null}
-          <ListItem
-            onClick={(e) => {
-              handleClick(e);
-            }}
-            complete={currentVendor?.booth?.primary.status > 0}
-            current={currentVendor?.booth?.primary.status === 0}
-          >
-            Select booth
-          </ListItem>
-          <ListItem
-            current={currentVendor?.booth?.primary?.status === 1}
-            complete={currentVendor?.booth?.primary?.status === 2}
-            onClick={(e) => {
-              changeState(states.FINALIZE);
-            }}
-          >
-            Finalize registration
-          </ListItem>
+          <Link to='/booth'>
+            <ListItem
+              onClick={(e) => {
+                handleClick(e);
+              }}
+              complete={currentVendor?.booth?.primary.status > 0}
+              current={currentVendor?.booth?.primary.status === 0}
+            >
+              Select booth
+            </ListItem>
+          </Link>
+          <Link to='/finalize'>
+            <ListItem
+              current={currentVendor?.booth?.primary?.status === 1}
+              complete={currentVendor?.booth?.primary?.status === 2}
+            >
+              Finalize registration
+            </ListItem>
+          </Link>
         </List>
       </TodoContainer>
     </Wrapper>
