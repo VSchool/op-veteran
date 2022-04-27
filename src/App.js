@@ -74,7 +74,7 @@ function UserViews() {
       <>
         <Header />
         <Routes>
-          <Route path='/home' element={<Home />} />
+          <Route path='/' element={<Home />} />
           <Route path='/registration' element={<RegistrationForm />} />
           {/* <Route path='/registration' element={<RegisterAccount />} /> */}
           <Route path='/sponsorship' element={<SponsorshipSelection />} />

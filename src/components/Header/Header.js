@@ -186,7 +186,7 @@ export default function Header() {
           {/* The 'Home' link is not working right now */}
           <div className='sideNavContainer'>
             <div className='sideNavLinks'>
-              <Link to='/home' className='sideNavLink'>
+              <Link to='/' className='sideNavLink'>
                 <span className='sideNavLink'>Home</span>
               </Link>
               <Link to='/registration' className='sideNavLink'>
