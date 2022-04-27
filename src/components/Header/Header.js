@@ -41,7 +41,7 @@ const HeaderContainer = styled.div`
 `;
 const SideNav = styled.div`
   height: 100%;
-  width: 350px;
+  width: 300px;
   position: fixed;
   z-index: 1;
   top: 0;
@@ -71,17 +71,6 @@ const SideNav = styled.div`
 
       & > .sideNavLink:hover {
         color: #f1f1f1;
-      }
-    }
-
-    & > .sideNavProgress {
-      & > .sideNavProgressItem {
-        padding: 8px 8px 8px 32px;
-        text-decoration: none;
-        font-size: 25px;
-        color: white;
-        display: block;
-        transition: 0.3s;
       }
     }
   }
@@ -124,8 +113,6 @@ const SideNav = styled.div`
     }
   }
 `;
-
-const SideNavProgressItem = styled.li``;
 
 const List = styled.div`
   & a {
