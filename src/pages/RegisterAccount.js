@@ -1,5 +1,4 @@
 import React, { useContext, useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import { AuthContext } from '../context/AuthProvider';
 import { Button } from '../components/Button';
 import GoogleLoginButton from '../components/GoogleLoginButton';
@@ -20,7 +19,7 @@ import {
 export default function RegisterAccount() {
   const { authError, signInWithGoogle, signInWithEmail, signUpWithEmail } =
     useContext(AuthContext);
-  const history = useHistory(null);
+
   const [inputs, setInputs] = useState({ email: '', password: '' });
 
   const handleChange = (e) => {

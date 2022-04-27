@@ -1,5 +1,4 @@
 import { createContext, useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import {
   Auth,
   googleSignIn,
@@ -40,8 +39,6 @@ export default function AuthProvider({ children }) {
     setAuthError(null);
     emailSignup(email, password, handleErrors);
   };
-
-  const history = useHistory();
 
   const logout = () => {
     signOut(handleErrors);
