@@ -1,21 +1,8 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import styled from 'styled-components';
-import { UserContext } from '../../context/UserProvider';
 import { VendorContext } from '../../context/VendorProvider';
-import { BoothContext } from '../../context/BoothProvider';
-import { Button } from '../../components/Button';
-import Modal from '../../components/Modal';
-import StatusMessage from '../../components/StatusMessage';
-import { Link } from 'react-router-dom';
-import {
-  Wrapper,
-  Header,
-  Subheader,
-  Paragraph,
-  Container,
-  HeaderWrapper,
-  FileUploader,
-} from '../../Elements/basic';
+import { Wrapper, Header, HeaderWrapper } from '../../Elements/basic';
+import ToDoList from './ToDoList';
 
 const Header2 = styled.h2`
   font-family: 'Open Sans';
@@ -40,6 +27,10 @@ const TodoContainer = styled.div`
 const List = styled.ol`
   list-style: none;
   counter-reset: steps;
+  & a {
+    text-decoration: none;
+    color: black;
+  }
 `;
 const ListItem = styled.li`
   counter-increment: steps;
@@ -77,74 +68,16 @@ const ListItem = styled.li`
   }
 `;
 const Home = (props) => {
-  const tasks = {};
-  const [modalMessage, setModalMessage] = useState(null);
-  const [modalOpen, setModalOpen] = useState(false);
-  const [showLogoUploader, setShowLogoUploader] = useState(false);
-  const { states, changeState } = props;
-  const { user } = useContext(UserContext);
-  const [file, setFile] = useState(null);
-  const {
-    currentVendor,
-    run,
-    matchVendor,
-    updateCurrentVendor,
-    storeFile,
-    checkProducts,
-    getCartItems,
-    getOrderStatus,
-    clearCart,
-  } = useContext(VendorContext);
-  const { updateBooth, booths, setNeighbors, newBooths, resetBooth } =
-    useContext(BoothContext);
+  const { matchVendor } = useContext(VendorContext);
 
-  const [items, setItems] = useState({
-    createAccount: true,
-    registerVendor: false,
-    uploadLogo: false,
-    sponsor: false,
-    selectBooth: false,
-    completeRegistration: false,
-  });
-
-  const saveLogo = (file) => {
-    const fileName = file.name;
-    const extension = fileName.split('.')[1];
-    const newFileName = currentVendor?.organization.replace(/ /g, '');
-    console.log(newFileName);
-    storeFile(file, `logos/${newFileName}/${newFileName}.${extension}`);
-  };
-
-  const handleLogoUpload = (e) => {
-    setShowLogoUploader(false);
-    saveLogo(file);
-  };
-
-  const handleClick = (e) => {
-    switch (e.target.innerText) {
-      case 'Upload logo':
-        setShowLogoUploader(!setShowLogoUploader);
-        break;
-      default:
-        break;
-    }
-  };
-  console.log(currentVendor);
-  const finalize = () => {
-    console.log('Finalize registration');
-    changeState(states.FINALIZE);
-  };
-  const changeBooths = (e) => {
-    console.log('changing booths');
-    for (let booth of booths) {
-      if (booth?.restriction !== 1 && booth?.restriction !== 2) {
-        const updatedBooth = { ...booth };
-        updatedBooth.restriction = 0;
-        updateBooth(updatedBooth, booth?.id);
-        console.log(`updating booth ${booth?.id}`);
-      }
-    }
-  };
+  // const [items, setItems] = useState({
+  //   createAccount: true,
+  //   registerVendor: false,
+  //   uploadLogo: false,
+  //   sponsor: false,
+  //   selectBooth: false,
+  //   completeRegistration: false,
+  // });
 
   useEffect(() => {
     matchVendor();
@@ -156,91 +89,7 @@ const Home = (props) => {
         <HeaderWrapper>
           <Header>Vendor Registration</Header>
         </HeaderWrapper>
-        <List>
-          <Header2>To do:</Header2>
-          <ListItem complete={true}>Create account</ListItem>
-          <Link to='/registration'>
-            <ListItem
-              complete={currentVendor?.organization}
-              current={currentVendor === null}
-            >
-              Register vendor
-            </ListItem>
-          </Link>
-          {currentVendor && !currentVendor?.logo ? (
-            <ListItem
-              complete={currentVendor && currentVendor?.logo}
-              current={currentVendor && !currentVendor?.logo}
-              onClick={(e) => {
-                if (currentVendor && !currentVendor?.logo)
-                  setShowLogoUploader(!showLogoUploader);
-              }}
-            >
-              Upload logo
-            </ListItem>
-          ) : null}
-          {currentVendor && !currentVendor?.logo && showLogoUploader ? (
-            <Container width='80%'>
-              <FileUploader
-                onChange={(e) => {
-                  setFile(e.target.files[0]);
-                }}
-                type='file'
-              />
-              {file === null ? null : (
-                <Button
-                  buttonText='Upload'
-                  buttonStyle='primary'
-                  onClick={(e) => {
-                    saveLogo(file);
-                  }}
-                >
-                  Upload file
-                </Button>
-              )}
-            </Container>
-          ) : null}
-          {currentVendor?.sponsorship &&
-          !currentVendor?.sponsorship.level &&
-          currentVendor?.sponsorship.interested ? (
-            <ListItem
-              onClick={(e) => {
-                if (
-                  currentVendor?.sponsorship &&
-                  !currentVendor?.sponsorship.level
-                )
-                  handleClick(e);
-              }}
-              complete={
-                currentVendor?.sponsorship && currentVendor?.sponsorship.level
-              }
-              current={
-                currentVendor?.sponsorship && !currentVendor?.sponsorship.level
-              }
-            >
-              Choose sponsorship
-            </ListItem>
-          ) : null}
-          <Link to='/booth'>
-            <ListItem
-              onClick={(e) => {
-                handleClick(e);
-              }}
-              complete={currentVendor?.booth?.primary.status > 0}
-              current={currentVendor?.booth?.primary.status === 0}
-            >
-              Select booth
-            </ListItem>
-          </Link>
-          <Link to='/finalize'>
-            <ListItem
-              current={currentVendor?.booth?.primary?.status === 1}
-              complete={currentVendor?.booth?.primary?.status === 2}
-            >
-              Finalize registration
-            </ListItem>
-          </Link>
-        </List>
+        <ToDoList List={List} Header2={Header2} ListItem={ListItem} />
       </TodoContainer>
     </Wrapper>
   );
