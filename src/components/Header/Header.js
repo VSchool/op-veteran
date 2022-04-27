@@ -6,7 +6,7 @@ import logo from '../../assets/images/vetfest-logo.png';
 import userIcon from '../../assets/icons/avatar-icon.svg';
 import { Profile } from '../Profile';
 import { IoChevronBackSharp, IoCloseOutline } from 'react-icons/io5';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const HeaderContainer = styled.div`
   position: relative;
@@ -119,6 +119,7 @@ const LogOut = styled.span`
 `;
 
 export default function Header() {
+  const navigate = useNavigate();
   const { logout } = useContext(AuthContext);
   const { user } = useContext(UserContext);
   const [showProfile, setShowProfile] = useState(false);
@@ -136,9 +137,9 @@ export default function Header() {
     <HeaderContainer>
       {sideToggle ? (
         <>
-          {/* <span style={{ cursor: 'pointer' }} onClick={history.goBack()}>
+          <span style={{ cursor: 'pointer' }} onClick={() => navigate(-1)}>
             <IoChevronBackSharp />
-          </span> */}
+          </span>
           <span
             style={{ fontSize: '30px', cursor: 'pointer', padding: '10px' }}
             onClick={handleSideBarToggle}
