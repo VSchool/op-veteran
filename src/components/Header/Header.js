@@ -2,11 +2,13 @@ import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import { AuthContext } from '../../context/AuthProvider';
 import { UserContext } from '../../context/UserProvider';
+import { VendorContext } from '../../context/VendorProvider';
 import logo from '../../assets/images/vetfest-logo.png';
 import userIcon from '../../assets/icons/avatar-icon.svg';
 import { Profile } from '../Profile';
 import { IoChevronBackSharp, IoCloseOutline } from 'react-icons/io5';
 import { Link, useNavigate } from 'react-router-dom';
+import ToDoList from '../../pages/VendorView/ToDoList';
 
 const HeaderContainer = styled.div`
   position: relative;
@@ -39,7 +41,7 @@ const HeaderContainer = styled.div`
 `;
 const SideNav = styled.div`
   height: 100%;
-  width: 250px;
+  width: 350px;
   position: fixed;
   z-index: 1;
   top: 0;
@@ -47,20 +49,41 @@ const SideNav = styled.div`
   background-color: #111;
   overflow-x: hidden;
   transition: 0.5s;
-  padding-top: 60px;
+  padding: 30px 0;
 
-  & > .sideNavLink {
-    padding: 8px 8px 8px 32px;
-    text-decoration: none;
-    font-size: 25px;
-    color: #818181;
-    display: block;
-    transition: 0.3s;
-    cursor: pointer;
-  }
+  & > .sideNavContainer {
+    display: flex;
+    flex-direction: column;
 
-  & > .sideNavLink:hover {
-    color: #f1f1f1;
+    justify-content: space-between;
+    height: 100%;
+
+    & > .sideNavLinks {
+      & > .sideNavLink {
+        padding: 8px 8px 8px 32px;
+        text-decoration: none;
+        font-size: 25px;
+        color: #818181;
+        display: block;
+        transition: 0.3s;
+        cursor: pointer;
+      }
+
+      & > .sideNavLink:hover {
+        color: #f1f1f1;
+      }
+    }
+
+    & > .sideNavProgress {
+      & > .sideNavProgressItem {
+        padding: 8px 8px 8px 32px;
+        text-decoration: none;
+        font-size: 25px;
+        color: white;
+        display: block;
+        transition: 0.3s;
+      }
+    }
   }
 
   & > .closeBtn {
@@ -69,7 +92,7 @@ const SideNav = styled.div`
     right: 25px;
     padding: 10px;
     font-size: 36px;
-    margin-left: 50px;
+
     cursor: pointer;
     color: #818181;
   }
@@ -102,11 +125,30 @@ const SideNav = styled.div`
   }
 `;
 
-const LogOut = styled.span`
-  display: flex;
-  height: 50%;
-  align-items: center;
+const SideNavProgressItem = styled.li``;
 
+const List = styled.div`
+  & a {
+    text-decoration: none;
+  }
+`;
+
+const ListItem = styled.li`
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: white;
+  display: block;
+  transition: 0.3s;
+  text-decoration: ${(props) => (props.complete ? 'line-through' : 'none')};
+  font-weight: ${(props) => (props.current ? 'bold' : 'normal')};
+  z-index: ${(props) => (props.current ? 3 : null)};
+  cursor: ${(props) => (props.current ? 'pointer' : null)};
+`;
+
+const Header2 = styled(ListItem)``;
+
+const LogOut = styled.span`
   & > h1 {
     padding: 8px 8px 8px 32px;
     text-decoration: none;
@@ -122,6 +164,7 @@ export default function Header() {
   const navigate = useNavigate();
   const { logout } = useContext(AuthContext);
   const { user } = useContext(UserContext);
+  const { currentVendor } = useContext(VendorContext);
   const [showProfile, setShowProfile] = useState(false);
   const handleClick = () => {
     setShowProfile((prev) => !prev);
@@ -154,24 +197,30 @@ export default function Header() {
             <IoCloseOutline />
           </span>
           {/* The 'Home' link is not working right now */}
-          <Link to='/home' className='sideNavLink'>
-            <span className='sideNavLink'>Home</span>
-          </Link>
-          <Link to='/registration' className='sideNavLink'>
-            <span>Register</span>
-          </Link>
-          <Link to='/sponsorship' className='sideNavLink'>
-            <span>Sponsor Tiers</span>
-          </Link>
-          <Link to='/booth' className='sideNavLink'>
-            <span>Booth Select</span>
-          </Link>
-          <Link to='/finalize' className='sideNavLink'>
-            <span>Finalize</span>
-          </Link>
-          <LogOut>
-            <h1 onClick={logout}>Logout</h1>
-          </LogOut>
+          <div className='sideNavContainer'>
+            <div className='sideNavLinks'>
+              <Link to='/home' className='sideNavLink'>
+                <span className='sideNavLink'>Home</span>
+              </Link>
+              <Link to='/registration' className='sideNavLink'>
+                <span>Register</span>
+              </Link>
+              <Link to='/sponsorship' className='sideNavLink'>
+                <span>Sponsor Tiers</span>
+              </Link>
+              <Link to='/booth' className='sideNavLink'>
+                <span>Booth Select</span>
+              </Link>
+              <Link to='/finalize' className='sideNavLink'>
+                <span>Finalize</span>
+              </Link>
+            </div>
+            <ToDoList List={List} ListItem={ListItem} Header2={Header2} />
+
+            <LogOut>
+              <h1 onClick={logout}>Logout</h1>
+            </LogOut>
+          </div>
         </SideNav>
       )}
       <Link className={'header-logo'} to='/'>
