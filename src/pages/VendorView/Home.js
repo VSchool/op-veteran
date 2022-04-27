@@ -159,7 +159,7 @@ const Home = (props) => {
         <List>
           <Header2>To do:</Header2>
           <ListItem complete={true}>Create account</ListItem>
-          <Link to='/register'>
+          <Link to='/registration'>
             <ListItem
               complete={currentVendor?.organization}
               current={currentVendor === null}
