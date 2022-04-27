@@ -9,7 +9,8 @@ import { BoothManagement } from '../VendorView/BoothManagement';
 import CanvasProvider from '../../context/CanvasProvider';
 import Home from './Home';
 import Finalize from './Finalize';
-import { Footer } from '../../components/Footer/Footer';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import RegisterAccount from '../RegisterAccount';
 
 const VendorPageContainer = styled.div`
   box-sizing: border-box;
@@ -24,23 +25,6 @@ const VendorPageContainer = styled.div`
 export default function Vendor() {
   const { user } = useContext(UserContext);
   const { vendor, matchVendor } = useContext(VendorContext);
-  const states = {
-    HOME: 0,
-    REGISTER: 1,
-    SPONSOR: 2,
-    SELECT: 3,
-    FINALIZE: 4,
-  };
-  const [state, setState] = useState(states.HOME);
-  const [showSponsorship, setShowSponsorship] = useState(false);
-
-  const changeState = (newState) => {
-    if (newState) {
-      setState(newState);
-    } else {
-      throw new Error(`${newState} is not a valid state`);
-    }
-  };
 
   //   if (state === states.HOME) {     page = <Home changeState={changeState}
   // states={states}/>   } else if (state === states.REGISTER) {     page =
@@ -51,26 +35,43 @@ export default function Vendor() {
   // <BoothManagement states={states} changeState={changeState}/>   } else if
   // (state === states.FINALIZE) {     page = <Finalize/>
 
-  return (
-    <VendorPageContainer>
-      {/* <Finalize/>  Added here for faster testing and debgging of the problem component */}
-      <Header states={states} changeState={changeState} />{' '}
-      {state === states.HOME ? (
-        <Home changeState={changeState} states={states} />
-      ) : state === states.REGISTER ? (
-        <RegistrationForm
-          setShowSponsorship={setShowSponsorship}
-          changeState={changeState}
-          states={states}
-        />
-      ) : state === states.SPONSOR ? (
-        <SponsorshipSelection changeState={changeState} states={states} />
-      ) : state === states.SELECT ? (
-        <BoothManagement states={states} changeState={changeState} />
-      ) : (
-        <Finalize />
-      )}
-      <Footer />
-    </VendorPageContainer>
-  );
+  return <></>;
+}
+
+// eslint-disable-next-line no-lone-blocks
+{
+  /* <BrowserRouter>
+  <Routes>
+    <Route exact path='/'>
+      <Landing />
+    </Route>
+    <Route path='/register'>
+      <RegisterAccount />
+    </Route>
+    <Route path='/vendor'>
+      <Vendor />
+    </Route>
+
+    <Route path='/registration'>
+      <RegistrationForm />
+    </Route>
+    <Route path='/booth'>
+      <BoothManagement />
+    </Route>
+    <Route path='/sponsorship'>
+      <SponsorshipSelection />
+    </Route>
+    <Route path='/finalize'>
+      <Finalize />
+    </Route>
+
+    <Route path='/admin'>
+      <Admin />
+    </Route>
+
+    <Route path='/playground'>
+      <Playground />
+    </Route>
+  </Routes>
+</BrowserRouter>; */
 }

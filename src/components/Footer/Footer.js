@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Footer = () => {
+const Footer = () => {
   const FooterContainer = styled.footer`
     box-shadow: inset 0 0em 3em rgb(184, 184, 184),
       0 0 0 2px rgba(190, 190, 190), 0.3em 0.3em 1em rgba(0, 0, 0, 0.4);
@@ -53,3 +53,5 @@ export const Footer = () => {
     </FooterContainer>
   );
 };
+
+export default Footer;

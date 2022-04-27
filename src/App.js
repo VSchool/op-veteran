@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import styled from 'styled-components';
-import { Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AuthContext } from './context/AuthProvider';
 import UserProvider, { UserContext } from './context/UserProvider';
 import VendorProvider, { VendorContext } from './context/VendorProvider';
@@ -13,6 +13,9 @@ import { Landing, Vendor, Admin, Playground } from './pages';
 import RegisterAccount from './pages/RegisterAccount';
 import RegistrationForm from './pages/VendorView/RegistrationForm/RegistrationForm';
 import { BoothManagement } from './pages/VendorView/BoothManagement';
+import Header from './components/Header/Header';
+import Footer from './components/Footer/Footer.js';
+import Home from './pages/VendorView/Home';
 
 const AppContainer = styled.div`
   box-sizing: border-box;
@@ -67,40 +70,19 @@ function UserViews() {
   } else if (isAdmin) {
     return <Admin />;
   } else if (!isDev) {
-    return <Vendor />;
+    return (
+      <>
+        <Header />
+        <Routes>
+          <Route path='/home' element={<Home />} />
+          <Route path='/registration' element={<RegistrationForm />} />
+          {/* <Route path='/registration' element={<RegisterAccount />} /> */}
+          <Route path='/sponsorship' element={<SponsorshipSelection />} />
+          <Route path='/booth' element={<BoothManagement />} />
+          <Route path='/finalize' element={<Finalize />} />
+        </Routes>
+        <Footer />
+      </>
+    );
   }
-  return (
-    <Switch>
-      <Route exact path='/'>
-        <Landing />
-      </Route>
-      <Route path='/register'>
-        <RegisterAccount />
-      </Route>
-      <Route path='/vendor'>
-        <Vendor />
-      </Route>
-
-      <Route path='/registration'>
-        <RegistrationForm />
-      </Route>
-      <Route path='/booth'>
-        <BoothManagement />
-      </Route>
-      <Route path='/sponsorship'>
-        <SponsorshipSelection />
-      </Route>
-      <Route path='/finalize'>
-        <Finalize />
-      </Route>
-
-      <Route path='/admin'>
-        <Admin />
-      </Route>
-
-      <Route path='/playground'>
-        <Playground />
-      </Route>
-    </Switch>
-  );
 }

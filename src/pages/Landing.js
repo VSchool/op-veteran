@@ -6,7 +6,7 @@ import { GoogleButton } from '../components/GoogleButton';
 import { Input } from '../components/Input';
 import logo from '../assets/images/vetfest-logo.png';
 import StatusMessage from '../components/StatusMessage';
-import { useHistory, Link } from 'react-router-dom';
+
 import {
   LandingContainer,
   Logo,
@@ -102,7 +102,6 @@ export default function Landing() {
     }
   };
 
-  const history = useHistory(null);
   return (
     <LandingContainer>
       {authError ? <StatusMessage message={authError} /> : null}
