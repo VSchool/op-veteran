@@ -1,7 +1,7 @@
-import React, {useState, useContext, useEffect} from "react";
-import {CanvasContext} from "../../../../context/CanvasProvider";
-import {BoothContext} from "../../../../context/BoothProvider";
-import {VendorContext} from "../../../../context/VendorProvider";
+import React, { useState, useContext, useEffect } from 'react';
+import { CanvasContext } from '../../../../context/CanvasProvider';
+import { BoothContext } from '../../../../context/BoothProvider';
+import { VendorContext } from '../../../../context/VendorProvider';
 import {
   Stage,
   Layer,
@@ -10,31 +10,28 @@ import {
   Rect,
   Path,
   Text,
-  Circle
-} from "react-konva";
-import useImage from "use-image";
-import styled from 'styled-components'
-import BlankMapPathLayer from './BlankMapPathLayer'
-import Row from './Row'
-import treeData from "./treeData";
+  Circle,
+} from 'react-konva';
+import useImage from 'use-image';
+import styled from 'styled-components';
+import BlankMapPathLayer from './BlankMapPathLayer';
+import Row from './Row';
+import treeData from './treeData';
 const SuperStage = styled(Stage)`
-
-  width: ${props => props.containerWidth};
-  height: ${props => props.containerWidth};
+  width: ${(props) => props.containerWidth};
+  height: ${(props) => props.containerWidth};
   margin: auto;
   overflow: hidden;
-`
-const SuperLayer = styled(Layer)`
-
-`
-const StageWrapper = styled.div `
+`;
+const SuperLayer = styled(Layer)``;
+const StageWrapper = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
-`
+`;
 
 // const SectionSelector = (props) => {   const {     setCurrentSection,     x,
 //    y,     width,     height,     sectionId   } = props   const [opacity,
@@ -53,7 +50,7 @@ const Map = (props) => {
     setStageSize,
     setCurrentSection,
     setCurrentBooth,
-    enterMapMode
+    enterMapMode,
   } = useContext(CanvasContext);
   const {
     booths,
@@ -61,29 +58,27 @@ const Map = (props) => {
     rowData,
     updateBooth,
     rowsOfBooths,
-    pullMapDataFromFirestore
+    pullMapDataFromFirestore,
   } = useContext(BoothContext);
-  const treeCircles = treeData.map(tree =>< Circle x = {
-    tree.x
-  }
-  y = {
-    tree.y
-  }
-  radius = {
-    tree.size / 2
-  }
-  fill = "rgba(35, 150, 10, .7)" />)
-  const [mapMode, setMapMode] = useState(false)
+  const treeCircles = treeData.map((tree) => (
+    <Circle
+      x={tree.x}
+      y={tree.y}
+      radius={tree.size / 2}
+      fill='rgba(35, 150, 10, .7)'
+    />
+  ));
+  const [mapMode, setMapMode] = useState(false);
   // const [mapImage] = useImage("https://liveshameless.com/map.jpg");
-  const [rowGroups, setRowGroups] = useState([])
+  const [rowGroups, setRowGroups] = useState([]);
   const colors = {
-    green: "#799C8A",
-    red: "#EA7C7C",
-    yellow: "#FBBC05",
-    blue: "#4E92F9"
-  }
-  
-  const {setShowInfo, containerWidth, setModalOptions, showTrees} = props
+    green: '#799C8A',
+    red: '#EA7C7C',
+    yellow: '#FBBC05',
+    blue: '#4E92F9',
+  };
+
+  const { setShowInfo, containerWidth, setModalOptions, showTrees } = props;
   const buildRows = () => {
     const arrayOfRows = [
       'A',
@@ -103,35 +98,41 @@ const Map = (props) => {
       'O',
       'P',
       'Q',
-      'R'
-    ].map(rowId =>< Row key = {
-      rowId
-    }
-    setCurrentBooth = {setCurrentBooth} 
-    rowId = {rowId}
-    rowDatum = {rowData[rowId]}
-    sectionId = {0}
-    setMapMode = {setMapMode}
-    booths = {booths} />)
-    setRowGroups(arrayOfRows)
-  }
+      'R',
+    ].map((rowId) => (
+      <Row
+        key={rowId}
+        setCurrentBooth={setCurrentBooth}
+        rowId={rowId}
+        rowDatum={rowData[rowId]}
+        sectionId={0}
+        setMapMode={setMapMode}
+        booths={booths}
+      />
+    ));
+    setRowGroups(arrayOfRows);
+  };
 
   useEffect(() => {
-    buildRows()
-    enterMapMode()
-  }, [])
+    buildRows();
+    enterMapMode();
+  }, []);
 
   return (
     <SuperStage
       containerWidth={containerWidth}
       width={1024}
       height={1083}
-      scale={scale}>
-      <BlankMapPathLayer/>
-      {showTrees ? 
-      <Layer globalCompositeOperation="lighten">
-        <Group width={1024} height={1083} x={40} y={215}>{treeCircles}</Group>
-      </Layer> : null}
+      scale={scale}
+    >
+      <BlankMapPathLayer />
+      {showTrees ? (
+        <Layer globalCompositeOperation='lighten'>
+          <Group width={1024} height={1083} x={40} y={215}>
+            {treeCircles}
+          </Group>
+        </Layer>
+      ) : null}
       <SuperLayer x={0} y={0}>
         {rowGroups}
       </SuperLayer>
@@ -159,7 +160,6 @@ const Map = (props) => {
         </Group>
       </Layer> */}
     </SuperStage>
-
   );
 };
 

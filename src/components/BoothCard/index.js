@@ -1,1 +1,1 @@
-export { default as BoothCard } from './BoothCard'
+export { default as BoothCard } from './BoothCard';

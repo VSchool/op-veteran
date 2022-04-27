@@ -1,31 +1,31 @@
 {
-    "colors": [
+  "colors": [
+    {
+      "timestamp": 1233086015,
+      "hex": "cf18dc",
+      "id": 61396,
+      "tags": [
         {
-            "timestamp": 1233086015,
-            "hex": "cf18dc",
-            "id": 61396,
-            "tags": [
-                {
-                    "timestamp": 1233086015,
-                    "id": 24231,
-                    "name": "blissad"
-                }
-            ]
+          "timestamp": 1233086015,
+          "id": 24231,
+          "name": "blissad"
         }
-    ],
-    "schemes": [],
-    "schemes_history": {},
-    "success": true,
-    "colors_history": {
-        "cf18dc": [
-            {
-                "d_count": 0,
-                "id": "24231",
-                "a_count": 1,
-                "name": "blissad"
-            }
-        ]
-    },
-    "messages": [],
-    "new_color": "cf18dc"
+      ]
+    }
+  ],
+  "schemes": [],
+  "schemes_history": {},
+  "success": true,
+  "colors_history": {
+    "cf18dc": [
+      {
+        "d_count": 0,
+        "id": "24231",
+        "a_count": 1,
+        "name": "blissad"
+      }
+    ]
+  },
+  "messages": [],
+  "new_color": "cf18dc"
 }
