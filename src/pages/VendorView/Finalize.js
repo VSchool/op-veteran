@@ -1,10 +1,10 @@
-import React, { Fragment, useState, useContext, useEffect} from "react";
-import styled from "styled-components";
-import { VendorContext } from "../../context/VendorProvider";
-import { BoothContext } from "../../context/BoothProvider";
-import { UserContext } from "../../context/UserProvider";
-import { Wrapper, Container } from "../../Elements/basic";
-import {Button} from '../../components/Button'
+import React, { Fragment, useState, useContext, useEffect } from 'react';
+import styled from 'styled-components';
+import { VendorContext } from '../../context/VendorProvider';
+import { BoothContext } from '../../context/BoothProvider';
+import { UserContext } from '../../context/UserProvider';
+import { Wrapper, Container } from '../../Elements/basic';
+import { Button } from '../../components/Button';
 
 const CardContainer = styled.div`
   width: 400px;
@@ -65,8 +65,8 @@ const HeaderWrapper = styled.div`
 `;
 const Hr = styled.hr`
   margin: auto;
-  margin-top: ${(props) => (props.top ? props.top : "8px")};
-  margin-bottom: ${(props) => (props.bottom ? props.botton : "8px")};
+  margin-top: ${(props) => (props.top ? props.top : '8px')};
+  margin-bottom: ${(props) => (props.bottom ? props.botton : '8px')};
   background-color: #f4f4f4;
   width: 90%;
 `;
@@ -75,8 +75,7 @@ const List = styled.ul`
   flex-direction: row;
   margin: auto;
 `;
-const ItemTitle = styled.li`
-`;
+const ItemTitle = styled.li``;
 const ItemPrice = styled.p`
   grid-column: 2/3;
 `;
@@ -86,46 +85,61 @@ const ItemQuantity = styled.p`
 
 const Finalize = (props) => {
   // const { currentVendor, getCartItems, cart, openCart } = useContext(VendorContext);
-  const { currentVendor, openCart, getCartItems, cartItems, changeQuantity, localCart} = useContext(VendorContext);
+  const {
+    currentVendor,
+    openCart,
+    getCartItems,
+    cartItems,
+    changeQuantity,
+    localCart,
+  } = useContext(VendorContext);
   // const [cartItems, setCartItems] = useState([])
 
   // This was the original code which breaks
-// useEffect(() => {
-//   getCartItems().then(items=> {
-//     // const elements = items.map((item) => <ItemTitle key={item.title}> {item.title} </ItemTitle>)
-//     // setCartItems(elements)
-//     items.lineItems.forEach((item)=>{
-//       console.table(item.variant)
-//     })
-// }, [])})
+  // useEffect(() => {
+  //   getCartItems().then(items=> {
+  //     // const elements = items.map((item) => <ItemTitle key={item.title}> {item.title} </ItemTitle>)
+  //     // setCartItems(elements)
+  //     items.lineItems.forEach((item)=>{
+  //       console.table(item.variant)
+  //     })
+  // }, [])})
 
-// This is for testing
-useEffect(() => {
-  getCartItems()
-}, [currentVendor])
+  // This is for testing
+  useEffect(() => {
+    getCartItems();
+  }, [currentVendor]);
 
-console.log("finalize page: currentVendor ", cartItems)
+  console.log('finalize page: currentVendor ', cartItems);
   return (
     <CardContainer>
       {/* <Wrapper> */}
       <Head>Local Cart Items</Head>
-      <p>Booth Selection: {localCart.primaryBoothId}</p>      
+      <p>Booth Selection: {localCart.primaryBoothId}</p>
       <p>Adjacent Booth Selection: {localCart.secondaryBoothId}</p>
-      
-      <br/><br/>
-      
+
+      <br />
+      <br />
+
       {/* Shopify Cart items list */}
       <Head>Shopift Cart Items</Head>
-      {cartItems?.map(item => <article key={item}>
-        <p>Product: {item.title}</p>
-        {/* <p>ID: {item.id}</p> */}
-        <p>Quantity: {item.quantity}</p>
-        <button onClick={()=>changeQuantity(item.id, item.quantity)}>Remove</button>
+      {cartItems?.map((item) => (
+        <article key={item}>
+          <p>Product: {item.title}</p>
+          {/* <p>ID: {item.id}</p> */}
+          <p>Quantity: {item.quantity}</p>
+          <button onClick={() => changeQuantity(item.id, item.quantity)}>
+            Remove
+          </button>
         </article>
-      )} 
+      ))}
       {/* End Shopify Cart ITems List */}
       {/* <a onClick={(e)=>console.log(e.target)} href={currentVendor.cartUrl} target="_blank">Open Cart</a> */}
-      <Button buttonText="Continue to checkout" buttonStyle="primary" onClick={openCart}/>
+      <Button
+        buttonText='Continue to checkout'
+        buttonStyle='primary'
+        onClick={openCart}
+      />
       {/* </Wrapper> */}
     </CardContainer>
   );

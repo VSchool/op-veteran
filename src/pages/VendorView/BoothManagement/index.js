@@ -1,1 +1,1 @@
-export {default as BoothManagement} from './BoothManagement'
+export { default as BoothManagement } from './BoothManagement';

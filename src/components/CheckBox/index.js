@@ -1,1 +1,1 @@
-export { default as CheckBox } from './CheckBox.js'
+export { default as CheckBox } from './CheckBox.js';

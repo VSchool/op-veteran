@@ -1,1 +1,1 @@
-export { default as TextArea } from './TextArea.js'
+export { default as TextArea } from './TextArea.js';
