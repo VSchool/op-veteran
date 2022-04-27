@@ -1,11 +1,10 @@
-import React, { useContext } from "react";
-import styled from "styled-components";
-import { Button } from "../Button";
-import { CanvasContext } from "../../context/CanvasProvider";
-import { BoothContext } from "../../context/BoothProvider";
-import { VendorContext } from "../../context/VendorProvider";
-import {IoCloseOutline} from 'react-icons/io5'
-
+import React, { useContext } from 'react';
+import styled from 'styled-components';
+import { Button } from '../Button';
+import { CanvasContext } from '../../context/CanvasProvider';
+import { BoothContext } from '../../context/BoothProvider';
+import { VendorContext } from '../../context/VendorProvider';
+import { IoCloseOutline } from 'react-icons/io5';
 
 const CardContainer = styled.div`
   width: 311px;
@@ -87,15 +86,15 @@ const HeaderWrapper = styled.div`
 `;
 const Hr = styled.hr`
   margin: auto;
-  margin-top: ${(props) => (props.top ? props.top : "8px")};
-  margin-bottom: ${(props) => (props.bottom ? props.botton : "8px")};
+  margin-top: ${(props) => (props.top ? props.top : '8px')};
+  margin-bottom: ${(props) => (props.bottom ? props.botton : '8px')};
   background-color: #f4f4f4;
   width: 90%;
 `;
 const BoothCard = (props) => {
   const {
-    addPrimaryBoothToLocalCart, 
-    addSecondaryBoothToLocalCart,    
+    addPrimaryBoothToLocalCart,
+    addSecondaryBoothToLocalCart,
     currentVendor,
     updateCurrentVendor,
     addPrimaryBoothToCart,
@@ -127,15 +126,14 @@ const BoothCard = (props) => {
     setCurrentBooth(null);
   };
 
-  // this needs lots of refactoring 
-  const handleSelectBooth = (_id, secondary=false) => {
+  // this needs lots of refactoring
+  const handleSelectBooth = (_id, secondary = false) => {
     if (secondary) {
       // addSecondaryBoothToCart(_id);
-      addSecondaryBoothToLocalCart(_id)  
-    }
-    else{
+      addSecondaryBoothToLocalCart(_id);
+    } else {
       // addPrimaryBoothToCart(_id);
-      addPrimaryBoothToLocalCart(_id)  
+      addPrimaryBoothToLocalCart(_id);
     }
 
     // might have to move this somewhere else
@@ -147,19 +145,19 @@ const BoothCard = (props) => {
     //   },
     //   _id
     // );
-    handleClose()
+    handleClose();
     checkNeighbors();
   };
-  
+
   const handlePrimaryClick = (e) => {
     e.preventDefault();
     if (isAllowed()) {
       // idea: instead of calling handleSelectBooth,
       // update currentBoothSelection and show that in
-      // cart, then have the option for the user to 
+      // cart, then have the option for the user to
       // add the two booths to their cart
       handleSelectBooth(id);
-    } 
+    }
     // don't send user to vendors page
     // else {
     //   const updatedVendor = {
@@ -172,24 +170,24 @@ const BoothCard = (props) => {
   };
   const checkNeighbors = () => {
     const options = booths.reduce((response, b) => {
-      if (neighbors.includes(b.id) && (b.status === 0 || b.status === "open")) {
+      if (neighbors.includes(b.id) && (b.status === 0 || b.status === 'open')) {
         response.push(b.id);
       }
       return response;
     }, []);
     if (options.length > 0) {
-      setModalOptions((prev)=>({...prev,
+      setModalOptions((prev) => ({
+        ...prev,
         visible: true,
         isOpen: true,
         options: options,
         handleSelectBooth: handleSelectBooth,
-        })
-      )
+      }));
     }
-  }
+  };
 
   const isAllowed = () => {
-    if(vendor) return false
+    if (vendor) return false;
     if (restriction === 0) {
       return true;
     } else {
@@ -200,8 +198,10 @@ const BoothCard = (props) => {
   return (
     <CardContainer>
       <HeaderWrapper>
-        <CloseBtn>      
-          <span className='closeBtn' alt="close" onClick={handleClose}><IoCloseOutline /></span>
+        <CloseBtn>
+          <span className='closeBtn' alt='close' onClick={handleClose}>
+            <IoCloseOutline />
+          </span>
         </CloseBtn>
         <Header>{`Booth ${id}`}</Header>
         <Paragraph>Info & availability</Paragraph>
@@ -220,15 +220,15 @@ const BoothCard = (props) => {
           <>
             <Subheader>Open</Subheader>
             <Paragraph>
-              {" "}
+              {' '}
               This boothspace is available.
               {isAllowed()
                 ? null
                 : `This section is reserved for ${
                     restriction == 2
-                      ? "Paladin and Abrams "
-                      : "Stryker and Bradley "
-                  } level sponsors.`}{" "}
+                      ? 'Paladin and Abrams '
+                      : 'Stryker and Bradley '
+                  } level sponsors.`}{' '}
             </Paragraph>
           </>
         )}
@@ -236,23 +236,23 @@ const BoothCard = (props) => {
       <ButtonWrapper>
         {vendor && vendor === null ? (
           <Button
-            buttonStyle="primary"
-            buttonText="Close"
+            buttonStyle='primary'
+            buttonText='Close'
             onClicks={handleClose}
           />
         ) : (
           <>
-            {" "}
+            {' '}
             <Button
-              buttonStyle="primary"
-              buttonText={isAllowed() ? "Select booth" : "View sponsorships"}
+              buttonStyle='primary'
+              buttonText={isAllowed() ? 'Select booth' : 'View sponsorships'}
               onClick={handlePrimaryClick}
-            />{" "}
+            />{' '}
             <Button
-              buttonStyle="secondary"
-              buttonText="Cancel"
+              buttonStyle='secondary'
+              buttonText='Cancel'
               onClick={handleClose}
-            />{" "}
+            />{' '}
           </>
         )}
       </ButtonWrapper>

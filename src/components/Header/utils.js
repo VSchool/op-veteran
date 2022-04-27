@@ -1,3 +1,3 @@
 export function handleSignOutAndClose() {
-    alert('Signed out and closing app.')
+  alert('Signed out and closing app.');
 }

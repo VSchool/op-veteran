@@ -1,11 +1,11 @@
-import React, { useContext, useState } from "react";
-import styled from "styled-components";
-import { Button } from "../../components/Button";
-import ListItem from "./ListItem";
-import { UserContext } from "../../context/UserProvider";
-import { VendorContext } from "../../context/VendorProvider";
-import { Blur } from "../../Elements/basic";
-import { CloseButton } from "../../Elements/basic";
+import React, { useContext, useState } from 'react';
+import styled from 'styled-components';
+import { Button } from '../../components/Button';
+import ListItem from './ListItem';
+import { UserContext } from '../../context/UserProvider';
+import { VendorContext } from '../../context/VendorProvider';
+import { Blur } from '../../Elements/basic';
+import { CloseButton } from '../../Elements/basic';
 
 const CardContainer = styled.div`
   width: 288px;
@@ -19,9 +19,9 @@ const CardContainer = styled.div`
   flex-direction: column;
   position: relative;
   border: ${(props) =>
-    props.selected ? "solid rgb(121, 156, 138) 2px" : null};
+    props.selected ? 'solid rgb(121, 156, 138) 2px' : null};
   box-shadow: ${(props) =>
-    props.selected ? "0 0 10px 10px rgba(121, 156, 138, .4)" : null};
+    props.selected ? '0 0 10px 10px rgba(121, 156, 138, .4)' : null};
 
   @media (min-width: 450px) {
   }
@@ -55,8 +55,8 @@ const Subheader = styled.h3`
 `;
 const Hr = styled.hr`
   margin: auto;
-  margin-top: ${(props) => (props.top ? props.top : "8px")};
-  margin-bottom: ${(props) => (props.bottom ? props.botton : "8px")};
+  margin-top: ${(props) => (props.top ? props.top : '8px')};
+  margin-bottom: ${(props) => (props.bottom ? props.botton : '8px')};
   background-color: #f4f4f4;
   width: 90%;
 `;
@@ -106,7 +106,7 @@ const Row = styled.div`
   flex-direction: row;
 `;
 const Paragraph = styled.p`
-  font-family: "Open Sans";
+  font-family: 'Open Sans';
   margin: 10px;
 `;
 // const ModalWrapper = styled.div`     display: flex;     flex-direction:
@@ -124,15 +124,14 @@ export default function SponsorshipCard(props) {
   } = props;
   const { user, updateUser } = useContext(UserContext);
   const {} = props;
-  const { vendor, updateCurrentVendor, addItemToCart } = useContext(
-    VendorContext
-  );
+  const { vendor, updateCurrentVendor, addItemToCart } =
+    useContext(VendorContext);
   const [selected, setSelected] = useState(false);
-  
+
   const listItems = perks.map((perk) => (
     <ListItem
       key={`${name}${perk.wording}`}
-      className={"item"}
+      className={'item'}
       wording={perk.wording}
       valid={perk.valid}
     />
@@ -141,23 +140,23 @@ export default function SponsorshipCard(props) {
     setSelected((prev) => !prev);
   };
   const handleSelect = (e) => {
-    const status = e.target.innerText === "Pay Today" ? "in cart" : "pending";
+    const status = e.target.innerText === 'Pay Today' ? 'in cart' : 'pending';
     const item =
-      e.target.innerText === "Pay Today"
-        ? "OP-Vetfest-booth"
+      e.target.innerText === 'Pay Today'
+        ? 'OP-Vetfest-booth'
         : {
-            category: "sponsorship comitment",
+            category: 'sponsorship comitment',
             name: name,
-            price: "$0",
+            price: '$0',
           };
     addItemToCart(item);
-    updateCurrentVendor({ "sponsorship.status": "in cart", level: name });
+    updateCurrentVendor({ 'sponsorship.status': 'in cart', level: name });
     changeState(states.SELECT);
   };
 
-  const formatter = new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
+  const formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
     minimumFractionDigits: 0,
   });
 
@@ -165,20 +164,20 @@ export default function SponsorshipCard(props) {
     <CardContainer className={className} selected={selected}>
       <Header>{name}</Header>
       <Subheader>Level sponsorship</Subheader>
-      <Hr className={"divider"} top="20px" bottom="12px"></Hr>
-      <Price className={"price"}>{formatter.format(price)}</Price>
-      <Perks className={"items-container"}>{listItems}</Perks>
-      <Hr className={"divider2"} top="22px" bottom="16px"></Hr>
+      <Hr className={'divider'} top='20px' bottom='12px'></Hr>
+      <Price className={'price'}>{formatter.format(price)}</Price>
+      <Perks className={'items-container'}>{listItems}</Perks>
+      <Hr className={'divider2'} top='22px' bottom='16px'></Hr>
       <SponsorshipButton
-        className={"sponsorship-button"}
-        buttonText={"Select this level"}
-        buttonStyle={"primary"}
+        className={'sponsorship-button'}
+        buttonText={'Select this level'}
+        buttonStyle={'primary'}
         onClick={handleClick}
       />
-   
+
       {selected ? (
         <>
-          <Blur width="288px" height="396px" />
+          <Blur width='288px' height='396px' />
           <ModalWrapper>
             <CloseButton
               onClick={(e) => {
@@ -186,27 +185,27 @@ export default function SponsorshipCard(props) {
               }}
             >
               X
-            </CloseButton>{" "}
+            </CloseButton>{' '}
             <Paragraph>
               Would you like to pay the sponsorship today or be contacted by an
               event organizer to make arrangements?
-            </Paragraph>{" "}
+            </Paragraph>{' '}
             <Row>
-              {" "}
+              {' '}
               <Button
-                buttonStyle="primary"
-                buttonText="Pay Today"
+                buttonStyle='primary'
+                buttonText='Pay Today'
                 onClick={handleSelect}
-              />{" "}
+              />{' '}
               <Button
-                buttonStyle="primary"
-                buttonText="Contact Me"
+                buttonStyle='primary'
+                buttonText='Contact Me'
                 onClick={handleSelect}
-              />{" "}
-            </Row>{" "}
-          </ModalWrapper>{" "}
+              />{' '}
+            </Row>{' '}
+          </ModalWrapper>{' '}
         </>
       ) : null}
     </CardContainer>
-  )
+  );
 }
