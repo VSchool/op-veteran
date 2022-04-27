@@ -6,7 +6,7 @@ import logo from '../../assets/images/vetfest-logo.png';
 import userIcon from '../../assets/icons/avatar-icon.svg';
 import { Profile } from '../Profile';
 import { IoChevronBackSharp, IoCloseOutline } from 'react-icons/io5';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const HeaderContainer = styled.div`
   position: relative;
@@ -118,9 +118,8 @@ const LogOut = styled.span`
   }
 `;
 
-export default function Header(props) {
+export default function Header() {
   const { logout } = useContext(AuthContext);
-  const { states, changeState } = props;
   const { user } = useContext(UserContext);
   const [showProfile, setShowProfile] = useState(false);
   const handleClick = () => {
@@ -133,15 +132,13 @@ export default function Header(props) {
     console.log(sideToggle);
   };
 
-  const history = useHistory();
-
   return (
     <HeaderContainer>
       {sideToggle ? (
         <>
-          <span style={{ cursor: 'pointer' }} onClick={history.goBack()}>
+          {/* <span style={{ cursor: 'pointer' }} onClick={history.goBack()}>
             <IoChevronBackSharp />
-          </span>
+          </span> */}
           <span
             style={{ fontSize: '30px', cursor: 'pointer', padding: '10px' }}
             onClick={handleSideBarToggle}
@@ -156,27 +153,21 @@ export default function Header(props) {
             <IoCloseOutline />
           </span>
           {/* The 'Home' link is not working right now */}
-          <span
-            className='sideNavLink'
-            onClick={() => changeState(states.HOME)}
-          >
-            Home
-          </span>
-          <Link to='/registration' className='sideNavLink'>
-            <span onClick={() => changeState(states.REGISTER)}>Register</span>
+          <Link to='/home' className='sideNavLink'>
+            <span className='sideNavLink'>Home</span>
           </Link>
-          <Link to='sponsorship' className='sideNavLink'>
-            <span onClick={() => changeState(states.SPONSOR)}>
-              Sponsor Tiers
-            </span>
+          <Link to='/registration' className='sideNavLink'>
+            <span>Register</span>
+          </Link>
+          <Link to='/sponsorship' className='sideNavLink'>
+            <span>Sponsor Tiers</span>
           </Link>
           <Link to='/booth' className='sideNavLink'>
-            <span onClick={() => changeState(states.SELECT)}>Booth Select</span>
+            <span>Booth Select</span>
           </Link>
           <Link to='/finalize' className='sideNavLink'>
-            <span onClick={() => changeState(states.FINALIZE)}>Finalize</span>
+            <span>Finalize</span>
           </Link>
-
           <LogOut>
             <h1 onClick={logout}>Logout</h1>
           </LogOut>
