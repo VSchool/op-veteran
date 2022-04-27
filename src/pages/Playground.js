@@ -1,13 +1,13 @@
-import React from 'react';
-import styled from 'styled-components';
-import { Button } from '../components/Button';
-import GoogleLoginButton from '../components/GoogleLoginButton';
-import { Input } from '../components/Input';
-import { FormInput } from '../components/FormInput';
-import ProgressBar from '../components/ProgressBar';
-import StatusMessage from '../components/StatusMessage';
-import { SponsorshipCard, ListItem } from '../components/SponsorshipCard';
-import { VendorCard } from '../components/VendorCard';
+import React from 'react'
+import styled from 'styled-components'
+import { Button } from '../components/Button'
+import GoogleLoginButton from '../components/GoogleLoginButton'
+import { Input } from '../components/Input'
+import { FormInput } from '../components/FormInput'
+import ProgressBar from '../components/ProgressBar'
+import StatusMessage from '../components/StatusMessage'
+import { SponsorshipCard, ListItem } from '../components/SponsorshipCard'
+import { VendorCard } from '../components/VendorCard'
 
 const PlaygroundContainer = styled.div`
   box-sizing: border-box;
@@ -49,7 +49,7 @@ const PlaygroundContainer = styled.div`
   & > .google {
     position: relative;
   }
-`;
+`
 
 export default function Playground() {
   return (
@@ -94,5 +94,5 @@ export default function Playground() {
       {/* <h2>Form Input</h2>
             <FormInput label={'Label as a question'} /> */}
     </PlaygroundContainer>
-  );
+  )
 }

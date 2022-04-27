@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import { Label } from '../../Elements/basic';
+import React, { useState } from 'react'
+import styled from 'styled-components'
+import { Label } from '../../Elements/basic'
 
 const Wrapper = styled.div`
   padding: 0;
@@ -8,7 +8,7 @@ const Wrapper = styled.div`
   display: grid;
   grid-template-rows: 24px auto;
   margin: 12px 8px;
-`;
+`
 
 const Textarea = styled.textarea`
   resize: none;
@@ -26,9 +26,9 @@ const Textarea = styled.textarea`
   &:focus {
     border: 1px solid #4e92f9;
   }
-`;
+`
 const TextArea = (props) => {
-  const { labelText, name, onChange, value, rows } = props;
+  const { labelText, name, onChange, value, rows } = props
   return (
     <Wrapper>
       <Label>{labelText}</Label>
@@ -39,6 +39,6 @@ const TextArea = (props) => {
         rows='4'
       ></Textarea>
     </Wrapper>
-  );
-};
-export default TextArea;
+  )
+}
+export default TextArea

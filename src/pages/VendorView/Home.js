@@ -1,8 +1,8 @@
-import React, { useContext, useEffect } from 'react';
-import styled from 'styled-components';
-import { VendorContext } from '../../context/VendorProvider';
-import { Wrapper, Header, HeaderWrapper } from '../../Elements/basic';
-import ToDoList from './ToDoList';
+import React, { useContext, useEffect } from 'react'
+import styled from 'styled-components'
+import { VendorContext } from '../../context/VendorProvider'
+import { Wrapper, Header, HeaderWrapper } from '../../Elements/basic'
+import ToDoList from './ToDoList'
 
 const Header2 = styled.h2`
   font-family: 'Open Sans';
@@ -13,7 +13,7 @@ const Header2 = styled.h2`
   box-shadow: 0 0px 10px rgba(0, 0, 0, 0.14);
   background-color: #232323;
   color: #ecf0f1;
-`;
+`
 const TodoContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -23,7 +23,7 @@ const TodoContainer = styled.div`
   padding: 20px 10px;
   width: clamp(300px, 75%, 800px);
   height: max-content;
-`;
+`
 const List = styled.ol`
   list-style: none;
   counter-reset: steps;
@@ -31,7 +31,7 @@ const List = styled.ol`
     text-decoration: none;
     color: black;
   }
-`;
+`
 const ListItem = styled.li`
   counter-increment: steps;
   font-family: 'Open Sans';
@@ -66,9 +66,9 @@ const ListItem = styled.li`
   @media (max-width: 500px) {
     font-size: 1rem;
   }
-`;
+`
 const Home = (props) => {
-  const { matchVendor } = useContext(VendorContext);
+  const { matchVendor } = useContext(VendorContext)
 
   // const [items, setItems] = useState({
   //   createAccount: true,
@@ -80,8 +80,8 @@ const Home = (props) => {
   // });
 
   useEffect(() => {
-    matchVendor();
-  }, []);
+    matchVendor()
+  }, [])
 
   return (
     <Wrapper>
@@ -92,7 +92,7 @@ const Home = (props) => {
         <ToDoList List={List} Header2={Header2} ListItem={ListItem} />
       </TodoContainer>
     </Wrapper>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home

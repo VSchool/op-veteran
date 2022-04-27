@@ -1,7 +1,7 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { CanvasContext } from '../../../../context/CanvasProvider';
-import { BoothContext } from '../../../../context/BoothProvider';
-import { VendorContext } from '../../../../context/VendorProvider';
+import React, { useState, useContext, useEffect } from 'react'
+import { CanvasContext } from '../../../../context/CanvasProvider'
+import { BoothContext } from '../../../../context/BoothProvider'
+import { VendorContext } from '../../../../context/VendorProvider'
 import {
   Stage,
   Layer,
@@ -11,19 +11,19 @@ import {
   Path,
   Text,
   Circle,
-} from 'react-konva';
-import useImage from 'use-image';
-import styled from 'styled-components';
-import BlankMapPathLayer from './BlankMapPathLayer';
-import Row from './Row';
-import treeData from './treeData';
+} from 'react-konva'
+import useImage from 'use-image'
+import styled from 'styled-components'
+import BlankMapPathLayer from './BlankMapPathLayer'
+import Row from './Row'
+import treeData from './treeData'
 const SuperStage = styled(Stage)`
   width: ${(props) => props.containerWidth};
   height: ${(props) => props.containerWidth};
   margin: auto;
   overflow: hidden;
-`;
-const SuperLayer = styled(Layer)``;
+`
+const SuperLayer = styled(Layer)``
 const StageWrapper = styled.div`
   width: 100%;
   height: 100%;
@@ -31,7 +31,7 @@ const StageWrapper = styled.div`
   justify-content: center;
   align-items: center;
   overflow: hidden;
-`;
+`
 
 // const SectionSelector = (props) => {   const {     setCurrentSection,     x,
 //    y,     width,     height,     sectionId   } = props   const [opacity,
@@ -51,7 +51,7 @@ const Map = (props) => {
     setCurrentSection,
     setCurrentBooth,
     enterMapMode,
-  } = useContext(CanvasContext);
+  } = useContext(CanvasContext)
   const {
     booths,
     diagramData,
@@ -59,7 +59,7 @@ const Map = (props) => {
     updateBooth,
     rowsOfBooths,
     pullMapDataFromFirestore,
-  } = useContext(BoothContext);
+  } = useContext(BoothContext)
   const treeCircles = treeData.map((tree) => (
     <Circle
       x={tree.x}
@@ -67,18 +67,18 @@ const Map = (props) => {
       radius={tree.size / 2}
       fill='rgba(35, 150, 10, .7)'
     />
-  ));
-  const [mapMode, setMapMode] = useState(false);
+  ))
+  const [mapMode, setMapMode] = useState(false)
   // const [mapImage] = useImage("https://liveshameless.com/map.jpg");
-  const [rowGroups, setRowGroups] = useState([]);
+  const [rowGroups, setRowGroups] = useState([])
   const colors = {
     green: '#799C8A',
     red: '#EA7C7C',
     yellow: '#FBBC05',
     blue: '#4E92F9',
-  };
+  }
 
-  const { setShowInfo, containerWidth, setModalOptions, showTrees } = props;
+  const { setShowInfo, containerWidth, setModalOptions, showTrees } = props
   const buildRows = () => {
     const arrayOfRows = [
       'A',
@@ -109,14 +109,14 @@ const Map = (props) => {
         setMapMode={setMapMode}
         booths={booths}
       />
-    ));
-    setRowGroups(arrayOfRows);
-  };
+    ))
+    setRowGroups(arrayOfRows)
+  }
 
   useEffect(() => {
-    buildRows();
-    enterMapMode();
-  }, []);
+    buildRows()
+    enterMapMode()
+  }, [])
 
   return (
     <SuperStage
@@ -160,9 +160,9 @@ const Map = (props) => {
         </Group>
       </Layer> */}
     </SuperStage>
-  );
-};
+  )
+}
 
-export default Map;
+export default Map
 
 //<Image image={mapImage} width={1024} height={1083}  />

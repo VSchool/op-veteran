@@ -1,8 +1,8 @@
 export function setOpenState(status, setter) {
   if (status === false) {
-    setter(() => true);
+    setter(() => true)
   } else if (status === true) {
-    setter(() => false);
+    setter(() => false)
   }
 }
 
@@ -11,20 +11,20 @@ export function setStyling(status) {
     return {
       visibility: `hidden`,
       containerHeight: `48px`,
-    };
+    }
   } else if (status === true) {
     return {
       visibility: `visible`,
       containerHeight: `328px`,
-    };
+    }
   }
 }
 
 export function toggleDetailsView(status, setter) {
   if (status === 'vendor') {
-    setter(() => 'event');
+    setter(() => 'event')
   } else if (status === 'event') {
-    setter(() => 'vendor');
+    setter(() => 'vendor')
   }
 }
 
@@ -41,4 +41,4 @@ export const fakeData = {
   veteranOwned: 'no',
   nonprofit: 'yes',
   poweredBooth: 'yes',
-};
+}

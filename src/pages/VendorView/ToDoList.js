@@ -1,56 +1,56 @@
-import React, { useState, useContext } from 'react';
-import { Link } from 'react-router-dom';
-import { VendorContext } from '../../context/VendorProvider';
-import { Container, FileUploader } from '../../Elements/basic';
-import { BoothContext } from '../../context/BoothProvider';
-import { Button } from '../../components/Button';
+import React, { useState, useContext } from 'react'
+import { Link } from 'react-router-dom'
+import { VendorContext } from '../../context/VendorProvider'
+import { Container, FileUploader } from '../../Elements/basic'
+import { BoothContext } from '../../context/BoothProvider'
+import { Button } from '../../components/Button'
 
 const ToDoList = ({ List, Header2, ListItem }) => {
-  const { currentVendor, storeFile } = useContext(VendorContext);
+  const { currentVendor, storeFile } = useContext(VendorContext)
   const { updateBooth, booths, setNeighbors, newBooths, resetBooth } =
-    useContext(BoothContext);
-  const [file, setFile] = useState(null);
-  const [showLogoUploader, setShowLogoUploader] = useState(false);
+    useContext(BoothContext)
+  const [file, setFile] = useState(null)
+  const [showLogoUploader, setShowLogoUploader] = useState(false)
 
   const saveLogo = (file) => {
-    const fileName = file.name;
-    const extension = fileName.split('.')[1];
-    const newFileName = currentVendor?.organization.replace(/ /g, '');
+    const fileName = file.name
+    const extension = fileName.split('.')[1]
+    const newFileName = currentVendor?.organization.replace(/ /g, '')
 
-    console.log(newFileName);
-    storeFile(file, `logos/${newFileName}/${newFileName}.${extension}`);
-  };
+    console.log(newFileName)
+    storeFile(file, `logos/${newFileName}/${newFileName}.${extension}`)
+  }
 
   const handleLogoUpload = (e) => {
-    setShowLogoUploader(false);
-    saveLogo(file);
-  };
+    setShowLogoUploader(false)
+    saveLogo(file)
+  }
 
   const handleClick = (e) => {
     switch (e.target.innerText) {
       case 'Upload logo':
-        setShowLogoUploader(!setShowLogoUploader);
-        break;
+        setShowLogoUploader(!setShowLogoUploader)
+        break
       default:
-        break;
+        break
     }
-  };
-  console.log(currentVendor);
+  }
+  console.log(currentVendor)
   const finalize = () => {
-    console.log('Finalize registration');
+    console.log('Finalize registration')
     // changeState(states.FINALIZE);
-  };
+  }
   const changeBooths = (e) => {
-    console.log('changing booths');
+    console.log('changing booths')
     for (let booth of booths) {
       if (booth?.restriction !== 1 && booth?.restriction !== 2) {
-        const updatedBooth = { ...booth };
-        updatedBooth.restriction = 0;
-        updateBooth(updatedBooth, booth?.id);
-        console.log(`updating booth ${booth?.id}`);
+        const updatedBooth = { ...booth }
+        updatedBooth.restriction = 0
+        updateBooth(updatedBooth, booth?.id)
+        console.log(`updating booth ${booth?.id}`)
       }
     }
-  };
+  }
 
   return (
     <List>
@@ -70,7 +70,7 @@ const ToDoList = ({ List, Header2, ListItem }) => {
           current={currentVendor && !currentVendor?.logo}
           onClick={(e) => {
             if (currentVendor && !currentVendor?.logo)
-              setShowLogoUploader(!showLogoUploader);
+              setShowLogoUploader(!showLogoUploader)
           }}
         >
           Upload logo
@@ -80,7 +80,7 @@ const ToDoList = ({ List, Header2, ListItem }) => {
         <Container width='80%'>
           <FileUploader
             onChange={(e) => {
-              setFile(e.target.files[0]);
+              setFile(e.target.files[0])
             }}
             type='file'
           />
@@ -89,7 +89,7 @@ const ToDoList = ({ List, Header2, ListItem }) => {
               buttonText='Upload'
               buttonStyle='primary'
               onClick={(e) => {
-                saveLogo(file);
+                saveLogo(file)
               }}
             >
               Upload file
@@ -103,7 +103,7 @@ const ToDoList = ({ List, Header2, ListItem }) => {
         <ListItem
           onClick={(e) => {
             if (currentVendor?.sponsorship && !currentVendor?.sponsorship.level)
-              handleClick(e);
+              handleClick(e)
           }}
           complete={
             currentVendor?.sponsorship && currentVendor?.sponsorship.level
@@ -118,7 +118,7 @@ const ToDoList = ({ List, Header2, ListItem }) => {
       <Link to='/booth'>
         <ListItem
           onClick={(e) => {
-            handleClick(e);
+            handleClick(e)
           }}
           complete={currentVendor?.booth?.primary.status > 0}
           current={currentVendor?.booth?.primary.status === 0}
@@ -135,7 +135,7 @@ const ToDoList = ({ List, Header2, ListItem }) => {
         </ListItem>
       </Link>
     </List>
-  );
-};
+  )
+}
 
-export default ToDoList;
+export default ToDoList

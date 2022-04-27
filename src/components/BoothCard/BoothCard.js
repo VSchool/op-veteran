@@ -1,10 +1,10 @@
-import React, { useContext } from 'react';
-import styled from 'styled-components';
-import { Button } from '../Button';
-import { CanvasContext } from '../../context/CanvasProvider';
-import { BoothContext } from '../../context/BoothProvider';
-import { VendorContext } from '../../context/VendorProvider';
-import { IoCloseOutline } from 'react-icons/io5';
+import React, { useContext } from 'react'
+import styled from 'styled-components'
+import { Button } from '../Button'
+import { CanvasContext } from '../../context/CanvasProvider'
+import { BoothContext } from '../../context/BoothProvider'
+import { VendorContext } from '../../context/VendorProvider'
+import { IoCloseOutline } from 'react-icons/io5'
 
 const CardContainer = styled.div`
   width: 311px;
@@ -23,7 +23,7 @@ const CardContainer = styled.div`
   bottom: 0;
   left: 0;
   right: 0;
-`;
+`
 
 const CloseBtn = styled.div`
   & > .closeBtn {
@@ -40,11 +40,11 @@ const CloseBtn = styled.div`
   & > .closeBtn:hover {
     color: #f1f1f1;
   }
-`;
+`
 const ButtonWrapper = styled.div`
   display: flex;
   flex-direction: row;
-`;
+`
 const Header = styled.h1`
   font-family: Open Sans;
   font-style: normal;
@@ -52,7 +52,7 @@ const Header = styled.h1`
   font-size: 17px;
   line-height: 24px;
   color: #545454;
-`;
+`
 const Subheader = styled.h3`
   font-family: Open Sans;
   font-style: normal;
@@ -60,7 +60,7 @@ const Subheader = styled.h3`
   font-size: 13px;
   line-height: 16px;
   color: #545454;
-`;
+`
 const Breadcrumbs = styled.h2`
   font-family: Open Sans;
   font-style: normal;
@@ -68,11 +68,11 @@ const Breadcrumbs = styled.h2`
   font-size: 15px;
   line-height: 20px;
   color: #545454;
-`;
+`
 const Logo = styled.img`
   height: 60px;
   width: auto;
-`;
+`
 const Paragraph = styled.p`
   font-family: Open Sans;
   font-style: normal;
@@ -80,17 +80,17 @@ const Paragraph = styled.p`
   font-size: 15px;
   line-height: 20px;
   color: #545454;
-`;
+`
 const HeaderWrapper = styled.div`
   padding: 20px 0;
-`;
+`
 const Hr = styled.hr`
   margin: auto;
   margin-top: ${(props) => (props.top ? props.top : '8px')};
   margin-bottom: ${(props) => (props.bottom ? props.botton : '8px')};
   background-color: #f4f4f4;
   width: 90%;
-`;
+`
 const BoothCard = (props) => {
   const {
     addPrimaryBoothToLocalCart,
@@ -101,8 +101,8 @@ const BoothCard = (props) => {
     addSecondaryBoothToCart,
     primaryMode,
     setPrimaryMode,
-  } = useContext(VendorContext);
-  const { reserveBooth, holdBooth, booths } = useContext(BoothContext);
+  } = useContext(VendorContext)
+  const { reserveBooth, holdBooth, booths } = useContext(BoothContext)
   const {
     data,
     setCurrentBooth,
@@ -110,7 +110,7 @@ const BoothCard = (props) => {
     changeState,
     setModalOptions,
     statusCodes,
-  } = props;
+  } = props
   const {
     id,
     vendor,
@@ -120,20 +120,20 @@ const BoothCard = (props) => {
     restriction,
     status,
     neighbors,
-  } = data;
+  } = data
 
   const handleClose = () => {
-    setCurrentBooth(null);
-  };
+    setCurrentBooth(null)
+  }
 
   // this needs lots of refactoring
   const handleSelectBooth = (_id, secondary = false) => {
     if (secondary) {
       // addSecondaryBoothToCart(_id);
-      addSecondaryBoothToLocalCart(_id);
+      addSecondaryBoothToLocalCart(_id)
     } else {
       // addPrimaryBoothToCart(_id);
-      addPrimaryBoothToLocalCart(_id);
+      addPrimaryBoothToLocalCart(_id)
     }
 
     //might have to move this somewhere else
@@ -145,18 +145,18 @@ const BoothCard = (props) => {
     //   },
     //   _id
     // );
-    handleClose();
-    checkNeighbors(); // might have to move this to else statement
-  };
+    handleClose()
+    checkNeighbors() // might have to move this to else statement
+  }
 
   const handlePrimaryClick = (e) => {
-    e.preventDefault();
+    e.preventDefault()
     if (isAllowed()) {
       // idea: instead of calling handleSelectBooth,
       // update currentBoothSelection and show that in
       // cart, then have the option for the user to
       // add the two booths to their cart
-      handleSelectBooth(id);
+      handleSelectBooth(id)
     }
     // don't send user to vendors page
     // else {
@@ -167,14 +167,14 @@ const BoothCard = (props) => {
     //   updateCurrentVendor(updatedVendor);
     //   changeState(states.SPONSOR);
     // }
-  };
+  }
   const checkNeighbors = () => {
     const options = booths.reduce((response, b) => {
       if (neighbors.includes(b.id) && (b.status === 0 || b.status === 'open')) {
-        response.push(b.id);
+        response.push(b.id)
       }
-      return response;
-    }, []);
+      return response
+    }, [])
     if (options.length > 0) {
       setModalOptions((prev) => ({
         ...prev,
@@ -182,18 +182,18 @@ const BoothCard = (props) => {
         isOpen: true,
         options: options,
         handleSelectBooth: handleSelectBooth,
-      }));
+      }))
     }
-  };
+  }
 
   const isAllowed = () => {
-    if (vendor) return false;
+    if (vendor) return false
     if (restriction === 0) {
-      return true;
+      return true
     } else {
-      return false;
+      return false
     }
-  };
+  }
 
   return (
     <CardContainer>
@@ -257,6 +257,6 @@ const BoothCard = (props) => {
         )}
       </ButtonWrapper>
     </CardContainer>
-  );
-};
-export default BoothCard;
+  )
+}
+export default BoothCard

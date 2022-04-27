@@ -1,8 +1,8 @@
-import React from 'react';
-import styled from 'styled-components';
-import { Header } from '../../components/Header';
-import AdminSearch from '../../components/AdminSearch';
-import { BoothCreation } from '../VendorView/BoothCreation.js/index.js';
+import React from 'react'
+import styled from 'styled-components'
+import { Header } from '../../components/Header'
+import AdminSearch from '../../components/AdminSearch'
+import { BoothCreation } from '../VendorView/BoothCreation.js/index.js'
 
 const AdminContainer = styled.div`
   box-sizing: border-box;
@@ -44,7 +44,7 @@ const AdminContainer = styled.div`
     font-family: 'Open Sans';
     border: 1px dotted orange;
   }
-`;
+`
 
 export default function Admin() {
   return (
@@ -53,5 +53,5 @@ export default function Admin() {
       <BoothCreation />
       <AdminSearch />
     </AdminContainer>
-  );
+  )
 }

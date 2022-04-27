@@ -1,14 +1,14 @@
-import React, { useContext, useState } from 'react';
-import styled from 'styled-components';
-import { AuthContext } from '../../context/AuthProvider';
-import { UserContext } from '../../context/UserProvider';
-import { VendorContext } from '../../context/VendorProvider';
-import logo from '../../assets/images/vetfest-logo.png';
-import userIcon from '../../assets/icons/avatar-icon.svg';
-import { Profile } from '../Profile';
-import { IoChevronBackSharp, IoCloseOutline } from 'react-icons/io5';
-import { Link, useNavigate } from 'react-router-dom';
-import ToDoList from '../../pages/VendorView/ToDoList';
+import React, { useContext, useState } from 'react'
+import styled from 'styled-components'
+import { AuthContext } from '../../context/AuthProvider'
+import { UserContext } from '../../context/UserProvider'
+import { VendorContext } from '../../context/VendorProvider'
+import logo from '../../assets/images/vetfest-logo.png'
+import userIcon from '../../assets/icons/avatar-icon.svg'
+import { Profile } from '../Profile'
+import { IoChevronBackSharp, IoCloseOutline } from 'react-icons/io5'
+import { Link, useNavigate } from 'react-router-dom'
+import ToDoList from '../../pages/VendorView/ToDoList'
 
 const HeaderContainer = styled.div`
   position: relative;
@@ -38,7 +38,7 @@ const HeaderContainer = styled.div`
     width: 40px;
     border-radius: 50%;
   }
-`;
+`
 const SideNav = styled.div`
   height: 100%;
   width: 300px;
@@ -112,13 +112,13 @@ const SideNav = styled.div`
       font-size: 18px;
     }
   }
-`;
+`
 
 const List = styled.div`
   & a {
     text-decoration: none;
   }
-`;
+`
 
 const ListItem = styled.li`
   padding: 8px 8px 8px 32px;
@@ -131,9 +131,9 @@ const ListItem = styled.li`
   font-weight: ${(props) => (props.current ? 'bold' : 'normal')};
   z-index: ${(props) => (props.current ? 3 : null)};
   cursor: ${(props) => (props.current ? 'pointer' : null)};
-`;
+`
 
-const Header2 = styled(ListItem)``;
+const Header2 = styled(ListItem)``
 
 const LogOut = styled.span`
   & > h1 {
@@ -145,23 +145,23 @@ const LogOut = styled.span`
     transition: 0.3s;
     cursor: pointer;
   }
-`;
+`
 
 export default function Header() {
-  const navigate = useNavigate();
-  const { logout } = useContext(AuthContext);
-  const { user } = useContext(UserContext);
-  const { currentVendor } = useContext(VendorContext);
-  const [showProfile, setShowProfile] = useState(false);
+  const navigate = useNavigate()
+  const { logout } = useContext(AuthContext)
+  const { user } = useContext(UserContext)
+  const { currentVendor } = useContext(VendorContext)
+  const [showProfile, setShowProfile] = useState(false)
   const handleClick = () => {
-    setShowProfile((prev) => !prev);
-  };
-  const [sideToggle, setSideToggle] = useState(true);
+    setShowProfile((prev) => !prev)
+  }
+  const [sideToggle, setSideToggle] = useState(true)
 
   const handleSideBarToggle = () => {
-    setSideToggle((prevState) => !prevState);
-    console.log(sideToggle);
-  };
+    setSideToggle((prevState) => !prevState)
+    console.log(sideToggle)
+  }
 
   return (
     <HeaderContainer>
@@ -221,5 +221,5 @@ export default function Header() {
       />
       {showProfile ? <Profile /> : <></>}
     </HeaderContainer>
-  );
+  )
 }

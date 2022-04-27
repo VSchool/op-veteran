@@ -1,12 +1,12 @@
-import React from 'react';
-import styled, { keyframes } from 'styled-components';
-import { MdReport } from 'react-icons/md';
+import React from 'react'
+import styled, { keyframes } from 'styled-components'
+import { MdReport } from 'react-icons/md'
 const entrance = keyframes`
     0% {top: -150px;}
     20% {top: 100px;}
     80% {top: 100px;}
     100% {top: -150px;}
-`;
+`
 const MessageContainer = styled.div`
   display: flex;
   top: -100px;
@@ -38,7 +38,7 @@ const MessageContainer = styled.div`
     width: 528px;
     left: calc(50% - 528px / 2);
   }
-`;
+`
 const Text = styled.p`
   box-sizing: border-box;
   margin: 0px;
@@ -51,21 +51,21 @@ const Text = styled.p`
   letter-spacing: 0.25px;
   color: #545454;
   // border: 1px dotted blue;
-`;
+`
 const Icon = styled(MdReport)`
   width: 24px;
   height: 24px;
   color: #4e92f9;
   padding: 4px auto;
-`;
+`
 
 export default function StatusMessage(props) {
-  const { message, className } = props;
+  const { message, className } = props
 
   return (
     <MessageContainer className={className}>
       <Icon />
       <Text>{message}</Text>
     </MessageContainer>
-  );
+  )
 }

@@ -1,8 +1,8 @@
-import React, { useState, useRef, useEffect } from 'react';
-import styled from 'styled-components';
-import NextButton from './NextButton';
-import warningIcon from '../../assets/icons/warning-icon.svg';
-import Selection from '../Selection';
+import React, { useState, useRef, useEffect } from 'react'
+import styled from 'styled-components'
+import NextButton from './NextButton'
+import warningIcon from '../../assets/icons/warning-icon.svg'
+import Selection from '../Selection'
 const InputContainer = styled.form`
   box-sizing: border-box;
   // position: relative;
@@ -84,28 +84,28 @@ const InputContainer = styled.form`
         right: 0px; */
     }
   }
-`;
+`
 
 export default function FormInput(props) {
-  const { label, className, answer, saveAnswer, topic } = props;
-  const { question, type, required, vendorProp } = topic;
-  const [input, setInput] = useState('');
-  const focusRef = useRef(null);
+  const { label, className, answer, saveAnswer, topic } = props
+  const { question, type, required, vendorProp } = topic
+  const [input, setInput] = useState('')
+  const focusRef = useRef(null)
 
   const handleChange = (e) => {
-    setInput(e.target.value);
-  };
+    setInput(e.target.value)
+  }
   const handleSubmit = (e) => {
-    e.preventDefault();
-    focusRef.current && focusRef.current.focus();
-    saveAnswer({ [vendorProp]: input });
-    setInput('');
-  };
+    e.preventDefault()
+    focusRef.current && focusRef.current.focus()
+    saveAnswer({ [vendorProp]: input })
+    setInput('')
+  }
   useEffect(() => {
     if (focusRef.current) {
-      focusRef.current.focus();
+      focusRef.current.focus()
     }
-  }, [focusRef.current]);
+  }, [focusRef.current])
   return (
     <InputContainer onSubmit={handleSubmit} className={className}>
       <p className={'label'}>{question}</p>
@@ -153,5 +153,5 @@ export default function FormInput(props) {
       <p className={'helper-text'}>{'Helper text'}</p>
       <NextButton className={'next-button'} />
     </InputContainer>
-  );
+  )
 }

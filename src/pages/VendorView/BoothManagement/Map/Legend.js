@@ -1,12 +1,12 @@
-import React, { useState, useContext, useEffect } from 'react';
-import styled from 'styled-components';
+import React, { useState, useContext, useEffect } from 'react'
+import styled from 'styled-components'
 
 const colors = {
   green: '#799C8A',
   red: '#EA7C7C',
   yellow: '#FBBC05',
   blue: '#4E92F9',
-};
+}
 
 const Wrapper = styled.div`
   display: grid;
@@ -24,20 +24,20 @@ const Wrapper = styled.div`
   position: absolute;
 
   //text-shadow: 1px 1px 1px #000;
-`;
+`
 const Item = styled.p`
   color: ${(props) => props.color};
   background-color: ${(props) => props.backgroundColor};
   //padding: 10px;
   grid-column: 1/2;
-`;
+`
 const Span = styled.span`
   box-sizing: border-box;
   color: ${(props) => props.color};
   background-color: ${(props) => props.backgroundColor};
   width: 25px;
   height: 25px;
-`;
+`
 
 const Legend = (props) => {
   return (
@@ -58,7 +58,7 @@ const Legend = (props) => {
       </Item>
       <Span backgroundColor={colors.yellow} />
     </Wrapper>
-  );
-};
+  )
+}
 
-export default Legend;
+export default Legend

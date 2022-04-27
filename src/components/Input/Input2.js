@@ -1,20 +1,20 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import warningIcon from '../../assets/icons/warning-icon.svg';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { useState } from 'react'
+import styled from 'styled-components'
+import warningIcon from '../../assets/icons/warning-icon.svg'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faClear,
   faEye,
   faEyeSlash,
   faExclamationTriangle,
-} from '@fortawesome/free-solid-svg-icons';
+} from '@fortawesome/free-solid-svg-icons'
 
 const InputContainer = styled.div`
   box-sizing: border-box;
   position: relative;
   width: 100%;
   height: 44px;
-`;
+`
 // border: 1px solid black;
 
 const Label = styled.label`
@@ -30,7 +30,7 @@ const Label = styled.label`
 
   color: #545454;
   // border: 1px dotted blue
-`;
+`
 
 const Wrapper = styled.div`
   position: absolute;
@@ -42,7 +42,7 @@ const Wrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   border: 1px solid #545454;
-`;
+`
 const TextInput = styled.input`
   box-sizing: border-box;
   height: 36px;
@@ -61,14 +61,14 @@ const TextInput = styled.input`
   &::after {
     content: ${(props) => props.icon};
   }
-`;
+`
 const Icon = styled(FontAwesomeIcon)`
   box-sizing: border-box;
   width: 24px;
   height: 24px;
   visibility: ${(props) => (props.show ? 'visible' : 'hidden')};
   color: ${(props) => props.color};
-`;
+`
 // border: 1px dotted blue;
 
 const HelperText = styled.p`
@@ -86,12 +86,12 @@ const HelperText = styled.p`
   color: #ea7c7c;
   visibility: ${(props) => (props.helperText ? 'visible' : 'hidden')};
   // border: 1px dotted blueeß
-`;
+`
 
 export default function Input(props) {
-  const [invalid, setInvalid] = useState(false);
-  const [type, setType] = useState(props.type);
-  const { labelText, className, helperText, ...inputProps } = props;
+  const [invalid, setInvalid] = useState(false)
+  const [type, setType] = useState(props.type)
+  const { labelText, className, helperText, ...inputProps } = props
   return (
     <InputContainer className={className}>
       <Label className={'label'}>{labelText}</Label>
@@ -104,5 +104,5 @@ export default function Input(props) {
         <HelperText className={'helper-text'}>{helperText}</HelperText>
       ) : null}
     </InputContainer>
-  );
+  )
 }

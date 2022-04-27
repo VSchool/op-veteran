@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import { Button } from '../Button';
-import { setOpenState, setStyling, toggleDetailsView, fakeData } from './utils';
-import closedIcon from '../../assets/icons/card-closed-icon.svg';
-import radioSelected from '../../assets/icons/radio-selected-icon.svg';
-import radioUnselected from '../../assets/icons/radio-unselected-icon.svg';
+import React, { useState } from 'react'
+import styled from 'styled-components'
+import { Button } from '../Button'
+import { setOpenState, setStyling, toggleDetailsView, fakeData } from './utils'
+import closedIcon from '../../assets/icons/card-closed-icon.svg'
+import radioSelected from '../../assets/icons/radio-selected-icon.svg'
+import radioUnselected from '../../assets/icons/radio-unselected-icon.svg'
 
 const CardContainer = styled.div`
   position: relative;
@@ -247,12 +247,12 @@ const CardContainer = styled.div`
       // border: 1px dotted dodgerblue;
     }
   }
-`;
+`
 
 export default function VendorCard() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [detailsView, setDetailsView] = useState('vendor');
-  const { visibility, containerHeight } = setStyling(isOpen);
+  const [isOpen, setIsOpen] = useState(false)
+  const [detailsView, setDetailsView] = useState('vendor')
+  const { visibility, containerHeight } = setStyling(isOpen)
 
   return (
     <CardContainer height={containerHeight}>
@@ -295,5 +295,5 @@ export default function VendorCard() {
         />
       </div>
     </CardContainer>
-  );
+  )
 }

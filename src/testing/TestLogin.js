@@ -1,27 +1,27 @@
-import { useContext, useState } from 'react';
-import { AuthContext } from '../context/AuthProvider';
+import { useContext, useState } from 'react'
+import { AuthContext } from '../context/AuthProvider'
 
 export default function TestLogin() {
   const { signInWithGoogle, signInWithEmail, signUpWithEmail, authError } =
-    useContext(AuthContext);
+    useContext(AuthContext)
   const [fields, setFields] = useState({
     email: '',
     password: '',
-  });
+  })
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFields((prev) => ({ ...prev, [name]: value }));
-  };
+    const { name, value } = e.target
+    setFields((prev) => ({ ...prev, [name]: value }))
+  }
 
   const handleClick = (e) => {
-    const { name } = e.target;
+    const { name } = e.target
     if (name === 'signup') {
-      signUpWithEmail(fields.email, fields.password);
+      signUpWithEmail(fields.email, fields.password)
     } else {
-      signInWithEmail(fields.email, fields.password);
+      signInWithEmail(fields.email, fields.password)
     }
-  };
+  }
 
   return (
     <>
@@ -56,5 +56,5 @@ export default function TestLogin() {
         </button>
       </form>
     </>
-  );
+  )
 }

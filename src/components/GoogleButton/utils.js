@@ -7,7 +7,7 @@ export function setStyle(style) {
       hoverBackground: `#6C937E`,
       activeBackground: `#567665`,
       activeBorder: `2px solid #70C297`,
-    };
+    }
   } else if (style === 'secondary') {
     return {
       background: `#FFFFFF`,
@@ -16,7 +16,7 @@ export function setStyle(style) {
       hoverBackground: `#F7F7F7`,
       activeBackground: `#F7F7F7`,
       activeBorder: `2px solid #70C297`,
-    };
+    }
   } else if (style === 'text') {
     return {
       background: `none`,
@@ -24,6 +24,6 @@ export function setStyle(style) {
       fontColor: `#618572`,
       boxShadow: `none`,
       activeBorder: `2px solid #70C297`,
-    };
+    }
   }
 }

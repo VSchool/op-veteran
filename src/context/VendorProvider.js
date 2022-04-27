@@ -1,19 +1,19 @@
-import react, { createContext, useContext, useEffect, useState } from 'react';
-import firestore from '../database';
-import Firebase, { Storage } from '../Firebase';
-import { UserContext } from './UserProvider';
-import { BoothContext } from './BoothProvider';
+import react, { createContext, useContext, useEffect, useState } from 'react'
+import firestore from '../database'
+import Firebase, { Storage } from '../Firebase'
+import { UserContext } from './UserProvider'
+import { BoothContext } from './BoothProvider'
 // import vendorData from "../testing/vendors.json";
-import Client from 'shopify-buy/index.unoptimized.umd';
-import firebase from 'firebase/app';
-import 'firebase/auth';
-import 'firebase/database';
-import 'firebase/firestore';
-import 'firebase/storage';
-import 'firebase/functions';
-import axios from 'axios';
-const vendorRef = firestore.collection('vendors');
-const batch = firestore.batch();
+import Client from 'shopify-buy/index.unoptimized.umd'
+import firebase from 'firebase/app'
+import 'firebase/auth'
+import 'firebase/database'
+import 'firebase/firestore'
+import 'firebase/storage'
+import 'firebase/functions'
+import axios from 'axios'
+const vendorRef = firestore.collection('vendors')
+const batch = firestore.batch()
 const products = {
   Paladin: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8zODgyMzc3NjgxMzI0MQ==',
   Abrams: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8zODgyMzc3Njg0NjAwOQ==',
@@ -34,27 +34,27 @@ const products = {
     'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC80MDI2NzYzMjczODQ4OQ==',
   AmtrakPromise: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC80MDI2NzYzMjc3MTI1Nw==',
   WLAPromise: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC80MDI2NzYzMjgwNDAyNQ==',
-};
+}
 
-export const VendorContext = createContext();
+export const VendorContext = createContext()
 
 export default function VendorProvider({ children }) {
-  const [primaryMode, setPrimaryMode] = useState(true);
-  const [holdingCell, setHoldingCell] = useState([]);
-  const { user, reserveBooth: reserve } = useContext(UserContext);
-  const [currentVendor, setCurrentVendor] = useState(null);
-  const { booths, statusCodes, resetBooth } = useContext(BoothContext);
-  const [cartItems, setCartItems] = useState(null);
+  const [primaryMode, setPrimaryMode] = useState(true)
+  const [holdingCell, setHoldingCell] = useState([])
+  const { user, reserveBooth: reserve } = useContext(UserContext)
+  const [currentVendor, setCurrentVendor] = useState(null)
+  const { booths, statusCodes, resetBooth } = useContext(BoothContext)
+  const [cartItems, setCartItems] = useState(null)
   const client = Client.buildClient({
     domain: 'o-p-veteran.myshopify.com',
     storefrontAccessToken: '76c1fba5d995f6b7dbb1eb1c1c3c5745',
-  });
+  })
 
   // test
   const [localCart, setLocalCart] = useState({
     primaryBoothId: '',
     secondaryBoothId: '',
-  });
+  })
 
   // This should work if we can get the cartId properly.  Doesnt appear its in the
   // currentVendor data becasue createCart function is never called
@@ -65,27 +65,27 @@ export default function VendorProvider({ children }) {
     client.checkout
       .fetch(currentVendor.cartId)
       .then((res) => {
-        console.log('dec 7: fetched cart items!!', res.lineItems);
-        setCartItems(res.lineItems);
+        console.log('dec 7: fetched cart items!!', res.lineItems)
+        setCartItems(res.lineItems)
       })
-      .catch((err) => console.log(err));
-  };
+      .catch((err) => console.log(err))
+  }
 
   const updateCurrentVendor = (data) => {
     // const updatedVendor = {   ...currentVendor,   ...data }
     if (!currentVendor) {
-      return;
+      return
     }
     vendorRef
       .doc(`${currentVendor.organization}`)
       .update(data)
-      .catch((err) => console.log(err));
-  };
+      .catch((err) => console.log(err))
+  }
 
   // This funciton is unused and is the root of the Shopify problem because its not saving the cart ID
   // Need to figure out where to integrate it. On the RegistrationForm component would likely make the most sense.
   const createCart = (data) => {
-    console.log('createCart function called with data: ', data);
+    console.log('createCart function called with data: ', data)
     client.checkout
       .create({
         shippingAddress: {
@@ -103,18 +103,18 @@ export default function VendorProvider({ children }) {
         email: data.repEmail,
       })
       .then((checkout) => {
-        console.log('From vendor provider: checkout', checkout);
-        console.log('From vendor provider: checkout ID', checkout.id);
+        console.log('From vendor provider: checkout', checkout)
+        console.log('From vendor provider: checkout ID', checkout.id)
         createVendor({
           ...data,
           cartId: checkout.id,
           cartUrl: checkout.webUrl,
-        });
+        })
 
         // updateCurrentVendor({cartId: checkout.id})
       })
-      .catch((err) => console.log(err));
-  };
+      .catch((err) => console.log(err))
+  }
 
   // Need to use the createCart function before this is called for this
   // function to work so we can have a cartId and checkout.id
@@ -156,12 +156,12 @@ export default function VendorProvider({ children }) {
         staus: data.isSponsor ? 2 : 0,
       },
       logo: null,
-    };
+    }
     vendorRef
       .doc(data.organization)
       .set(currentVendorData)
       .then(() => matchVendor())
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err))
     // const shippingAddress = {
     //   address1: data.street,
     //   address2: data.apt,
@@ -180,15 +180,15 @@ export default function VendorProvider({ children }) {
     //   .create({shippingAddress, email})
     //   .then((checkout => {
     // }))
-  };
+  }
 
   const checkProducts = () => {
     for (let product of Object.keys(products)) {
       client.product
         .fetch(products[product])
-        .then((p) => console.log(`${product}: ${Object.entries(p)}`));
+        .then((p) => console.log(`${product}: ${Object.entries(p)}`))
     }
-  };
+  }
   // useEffect(() => { vendorData.forEach(b => { batch.set(vendorRef.doc(b.id),
   // b); }); batch.commit().catch(err => console.error(err)); }, []); useEffect(()
   // => { 	const unsub = vendorRef.onSnapshot(snap => { 		const list = {}; 		const
@@ -203,11 +203,11 @@ export default function VendorProvider({ children }) {
 
   const openCart = () => {
     // This Doesnt work becasue I cant get a valid cartId
-    console.log('opening cart');
+    console.log('opening cart')
     client.checkout
       .fetch(currentVendor.cartId)
-      .then((checkout) => window.open(checkout.webUrl));
-  };
+      .then((checkout) => window.open(checkout.webUrl))
+  }
 
   const changeQuantity = (itemId, currentQuantity) => {
     /*
@@ -223,16 +223,16 @@ client.checkout.updateLineItems(checkoutId, lineItemsToUpdate).then((checkout) =
 });
 
     */
-    let newQuantity = currentQuantity - 1;
+    let newQuantity = currentQuantity - 1
     client.checkout
       .updateLineItems(currentVendor.cartId, {
         id: itemId,
         quantity: newQuantity,
       })
       .then((checkout) => {
-        setCartItems(checkout.lineItems);
-      });
-  };
+        setCartItems(checkout.lineItems)
+      })
+  }
 
   const addItemToCart = (item, boothId) => {
     return client.checkout.addLineItems(currentVendor.cartId, [
@@ -241,42 +241,42 @@ client.checkout.updateLineItems(checkoutId, lineItemsToUpdate).then((checkout) =
         quantity: 1,
         customAttributes: [{ key: 'boothID', value: boothId }],
       },
-    ]);
-  };
+    ])
+  }
   const storeFile = (file, path) => {
-    const storageRef = Storage.ref(path);
+    const storageRef = Storage.ref(path)
     storageRef
       .put(file)
       .then((snapShot) => {
         storageRef.getDownloadURL().then((url) => {
-          updateCurrentVendor({ logo: url });
-        });
+          updateCurrentVendor({ logo: url })
+        })
       })
-      .catch((err) => console.log(err));
-  };
+      .catch((err) => console.log(err))
+  }
   // const matchVendor = () => {   const query = vendorRef     .where("repEmail",
   // "==", user.email)     .onSnapshot((querySnapshot) => {
   // querySnapshot.forEach((doc)=>{       setCurrentVendor(doc.data())       })  }
   //     )   }
   const matchVendor = () => {
     if (user && currentVendor === null) {
-      console.log(`matching vendor with ${user?.email}`);
+      console.log(`matching vendor with ${user?.email}`)
       vendorRef
         .where('repEmail', '==', user.email)
         .onSnapshot((querySnapshot) => {
           querySnapshot.forEach((doc) => {
-            setCurrentVendor(doc.data());
-          });
-        });
+            setCurrentVendor(doc.data())
+          })
+        })
     }
-  };
+  }
 
   const deleteVendor = (id) => {
     vendorRef
       .doc(id)
       .delete()
-      .catch((err) => console.error(err));
-  };
+      .catch((err) => console.error(err))
+  }
   // useEffect(() => {   matchVendor() }, [])  useEffect(() => {        if
   // (currentVendor?.booths?.primary?.status != undefined) {
   // setPrimaryMode(!currentVendor.booths.primary.status)        }  },
@@ -284,22 +284,22 @@ client.checkout.updateLineItems(checkoutId, lineItemsToUpdate).then((checkout) =
 
   // test to check if it's okay to make localcart
   const addPrimaryBoothToLocalCart = (boothId) => {
-    console.log('TEST PRIMARY: only setting current local cart');
-    setLocalCart({ primaryBoothId: boothId });
-  };
+    console.log('TEST PRIMARY: only setting current local cart')
+    setLocalCart({ primaryBoothId: boothId })
+  }
 
   const addSecondaryBoothToLocalCart = (boothId) => {
-    console.log('TEST SECONDARY: only setting current local cart');
-    setLocalCart((prevCart) => ({ ...prevCart, secondaryBoothId: boothId }));
-  };
+    console.log('TEST SECONDARY: only setting current local cart')
+    setLocalCart((prevCart) => ({ ...prevCart, secondaryBoothId: boothId }))
+  }
 
   const addPrimaryBoothToCart = (boothId) => {
     console.log(
       'this is the current booth selection id from addPrimaryBoothCart: ',
       boothId
-    );
+    )
     //currentBooth should hold the whole booth instead of just the ID to avoid always holding
-    const booth = booths.find((b) => b.id === boothId);
+    const booth = booths.find((b) => b.id === boothId)
     if (
       ['Paladin', 'Stryker', 'Abrams', 'Bradley'].includes(
         currentVendor.sponsorship.level
@@ -313,10 +313,10 @@ client.checkout.updateLineItems(checkoutId, lineItemsToUpdate).then((checkout) =
                 currentVendor.cartId,
                 'sponsoredBoothElectricity'
               )
-            );
+            )
           }
         })
-        .catch((err) => console.log(err));
+        .catch((err) => console.log(err))
     } else if (
       currentVendor.isNonprofit ||
       currentVendor.isGovernmental ||
@@ -327,20 +327,20 @@ client.checkout.updateLineItems(checkoutId, lineItemsToUpdate).then((checkout) =
           if (booth.hasElectricity) {
             addItemToCart('electricity', boothId)
               .then((checkout) => console.log(checkout))
-              .catch((err) => console.log(err));
+              .catch((err) => console.log(err))
           }
         })
-        .catch((err) => console.log(err));
+        .catch((err) => console.log(err))
     } else {
       addItemToCart('standardBooth', boothId)
         .then(() => {
           if (booth.hasElectricity) {
             addItemToCart('electricity', boothId)
               .then((checkout) => console.log(checkout))
-              .catch((err) => console.log(err));
+              .catch((err) => console.log(err))
           }
         })
-        .catch((err) => console.log(err));
+        .catch((err) => console.log(err))
     }
 
     // may have to refactor this part
@@ -349,11 +349,11 @@ client.checkout.updateLineItems(checkoutId, lineItemsToUpdate).then((checkout) =
         id: boothId,
         status: 1,
       },
-    });
-  };
+    })
+  }
 
   const addSecondaryBoothToCart = (boothId) => {
-    const booth = booths.find((b) => b.id === boothId);
+    const booth = booths.find((b) => b.id === boothId)
     if (
       ['Paladin', 'Stryker', 'Abrams', 'Bradley'].includes(
         currentVendor.sponsorship.level
@@ -365,7 +365,7 @@ client.checkout.updateLineItems(checkoutId, lineItemsToUpdate).then((checkout) =
         )
         .then(() => {
           if (booth.hasElectricity) {
-            addItemToCart('electricity');
+            addItemToCart('electricity')
           }
         })
         .then((checkout) =>
@@ -374,7 +374,7 @@ client.checkout.updateLineItems(checkoutId, lineItemsToUpdate).then((checkout) =
             'sponsoredBoothElectricity'
           )
         )
-        .catch((err) => console.log(err));
+        .catch((err) => console.log(err))
     } else if (
       currentVendor.isNonprofit ||
       currentVendor.isGovernmental ||
@@ -385,20 +385,20 @@ client.checkout.updateLineItems(checkoutId, lineItemsToUpdate).then((checkout) =
           if (booth.hasElectricity) {
             addItemToCart('electricity').then((checkout) =>
               console.log(checkout)
-            );
+            )
           }
         })
-        .catch((err) => console.log(err));
+        .catch((err) => console.log(err))
     } else {
       addItemToCart('doubleBooth', boothId)
         .then(() => {
           if (booth.hasElectricity) {
             addItemToCart('electricity')
               .then((checkout) => console.log(checkout))
-              .catch((err) => console.log(err));
+              .catch((err) => console.log(err))
           }
         })
-        .catch((err) => console.log(err));
+        .catch((err) => console.log(err))
     }
 
     // may have to refactor this part
@@ -407,17 +407,17 @@ client.checkout.updateLineItems(checkoutId, lineItemsToUpdate).then((checkout) =
         id: boothId,
         status: 1,
       },
-    });
-  };
+    })
+  }
   const getOrderStatus = () => {
     client.checkout.fetch(currentVendor.cartId).then((checkout) => {
-      const lineItems = checkout.lineItems;
-      const toRemove = lineItems.map((item) => item.id);
+      const lineItems = checkout.lineItems
+      const toRemove = lineItems.map((item) => item.id)
       client.checkout
         .removeLineItems(currentVendor.cartId, toRemove)
-        .then(() => console.log('removed'));
-    });
-  };
+        .then(() => console.log('removed'))
+    })
+  }
   return (
     <VendorContext.Provider
       value={{
@@ -447,5 +447,5 @@ client.checkout.updateLineItems(checkoutId, lineItemsToUpdate).then((checkout) =
     >
       {children}
     </VendorContext.Provider>
-  );
+  )
 }

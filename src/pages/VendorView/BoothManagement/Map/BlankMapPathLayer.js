@@ -1,5 +1,5 @@
-import React from 'react';
-import { Group, Layer, Path } from 'react-konva';
+import React from 'react'
+import { Group, Layer, Path } from 'react-konva'
 
 const BlankMapPathLayer = (props) => {
   return (
@@ -92,7 +92,7 @@ const BlankMapPathLayer = (props) => {
 		c-16.9,0.7-267.7,76-294,96.6c0,0-172.9,124.6-183,143.3'
       />
     </Layer>
-  );
-};
+  )
+}
 
-export default BlankMapPathLayer;
+export default BlankMapPathLayer

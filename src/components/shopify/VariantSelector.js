@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 
 class VariantSelector extends Component {
   render() {
@@ -15,11 +15,11 @@ class VariantSelector extends Component {
               value={value}
               key={`${this.props.option.name}-${value}`}
             >{`${value}`}</option>
-          );
+          )
         })}
       </select>
-    );
+    )
   }
 }
 
-export default VariantSelector;
+export default VariantSelector

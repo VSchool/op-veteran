@@ -1,21 +1,21 @@
-import React, { useState, useContext, useEffect } from 'react';
-import styled from 'styled-components';
-import Konva from 'konva';
-import { Stage, Layer, Rect, Text, Group, Path } from 'react-konva';
-import { CanvasContext } from '../../../../context/CanvasProvider';
-import { UserContext } from '../../../../context/UserProvider';
-import { VendorContext } from '../../../../context/VendorProvider';
-import { BoothContext } from '../../../../context/BoothProvider';
+import React, { useState, useContext, useEffect } from 'react'
+import styled from 'styled-components'
+import Konva from 'konva'
+import { Stage, Layer, Rect, Text, Group, Path } from 'react-konva'
+import { CanvasContext } from '../../../../context/CanvasProvider'
+import { UserContext } from '../../../../context/UserProvider'
+import { VendorContext } from '../../../../context/VendorProvider'
+import { BoothContext } from '../../../../context/BoothProvider'
 
 const colors = {
   green: '#799C8A',
   red: '#EA7C7C',
   yellow: '#FBBC05',
   blue: '#4E92F9',
-};
+}
 const DiagramBooth = (props) => {
   const { data, mapMode, setMapMode, updateBoothObjects, setCurrentBooth } =
-    props;
+    props
   const {
     hasElectricity,
     restriction,
@@ -25,7 +25,7 @@ const DiagramBooth = (props) => {
     number,
     section,
     row,
-  } = data;
+  } = data
 
   return (
     <Group width={72} height={72} x={0} y={number * 72}>
@@ -63,11 +63,11 @@ const DiagramBooth = (props) => {
         y={0}
         fill='rgba(100,100,100,0)'
         onClick={() => {
-          setCurrentBooth(id);
+          setCurrentBooth(id)
         }}
       />
     </Group>
-  );
-};
+  )
+}
 
-export default DiagramBooth;
+export default DiagramBooth
