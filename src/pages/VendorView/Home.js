@@ -1,8 +1,13 @@
 import React, { useContext, useEffect } from 'react'
 import styled from 'styled-components'
 import { VendorContext } from '../../context/VendorProvider'
-import { Wrapper, Header, HeaderWrapper } from '../../Elements/basic'
+import { Header, HeaderWrapper } from '../../Elements/basic'
 import ToDoList from './ToDoList'
+
+const Wrapper = styled.div`
+  align-items: center;
+  height: calc(100% - 222px);
+`
 
 const Header2 = styled.h2`
   font-family: 'Open Sans';

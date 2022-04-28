@@ -2,8 +2,6 @@ import styled from 'styled-components'
 
 const Footer = () => {
   const FooterContainer = styled.footer`
-    box-shadow: inset 0 0em 3em rgb(184, 184, 184),
-      0 0 0 2px rgba(190, 190, 190), 0.3em 0.3em 1em rgba(0, 0, 0, 0.4);
     background-color: rgb(217, 217, 217);
     bottom: 0;
     width: 100%;
