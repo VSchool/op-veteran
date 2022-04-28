@@ -19,7 +19,6 @@ const StyledButton = styled.button`
   grid-column: ${(props) => (props.column ? props.column : null)};
   grid-row: ${(props) => (props.row ? props.row : null)};
   box-sizing: border-box;
-  width: 50%;
   height: 40px;
   line-height: 24px;
   letter-spacing: 0.25px;
@@ -31,7 +30,7 @@ const StyledButton = styled.button`
   // box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.14), 0px 1px 18px rgba(0, 0, 0, 0.12), 0px 3px 5px rgba(0, 0, 0, 0.2);
   // border: 2px solid #618572;
   border: ${(props) => props.border};
-  border-radius: ${(props) => props.borderRadius};
+  border-radius: 50px;
   outline: none;
   &:hover {
     background-color: ${(props) => props.hoverBackground};
