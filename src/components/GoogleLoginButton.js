@@ -46,7 +46,7 @@ export default function GoogleLoginButton(props) {
   return (
     <StyledButton onClick={onClick}>
       <span>Register with </span>
-      <img src={googleLogo} />
+      <img src={googleLogo} alt='google logo' />
     </StyledButton>
   )
 }
