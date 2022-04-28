@@ -1,6 +1,6 @@
-import React from 'react';
-import styled from 'styled-components';
-import searchIcon from '../assets/icons/search-icon.svg';
+import React from 'react'
+import styled from 'styled-components'
+import searchIcon from '../assets/icons/search-icon.svg'
 
 const InputContainer = styled.div`
   box-sizing: border-box;
@@ -25,7 +25,7 @@ const InputContainer = styled.div`
     height: 24px;
     border: 1px dashed dodgerblue;
   }
-`;
+`
 
 export default function AdminSearch() {
   return (
@@ -33,5 +33,5 @@ export default function AdminSearch() {
       <input placeholder={'placeholder'} />
       <img src={searchIcon} alt={'Search icon'} />
     </InputContainer>
-  );
+  )
 }

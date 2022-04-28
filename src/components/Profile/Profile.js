@@ -1,10 +1,10 @@
-import React, { useState, useContext } from 'react';
-import styled from 'styled-components';
-import { VendorContext } from '../../context/VendorProvider';
-import { UserContext } from '../../context/UserProvider';
-import { CanvasContext } from '../../context/CanvasProvider';
-import Finalize from '../../pages/VendorView/Finalize';
-import firestore from '../../database';
+import React, { useState, useContext } from 'react'
+import styled from 'styled-components'
+import { VendorContext } from '../../context/VendorProvider'
+import { UserContext } from '../../context/UserProvider'
+import { CanvasContext } from '../../context/CanvasProvider'
+import Finalize from '../../pages/VendorView/Finalize'
+import firestore from '../../database'
 
 const Wrapper = styled.div`
   min-width: 311px;
@@ -21,17 +21,17 @@ const Wrapper = styled.div`
   position: fixed;
   top: 0;
   z-index: 999;
-`;
-const Paragraph = styled.p``;
+`
+const Paragraph = styled.p``
 const Logo = styled.img`
   width: 40px;
   height: 40px;
-`;
+`
 
 const Profile = (props) => {
-  const { currentVendor, updateCurrentVendor } = useContext(VendorContext);
-  const { user, updateUser } = useContext(UserContext);
-  const { currentBooth } = useContext(CanvasContext);
+  const { currentVendor, updateCurrentVendor } = useContext(VendorContext)
+  const { user, updateUser } = useContext(UserContext)
+  const { currentBooth } = useContext(CanvasContext)
 
   const [info, setInfo] = useState({
     organization: currentVendor.organization,
@@ -43,8 +43,8 @@ const Profile = (props) => {
     rep: currentVendor.rep,
     repEmail: currentVendor.repEmail,
     sponsorship: currentVendor.sponsorship,
-  });
-  const boothRef = firestore.collection('Booths');
+  })
+  const boothRef = firestore.collection('Booths')
 
   /* Delete this later, just for testing*/
   /* for testing purposes because you can add more than 2 booths at a time */
@@ -69,7 +69,7 @@ const Profile = (props) => {
       {/* for testing purposes because you can add more than 2 booths at a time */}
       {/* <button onClick={resetBooths}>Reset Booths</button> */}
     </Wrapper>
-  );
-};
+  )
+}
 
-export default Profile;
+export default Profile

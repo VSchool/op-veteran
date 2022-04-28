@@ -21,7 +21,7 @@
   },
   "editor.tabSize": 2,
   "prettier.jsxSingleQuote": true,
-  "prettier.semi": true,
+  "prettier.semi": false,
   "prettier.singleQuote": true,
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",

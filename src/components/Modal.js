@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import styled, { keyframes } from 'styled-components';
-import { MdReport } from 'react-icons/md';
-import { CloseButton } from '../Elements/basic';
-import { Button } from '../components/Button';
+import React, { useState } from 'react'
+import styled, { keyframes } from 'styled-components'
+import { MdReport } from 'react-icons/md'
+import { CloseButton } from '../Elements/basic'
+import { Button } from '../components/Button'
 
 const ButtonWrapper = styled.div`
   display: grid;
@@ -10,13 +10,13 @@ const ButtonWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   margin: 10px auto;
-`;
+`
 const entrance = keyframes`
     0% {top: -150px;}
     20% {top: 100px;}
     80% {top: 100px;}
     100% {top: -150px;}
-`;
+`
 
 const MessageContainer = styled.div`
   display: flex;
@@ -40,7 +40,7 @@ const MessageContainer = styled.div`
   z-index: 9;
   transition: all 1s ease-in-out;
   animation: ${entrance} 4s ease-in;
-`;
+`
 /* box-sizing: border-box;
     position: relative;
     width: 328px;
@@ -66,16 +66,16 @@ const Text = styled.p`
   letter-spacing: 0.25px;
   color: #545454;
   // border: 1px dotted blue;
-`;
+`
 const Icon = styled(MdReport)`
   width: 24px;
   height: 24px;
   color: #4e92f9;
   padding: 4px auto;
-`;
+`
 
 export default function Modal(props) {
-  const { message, modalOpen, className, setModalOpen } = props;
+  const { message, modalOpen, className, setModalOpen } = props
 
   return (
     <>
@@ -86,7 +86,7 @@ export default function Modal(props) {
         <Icon />
         <CloseButton
           onClick={(e) => {
-            setModalOpen(false);
+            setModalOpen(false)
           }}
         >
           X
@@ -94,5 +94,5 @@ export default function Modal(props) {
         <Text>{modalOpen ? message : 'Click for instructions'}</Text>
       </MessageContainer>
     </>
-  );
+  )
 }

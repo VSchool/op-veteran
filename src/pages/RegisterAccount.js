@@ -1,10 +1,10 @@
-import React, { useContext, useState } from 'react';
-import { AuthContext } from '../context/AuthProvider';
-import { Button } from '../components/Button';
-import GoogleLoginButton from '../components/GoogleLoginButton';
-import { Input } from '../components/Input';
-import logo from '../assets/images/vetfest-logo.png';
-import StatusMessage from '../components/StatusMessage';
+import React, { useContext, useState } from 'react'
+import { AuthContext } from '../context/AuthProvider'
+import { Button } from '../components/Button'
+import GoogleLoginButton from '../components/GoogleLoginButton'
+import { Input } from '../components/Input'
+import logo from '../assets/images/vetfest-logo.png'
+import StatusMessage from '../components/StatusMessage'
 import {
   LandingContainer,
   Logo,
@@ -14,31 +14,31 @@ import {
   ButtonWrapper,
   FormWrapper,
   Wrapper,
-} from '../Elements/basic';
+} from '../Elements/basic'
 
 export default function RegisterAccount() {
   const { authError, signInWithGoogle, signInWithEmail, signUpWithEmail } =
-    useContext(AuthContext);
+    useContext(AuthContext)
 
-  const [inputs, setInputs] = useState({ email: '', password: '' });
+  const [inputs, setInputs] = useState({ email: '', password: '' })
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target
     setInputs((prev) => ({
       ...prev,
       [name]: value,
-    }));
-  };
+    }))
+  }
 
   const handleClick = (e) => {
-    const { email, password } = inputs;
+    const { email, password } = inputs
     /*** Add validation ***/
-    const { name } = e.target;
+    const { name } = e.target
     if (name === 'register') {
-      signUpWithEmail(email, password);
+      signUpWithEmail(email, password)
     }
-    signInWithEmail(email, password);
-  };
+    signInWithEmail(email, password)
+  }
   return (
     <LandingContainer>
       {authError ? <StatusMessage message={authError} /> : null}
@@ -82,5 +82,5 @@ export default function RegisterAccount() {
         </FormWrapper>
       </Wrapper>
     </LandingContainer>
-  );
+  )
 }

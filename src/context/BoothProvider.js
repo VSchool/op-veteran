@@ -1,41 +1,41 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import firestore from '../database';
-import { UserContext } from './UserProvider';
+import React, { createContext, useContext, useEffect, useState } from 'react'
+import firestore from '../database'
+import { UserContext } from './UserProvider'
 // import boothData from "../testing/booths.json";
 
-const boothRef = firestore.collection('Booths');
-const batch = firestore.batch();
+const boothRef = firestore.collection('Booths')
+const batch = firestore.batch()
 
-export const BoothContext = createContext();
+export const BoothContext = createContext()
 export default function ({ children }) {
-  const [booths, setBooths] = useState([]);
+  const [booths, setBooths] = useState([])
 
-  const [rowsOfBooths, setRowsOfBooths] = useState({});
-  const [sectionsOfRows, setSectionsOfRows] = useState({});
+  const [rowsOfBooths, setRowsOfBooths] = useState({})
+  const [sectionsOfRows, setSectionsOfRows] = useState({})
   const statusCodes = {
     OPEN: 0,
     ONHOLD: 1,
     RESERVED: 2,
-  };
+  }
   const organizeBoothData = () => {
     if (booths && booths.length > 0) {
       Object.keys(rowData).forEach((rowId) => {
-        const boothsInRow = booths.filter((b) => b.row === rowId);
-        boothsInRow.sort((a, b) => parseInt(a.number) - parseInt(b.number));
-        return boothsInRow;
-      });
+        const boothsInRow = booths.filter((b) => b.row === rowId)
+        boothsInRow.sort((a, b) => parseInt(a.number) - parseInt(b.number))
+        return boothsInRow
+      })
     }
-  };
+  }
   const makeId = (row, number) => {
-    let id = row;
+    let id = row
     if (number < 10) {
-      id += '0';
+      id += '0'
     }
-    id += number;
-    return id;
-  };
+    id += number
+    return id
+  }
   const newBooths = () => {
-    const rows = ['O', 'P', 'Q', 'R'];
+    const rows = ['O', 'P', 'Q', 'R']
     for (let b = 0; b < rows.length; b++) {
       for (let i = 1; i < rowData[rows[b]].booths + 1; i++) {
         createBooth({
@@ -48,24 +48,24 @@ export default function ({ children }) {
           status: 0,
           vendor: null,
           id: makeId(rows[b], i),
-        });
+        })
       }
     }
-  };
+  }
   const createBooth = (data) => {
-    let id = data.row;
+    let id = data.row
     if (data.number < 10) {
-      id += '0';
+      id += '0'
     }
-    id += data.number;
+    id += data.number
     boothRef
       .doc(id)
       .set({
         ...data,
       })
       .then(console.log(`booth ${id} created`))
-      .catch((err) => console.error(err));
-  };
+      .catch((err) => console.error(err))
+  }
   const resetBooth = (id) => {
     updateBooth(
       {
@@ -73,20 +73,20 @@ export default function ({ children }) {
         vendor: null,
       },
       id
-    );
-  };
+    )
+  }
   const updateBooth = (data, id) => {
     boothRef
       .doc(id)
       .update(data)
-      .catch((err) => console.error(err));
-  };
+      .catch((err) => console.error(err))
+  }
   const deleteBooth = (id) => {
     boothRef
       .doc(id)
       .delete()
-      .catch((err) => console.error(err));
-  };
+      .catch((err) => console.error(err))
+  }
   const reserveBooth = (vendor, id) => {
     updateBooth(
       {
@@ -94,8 +94,8 @@ export default function ({ children }) {
         status: 2,
       },
       id
-    );
-  };
+    )
+  }
   const holdBooth = (vendor, id) => {
     updateBooth(
       {
@@ -103,8 +103,8 @@ export default function ({ children }) {
         status: 1,
       },
       id
-    );
-  };
+    )
+  }
 
   const rowData = {
     A: {
@@ -207,7 +207,7 @@ export default function ({ children }) {
       y: 928,
       theta: -120,
     },
-  };
+  }
 
   const diagramData = {
     section1: {
@@ -384,23 +384,23 @@ export default function ({ children }) {
         theta: 0,
       },
     },
-  };
+  }
 
   useEffect(() => {
-    let unsub;
-    const boothArray = [];
+    let unsub
+    const boothArray = []
     if (booths && booths.length === 0) {
       //.where("number", "!=", null)
       return boothRef
         .where('number', '!=', null)
         .onSnapshot((querySnapshot) => {
           querySnapshot.forEach((doc) => {
-            boothArray.push(doc.data());
-          });
-          setBooths(boothArray);
-        });
+            boothArray.push(doc.data())
+          })
+          setBooths(boothArray)
+        })
     }
-  }, []);
+  }, [])
 
   return (
     <BoothContext.Provider
@@ -421,5 +421,5 @@ export default function ({ children }) {
     >
       {children}
     </BoothContext.Provider>
-  );
+  )
 }

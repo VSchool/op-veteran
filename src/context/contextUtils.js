@@ -1,19 +1,19 @@
 ////booth
 
 const setNeighbors = () => {
-  console.log('setting neighbors');
+  console.log('setting neighbors')
   for (let booth of booths) {
-    const updatedBooth = { ...booth };
-    updatedBooth.vendor = null;
-    updatedBooth.status = 'open';
-    updateBooth(updatedBooth, booth.id);
-    console.log(`updated ${booth.id}`);
+    const updatedBooth = { ...booth }
+    updatedBooth.vendor = null
+    updatedBooth.status = 'open'
+    updateBooth(updatedBooth, booth.id)
+    console.log(`updated ${booth.id}`)
   }
-};
+}
 
 const seedBooths = (e) => {
-  e.preventDefault();
-  console.log('seeding');
+  e.preventDefault()
+  console.log('seeding')
   const letters = [
     'A',
     'B',
@@ -29,12 +29,12 @@ const seedBooths = (e) => {
     'L',
     'M',
     'N',
-  ];
+  ]
 
-  const boothObjects = [];
+  const boothObjects = []
   for (let row of letters) {
     for (let i = 1; i < 8; i++) {
-      let exists = false;
+      let exists = false
       const obj = {
         hasElectricity: false,
         restriction: 2,
@@ -43,21 +43,21 @@ const seedBooths = (e) => {
         number: i,
         neighbors: [],
         vendor: null,
-      };
+      }
 
       switch (row) {
         case 'N':
-          exists = true;
+          exists = true
           if (row === 'H') {
             obj.hasElectricity =
-              (i < 8 && i > 2) || (i < 20 && i > 14) ? true : false;
+              (i < 8 && i > 2) || (i < 20 && i > 14) ? true : false
           }
           if (i < 8) {
-            obj.section = 7;
+            obj.section = 7
           } else if (i < 15) {
-            obj.section = 4;
+            obj.section = 4
           } else {
-            obj.section = 7;
+            obj.section = 7
           }
           // if (i < 15) {
           //   obj.restriction =1
@@ -65,16 +65,16 @@ const seedBooths = (e) => {
           // else {
           //   obj.restriction=2
           // }
-          break;
+          break
       }
 
       if (exists) {
-        boothObjects.push(obj);
+        boothObjects.push(obj)
       }
     }
   }
   boothObjects.forEach((obj) => {
-    createBooth(obj);
-  });
-};
-c;
+    createBooth(obj)
+  })
+}
+c

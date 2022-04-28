@@ -1,5 +1,5 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from 'react'
+import styled from 'styled-components'
 
 const BarContainer = styled.div`
   box-sizing: border-box;
@@ -45,10 +45,10 @@ const BarContainer = styled.div`
       border-radius: 4px;
     }
   }
-`;
+`
 
 export default function ProgressBar(props) {
-  const { complete, className } = props;
+  const { complete, className } = props
 
   return (
     <BarContainer className={className}>
@@ -57,5 +57,5 @@ export default function ProgressBar(props) {
         <div className={'fill-div'} complete={complete}></div>
       </div>
     </BarContainer>
-  );
+  )
 }

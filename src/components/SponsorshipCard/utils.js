@@ -9,7 +9,7 @@ export const perkList = {
   perkEight: 'Radio Endorsement',
   perkNine: 'Television Endorsement',
   perkTen: 'Detailed Promotional Live Social Media Video',
-};
+}
 
 export const sponsorshipLevels = [
   {
@@ -108,7 +108,7 @@ export const sponsorshipLevels = [
       { wording: perkList.perkTen, valid: false },
     ],
   },
-];
+]
 
 /*
 Additional level:

@@ -1,1 +1,1 @@
-export { default as BoothCreation } from './BoothCreation';
+export { default as BoothCreation } from './BoothCreation'

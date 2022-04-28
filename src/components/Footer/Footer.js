@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
 
 const Footer = () => {
   const FooterContainer = styled.footer`
@@ -15,16 +15,16 @@ const Footer = () => {
     padding: 15px;
     color: rgb(35, 35, 35);
     padding-top: 45px;
-  `;
+  `
   const StyledIcon = styled.i`
     font-size: 24px;
     padding: 2vh;
-  `;
+  `
   const StyledLink = styled.a`
     text-decoration: none;
     color: inherit;
     font-weight: bold;
-  `;
+  `
 
   return (
     <FooterContainer>
@@ -51,7 +51,7 @@ const Footer = () => {
         </StyledLink>
       </span>
     </FooterContainer>
-  );
-};
+  )
+}
 
-export default Footer;
+export default Footer

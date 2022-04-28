@@ -1,11 +1,11 @@
-import React, { useState, useContext, useEffect } from 'react';
-import styled from 'styled-components';
-import Konva from 'konva';
-import { Stage, Layer, Rect, Text, Group, Path } from 'react-konva';
-import { CanvasContext } from '../../../../context/CanvasProvider';
-import { UserContext } from '../../../../context/UserProvider';
-import { VendorContext } from '../../../../context/VendorProvider';
-import { BoothContext } from '../../../../context/BoothProvider';
+import React, { useState, useContext, useEffect } from 'react'
+import styled from 'styled-components'
+import Konva from 'konva'
+import { Stage, Layer, Rect, Text, Group, Path } from 'react-konva'
+import { CanvasContext } from '../../../../context/CanvasProvider'
+import { UserContext } from '../../../../context/UserProvider'
+import { VendorContext } from '../../../../context/VendorProvider'
+import { BoothContext } from '../../../../context/BoothProvider'
 
 const colors = {
   green: '#799C8A',
@@ -14,7 +14,7 @@ const colors = {
   blue: '#4E92F9',
   grey: '#ecf0f1',
   white: '#def',
-};
+}
 const Booth = (props) => {
   const {
     data,
@@ -23,7 +23,7 @@ const Booth = (props) => {
     updateBoothObjects,
     setCurrentBooth,
     size,
-  } = props;
+  } = props
   const {
     hasElectricity,
     restriction,
@@ -33,17 +33,17 @@ const Booth = (props) => {
     section,
     row,
     status,
-  } = data;
+  } = data
 
   const handleClick = () => {
-    let id = row;
+    let id = row
     if (number < 10) {
-      id += '0';
+      id += '0'
     }
-    id += number;
-    console.log(`setting current booth to ${id}`);
-    setCurrentBooth(id);
-  };
+    id += number
+    console.log(`setting current booth to ${id}`)
+    setCurrentBooth(id)
+  }
 
   return (
     <Group
@@ -56,7 +56,7 @@ const Booth = (props) => {
           : number * 19 + Math.floor((number - 1) / 7) * 24
       }
       onClick={() => {
-        handleClick();
+        handleClick()
       }}
     >
       <Rect
@@ -97,7 +97,7 @@ const Booth = (props) => {
         fill='rgba(100,100,100,0)'
       />
     </Group>
-  );
-};
+  )
+}
 
-export default Booth;
+export default Booth

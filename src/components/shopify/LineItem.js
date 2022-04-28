@@ -1,21 +1,21 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 
 class LineItem extends Component {
   constructor(props) {
-    super(props);
+    super(props)
 
-    this.decrementQuantity = this.decrementQuantity.bind(this);
-    this.incrementQuantity = this.incrementQuantity.bind(this);
+    this.decrementQuantity = this.decrementQuantity.bind(this)
+    this.incrementQuantity = this.incrementQuantity.bind(this)
   }
 
   decrementQuantity(lineItemId) {
-    const updatedQuantity = this.props.line_item.quantity - 1;
-    this.props.updateQuantityInCart(lineItemId, updatedQuantity);
+    const updatedQuantity = this.props.line_item.quantity - 1
+    this.props.updateQuantityInCart(lineItemId, updatedQuantity)
   }
 
   incrementQuantity(lineItemId) {
-    const updatedQuantity = this.props.line_item.quantity + 1;
-    this.props.updateQuantityInCart(lineItemId, updatedQuantity);
+    const updatedQuantity = this.props.line_item.quantity + 1
+    this.props.updateQuantityInCart(lineItemId, updatedQuantity)
   }
 
   render() {
@@ -74,8 +74,8 @@ class LineItem extends Component {
           </div>
         </div>
       </li>
-    );
+    )
   }
 }
 
-export default LineItem;
+export default LineItem

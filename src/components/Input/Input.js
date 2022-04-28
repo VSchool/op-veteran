@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import warningIcon from '../../assets/icons/warning-icon.svg';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { useState } from 'react'
+import styled from 'styled-components'
+import warningIcon from '../../assets/icons/warning-icon.svg'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faClear,
   faEye,
   faEyeSlash,
   faExclamationTriangle,
-} from '@fortawesome/free-solid-svg-icons';
-import { Label } from '../../Elements/basic';
+} from '@fortawesome/free-solid-svg-icons'
+import { Label } from '../../Elements/basic'
 
 const InputWrapper = styled.div`
   padding: 0;
@@ -16,7 +16,7 @@ const InputWrapper = styled.div`
   display: grid;
   grid-template-rows: 24px 36px;
   margin: 12px 8px;
-`;
+`
 
 const TextInput = styled.input`
   margin: 0;
@@ -34,10 +34,10 @@ const TextInput = styled.input`
   &:focus {
     border: 1px solid #4e92f9;
   }
-`;
+`
 
 const Input = (props) => {
-  const { labelText, name, onChange, type, value, autocomplete } = props;
+  const { labelText, name, onChange, type, value, autocomplete } = props
   return (
     <InputWrapper>
       <Label>{labelText}</Label>
@@ -49,6 +49,6 @@ const Input = (props) => {
         type={type}
       />
     </InputWrapper>
-  );
-};
-export default Input;
+  )
+}
+export default Input

@@ -1,21 +1,21 @@
-import { useContext } from 'react';
-import styled from 'styled-components';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { AuthContext } from './context/AuthProvider';
-import UserProvider, { UserContext } from './context/UserProvider';
-import VendorProvider, { VendorContext } from './context/VendorProvider';
-import BoothProvider from './context/BoothProvider';
-import SponsorshipSelection from './pages/VendorView/SponsorshipSelection/SponsorshipSelection';
-import Finalize from './pages/VendorView/Finalize';
+import { useContext } from 'react'
+import styled from 'styled-components'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { AuthContext } from './context/AuthProvider'
+import UserProvider, { UserContext } from './context/UserProvider'
+import VendorProvider, { VendorContext } from './context/VendorProvider'
+import BoothProvider from './context/BoothProvider'
+import SponsorshipSelection from './pages/VendorView/SponsorshipSelection/SponsorshipSelection'
+import Finalize from './pages/VendorView/Finalize'
 
-import CanvasProvider from './context/CanvasProvider';
-import { Landing, Vendor, Admin, Playground } from './pages';
-import RegisterAccount from './pages/RegisterAccount';
-import RegistrationForm from './pages/VendorView/RegistrationForm/RegistrationForm';
-import { BoothManagement } from './pages/VendorView/BoothManagement';
-import Header from './components/Header/Header';
-import Footer from './components/Footer/Footer.js';
-import Home from './pages/VendorView/Home';
+import CanvasProvider from './context/CanvasProvider'
+import { Landing, Vendor, Admin, Playground } from './pages'
+import RegisterAccount from './pages/RegisterAccount'
+import RegistrationForm from './pages/VendorView/RegistrationForm/RegistrationForm'
+import { BoothManagement } from './pages/VendorView/BoothManagement'
+import Header from './components/Header/Header'
+import Footer from './components/Footer/Footer.js'
+import Home from './pages/VendorView/Home'
 
 const AppContainer = styled.div`
   box-sizing: border-box;
@@ -29,21 +29,21 @@ const AppContainer = styled.div`
   //   height: 3040px;
   //position: relative;
   //   border: 1px solid lightcoral;
-`;
+`
 
 /*
 if not auth
 */
 
 export default function App() {
-  const { auth } = useContext(AuthContext);
+  const { auth } = useContext(AuthContext)
   // console.log("App.js auth log: ", auth)
   if (!auth) {
     return (
       <AppContainer>
         <Landing />
       </AppContainer>
-    );
+    )
   }
   return (
     <BoothProvider>
@@ -59,16 +59,16 @@ export default function App() {
         </VendorProvider>
       </UserProvider>
     </BoothProvider>
-  );
+  )
 }
 
 function UserViews() {
-  const { user, isAdmin, isDev } = useContext(UserContext);
+  const { user, isAdmin, isDev } = useContext(UserContext)
 
   if (!user) {
-    return <h1>Loading...</h1>;
+    return <h1>Loading...</h1>
   } else if (isAdmin) {
-    return <Admin />;
+    return <Admin />
   } else if (!isDev) {
     return (
       <>
@@ -83,6 +83,6 @@ function UserViews() {
         </Routes>
         <Footer />
       </>
-    );
+    )
   }
 }

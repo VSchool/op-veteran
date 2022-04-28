@@ -1,10 +1,10 @@
-import { useContext } from 'react';
-import { AuthContext } from '../context/AuthProvider';
-import { UserContext } from '../context/UserProvider';
+import { useContext } from 'react'
+import { AuthContext } from '../context/AuthProvider'
+import { UserContext } from '../context/UserProvider'
 
 export default function TestUserView() {
-  const { logout } = useContext(AuthContext);
-  const { user } = useContext(UserContext);
+  const { logout } = useContext(AuthContext)
+  const { user } = useContext(UserContext)
 
   return (
     <div>
@@ -13,5 +13,5 @@ export default function TestUserView() {
       </h1>
       <button onClick={logout}>Logout</button>
     </div>
-  );
+  )
 }

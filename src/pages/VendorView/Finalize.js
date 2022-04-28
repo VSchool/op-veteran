@@ -1,10 +1,10 @@
-import React, { Fragment, useState, useContext, useEffect } from 'react';
-import styled from 'styled-components';
-import { VendorContext } from '../../context/VendorProvider';
-import { BoothContext } from '../../context/BoothProvider';
-import { UserContext } from '../../context/UserProvider';
-import { Wrapper, Container } from '../../Elements/basic';
-import { Button } from '../../components/Button';
+import React, { Fragment, useState, useContext, useEffect } from 'react'
+import styled from 'styled-components'
+import { VendorContext } from '../../context/VendorProvider'
+import { BoothContext } from '../../context/BoothProvider'
+import { UserContext } from '../../context/UserProvider'
+import { Wrapper, Container } from '../../Elements/basic'
+import { Button } from '../../components/Button'
 
 const CardContainer = styled.div`
   width: 400px;
@@ -19,11 +19,11 @@ const CardContainer = styled.div`
   justify-content: space-between;
   padding: 10px;
   top: 0;
-`;
+`
 const ButtonWrapper = styled.div`
   display: flex;
   flex-direction: row;
-`;
+`
 const Head = styled.h1`
   font-family: Open Sans;
   font-style: normal;
@@ -31,7 +31,7 @@ const Head = styled.h1`
   font-size: 17px;
   line-height: 24px;
   color: #545454;
-`;
+`
 const Subheader = styled.h3`
   font-family: Open Sans;
   font-style: normal;
@@ -39,7 +39,7 @@ const Subheader = styled.h3`
   font-size: 13px;
   line-height: 16px;
   color: #545454;
-`;
+`
 const Breadcrumbs = styled.h2`
   font-family: Open Sans;
   font-style: normal;
@@ -47,11 +47,11 @@ const Breadcrumbs = styled.h2`
   font-size: 15px;
   line-height: 20px;
   color: #545454;
-`;
+`
 const Logo = styled.img`
   height: 60px;
   width: auto;
-`;
+`
 const Paragraph = styled.p`
   font-family: Open Sans;
   font-style: normal;
@@ -59,29 +59,29 @@ const Paragraph = styled.p`
   font-size: 15px;
   line-height: 20px;
   color: #545454;
-`;
+`
 const HeaderWrapper = styled.div`
   padding: 20px 0;
-`;
+`
 const Hr = styled.hr`
   margin: auto;
   margin-top: ${(props) => (props.top ? props.top : '8px')};
   margin-bottom: ${(props) => (props.bottom ? props.botton : '8px')};
   background-color: #f4f4f4;
   width: 90%;
-`;
+`
 const List = styled.ul`
   display: flex;
   flex-direction: row;
   margin: auto;
-`;
-const ItemTitle = styled.li``;
+`
+const ItemTitle = styled.li``
 const ItemPrice = styled.p`
   grid-column: 2/3;
-`;
+`
 const ItemQuantity = styled.p`
   grid-column: 3/4;
-`;
+`
 
 const Finalize = (props) => {
   // const { currentVendor, getCartItems, cart, openCart } = useContext(VendorContext);
@@ -92,7 +92,7 @@ const Finalize = (props) => {
     cartItems,
     changeQuantity,
     localCart,
-  } = useContext(VendorContext);
+  } = useContext(VendorContext)
   // const [cartItems, setCartItems] = useState([])
 
   // This was the original code which breaks
@@ -107,10 +107,10 @@ const Finalize = (props) => {
 
   // This is for testing
   useEffect(() => {
-    getCartItems();
-  }, [currentVendor]);
+    getCartItems()
+  }, [currentVendor])
 
-  console.log('finalize page: currentVendor ', cartItems);
+  console.log('finalize page: currentVendor ', cartItems)
   return (
     <CardContainer>
       {/* <Wrapper> */}
@@ -142,7 +142,7 @@ const Finalize = (props) => {
       />
       {/* </Wrapper> */}
     </CardContainer>
-  );
-};
+  )
+}
 
-export default Finalize;
+export default Finalize

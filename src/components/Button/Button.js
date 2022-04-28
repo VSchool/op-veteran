@@ -1,6 +1,6 @@
-import React from 'react';
-import styled from 'styled-components';
-import { setStyle } from './utils';
+import React from 'react'
+import styled from 'styled-components'
+import { setStyle } from './utils'
 
 const StyledButton = styled.button`
   font-family: Roboto;
@@ -39,10 +39,10 @@ const StyledButton = styled.button`
     background: ${(props) => props.activeBackground};
     border: ${(props) => props.activeBorder};
   }
-`;
+`
 
 export default function Button(props) {
-  const { buttonText, buttonStyle, disabled, ...buttonProps } = props;
+  const { buttonText, buttonStyle, disabled, ...buttonProps } = props
   const {
     background,
     border,
@@ -50,7 +50,7 @@ export default function Button(props) {
     hoverBackground,
     activeBackground,
     activeBorder,
-  } = setStyle(buttonStyle);
+  } = setStyle(buttonStyle)
 
   return (
     <StyledButton
@@ -66,5 +66,5 @@ export default function Button(props) {
     >
       {buttonText}
     </StyledButton>
-  );
+  )
 }

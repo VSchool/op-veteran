@@ -1,20 +1,20 @@
-import firebase from './Firebase';
+import firebase from './Firebase'
 
-const firestore = firebase.firestore();
+const firestore = firebase.firestore()
 
 /* Create a new user document from an Authentication user */
 export function createUser(auth) {
-  const ref = firestore.doc(`Users/${auth.email}`);
+  const ref = firestore.doc(`Users/${auth.email}`)
   ref.set({
     email: auth.email,
     name: auth.displayName || '',
     userImg: auth.photoURL || '',
     isRegistrationComplete: false,
-  });
+  })
 }
 export function createBooth(id, data) {
-  const ref = firestore.doc(`Booths/${id}`);
-  ref.set(data);
+  const ref = firestore.doc(`Booths/${id}`)
+  ref.set(data)
 }
 
 export function checkPermissions(uid) {
@@ -23,11 +23,11 @@ export function checkPermissions(uid) {
     .get()
     .then((doc) => {
       if (doc.exists) {
-        return doc.data();
+        return doc.data()
       }
-      return null;
+      return null
     })
-    .catch((err) => console.error(err));
+    .catch((err) => console.error(err))
 }
 
-export default firestore;
+export default firestore

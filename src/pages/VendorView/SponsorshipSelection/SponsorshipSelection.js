@@ -1,12 +1,12 @@
-import React, { useState, useContext, useEffect } from 'react';
-import styled from 'styled-components';
-import StatusMessage from '../../../components/StatusMessage';
-import { SponsorshipCard } from '../../../components/SponsorshipCard';
-import VendorContext from '../../../context/VendorProvider';
+import React, { useState, useContext, useEffect } from 'react'
+import styled from 'styled-components'
+import StatusMessage from '../../../components/StatusMessage'
+import { SponsorshipCard } from '../../../components/SponsorshipCard'
+import VendorContext from '../../../context/VendorProvider'
 import {
   perkList,
   sponsorshipLevels,
-} from '../../../components/SponsorshipCard/utils';
+} from '../../../components/SponsorshipCard/utils'
 import {
   LandingContainer,
   Logo,
@@ -17,7 +17,7 @@ import {
   Wrapper,
   Row,
   Container,
-} from '../../../Elements/basic';
+} from '../../../Elements/basic'
 
 // const Container = styled.div`     box-sizing: border-box;     display: flex;
 //   flex-direction: column;     justify-content: space-evenly;     margin:
@@ -45,7 +45,7 @@ const Header = styled.h1`
   @media (min-width: 450px) {
     font-size: 1.3rem;
   }
-`;
+`
 
 const Holder = styled.div`
   height: ${(props) => (props.portrait ? '500px' : '500px')};
@@ -57,7 +57,7 @@ const Holder = styled.div`
   flex-direction: ${(props) => (props.portrait ? 'column' : 'row')};
   overflow-y: ${(props) => (props.portrait ? 'hidden' : 'hidden')};
   overflow-x: ${(props) => (props.portrait ? 'hidden' : 'scroll')};
-`;
+`
 const Slider = styled.div`
   width: fit-content;
   height: 100%;
@@ -66,13 +66,13 @@ const Slider = styled.div`
   position: absolute;
   overflow-y: ${(props) => (props.portrait ? 'scroll' : 'hidden')};
   overflow-x: ${(props) => (props.portrait ? 'hidden' : 'scroll')};
-`;
+`
 
 export default function SponsorshipSelection(props) {
-  const [data, setData] = useState(props.data);
-  const { changeState, states } = props;
+  const [data, setData] = useState(props.data)
+  const { changeState, states } = props
 
-  const [portrait, setPortrait] = useState(false);
+  const [portrait, setPortrait] = useState(false)
 
   const sponsorships = sponsorshipLevels.map((level) => {
     return (
@@ -85,15 +85,15 @@ export default function SponsorshipSelection(props) {
         perks={level.perks}
         portrait={portrait}
       />
-    );
-  });
+    )
+  })
   useEffect(() => {
-    let container = document.querySelector('#root');
-    let containerWidth = container.offsetWidth;
+    let container = document.querySelector('#root')
+    let containerWidth = container.offsetWidth
     if (containerWidth < 500) {
-      setPortrait(true);
+      setPortrait(true)
     }
-  }, []);
+  }, [])
   return (
     <Wrapper>
       <Container height='auto' width='auto'>
@@ -111,7 +111,7 @@ export default function SponsorshipSelection(props) {
         </Holder>
       </Container>
     </Wrapper>
-  );
+  )
 }
 // <Subheader className={'subtitle'}>Choose the right sponsorship package for your organization.
 // </Subheader>

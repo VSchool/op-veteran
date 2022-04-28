@@ -1,7 +1,7 @@
-import styled, { keyframes } from 'styled-components';
-import { MdReport } from 'react-icons/md';
-import { CloseButton } from '../../Elements/basic';
-import { Button } from '../Button';
+import styled, { keyframes } from 'styled-components'
+import { MdReport } from 'react-icons/md'
+import { CloseButton } from '../../Elements/basic'
+import { Button } from '../Button'
 
 const ButtonWrapper = styled.div`
   display: grid;
@@ -10,13 +10,13 @@ const ButtonWrapper = styled.div`
   justify-content: space-around;
   align-items: center;
   margin: 10px auto;
-`;
+`
 const entrance = keyframes`
     0% {top: -150px;}
     20% {top: 100px;}
     80% {top: 100px;}
     100% {top: -150px;}
-`;
+`
 
 const MessageContainer = styled.div`
   display: ${(props) => (props.visible ? 'flex' : 'none')};
@@ -43,7 +43,7 @@ const MessageContainer = styled.div`
   overflow: hidden;
   z-index: 90;
   transition: all 1s ease-in-out;
-`;
+`
 //animation: ${entrance} 4s ease-in;
 /* box-sizing: border-box;
     position: relative;
@@ -70,13 +70,13 @@ const Text = styled.p`
   letter-spacing: 0.25px;
   color: #ecf0f1;
   // border: 1px dotted blue;
-`;
+`
 const Icon = styled(MdReport)`
   width: 24px;
   height: 24px;
   color: #4e92f9;
   padding: 4px auto;
-`;
+`
 
 export default function DoubleBoothModal({
   close,
@@ -87,16 +87,16 @@ export default function DoubleBoothModal({
   changeState,
 }) {
   const handleClick = (e) => {
-    e.preventDefault();
-    const boothId = e.target.innerText;
-    handleSelectBooth(boothId, true);
-    close();
-    changeState(states.FINALIZE);
-  };
+    e.preventDefault()
+    const boothId = e.target.innerText
+    handleSelectBooth(boothId, true)
+    close()
+    changeState(states.FINALIZE)
+  }
 
   const buttons = options.map((booth) => (
     <Button buttonText={booth} buttonStyle='primary' onClick={handleClick} />
-  ));
+  ))
 
   return (
     <MessageContainer visible={visible}>
@@ -110,5 +110,5 @@ export default function DoubleBoothModal({
         row='2/3'
       />
     </MessageContainer>
-  );
+  )
 }

@@ -1,7 +1,7 @@
-import React from 'react';
-import styled from 'styled-components';
-import { setStyle } from './utils';
-import googleLogo from '../../assets/icons/google-icon.svg';
+import React from 'react'
+import styled from 'styled-components'
+import { setStyle } from './utils'
+import googleLogo from '../../assets/icons/google-icon.svg'
 
 const StyledButton = styled.button`
   box-sizing: border-box;
@@ -32,13 +32,13 @@ const StyledButton = styled.button`
     background: ${(props) => props.activeBackground};
     border: ${(props) => props.activeBorder};
   }
-`;
+`
 const Logo = styled.img`
   margin-left: 20px;
-`;
+`
 
 export default function Button(props) {
-  const { buttonText, buttonStyle, ...buttonProps } = props;
+  const { buttonText, buttonStyle, ...buttonProps } = props
   const {
     background,
     border,
@@ -46,7 +46,7 @@ export default function Button(props) {
     hoverBackground,
     activeBackground,
     activeBorder,
-  } = setStyle(buttonStyle);
+  } = setStyle(buttonStyle)
 
   return (
     <StyledButton
@@ -61,5 +61,5 @@ export default function Button(props) {
     >
       {buttonText} <Logo src={googleLogo} />
     </StyledButton>
-  );
+  )
 }

@@ -1,1 +1,1 @@
-export { default as SponsorshipSelection } from './SponsorshipSelection';
+export { default as SponsorshipSelection } from './SponsorshipSelection'

@@ -1,12 +1,12 @@
-import React, { useContext, useState } from 'react';
-import styled from 'styled-components';
-import { Button } from '../../components/Button';
-import ListItem from './ListItem';
-import { UserContext } from '../../context/UserProvider';
-import { VendorContext } from '../../context/VendorProvider';
-import { Blur } from '../../Elements/basic';
-import { CloseButton } from '../../Elements/basic';
-import Client from 'shopify-buy';
+import React, { useContext, useState } from 'react'
+import styled from 'styled-components'
+import { Button } from '../../components/Button'
+import ListItem from './ListItem'
+import { UserContext } from '../../context/UserProvider'
+import { VendorContext } from '../../context/VendorProvider'
+import { Blur } from '../../Elements/basic'
+import { CloseButton } from '../../Elements/basic'
+import Client from 'shopify-buy'
 const CardContainer = styled.div`
   width: 288px;
   height: 450px;
@@ -25,7 +25,7 @@ const CardContainer = styled.div`
 
   @media (min-width: 450px) {
   }
-`;
+`
 const Header = styled.h1`
   font-family: Open Sans;
   font-style: normal;
@@ -36,7 +36,7 @@ const Header = styled.h1`
   @media (min-width: 450px) {
     font-size: 1rem;
   }
-`;
+`
 const Subheader = styled.h3`
   height: 16px;
   font-family: Open Sans;
@@ -51,14 +51,14 @@ const Subheader = styled.h3`
     text-align: center;
     font-weight: bold;
   }
-`;
+`
 const Hr = styled.hr`
   margin: auto;
   margin-top: ${(props) => (props.top ? props.top : '8px')};
   margin-bottom: ${(props) => (props.bottom ? props.botton : '8px')};
   background-color: #f4f4f4;
   width: 90%;
-`;
+`
 const Price = styled.h1`
   font-family: Open Sans;
   font-style: normal;
@@ -69,11 +69,11 @@ const Price = styled.h1`
   letter-spacing: 0.02em;
   color: #696969;
   margin-top: 20px;
-`;
+`
 const SponsorshipButton = styled(Button)`
   //margin: 16px auto;
   padding: 4px 8px;
-`;
+`
 const Perks = styled.div`
   width: 100%;
   //height: 184px;
@@ -81,7 +81,7 @@ const Perks = styled.div`
   flex-direction: column;
   justify-content: space-between;
   // border: 1px solid orange;
-`;
+`
 const ModalWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -99,15 +99,15 @@ const ModalWrapper = styled.div`
     0px 4px 5px rgba(0, 0, 0, 0.2);
   justify-content: space-around;
   align-items: center;
-`;
+`
 const Row = styled.div`
   display: flex;
   flex-direction: row;
-`;
+`
 const Paragraph = styled.p`
   font-family: 'Open Sans';
   margin: 10px;
-`;
+`
 // const ModalWrapper = styled.div`     display: flex;     flex-direction:
 // column;     padding: 10px;     position: absolute; `
 export default function SponsorshipCard(props) {
@@ -120,16 +120,16 @@ export default function SponsorshipCard(props) {
     states,
     handlePayToday,
     handleContactMe,
-  } = props;
-  const { user, updateUser } = useContext(UserContext);
-  const {} = props;
+  } = props
+  const { user, updateUser } = useContext(UserContext)
+  const {} = props
   const {
     currentVendor,
     updateCurrentVendor,
     addItemToCart,
     getSponsorshipVariantId,
-  } = useContext(VendorContext);
-  const [selected, setSelected] = useState(false);
+  } = useContext(VendorContext)
+  const [selected, setSelected] = useState(false)
 
   const listItems = perks.map((perk) => (
     <ListItem
@@ -138,27 +138,27 @@ export default function SponsorshipCard(props) {
       wording={perk.wording}
       valid={perk.valid}
     />
-  ));
+  ))
   const handleClick = (e) => {
-    setSelected((prev) => !prev);
-  };
+    setSelected((prev) => !prev)
+  }
   const handleSelect = (e) => {
-    e.preventDefault();
-    const status = e.target.innerText;
-    const item = status == 'Pay Today' ? name : `${name}Promise`;
-    console.log(item);
-    addItemToCart(item);
+    e.preventDefault()
+    const status = e.target.innerText
+    const item = status == 'Pay Today' ? name : `${name}Promise`
+    console.log(item)
+    addItemToCart(item)
     // const updatedVendor = {...currentVendor}
     // updatedVendor?.sponsorship.level = name
     // updatedVendor?.sponsorship.status = 1
-    updateCurrentVendor({ 'sponsorship.level': name, 'sponsorship.status': 1 });
-    changeState(states.SELECT);
-  };
+    updateCurrentVendor({ 'sponsorship.level': name, 'sponsorship.status': 1 })
+    changeState(states.SELECT)
+  }
   const formatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
     minimumFractionDigits: 0,
-  });
+  })
 
   return (
     <CardContainer className={className} selected={selected}>
@@ -181,7 +181,7 @@ export default function SponsorshipCard(props) {
           <ModalWrapper>
             <CloseButton
               onClick={(e) => {
-                setSelected(false);
+                setSelected(false)
               }}
             >
               X
@@ -207,5 +207,5 @@ export default function SponsorshipCard(props) {
         </>
       ) : null}
     </CardContainer>
-  );
+  )
 }

@@ -419,6 +419,6 @@ const treeData = [
     y: 122,
     size: 23,
   },
-];
+]
 
-export default treeData;
+export default treeData

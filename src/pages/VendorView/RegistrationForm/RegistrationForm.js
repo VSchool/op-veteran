@@ -1,15 +1,15 @@
-import React, { useContext, useState, useEffect, useRef } from 'react';
-import styled from 'styled-components';
-import { FormInput } from '../../../components/FormInput';
-import ProgressBar from '../../../components/ProgressBar';
-import StatusMessage from '../../../components/StatusMessage';
-import { UserContext } from '../../../context/UserProvider';
-import { VendorContext } from '../../../context/VendorProvider';
-import { BoothContext } from '../../../context/BoothProvider';
-import { Input } from '../../../components/Input';
-import { Button } from '../../../components/Button';
-import { TextArea } from '../../../components/TextArea';
-import Selection from '../../../components/Selection';
+import React, { useContext, useState, useEffect, useRef } from 'react'
+import styled from 'styled-components'
+import { FormInput } from '../../../components/FormInput'
+import ProgressBar from '../../../components/ProgressBar'
+import StatusMessage from '../../../components/StatusMessage'
+import { UserContext } from '../../../context/UserProvider'
+import { VendorContext } from '../../../context/VendorProvider'
+import { BoothContext } from '../../../context/BoothProvider'
+import { Input } from '../../../components/Input'
+import { Button } from '../../../components/Button'
+import { TextArea } from '../../../components/TextArea'
+import Selection from '../../../components/Selection'
 import {
   LandingContainer,
   Logo,
@@ -21,11 +21,11 @@ import {
   Wrapper,
   Row,
   Container,
-} from '../../../Elements/basic';
-import { CheckBox } from '../../../components/CheckBox';
+} from '../../../Elements/basic'
+import { CheckBox } from '../../../components/CheckBox'
 const Paragraph = styled.p`
   padding: 10px 5px;
-`;
+`
 const FileButton = styled.input`
   /* width: 0.1px;
 	height: 0.1px;
@@ -33,7 +33,7 @@ const FileButton = styled.input`
 	overflow: hidden;
 	position: absolute;
 	z-index: -1; */
-`;
+`
 const FileLable = styled.label`
   font-size: 1.25em;
   font-weight: 700;
@@ -41,19 +41,19 @@ const FileLable = styled.label`
   background-color: #4e92f9;
   display: inline-block;
   margin: 5px;
-`;
+`
 export default function RegistrationForm(props) {
-  const { user, updateUser } = useContext(UserContext);
-  const { seedBooths } = useContext(BoothContext);
+  const { user, updateUser } = useContext(UserContext)
+  const { seedBooths } = useContext(BoothContext)
   const {
     currentVendor,
     matchVendor,
     createVendor,
     storeFile,
     createCart, // This function needs to be called to create a shopify cartId. Use it in the handleSubmit function here or at the begining of the createVendor function in the VendorProvider.  This is currently untested
-  } = useContext(VendorContext);
-  const [showSponsorship, setShowSponsorship] = useState(false);
-  const { changeState, states } = props;
+  } = useContext(VendorContext)
+  const [showSponsorship, setShowSponsorship] = useState(false)
+  const { changeState, states } = props
   const [input, setInput] = useState({
     firstName: '',
     lastName: '',
@@ -74,7 +74,7 @@ export default function RegistrationForm(props) {
     wantToSponsor: false,
     file: null,
     repEmail: user.email,
-  });
+  })
 
   // useEffect(() => {
   //   if (currentVendor && currentVendor.repEmail ===user.email){
@@ -84,59 +84,59 @@ export default function RegistrationForm(props) {
   // }, [currentVendor])
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target
     setInput((prev) => {
       return {
         ...prev,
         [name]: value,
-      };
-    });
-  };
+      }
+    })
+  }
   const handleShowSponsorship = (e) => {
-    e.preventDefault();
-    setShowSponsorship(true);
-  };
+    e.preventDefault()
+    setShowSponsorship(true)
+  }
 
   const handleChooseFile = (e) => {
-    setInput((prev) => ({ ...prev, file: e.target.files[0] }));
-  };
+    setInput((prev) => ({ ...prev, file: e.target.files[0] }))
+  }
 
   const saveLogo = (file) => {
-    const fileName = file.name;
-    const extension = fileName.split('.')[1];
+    const fileName = file.name
+    const extension = fileName.split('.')[1]
     storeFile(
       file,
       `logos/${input.organization}/${input.organization}.${extension}`
-    );
-  };
+    )
+  }
 
   // async but no await?
   const handleSubmit = (e) => {
-    e.preventDefault();
-    setShowSponsorship(input.wantToSponsor);
+    e.preventDefault()
+    setShowSponsorship(input.wantToSponsor)
     // createVendor({...input})
 
-    console.log('from handlesubmit: ', { ...input });
-    createCart({ ...input });
+    console.log('from handlesubmit: ', { ...input })
+    createCart({ ...input })
     if (input.file) {
-      saveLogo(input.file);
+      saveLogo(input.file)
     }
     if (input.wantToSponsor) {
-      changeState(states.SPONSOR);
+      changeState(states.SPONSOR)
     } else {
-      changeState(states.SELECT);
+      changeState(states.SELECT)
     }
-  };
+  }
 
   const handleCheck = (e) => {
-    const { name, checked } = e.target;
+    const { name, checked } = e.target
     setInput((prev) => {
       return {
         ...prev,
         [name]: checked,
-      };
-    });
-  };
+      }
+    })
+  }
 
   return (
     <Container height='fit-content'>
@@ -291,5 +291,5 @@ export default function RegistrationForm(props) {
       />
       {showSponsorship ? <></> : null}
     </Container>
-  );
+  )
 }
