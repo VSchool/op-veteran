@@ -186,21 +186,21 @@ export default function Header() {
           {/* The 'Home' link is not working right now */}
           <div className='sideNavContainer'>
             <div className='sideNavLinks'>
-              <Link to='/home' className='sideNavLink'>
+              <Link to='/' className='sideNavLink'>
                 <span className='sideNavLink'>Home</span>
               </Link>
-              <Link to='/registration' className='sideNavLink'>
+              {/* <Link to='/registration' className='sideNavLink'>
                 <span>Register</span>
-              </Link>
+              </Link> */}
               <Link to='/sponsorship' className='sideNavLink'>
                 <span>Sponsor Tiers</span>
               </Link>
-              <Link to='/booth' className='sideNavLink'>
+              {/* <Link to='/booth' className='sideNavLink'>
                 <span>Booth Select</span>
-              </Link>
-              <Link to='/finalize' className='sideNavLink'>
+              </Link> */}
+              {/* <Link to='/finalize' className='sideNavLink'>
                 <span>Finalize</span>
-              </Link>
+              </Link> */}
             </div>
             <ToDoList List={List} ListItem={ListItem} Header2={Header2} />
 
