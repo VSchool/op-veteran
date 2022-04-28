@@ -106,7 +106,7 @@ const Container = styled.div`
   //grid-template-rows: 1fr 1fr;
   height: ${(props) => (props.height ? props.height : '100%')};
   width: ${(props) =>
-    props.width ? props.width : 'clamp(300px, 100%, 400px)'};
+    props.width ? props.width : 'clamp(500px, 100%, 400px)'};
   margin: auto;
   padding: 0 24px 16px 24px;
   overflow: hidden;
