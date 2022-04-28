@@ -5,9 +5,8 @@ const LandingContainer = styled.div`
   box-sizing: border-box;
   width: 100%;
   height: 100vh;
-  display: grid;
-  padding: 0px;
-  grid-template-rows: 72px 1fr;
+  display: flex;
+  flex-direction: column;
   //justify-content: space-evenly;
   //flex-direction: column;
   //align-items: center;
@@ -69,7 +68,7 @@ const Wrapper = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   align-items: ${(props) => (props.alignment ? props.alignment : 'center')};
   padding: ${(props) => (props.padding ? props.padding : '0px')};
   overflow: ${(props) => (!props.showOverflow ? 'hidden' : 'scroll')};
@@ -79,7 +78,10 @@ const FormWrapper = styled.form`
   display: flex;
   flex-direction: column;
   margin: 0;
-  padding: 0;
+  padding: 20px 50px;
+  background: #ffffff;
+  border-radius: 0.5rem;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
 `
 const Icon = styled(FontAwesomeIcon)``
 
