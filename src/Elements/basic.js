@@ -37,7 +37,7 @@ const Subheader = styled.div`
 const Header = styled.div`
   font-family: 'Open Sans';
   font-style: normal;
-  font-weight: normal;
+  font-weight: bold;
   font-size: 1.2rem;
   line-height: 1.3rem;
   /* or 133% */
