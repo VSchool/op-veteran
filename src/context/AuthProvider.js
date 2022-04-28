@@ -1,4 +1,5 @@
 import { createContext, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import {
   Auth,
   googleSignIn,
@@ -12,6 +13,7 @@ export const AuthContext = createContext()
 export default function AuthProvider({ children }) {
   const [auth, setAuth] = useState(null)
   const [authError, setAuthError] = useState(null)
+  const navigate = useNavigate()
 
   useEffect(() => {
     Auth.onAuthStateChanged((user) => {
@@ -43,6 +45,7 @@ export default function AuthProvider({ children }) {
   const logout = () => {
     signOut(handleErrors)
     setAuth(!auth)
+    navigate('/')
   }
 
   return (
