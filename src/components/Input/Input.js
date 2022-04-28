@@ -16,6 +16,7 @@ const InputWrapper = styled.div`
   display: grid;
   grid-template-rows: 24px 36px;
   margin: 12px 8px;
+  width: 95%;
 `
 
 const TextInput = styled.input`
@@ -27,12 +28,12 @@ const TextInput = styled.input`
   font-size: 14px;
   line-height: 20px;
   background: #ffffff;
-  border: 2px solid #696969;
-  border-radius: 4px;
+  border: none;
+  border-bottom: 1.5px solid lightgray;
   outline: none;
   width: 100%;
   &:focus {
-    border: 1px solid #4e92f9;
+    border-bottom: 1.5px solid rgb(51, 168, 82);
   }
 `
 

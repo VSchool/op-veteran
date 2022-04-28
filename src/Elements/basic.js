@@ -5,9 +5,8 @@ const LandingContainer = styled.div`
   box-sizing: border-box;
   width: 100%;
   height: 100vh;
-  display: grid;
-  padding: 0px;
-  grid-template-rows: 72px 1fr;
+  display: flex;
+  flex-direction: column;
   //justify-content: space-evenly;
   //flex-direction: column;
   //align-items: center;
@@ -18,14 +17,9 @@ const LandingContainer = styled.div`
   // border: 2px solid dodgerblue;
 `
 const Logo = styled.img`
-  //width: 160px;
   height: auto;
-  padding-top: 32;
+  padding-top: 32px;
   margin: auto;
-  //position: absolute;
-  //margin: 32px auto;
-
-  // border: 1px dotted orange;
 `
 const Paragraph = styled.p``
 const Subheader = styled.div`
@@ -43,7 +37,7 @@ const Subheader = styled.div`
 const Header = styled.div`
   font-family: 'Open Sans';
   font-style: normal;
-  font-weight: normal;
+  font-weight: bold;
   font-size: 1.2rem;
   line-height: 1.3rem;
   /* or 133% */
@@ -69,7 +63,7 @@ const Wrapper = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   align-items: ${(props) => (props.alignment ? props.alignment : 'center')};
   padding: ${(props) => (props.padding ? props.padding : '0px')};
   overflow: ${(props) => (!props.showOverflow ? 'hidden' : 'scroll')};
@@ -79,7 +73,10 @@ const FormWrapper = styled.form`
   display: flex;
   flex-direction: column;
   margin: 0;
-  padding: 0;
+  padding: 20px 50px;
+  background: #ffffff;
+  border-radius: 0.5rem;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
 `
 const Icon = styled(FontAwesomeIcon)``
 
@@ -109,7 +106,7 @@ const Container = styled.div`
   //grid-template-rows: 1fr 1fr;
   height: ${(props) => (props.height ? props.height : '100%')};
   width: ${(props) =>
-    props.width ? props.width : 'clamp(300px, 100%, 400px)'};
+    props.width ? props.width : 'clamp(500px, 100%, 400px)'};
   margin: auto;
   padding: 0 24px 16px 24px;
   overflow: hidden;

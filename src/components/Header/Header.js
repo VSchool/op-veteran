@@ -12,11 +12,11 @@ import ToDoList from '../../pages/VendorView/ToDoList'
 
 const HeaderContainer = styled.div`
   position: relative;
-  height: 88px;
-  padding: 20px;
-  box-shadow: inset 0 -3em 3em rgb(209, 209, 209), 0 0 0 2px rgba(0, 0, 0, 0.4),
-    0.3em 0.3em 1em rgba(0, 0, 0, 0.4);
-
+  padding: 10px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  display: flex;
+  justify-content: space-between;
   & > .exit-icon {
     position: absolute;
     top: 32px;
@@ -24,16 +24,7 @@ const HeaderContainer = styled.div`
     width: 40px;
   }
 
-  & > .header-logo {
-    position: absolute;
-    top: 32px;
-    left: calc(50% - 160px / 2);
-    width: 160px;
-  }
-
-  & > .avatar-icon {
-    position: absolute;
-    top: 32px;
+  & .avatar-icon {
     right: 12px;
     width: 40px;
     border-radius: 50%;
@@ -166,17 +157,7 @@ export default function Header() {
   return (
     <HeaderContainer>
       {sideToggle ? (
-        <>
-          <span style={{ cursor: 'pointer' }} onClick={() => navigate(-1)}>
-            <IoChevronBackSharp />
-          </span>
-          <span
-            style={{ fontSize: '30px', cursor: 'pointer', padding: '10px' }}
-            onClick={handleSideBarToggle}
-          >
-            &#9776;
-          </span>
-        </>
+        <></>
       ) : (
         // Drawer menu -- toggle different component render states. See Vendor component render logic.
         <SideNav id='mySideNav'>
@@ -210,16 +191,31 @@ export default function Header() {
           </div>
         </SideNav>
       )}
-      <Link className={'header-logo'} to='/'>
-        <img src={logo} alt={'OP Veteran VetFest logo.'} />
-      </Link>
-      <img
-        src={user.userImg === '' ? userIcon : user.userImg}
-        alt={'User is logged in.'}
-        className={'avatar-icon'}
-        onClick={handleClick}
-      />
-      {showProfile ? <Profile /> : <></>}
+      <div>
+        <span style={{ cursor: 'pointer' }} onClick={() => navigate(-1)}>
+          <IoChevronBackSharp />
+        </span>
+        <span
+          style={{ fontSize: '30px', cursor: 'pointer', padding: '10px' }}
+          onClick={handleSideBarToggle}
+        >
+          &#9776;
+        </span>
+      </div>
+      <div>
+        <Link className={'header-logo'} to='/'>
+          <img src={logo} alt={'OP Veteran VetFest logo.'} />
+        </Link>
+      </div>
+      <div>
+        <img
+          src={user.userImg === '' ? userIcon : user.userImg}
+          alt={'User is logged in.'}
+          className={'avatar-icon'}
+          onClick={handleClick}
+        />
+        {showProfile ? <Profile /> : <></>}
+      </div>
     </HeaderContainer>
   )
 }

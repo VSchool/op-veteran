@@ -12,6 +12,7 @@ export function setStyle(style) {
     return {
       background: `#FFFFFF`,
       border: `2px solid #7A9E8B`,
+      borderRadius: `50px`,
       fontColor: `#7A9E8B`,
       hoverBackground: `#F7F7F7`,
       activeBackground: `#F7F7F7`,

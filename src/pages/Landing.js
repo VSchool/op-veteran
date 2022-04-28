@@ -108,11 +108,12 @@ export default function Landing() {
       {notification ? <StatusMessage message={notification} /> : null}
       <Logo src={logo} alt='OP Veteran VetFest logo' />
       <Wrapper>
-        <HeaderWrapper>
-          <Subheader>OP Veteran</Subheader>
-          <Header>VetFest Registration</Header>
-        </HeaderWrapper>
         <FormWrapper name='landingform'>
+          <HeaderWrapper>
+            <Subheader>OP Veteran</Subheader>
+            <Header>VetFest Registration</Header>
+          </HeaderWrapper>
+
           {toggleLogin ? (
             <>
               <Input

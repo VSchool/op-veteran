@@ -1,8 +1,13 @@
 import React, { useContext, useEffect } from 'react'
 import styled from 'styled-components'
 import { VendorContext } from '../../context/VendorProvider'
-import { Wrapper, Header, HeaderWrapper } from '../../Elements/basic'
+import { Header, HeaderWrapper } from '../../Elements/basic'
 import ToDoList from './ToDoList'
+
+const Wrapper = styled.div`
+  align-items: center;
+  height: calc(100% - 222px);
+`
 
 const Header2 = styled.h2`
   font-family: 'Open Sans';
@@ -13,6 +18,8 @@ const Header2 = styled.h2`
   box-shadow: 0 0px 10px rgba(0, 0, 0, 0.14);
   background-color: #232323;
   color: #ecf0f1;
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
 `
 const TodoContainer = styled.div`
   display: flex;
@@ -40,11 +47,10 @@ const ListItem = styled.li`
   width: 100%;
   height: 3em;
   line-height: 1.3em;
-  margin: 5px 0;
+  margin: 0.4px;
   font-weight: ${(props) => (props.current ? 'bold' : 'normal')};
-  background-color: #ecf0f1;
-  box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.14), 0px 1px 7px rgba(0, 0, 0, 0.12),
-    0px 2px 3px rgba(0, 0, 0, 0.2);
+  background-color: white;
+  border-bottom: 1px solid #e0e0e0;
   z-index: ${(props) => (props.current ? 3 : null)};
   text-decoration: ${(props) => (props.complete ? 'line-through' : 'none')};
   cursor: ${(props) => (props.current ? 'pointer' : null)};
@@ -61,7 +67,9 @@ const ListItem = styled.li`
     line-height: 1.2em;
   }
   &:hover {
-    background-color: ${(props) => (props.current ? '#7c9091' : '#ecf0f1')};
+    background-color: #7c9091;
+
+    color: ${(props) => (props.current ? 'white' : 'black')};
   }
   @media (max-width: 500px) {
     font-size: 1rem;
