@@ -17,14 +17,9 @@ const LandingContainer = styled.div`
   // border: 2px solid dodgerblue;
 `
 const Logo = styled.img`
-  //width: 160px;
   height: auto;
-  padding-top: 32;
+  padding-top: 32px;
   margin: auto;
-  //position: absolute;
-  //margin: 32px auto;
-
-  // border: 1px dotted orange;
 `
 const Paragraph = styled.p``
 const Subheader = styled.div`
