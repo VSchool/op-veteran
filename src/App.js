@@ -41,7 +41,9 @@ export default function App() {
   if (!auth) {
     return (
       <AppContainer>
-        <Landing />
+        <Routes>
+          <Route path='/' element={<Landing />} />
+        </Routes>
       </AppContainer>
     )
   }
