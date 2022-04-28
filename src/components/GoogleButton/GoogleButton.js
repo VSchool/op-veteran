@@ -25,6 +25,7 @@ const StyledButton = styled.button`
   border: ${(props) => props.border};
   border-radius: 2px;
   outline: none;
+  cursor: pointer;
   &:hover {
     background-color: ${(props) => props.hoverBackground};
   }
