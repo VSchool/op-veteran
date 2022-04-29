@@ -5,6 +5,7 @@ import { UserContext } from '../../context/UserProvider'
 import { CanvasContext } from '../../context/CanvasProvider'
 import Finalize from '../../pages/VendorView/Finalize'
 import firestore from '../../database'
+import opveteranLogo from '../../assets/icons/OPVeteranLogo.png'
 
 const Wrapper = styled.div`
   min-width: 311px;
@@ -19,7 +20,8 @@ const Wrapper = styled.div`
   padding: 20px;
   justify-content: space-between;
   position: fixed;
-  top: 0;
+  top: 70px;
+  right: 20px;
   z-index: 999;
 `
 const Paragraph = styled.p``
@@ -34,15 +36,21 @@ const Profile = (props) => {
   const { currentBooth } = useContext(CanvasContext)
 
   const [info, setInfo] = useState({
-    organization: currentVendor.organization,
-    description: currentVendor.description,
-    logo: currentVendor.logo,
-    primaryBooth: currentVendor.primaryBooth,
-    secondaryBooth: currentVendor.secondaryBooth,
-    address: currentVendor.address,
-    rep: currentVendor.rep,
-    repEmail: currentVendor.repEmail,
-    sponsorship: currentVendor.sponsorship,
+    organization:
+      currentVendor !== null ? currentVendor.organization : 'Not registered',
+    description:
+      currentVendor !== null ? currentVendor.description : 'Not registered',
+    logo: currentVendor !== null ? currentVendor.logo : opveteranLogo,
+    primaryBooth:
+      currentVendor !== null ? currentVendor.primaryBooth : 'Not registered',
+    secondaryBooth:
+      currentVendor !== null ? currentVendor.secondaryBooth : 'Not registered',
+    address: currentVendor !== null ? currentVendor.address : 'Not registered',
+    rep: currentVendor !== null ? currentVendor.rep : 'Not registered',
+    repEmail:
+      currentVendor !== null ? currentVendor.repEmail : 'Not registered',
+    sponsorship:
+      currentVendor !== null ? currentVendor.sponsorship : 'Not registered',
   })
   const boothRef = firestore.collection('Booths')
 
@@ -61,10 +69,15 @@ const Profile = (props) => {
   return (
     <Wrapper>
       <Logo src={info.logo} />
-      <Paragraph>Current Booth: {currentBooth}</Paragraph>
+      <Paragraph>
+        Current Booth: {currentBooth ? currentBooth : 'None Selected'}
+      </Paragraph>
       <Paragraph>Name: {info.rep}</Paragraph>
       <Paragraph>Organization: {info.organization}</Paragraph>
-      <Paragraph>Sponsorship: {info.sponsorship.level}</Paragraph>
+      <Paragraph>
+        Sponsorship:{' '}
+        {info.sponsorship.level ? info.sponsorship.level : 'None Selected'}
+      </Paragraph>
       <Finalize />
       {/* for testing purposes because you can add more than 2 booths at a time */}
       {/* <button onClick={resetBooths}>Reset Booths</button> */}
