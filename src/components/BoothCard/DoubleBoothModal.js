@@ -2,6 +2,7 @@ import styled, { keyframes } from 'styled-components'
 import { MdReport } from 'react-icons/md'
 import { CloseButton } from '../../Elements/basic'
 import { Button } from '../Button'
+import { useNavigate } from 'react-router-dom'
 
 const ButtonWrapper = styled.div`
   display: grid;
@@ -86,12 +87,13 @@ export default function DoubleBoothModal({
   states,
   changeState,
 }) {
+  const navigate = useNavigate()
   const handleClick = (e) => {
     e.preventDefault()
     const boothId = e.target.innerText
     handleSelectBooth(boothId, true)
     close()
-    changeState(states.FINALIZE)
+    navigate('/finalize')
   }
 
   const buttons = options.map((booth) => (
