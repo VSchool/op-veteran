@@ -23,6 +23,7 @@ import {
   Container,
 } from '../../../Elements/basic'
 import { CheckBox } from '../../../components/CheckBox'
+import { useNavigate } from 'react-router-dom'
 const Paragraph = styled.p`
   padding: 10px 5px;
 `
@@ -52,6 +53,7 @@ export default function RegistrationForm(props) {
     storeFile,
     createCart, // This function needs to be called to create a shopify cartId. Use it in the handleSubmit function here or at the begining of the createVendor function in the VendorProvider.  This is currently untested
   } = useContext(VendorContext)
+  const navigate = useNavigate()
   const [showSponsorship, setShowSponsorship] = useState(false)
   const { changeState, states } = props
   const [input, setInput] = useState({
@@ -122,9 +124,9 @@ export default function RegistrationForm(props) {
       saveLogo(input.file)
     }
     if (input.wantToSponsor) {
-      changeState(states.SPONSOR)
+      navigate('/sponsorship')
     } else {
-      changeState(states.SELECT)
+      navigate('/booth')
     }
   }
 

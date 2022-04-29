@@ -6,6 +6,7 @@ import { UserContext } from '../../context/UserProvider'
 import { VendorContext } from '../../context/VendorProvider'
 import { Blur } from '../../Elements/basic'
 import { CloseButton } from '../../Elements/basic'
+import { useNavigate } from 'react-router-dom'
 import Client from 'shopify-buy'
 const CardContainer = styled.div`
   width: 288px;
@@ -111,6 +112,7 @@ const Paragraph = styled.p`
 // const ModalWrapper = styled.div`     display: flex;     flex-direction:
 // column;     padding: 10px;     position: absolute; `
 export default function SponsorshipCard(props) {
+  const navigate = useNavigate()
   const {
     className,
     name,
@@ -152,7 +154,7 @@ export default function SponsorshipCard(props) {
     // updatedVendor?.sponsorship.level = name
     // updatedVendor?.sponsorship.status = 1
     updateCurrentVendor({ 'sponsorship.level': name, 'sponsorship.status': 1 })
-    changeState(states.SELECT)
+    navigate('/booth')
   }
   const formatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
