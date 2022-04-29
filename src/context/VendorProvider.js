@@ -59,11 +59,9 @@ export default function VendorProvider({ children }) {
   // This should work if we can get the cartId properly.  Doesnt appear its in the
   // currentVendor data becasue createCart function is never called
   const getCartItems = () => {
-    // console.log("urrent vendor from getCartItems: ", currentVendor)
-
-    //
+    if (!currentVendor) return
     client.checkout
-      .fetch(currentVendor.cartId)
+      .fetch(currentVendor?.cartId)
       .then((res) => {
         console.log('dec 7: fetched cart items!!', res.lineItems)
         setCartItems(res.lineItems)
@@ -202,10 +200,10 @@ export default function VendorProvider({ children }) {
   // setSelectedVendor]);
 
   const openCart = () => {
-    // This Doesnt work becasue I cant get a valid cartId
+    if (!currentVendor) return
     console.log('opening cart')
     client.checkout
-      .fetch(currentVendor.cartId)
+      .fetch(currentVendor?.cartId)
       .then((checkout) => window.open(checkout.webUrl))
   }
 

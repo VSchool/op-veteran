@@ -5,6 +5,8 @@ import { BoothContext } from '../../context/BoothProvider'
 import { UserContext } from '../../context/UserProvider'
 import { Wrapper, Container } from '../../Elements/basic'
 import { Button } from '../../components/Button'
+import StatusMessage from '../../components/StatusMessage'
+import { useNavigate } from 'react-router-dom'
 
 const CardContainer = styled.div`
   width: 400px;
@@ -85,6 +87,7 @@ const ItemQuantity = styled.p`
 
 const Finalize = (props) => {
   // const { currentVendor, getCartItems, cart, openCart } = useContext(VendorContext);
+  const navigate = useNavigate()
   const {
     currentVendor,
     openCart,
@@ -110,7 +113,6 @@ const Finalize = (props) => {
     getCartItems()
   }, [currentVendor])
 
-  console.log('finalize page: currentVendor ', cartItems)
   return (
     <CardContainer>
       {/* <Wrapper> */}
@@ -122,7 +124,7 @@ const Finalize = (props) => {
       <br />
 
       {/* Shopify Cart items list */}
-      <Head>Shopift Cart Items</Head>
+      <Head>Shopify Cart Items</Head>
       {cartItems?.map((item) => (
         <article key={item}>
           <p>Product: {item.title}</p>
@@ -135,11 +137,29 @@ const Finalize = (props) => {
       ))}
       {/* End Shopify Cart ITems List */}
       {/* <a onClick={(e)=>console.log(e.target)} href={currentVendor.cartUrl} target="_blank">Open Cart</a> */}
-      <Button
-        buttonText='Continue to checkout'
-        buttonStyle='primary'
-        onClick={openCart}
-      />
+      {!currentVendor ? (
+        <>
+          <StatusMessage
+            className={'status-message'}
+            message={
+              'You must register to checkout. Please register to continue.'
+            }
+            animationTime={5000}
+          />
+          <Button
+            buttonText='Register to continue'
+            buttonStyle='primary'
+            onClick={() => navigate('/registration')}
+          />
+        </>
+      ) : (
+        <Button
+          buttonText='Continue to checkout'
+          buttonStyle='primary'
+          onClick={openCart}
+        />
+      )}
+
       {/* </Wrapper> */}
     </CardContainer>
   )
