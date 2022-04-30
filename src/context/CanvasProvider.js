@@ -5,7 +5,7 @@ import Konva from 'konva'
 // import vendorData from "../testing/vendors.json";
 
 export const CanvasContext = createContext()
-export default function ({ children }) {
+export default function CanvasProvider({ children }) {
   const [scale, setScale] = useState({ x: 1, y: 1 })
   const [stageSize, setStageSize] = useState({ w: 1024, h: 1083 })
   const [currentSection, setCurrentSection] = useState('')
@@ -38,6 +38,7 @@ export default function ({ children }) {
   useEffect(() => {
     fitStageIntoParentContainer()
   }, [])
+
   useEffect(() => {
     window.addEventListener('resize', fitStageIntoParentContainer, {
       passive: true,
