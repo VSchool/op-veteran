@@ -20,7 +20,7 @@ const entrance = keyframes`
 `
 
 const MessageContainer = styled.div`
-  display: ${(props) => (props.visible ? 'flex' : 'none')};
+  display: flex;
   top: 0px;
   left: 0;
   right: 0;
@@ -80,19 +80,15 @@ const Icon = styled(MdReport)`
 `
 
 export default function DoubleBoothModal({
-  close,
-  visible,
   options,
   handleSelectBooth,
-  states,
-  changeState,
+  close,
 }) {
   const navigate = useNavigate()
   const handleClick = (e) => {
     e.preventDefault()
     const boothId = e.target.innerText
     handleSelectBooth(boothId, true)
-    close()
     navigate('/finalize')
   }
 
@@ -101,7 +97,7 @@ export default function DoubleBoothModal({
   ))
 
   return (
-    <MessageContainer visible={visible}>
+    <MessageContainer>
       <Text>Please select the adjacent booth you'd like to add.</Text>
       {buttons.length && <ButtonWrapper>{buttons}</ButtonWrapper>}
       <Button
@@ -111,6 +107,7 @@ export default function DoubleBoothModal({
         column='1/3'
         row='2/3'
       />
+      <Button buttonStyle='primary' buttonText='Close' onClick={close} />
     </MessageContainer>
   )
 }
