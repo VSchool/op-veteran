@@ -25,7 +25,7 @@ const Row = (props) => {
   const { x, y, theta } = rowDatum
 
   useEffect(() => {
-    const filtered = booths.filter((b) => b.row == rowId)
+    const filtered = booths.filter((b) => b.row === rowId)
     filtered.sort((a, b) => a.number - b.number)
     const comps = filtered.map((b) => (
       <Booth
