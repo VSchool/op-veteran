@@ -155,6 +155,62 @@ export default function VendorProvider({ children }) {
     // })
   }
 
+  const addSecondaryBoothToCart = async (boothId) => {
+    const booth = booths.find((b) => b.id === boothId)
+    if (
+      ['Paladin', 'Stryker', 'Abrams', 'Bradley'].includes(
+        currentVendor.sponsorship.level
+      )
+    ) {
+      if (booth.hasElectricity) {
+        const checkout = await addItemToCart(
+          'doubleBooth',
+          boothId,
+          'electricity'
+        )
+        const electricityDiscount = await checkout.addDiscount(
+          currentVendor.cartId,
+          'sponsoredBoothElectricity'
+        )
+        await electricityDiscount.addDiscount(
+          currentVendor.cartId,
+          'sponsoredDoubleBooth'
+        )
+      } else {
+        const doubleBoothCheckout = await addItemToCart('doubleBooth', boothId)
+        await doubleBoothCheckout.addDiscount(
+          currentVendor.cartId,
+          'sponsoredDoubleBooth'
+        )
+      }
+    } else if (
+      currentVendor.isNonprofit ||
+      currentVendor.isGovernmental ||
+      currentVendor.isVeteranOwned
+    ) {
+      if (booth.hasElectricity) {
+        await addItemToCart('doubleBooth', boothId, 'electricity')
+      } else {
+        await addItemToCart('doubleBooth', boothId)
+      }
+    } else {
+      if (booth.hasElectricity) {
+        await addItemToCart('doubleBooth', boothId, 'electricity')
+      } else {
+        await addItemToCart('doubleBooth', boothId)
+      }
+      getShopifyCart()
+    }
+
+    // may have to refactor this part
+    // updateCurrentVendor({
+    //   'booth.secondary': {
+    //     id: boothId,
+    //     status: 1,
+    //   },
+    // })
+  }
+
   // This should work if we can get the cartId properly.  Doesnt appear its in the
   // currentVendor data becasue createCart function is never called
 
@@ -388,61 +444,6 @@ client.checkout.updateLineItems(checkoutId, lineItemsToUpdate).then((checkout) =
 
   // test to check if it's okay to make localcart
 
-  const addSecondaryBoothToCart = async (boothId) => {
-    const booth = booths.find((b) => b.id === boothId)
-    if (
-      ['Paladin', 'Stryker', 'Abrams', 'Bradley'].includes(
-        currentVendor.sponsorship.level
-      )
-    ) {
-      if (booth.hasElectricity) {
-        const checkout = await addItemToCart(
-          'doubleBooth',
-          boothId,
-          'electricity'
-        )
-        const electricityDiscount = await checkout.addDiscount(
-          currentVendor.cartId,
-          'sponsoredBoothElectricity'
-        )
-        await electricityDiscount.addDiscount(
-          currentVendor.cartId,
-          'sponsoredDoubleBooth'
-        )
-      } else {
-        const doubleBoothCheckout = await addItemToCart('doubleBooth', boothId)
-        await doubleBoothCheckout.addDiscount(
-          currentVendor.cartId,
-          'sponsoredDoubleBooth'
-        )
-      }
-    } else if (
-      currentVendor.isNonprofit ||
-      currentVendor.isGovernmental ||
-      currentVendor.isVeteranOwned
-    ) {
-      if (booth.hasElectricity) {
-        await addItemToCart('doubleBooth', boothId, 'electricity')
-      } else {
-        await addItemToCart('doubleBooth', boothId)
-      }
-    } else {
-      if (booth.hasElectricity) {
-        await addItemToCart('doubleBooth', boothId, 'electricity')
-      } else {
-        await addItemToCart('doubleBooth', boothId)
-      }
-      getShopifyCart()
-    }
-
-    // may have to refactor this part
-    // updateCurrentVendor({
-    //   'booth.secondary': {
-    //     id: boothId,
-    //     status: 1,
-    //   },
-    // })
-  }
   const getOrderStatus = () => {
     client.checkout.fetch(currentVendor.cartId).then((checkout) => {
       const lineItems = checkout.lineItems
