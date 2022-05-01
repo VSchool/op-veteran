@@ -64,16 +64,20 @@ export default function VendorProvider({ children }) {
     return client.checkout
       .fetch(currentVendor.cartId)
       .then((res) => {
-        console.log('fetch cart items', res.lineItems)
-        setCartItems(res.lineItems)
+        console.log(res.lineItems)
+        const lineItemsData = res.lineItems.map((item) => {
+          return {
+            title: item.title,
+            quantity: item.quantity,
+            id: item.id,
+          }
+        })
+        setCartItems(lineItemsData)
         setLoading(false)
       })
       .catch((err) => console.log(err))
   }
-  useEffect(() => {
-    if (cartItems.length > 0) {
-    }
-  }, [cartItems])
+  console.log('cartItems', cartItems)
 
   const addPrimaryBoothToLocalCart = (boothId) => {
     setLoading(true)
@@ -109,27 +113,34 @@ export default function VendorProvider({ children }) {
         currentVendor.sponsorship.level
       )
     ) {
-      await addItemToCart('freeBooth', boothId)
       if (booth.hasElectricity) {
-        const checkout = await addItemToCart('electricity', boothId)
+        const checkout = await addItemToCart(
+          'freeBooth',
+          boothId,
+          'electricity'
+        )
         await checkout.addDiscount(
           currentVendor.cartId,
           'sponsoredBoothElectricity'
         )
+      } else {
+        await addItemToCart('freeBooth', boothId)
       }
     } else if (
       currentVendor.isNonprofit ||
       currentVendor.isGovernmental ||
       currentVendor.isVeteranOwned
     ) {
-      await addItemToCart('freeBooth', boothId)
       if (booth.hasElectricity) {
-        await addItemToCart('electricity', boothId)
+        await addItemToCart('freeBooth', boothId, 'electricity')
+      } else {
+        await addItemToCart('freeBooth', boothId)
       }
     } else {
-      await addItemToCart('standardBooth', boothId)
       if (booth.hasElectricity) {
-        await addItemToCart('electricity', boothId)
+        await addItemToCart('standardBooth', boothId, 'electricity')
+      } else {
+        await addItemToCart('standardBooth', boothId)
       }
     }
 
@@ -310,15 +321,31 @@ client.checkout.updateLineItems(checkoutId, lineItemsToUpdate).then((checkout) =
       })
   }
 
-  const addItemToCart = (item, boothId) => {
+  const addItemToCart = (item, boothId, electricity) => {
     console.log(`addItemToCart item: ${item} boothId: ${boothId}`)
-    return client.checkout.addLineItems(currentVendor.cartId, [
-      {
-        variantId: products[item],
-        quantity: 1,
-        customAttributes: [{ key: 'boothID', value: boothId }],
-      },
-    ])
+
+    if (electricity) {
+      return client.checkout.addLineItems(currentVendor.cartId, [
+        {
+          variantId: products[item],
+          quantity: 1,
+          customAttributes: [{ key: 'boothID', value: boothId }],
+        },
+        {
+          variantId: products[electricity],
+          quantity: 1,
+          customAttributes: [{ key: 'boothID', value: boothId }],
+        },
+      ])
+    } else {
+      return client.checkout.addLineItems(currentVendor.cartId, [
+        {
+          variantId: products[item],
+          quantity: 1,
+          customAttributes: [{ key: 'boothID', value: boothId }],
+        },
+      ])
+    }
   }
   const storeFile = (file, path) => {
     const storageRef = Storage.ref(path)
@@ -363,40 +390,47 @@ client.checkout.updateLineItems(checkoutId, lineItemsToUpdate).then((checkout) =
 
   const addSecondaryBoothToCart = async (boothId) => {
     const booth = booths.find((b) => b.id === boothId)
-    console.log(boothId)
-
     if (
       ['Paladin', 'Stryker', 'Abrams', 'Bradley'].includes(
         currentVendor.sponsorship.level
       )
     ) {
-      const doubleBoothCheckout = await addItemToCart('doubleBooth', boothId)
-      await doubleBoothCheckout.addDiscount(
-        currentVendor.cartId,
-        'sponsoredDoubleBooth'
-      )
       if (booth.hasElectricity) {
-        const electricityCheckout = await addItemToCart('electricity', boothId)
-        await electricityCheckout.addDiscount(
+        const checkout = await addItemToCart(
+          'doubleBooth',
+          boothId,
+          'electricity'
+        )
+        const electricityDiscount = await checkout.addDiscount(
           currentVendor.cartId,
           'sponsoredBoothElectricity'
         )
+        await electricityDiscount.addDiscount(
+          currentVendor.cartId,
+          'sponsoredDoubleBooth'
+        )
+      } else {
+        const doubleBoothCheckout = await addItemToCart('doubleBooth', boothId)
+        await doubleBoothCheckout.addDiscount(
+          currentVendor.cartId,
+          'sponsoredDoubleBooth'
+        )
       }
-      getShopifyCart()
     } else if (
       currentVendor.isNonprofit ||
       currentVendor.isGovernmental ||
       currentVendor.isVeteranOwned
     ) {
-      await addItemToCart('doubleBooth', boothId)
       if (booth.hasElectricity) {
-        await addItemToCart('electricity', boothId)
+        await addItemToCart('doubleBooth', boothId, 'electricity')
+      } else {
+        await addItemToCart('doubleBooth', boothId)
       }
-      getShopifyCart()
     } else {
-      await addItemToCart('doubleBooth', boothId)
       if (booth.hasElectricity) {
-        await addItemToCart('electricity', boothId)
+        await addItemToCart('doubleBooth', boothId, 'electricity')
+      } else {
+        await addItemToCart('doubleBooth', boothId)
       }
       getShopifyCart()
     }
