@@ -93,7 +93,12 @@ export default function DoubleBoothModal({
   }
 
   const buttons = options.map((booth) => (
-    <Button buttonText={booth} buttonStyle='primary' onClick={handleClick} />
+    <Button
+      buttonText={booth}
+      buttonStyle='primary'
+      onClick={handleClick}
+      key={booth}
+    />
   ))
 
   return (
