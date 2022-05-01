@@ -109,9 +109,7 @@ const Finalize = (props) => {
   // }, [])})
 
   // This is for testing
-  useEffect(() => {
-    getCartItems()
-  }, [currentVendor])
+  useEffect(() => {}, [cartItems])
 
   return (
     <CardContainer>
@@ -125,8 +123,8 @@ const Finalize = (props) => {
 
       {/* Shopify Cart items list */}
       <Head>Shopify Cart Items</Head>
-      {cartItems?.map((item) => (
-        <article key={item}>
+      {cartItems?.map((item, index) => (
+        <article key={item + index}>
           <p>Product: {item.title}</p>
           {/* <p>ID: {item.id}</p> */}
           <p>Quantity: {item.quantity}</p>
