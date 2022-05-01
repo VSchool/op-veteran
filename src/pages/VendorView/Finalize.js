@@ -95,6 +95,7 @@ const Finalize = (props) => {
     cartItems,
     changeQuantity,
     localCart,
+    loading,
   } = useContext(VendorContext)
   // const [cartItems, setCartItems] = useState([])
 
@@ -109,7 +110,7 @@ const Finalize = (props) => {
   // }, [])})
 
   // This is for testing
-  useEffect(() => {}, [cartItems])
+  useEffect(() => {}, [])
 
   return (
     <CardContainer>
@@ -122,17 +123,25 @@ const Finalize = (props) => {
       <br />
 
       {/* Shopify Cart items list */}
-      <Head>Shopify Cart Items</Head>
-      {cartItems?.map((item, index) => (
-        <article key={item + index}>
-          <p>Product: {item.title}</p>
-          {/* <p>ID: {item.id}</p> */}
-          <p>Quantity: {item.quantity}</p>
-          <button onClick={() => changeQuantity(item.id, item.quantity)}>
-            Remove
-          </button>
-        </article>
-      ))}
+
+      {loading ? (
+        <Head>Loading Cart Items...</Head>
+      ) : (
+        <>
+          <Head>Shopify Cart Items</Head>
+          {cartItems?.map((item, index) => (
+            <article key={item + index}>
+              <p>Product: {item.title}</p>
+              {/* <p>ID: {item.id}</p> */}
+              <p>Quantity: {item.quantity}</p>
+              <button onClick={() => changeQuantity(item.id, item.quantity)}>
+                Remove
+              </button>
+            </article>
+          ))}
+        </>
+      )}
+
       {/* End Shopify Cart ITems List */}
       {/* <a onClick={(e)=>console.log(e.target)} href={currentVendor.cartUrl} target="_blank">Open Cart</a> */}
       {!currentVendor ? (
