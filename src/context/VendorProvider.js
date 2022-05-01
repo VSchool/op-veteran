@@ -45,6 +45,7 @@ export default function VendorProvider({ children }) {
   const [currentVendor, setCurrentVendor] = useState(null)
   const { booths, statusCodes, resetBooth } = useContext(BoothContext)
   const [cartItems, setCartItems] = useState([])
+  const [loading, setLoading] = useState(false)
   const client = Client.buildClient({
     domain: 'o-p-veteran.myshopify.com',
     storefrontAccessToken: '76c1fba5d995f6b7dbb1eb1c1c3c5745',
@@ -70,9 +71,10 @@ export default function VendorProvider({ children }) {
   }
 
   useEffect(() => {
-    if (!currentVendor) return
-    getShopifyCart()
-  }, [localCart])
+    if (cartItems.length > 0) {
+      setLoading(false)
+    }
+  }, [cartItems])
 
   const addPrimaryBoothToLocalCart = (boothId) => {
     console.log('TEST PRIMARY: only setting current local cart')
@@ -95,7 +97,8 @@ export default function VendorProvider({ children }) {
     getShopifyCart()
   }
 
-  const addPrimaryBoothToCart = (boothId) => {
+  const addPrimaryBoothToCart = async (boothId) => {
+    setLoading(true)
     console.log(
       'this is the current booth selection id from addPrimaryBoothCart: ',
       boothId
@@ -107,45 +110,28 @@ export default function VendorProvider({ children }) {
         currentVendor.sponsorship.level
       )
     ) {
-      addItemToCart('freeBooth', boothId)
-        .then(() => {
-          if (booth.hasElectricity) {
-            addItemToCart('electricity', boothId).then((checkout) =>
-              checkout.addDiscount(
-                currentVendor.cartId,
-                'sponsoredBoothElectricity'
-              )
-            )
-          }
-        })
-        .catch((err) => console.log(err))
+      await addItemToCart('freeBooth', boothId)
+      if (booth.hasElectricity) {
+        const checkout = await addItemToCart('electricity', boothId)
+        checkout.addDiscount(currentVendor.cartId, 'sponsoredBoothElectricity')
+      }
     } else if (
       currentVendor.isNonprofit ||
       currentVendor.isGovernmental ||
       currentVendor.isVeteranOwned
     ) {
-      addItemToCart('freeBooth', boothId)
-        .then(() => {
-          if (booth.hasElectricity) {
-            addItemToCart('electricity', boothId)
-              .then((checkout) => console.log(checkout))
-              .catch((err) => console.log(err))
-          }
-        })
-        .catch((err) => console.log(err))
+      await addItemToCart('freeBooth', boothId)
+      if (booth.hasElectricity) {
+        await addItemToCart('electricity', boothId)
+      }
     } else {
-      addItemToCart('standardBooth', boothId)
-        .then((checkout) => {
-          console.log(checkout.lineItems[0].title)
-          if (booth.hasElectricity) {
-            addItemToCart('electricity', boothId)
-              .then((checkout) => console.log(checkout))
-              .catch((err) => console.log(err))
-          }
-        })
-        .then((res) => console.log(res))
-        .catch((err) => console.log(err))
+      await addItemToCart('standardBooth', boothId)
+      if (booth.hasElectricity) {
+        await addItemToCart('electricity', boothId)
+      }
     }
+
+    getShopifyCart()
 
     // may have to refactor this part
     // updateCurrentVendor({
@@ -323,6 +309,7 @@ client.checkout.updateLineItems(checkoutId, lineItemsToUpdate).then((checkout) =
   }
 
   const addItemToCart = (item, boothId) => {
+    console.log(`addItemToCart item: ${item} boothId: ${boothId}`)
     return client.checkout.addLineItems(currentVendor.cartId, [
       {
         variantId: products[item],
@@ -463,6 +450,7 @@ client.checkout.updateLineItems(checkoutId, lineItemsToUpdate).then((checkout) =
         getOrderStatus,
         client,
         localCart,
+        loading,
       }}
     >
       {children}
