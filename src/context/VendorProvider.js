@@ -61,22 +61,22 @@ export default function VendorProvider({ children }) {
   const [localCart, setLocalCart] = useState(initState)
 
   const getShopifyCart = () => {
-    client.checkout
+    return client.checkout
       .fetch(currentVendor.cartId)
       .then((res) => {
         console.log('fetch cart items', res.lineItems)
         setCartItems(res.lineItems)
+        setLoading(false)
       })
       .catch((err) => console.log(err))
   }
-
   useEffect(() => {
     if (cartItems.length > 0) {
-      setLoading(false)
     }
   }, [cartItems])
 
   const addPrimaryBoothToLocalCart = (boothId) => {
+    setLoading(true)
     console.log('TEST PRIMARY: only setting current local cart')
     setLocalCart({ primaryBoothId: boothId })
     localStorage.setItem(
@@ -87,6 +87,7 @@ export default function VendorProvider({ children }) {
   }
 
   const addSecondaryBoothToLocalCart = (boothId) => {
+    setLoading(true)
     console.log('TEST SECONDARY: only setting current local cart')
     setLocalCart((prevCart) => ({ ...prevCart, secondaryBoothId: boothId }))
     localStorage.setItem(
@@ -94,11 +95,9 @@ export default function VendorProvider({ children }) {
       JSON.stringify({ ...localCart, secondaryBoothId: boothId })
     )
     addSecondaryBoothToCart(boothId)
-    getShopifyCart()
   }
 
   const addPrimaryBoothToCart = async (boothId) => {
-    setLoading(true)
     console.log(
       'this is the current booth selection id from addPrimaryBoothCart: ',
       boothId
@@ -113,7 +112,10 @@ export default function VendorProvider({ children }) {
       await addItemToCart('freeBooth', boothId)
       if (booth.hasElectricity) {
         const checkout = await addItemToCart('electricity', boothId)
-        checkout.addDiscount(currentVendor.cartId, 'sponsoredBoothElectricity')
+        await checkout.addDiscount(
+          currentVendor.cartId,
+          'sponsoredBoothElectricity'
+        )
       }
     } else if (
       currentVendor.isNonprofit ||
@@ -131,7 +133,7 @@ export default function VendorProvider({ children }) {
       }
     }
 
-    getShopifyCart()
+    await getShopifyCart()
 
     // may have to refactor this part
     // updateCurrentVendor({
@@ -359,54 +361,44 @@ client.checkout.updateLineItems(checkoutId, lineItemsToUpdate).then((checkout) =
 
   // test to check if it's okay to make localcart
 
-  const addSecondaryBoothToCart = (boothId) => {
+  const addSecondaryBoothToCart = async (boothId) => {
     const booth = booths.find((b) => b.id === boothId)
-    console.log(booth)
+    console.log(boothId)
+
     if (
       ['Paladin', 'Stryker', 'Abrams', 'Bradley'].includes(
         currentVendor.sponsorship.level
       )
     ) {
-      addItemToCart('doubleBooth', boothId)
-        .then((checkout) =>
-          checkout.addDiscount(currentVendor.cartId, 'sponsoredDoubleBooth')
+      const doubleBoothCheckout = await addItemToCart('doubleBooth', boothId)
+      await doubleBoothCheckout.addDiscount(
+        currentVendor.cartId,
+        'sponsoredDoubleBooth'
+      )
+      if (booth.hasElectricity) {
+        const electricityCheckout = await addItemToCart('electricity', boothId)
+        await electricityCheckout.addDiscount(
+          currentVendor.cartId,
+          'sponsoredBoothElectricity'
         )
-        .then(() => {
-          if (booth.hasElectricity) {
-            addItemToCart('electricity', boothId)
-          }
-        })
-        .then((checkout) =>
-          checkout.addDiscount(
-            currentVendor.cartId,
-            'sponsoredBoothElectricity'
-          )
-        )
-        .catch((err) => console.log(err))
+      }
+      getShopifyCart()
     } else if (
       currentVendor.isNonprofit ||
       currentVendor.isGovernmental ||
       currentVendor.isVeteranOwned
     ) {
-      addItemToCart('doubleBooth', boothId)
-        .then(() => {
-          if (booth.hasElectricity) {
-            addItemToCart('electricity', boothId).then((checkout) =>
-              console.log(checkout)
-            )
-          }
-        })
-        .catch((err) => console.log(err))
+      await addItemToCart('doubleBooth', boothId)
+      if (booth.hasElectricity) {
+        await addItemToCart('electricity', boothId)
+      }
+      getShopifyCart()
     } else {
-      addItemToCart('doubleBooth', boothId)
-        .then((checkout) => {
-          if (booth.hasElectricity) {
-            addItemToCart('electricity', boothId)
-              .then((checkout) => console.log(checkout))
-              .catch((err) => console.log(err))
-          }
-        })
-        .catch((err) => console.log(err))
+      await addItemToCart('doubleBooth', boothId)
+      if (booth.hasElectricity) {
+        await addItemToCart('electricity', boothId)
+      }
+      getShopifyCart()
     }
 
     // may have to refactor this part
