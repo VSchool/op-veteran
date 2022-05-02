@@ -33,10 +33,13 @@ const StyledButton = styled.button`
   outline: none;
   &:hover {
     background-color: ${(props) => props.hoverBackground};
+    transform: translateY(-3px);
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
   }
   &:active {
     background: ${(props) => props.activeBackground};
     border: ${(props) => props.activeBorder};
+    transform: translateY(-1px);
   }
 `
 
