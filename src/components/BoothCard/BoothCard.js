@@ -5,6 +5,7 @@ import { CanvasContext } from '../../context/CanvasProvider'
 import { BoothContext } from '../../context/BoothProvider'
 import { VendorContext } from '../../context/VendorProvider'
 import { IoCloseOutline } from 'react-icons/io5'
+import { useNavigate } from 'react-router-dom'
 
 const CardContainer = styled.div`
   width: 311px;
@@ -92,6 +93,7 @@ const Hr = styled.hr`
   width: 90%;
 `
 const BoothCard = (props) => {
+  const navigate = useNavigate()
   const {
     addPrimaryBoothToLocalCart,
     addSecondaryBoothToLocalCart,
@@ -103,14 +105,7 @@ const BoothCard = (props) => {
     setPrimaryMode,
   } = useContext(VendorContext)
   const { reserveBooth, holdBooth, booths } = useContext(BoothContext)
-  const {
-    data,
-    setCurrentBooth,
-    states,
-    changeState,
-    setModalOptions,
-    statusCodes,
-  } = props
+  const { data, handleSelectBooth, handleClose } = props
   const {
     id,
     vendor,
@@ -122,33 +117,6 @@ const BoothCard = (props) => {
     neighbors,
   } = data
 
-  const handleClose = () => {
-    setCurrentBooth(null)
-  }
-
-  // this needs lots of refactoring
-  const handleSelectBooth = (_id, secondary = false) => {
-    if (secondary) {
-      // addSecondaryBoothToCart(_id);
-      addSecondaryBoothToLocalCart(_id)
-    } else {
-      // addPrimaryBoothToCart(_id);
-      addPrimaryBoothToLocalCart(_id)
-    }
-
-    //might have to move this somewhere else
-    // holdBooth(
-    //   {
-    //     organization: currentVendor.organization,
-    //     description: currentVendor.description,
-    //     logo: currentVendor.logo,
-    //   },
-    //   _id
-    // );
-    handleClose()
-    checkNeighbors() // might have to move this to else statement
-  }
-
   const handlePrimaryClick = (e) => {
     e.preventDefault()
     if (isAllowed()) {
@@ -157,6 +125,8 @@ const BoothCard = (props) => {
       // cart, then have the option for the user to
       // add the two booths to their cart
       handleSelectBooth(id)
+    } else {
+      navigate('/sponsorship')
     }
     // don't send user to vendors page
     // else {
@@ -167,23 +137,6 @@ const BoothCard = (props) => {
     //   updateCurrentVendor(updatedVendor);
     //   changeState(states.SPONSOR);
     // }
-  }
-  const checkNeighbors = () => {
-    const options = booths.reduce((response, b) => {
-      if (neighbors.includes(b.id) && (b.status === 0 || b.status === 'open')) {
-        response.push(b.id)
-      }
-      return response
-    }, [])
-    if (options.length > 0) {
-      setModalOptions((prev) => ({
-        ...prev,
-        visible: true,
-        isOpen: true,
-        options: options,
-        handleSelectBooth: handleSelectBooth,
-      }))
-    }
   }
 
   const isAllowed = () => {
@@ -225,7 +178,7 @@ const BoothCard = (props) => {
               {isAllowed()
                 ? null
                 : `This section is reserved for ${
-                    restriction == 2
+                    restriction === 2
                       ? 'Paladin and Abrams '
                       : 'Stryker and Bradley '
                   } level sponsors.`}{' '}
@@ -238,7 +191,7 @@ const BoothCard = (props) => {
           <Button
             buttonStyle='primary'
             buttonText='Close'
-            onClicks={handleClose}
+            onClick={handleClose}
           />
         ) : (
           <>

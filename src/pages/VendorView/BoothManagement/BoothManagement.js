@@ -49,7 +49,6 @@ const BoothManagement = (props) => {
   }
   const [showTrees, setShowTrees] = useState(true)
   const [modalOptions, setModalOptions] = useState({
-    handleSelectBooth: null,
     options: [],
     isOpen: false,
     visible: false,
@@ -61,9 +60,15 @@ const BoothManagement = (props) => {
   const [showInfo, setShowInfo] = useState(false)
   const [organizedBooths, setOrganizedBooths] = useState([])
   const { user } = useContext(UserContext)
-  const { currentVendor, updateCurrentVendor } = useContext(VendorContext)
+  const {
+    currentVendor,
+    updateCurrentVendor,
+    addPrimaryBoothToLocalCart,
+    addSecondaryBoothToLocalCart,
+  } = useContext(VendorContext)
   const [secondary, setSecondary] = useState(false)
   const [modalIsOpen, setModalIsOpen] = useState(false)
+  const [isDoubleBoothOpen, setIsDoubleBoothOpen] = useState(false)
   const {
     scale,
     setScale,
@@ -82,6 +87,7 @@ const BoothManagement = (props) => {
     enterMapMode,
     getContainerWidth,
   } = useContext(CanvasContext)
+
   const {
     booths,
     reserveBooth,
@@ -89,6 +95,46 @@ const BoothManagement = (props) => {
     organizeBoothData,
     statusCodes,
   } = useContext(BoothContext)
+
+  const handleSelectBooth = (_id, secondary = false) => {
+    if (secondary) {
+      // addSecondaryBoothToCart(_id);
+      addSecondaryBoothToLocalCart(_id)
+      setIsDoubleBoothOpen(false)
+    } else {
+      // addPrimaryBoothToCart(_id);
+      addPrimaryBoothToLocalCart(_id)
+      handleClose()
+      checkNeighbors()
+    }
+  }
+
+  const handleClose = () => {
+    setIsDoubleBoothOpen(false)
+    setCurrentBooth(null)
+  }
+
+  const selectedBooth = booths.filter((booth) => booth.id === currentBooth)[0]
+
+  console.log(selectedBooth)
+  const checkNeighbors = () => {
+    const options = booths.reduce((response, b) => {
+      if (
+        selectedBooth.neighbors.includes(b.id) &&
+        (b.status === 0 || b.status === 'open')
+      ) {
+        response.push(b.id)
+      }
+      return response
+    }, [])
+    if (options.length > 0) {
+      setModalOptions((prev) => ({
+        ...prev,
+        options: options,
+      }))
+      setIsDoubleBoothOpen(true)
+    }
+  }
 
   useEffect(() => {
     const data = organizeBoothData()
@@ -99,15 +145,13 @@ const BoothManagement = (props) => {
 
   return (
     <>
-      <DoubleBoothModal
-        states={states}
-        changeState={changeState}
-        isOpen={modalOptions.isOpen}
-        close={modalOptions.close}
-        visible={modalOptions.visible}
-        options={modalOptions.options}
-        handleSelectBooth={modalOptions.handleSelectBooth}
-      />
+      {isDoubleBoothOpen && (
+        <DoubleBoothModal
+          options={modalOptions.options}
+          handleSelectBooth={handleSelectBooth}
+          close={handleClose}
+        />
+      )}
       <ButtonWrapper>
         <ModeButton
           bgcolor='palegoldenrod'
@@ -159,19 +203,16 @@ const BoothManagement = (props) => {
           setMapMode={setMapMode}
         />
       )}
-      {currentBooth ? (
+      {currentBooth && (
+        // When a booth is selected, CanvasProvider receives the booth data, and the BoothCard component is rendered via currentBooth
         <BoothCard
-          setModalOptions={setModalOptions}
-          statusCodes={statusCodes}
-          states={states}
-          changeState={changeState}
-          setCurrentBooth={setCurrentBooth}
-          reserveBooth={reserveBooth}
-          data={booths.filter((b) => b.id === currentBooth)[0]}
+          handleSelectBooth={handleSelectBooth}
+          handleClose={handleClose}
+          data={selectedBooth}
         />
-      ) : null}
-      {showInfo ? <Legend /> : null}
-      {secondary ? <StatusMessage /> : null}{' '}
+      )}
+      {showInfo && <Legend />}
+      {secondary && <StatusMessage />}{' '}
     </>
   )
 }

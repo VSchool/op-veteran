@@ -42,6 +42,7 @@ const Booth = (props) => {
     }
     id += number
     console.log(`setting current booth to ${id}`)
+    // sets the current booth in the CanvasProvider which triggers the BoothCard modal
     setCurrentBooth(id)
   }
 
