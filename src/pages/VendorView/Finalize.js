@@ -29,6 +29,10 @@ const CartContainer = styled.div`
   display: flex;
   justify-content: space-around;
   gap: 20px;
+
+  & div:last-child {
+    min-width: 60px;
+  }
 `
 
 const Head = styled.h1`
@@ -93,7 +97,7 @@ const Product = styled.div`
 
 const ProductOptions = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
 
   & > p {
@@ -175,30 +179,28 @@ const Finalize = (props) => {
           {loading ? (
             <Head>Loading Cart Items...</Head>
           ) : (
-            <>
-              <Cart>
-                <Head>Shopify Cart Items</Head>
-                {cartItems.length === 0 && (
-                  <EmptyCart>Your cart is empty</EmptyCart>
-                )}
-                {cartItems?.map((item, index) => (
-                  <ProductWrapper key={item + index}>
-                    <Product>
-                      <p>{item.title}</p>
-                      {/* <p>ID: {item.id}</p> */}
-                      <ProductOptions>
-                        <p>{item.quantity}</p>
-                        <TrashButton
-                          onClick={() => changeQuantity(item.id, item.quantity)}
-                        >
-                          <FontAwesomeIcon icon={faTrash} size='xs' />
-                        </TrashButton>{' '}
-                      </ProductOptions>
-                    </Product>
-                  </ProductWrapper>
-                ))}
-              </Cart>
-            </>
+            <Cart>
+              <Head>Shopify Cart Items</Head>
+              {cartItems.length === 0 && (
+                <EmptyCart>Your cart is empty</EmptyCart>
+              )}
+              {cartItems?.map((item, index) => (
+                <ProductWrapper key={item + index}>
+                  <Product>
+                    <p>{item.title}</p>
+                    {/* <p>ID: {item.id}</p> */}
+                    <ProductOptions>
+                      <p>{item.quantity}</p>
+                      <TrashButton
+                        onClick={() => changeQuantity(item.id, item.quantity)}
+                      >
+                        <FontAwesomeIcon icon={faTrash} size='xs' />
+                      </TrashButton>{' '}
+                    </ProductOptions>
+                  </Product>
+                </ProductWrapper>
+              ))}
+            </Cart>
           )}
         </CartContainer>
 
