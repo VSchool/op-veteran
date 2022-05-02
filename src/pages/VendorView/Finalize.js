@@ -21,7 +21,7 @@ const CardContainer = styled.div`
   justify-content: center;
   align-items: center;
   & button {
-    width: 50%;
+    width: auto;
   }
 `
 
