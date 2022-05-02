@@ -80,7 +80,7 @@ function UserViews() {
           <Route path='/registration' element={<RegistrationForm />} />
           {/* <Route path='/registration' element={<RegisterAccount />} /> */}
           <Route path='/sponsorship' element={<SponsorshipSelection />} />
-          <Route path='/booth' element={<BoothManagement />} />
+          <Route path='/booth-selection' element={<BoothManagement />} />
           <Route path='/finalize' element={<Finalize />} />
         </Routes>
         <Footer />

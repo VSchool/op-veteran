@@ -111,7 +111,7 @@ const ToDoList = ({ List, Header2, ListItem }) => {
           Choose sponsorship
         </ListItem>
       ) : null}
-      <Link to='/booth'>
+      <Link to='/booth-selection'>
         <ListItem
           onClick={(e) => {
             handleClick(e)
