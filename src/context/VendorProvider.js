@@ -53,8 +53,8 @@ export default function VendorProvider({ children }) {
 
   const localStorageCart = JSON.parse(localStorage.getItem('localCart'))
   const initState = {
-    primaryBoothId: localStorageCart.primaryBoothId || '',
-    secondaryBoothId: localStorageCart.secondaryBoothId || '',
+    primaryBoothId: '' || localStorageCart?.primaryBoothId,
+    secondaryBoothId: '' || localStorageCart?.secondaryBoothId,
   }
 
   // test
