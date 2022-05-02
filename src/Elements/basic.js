@@ -1,6 +1,17 @@
 import react from 'react'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
+const PageContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: calc(100% - 70px);
+  margin-top: -65px;
+`
+
 const LandingContainer = styled.div`
   box-sizing: border-box;
   width: 100%;
@@ -156,4 +167,5 @@ export {
   Paragraph,
   Blur,
   FileUploader,
+  PageContainer,
 }
