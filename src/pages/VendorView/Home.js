@@ -10,7 +10,6 @@ const Wrapper = styled.div`
 `
 
 const Header2 = styled.h2`
-  font-family: 'Open Sans';
   font-weight: normal;
   padding: 15px 15px;
   width: 100%;
@@ -41,7 +40,6 @@ const List = styled.ol`
 `
 const ListItem = styled.li`
   counter-increment: steps;
-  font-family: 'Open Sans';
   font-size: 1.3em;
   padding: 20px;
   width: 100%;

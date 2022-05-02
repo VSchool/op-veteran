@@ -22,7 +22,6 @@ const Label = styled.label`
   position: absolute;
   top: 0px;
   left: 0px;
-  font-family: Open Sans;
   font-style: normal;
   font-weight: 300;
   font-size: 16px;
@@ -47,7 +46,6 @@ const TextInput = styled.input`
   box-sizing: border-box;
   height: 36px;
   width: 280px;
-  font-family: Open Sans;
   font-style: normal;
   font-weight: 500;
   font-size: 14px;
@@ -77,7 +75,6 @@ const HelperText = styled.p`
   top: 56px;
   left: 8px;
   right: 8px;
-  font-family: Open Sans;
   font-style: normal;
   font-weight: 300;
   font-size: 12px;

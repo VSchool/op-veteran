@@ -40,7 +40,6 @@ const CardContainer = styled.div`
       left: 16px;
       right: 88px;
       height: 24px;
-      font-family: Open Sans;
       font-style: normal;
       font-weight: normal;
       font-size: 18px;
@@ -59,7 +58,6 @@ const CardContainer = styled.div`
       right: 40px;
       width: 40px;
       height: 24px;
-      font-family: Open Sans;
       font-style: normal;
       font-weight: 600;
       font-size: 20px;
@@ -112,7 +110,6 @@ const CardContainer = styled.div`
       top: 16px;
       left: 16px;
       margin: 0px;
-      font-family: Open Sans;
       font-style: normal;
       font-weight: normal;
       font-size: 18px;
@@ -147,7 +144,6 @@ const CardContainer = styled.div`
       top: 20px;
       left: 160px;
       margin: 0px;
-      font-family: Open Sans;
       font-style: normal;
       font-weight: normal;
       font-size: 15px;
@@ -164,7 +160,6 @@ const CardContainer = styled.div`
       top: 20px;
       left: 256px;
       margin: 0px;
-      font-family: Open Sans;
       font-style: normal;
       font-weight: normal;
       font-size: 15px;
@@ -179,7 +174,6 @@ const CardContainer = styled.div`
       box-sizing: border-box;
       margin: 0px;
       height: 16px;
-      font-family: Open Sans;
       font-style: normal;
       font-weight: normal;
       font-size: 15px;

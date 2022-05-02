@@ -17,7 +17,6 @@ const InputContainer = styled.form`
     /* top: 0px;
         left: 0px;
         right: 0px; */
-    font-family: Open Sans;
     font-style: normal;
     font-weight: 600;
     font-size: 16px;
@@ -33,7 +32,6 @@ const InputContainer = styled.form`
         top: 72px;
         left: 0px;
         right: 0px; */
-    font-family: Open Sans;
     font-style: normal;
     font-weight: normal;
     font-size: 15px;
@@ -57,7 +55,6 @@ const InputContainer = styled.form`
             left: 0px;
             width: 280px;
             height: 32px; */
-      font-family: Open Sans;
       font-style: normal;
       font-weight: 300;
       font-size: 28px;

@@ -6,7 +6,6 @@ const StyledButton = styled.button`
   width: 128px;
   height: 32px;
   padding: auto;
-  font-family: Open Sans;
   font-style: normal;
   font-weight: 600;
   font-size: 20px;
