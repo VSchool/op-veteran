@@ -93,6 +93,7 @@ const Finalize = (props) => {
     changeQuantity,
     localCart,
     loading,
+    getShopifyCart,
   } = useContext(VendorContext)
   // const [cartItems, setCartItems] = useState([])
 
@@ -107,7 +108,9 @@ const Finalize = (props) => {
   // }, [])})
 
   // This is for testing
-  useEffect(() => {}, [])
+  useEffect(() => {
+    getShopifyCart()
+  }, [])
 
   return (
     <PageContainer>

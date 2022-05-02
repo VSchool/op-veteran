@@ -478,6 +478,7 @@ client.checkout.updateLineItems(checkoutId, lineItemsToUpdate).then((checkout) =
         client,
         localCart,
         loading,
+        getShopifyCart,
       }}
     >
       {children}
