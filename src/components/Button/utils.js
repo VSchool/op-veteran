@@ -4,9 +4,8 @@ export function setStyle(style) {
       background: `#16a085`,
       border: `none`,
       fontColor: `#FFFFFF`,
-      hoverBackground: `#6C937E`,
-      activeBackground: `#567665`,
-      activeBorder: `2px solid #70C297`,
+      hoverBackground: `#1abc9c`,
+      activeBackground: `#1abc9c`,
     }
   } else if (style === 'secondary') {
     return {
