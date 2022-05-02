@@ -25,9 +25,22 @@ import {
   Container,
 } from '../../../Elements/basic'
 const ModeButton = styled.button`
-  padding: 10px;
+  padding: 10px 20px;
   background-color: ${(props) => props.bgcolor};
-  margin: 10px;
+  margin: 30px 10px;
+  border: none;
+  box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.4);
+  color: white;
+  font-weight: bold;
+  font-size: 1rem;
+  border-radius: 0.5rem;
+  letter-spacing: 1px;
+  opacity: 0.85;
+
+  &:hover {
+    opacity: 1;
+    cursor: pointer;
+  }
 `
 const ButtonWrapper = styled.div`
   display: flex;
@@ -154,7 +167,7 @@ const BoothManagement = (props) => {
       )}
       <ButtonWrapper>
         <ModeButton
-          bgcolor='palegoldenrod'
+          bgcolor='#e67e22'
           onClick={(e) => {
             e.preventDefault()
             if (mapMode) {
@@ -169,7 +182,7 @@ const BoothManagement = (props) => {
           {mapMode ? 'Switch to diagram view' : 'Switch to map view'}
         </ModeButton>
         <ModeButton
-          bgcolor='palegreen'
+          bgcolor='#27ae60'
           onClick={(e) => {
             e.preventDefault()
             setShowTrees(!showTrees)
@@ -178,7 +191,7 @@ const BoothManagement = (props) => {
           {showTrees ? 'Hide Trees' : 'Show Trees'}
         </ModeButton>
         <ModeButton
-          bgcolor='paleblue'
+          bgcolor='#95a5a6'
           onClick={(e) => {
             e.preventDefault()
             setShowInfo(!showInfo)
