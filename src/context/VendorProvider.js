@@ -61,6 +61,7 @@ export default function VendorProvider({ children }) {
   const [localCart, setLocalCart] = useState(initState)
 
   const getShopifyCart = () => {
+    if (!currentVendor) return
     return client.checkout
       .fetch(currentVendor.cartId)
       .then((res) => {
@@ -87,7 +88,7 @@ export default function VendorProvider({ children }) {
       'localCart',
       JSON.stringify({ primaryBoothId: boothId })
     )
-    addPrimaryBoothToCart(boothId)
+    currentVendor && addPrimaryBoothToCart(boothId)
   }
 
   const addSecondaryBoothToLocalCart = (boothId) => {
@@ -98,7 +99,7 @@ export default function VendorProvider({ children }) {
       'localCart',
       JSON.stringify({ ...localCart, secondaryBoothId: boothId })
     )
-    addSecondaryBoothToCart(boothId)
+    currentVendor && addSecondaryBoothToCart(boothId)
   }
 
   const addPrimaryBoothToCart = async (boothId) => {
