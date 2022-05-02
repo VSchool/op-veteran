@@ -17,6 +17,7 @@ import {
   Wrapper,
   Row,
   Container,
+  PageContainer,
 } from '../../../Elements/basic'
 
 // const Container = styled.div`     box-sizing: border-box;     display: flex;
@@ -41,7 +42,7 @@ const Header = styled.h1`
   text-align: center;
   color: #232323;
   font-size: 1.5rem;
-  margin-bottom: 20px;
+
   @media (min-width: 450px) {
     font-size: 1.3rem;
   }
@@ -95,7 +96,7 @@ export default function SponsorshipSelection(props) {
     }
   }, [])
   return (
-    <Wrapper>
+    <PageContainer>
       <Container height='auto' width='auto'>
         <StatusMessage
           className={'status-message'}
@@ -110,7 +111,7 @@ export default function SponsorshipSelection(props) {
           <Slider portrait={portrait}>{sponsorships}</Slider>
         </Holder>
       </Container>
-    </Wrapper>
+    </PageContainer>
   )
 }
 // <Subheader className={'subtitle'}>Choose the right sponsorship package for your organization.
