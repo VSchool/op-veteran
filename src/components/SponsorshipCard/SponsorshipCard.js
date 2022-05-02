@@ -28,7 +28,6 @@ const CardContainer = styled.div`
   }
 `
 const Header = styled.h1`
-  font-family: Open Sans;
   font-style: normal;
   font-weight: normal;
   font-size: 1.2rem;
@@ -40,7 +39,6 @@ const Header = styled.h1`
 `
 const Subheader = styled.h3`
   height: 16px;
-  font-family: Open Sans;
   font-style: normal;
   font-weight: normal;
   font-size: 1.1rem;
@@ -61,7 +59,6 @@ const Hr = styled.hr`
   width: 90%;
 `
 const Price = styled.h1`
-  font-family: Open Sans;
   font-style: normal;
   font-weight: bold;
   font-size: 27px;
@@ -106,7 +103,6 @@ const Row = styled.div`
   flex-direction: row;
 `
 const Paragraph = styled.p`
-  font-family: 'Open Sans';
   margin: 10px;
 `
 // const ModalWrapper = styled.div`     display: flex;     flex-direction:
@@ -154,7 +150,7 @@ export default function SponsorshipCard(props) {
     // updatedVendor?.sponsorship.level = name
     // updatedVendor?.sponsorship.status = 1
     updateCurrentVendor({ 'sponsorship.level': name, 'sponsorship.status': 1 })
-    navigate('/booth')
+    navigate('/booth-selection')
   }
   const formatter = new Intl.NumberFormat('en-US', {
     style: 'currency',

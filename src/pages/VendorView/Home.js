@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react'
 import styled from 'styled-components'
 import { VendorContext } from '../../context/VendorProvider'
-import { Header, HeaderWrapper } from '../../Elements/basic'
+import { Header, HeaderWrapper, PageContainer } from '../../Elements/basic'
 import ToDoList from './ToDoList'
 
 const Wrapper = styled.div`
@@ -10,7 +10,6 @@ const Wrapper = styled.div`
 `
 
 const Header2 = styled.h2`
-  font-family: 'Open Sans';
   font-weight: normal;
   padding: 15px 15px;
   width: 100%;
@@ -41,7 +40,6 @@ const List = styled.ol`
 `
 const ListItem = styled.li`
   counter-increment: steps;
-  font-family: 'Open Sans';
   font-size: 1.3em;
   padding: 20px;
   width: 100%;
@@ -92,14 +90,14 @@ const Home = (props) => {
   }, [])
 
   return (
-    <Wrapper>
+    <PageContainer>
       <TodoContainer>
         <HeaderWrapper>
           <Header>Vendor Registration</Header>
         </HeaderWrapper>
         <ToDoList List={List} Header2={Header2} ListItem={ListItem} />
       </TodoContainer>
-    </Wrapper>
+    </PageContainer>
   )
 }
 

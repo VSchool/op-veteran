@@ -20,7 +20,6 @@ const PlaygroundContainer = styled.div`
   & > h1 {
     margin: 0px;
     font-size: 48px;
-    font-family: 'Open Sans';
     text-align: center;
     text-transform: uppercase;
     color: #545454;
@@ -36,13 +35,11 @@ const PlaygroundContainer = styled.div`
   & > h2 {
     margin: 40px 0px 0px 0px;
     font-size: 32px;
-    font-family: 'Open Sans';
     color: #545454;
   }
 
   & > p {
     margin: 0px 0px 8px 0px;
-    font-family: 'Open Sans';
     color: #545454;
   }
 

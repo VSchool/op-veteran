@@ -16,7 +16,6 @@ const BarContainer = styled.div`
     top: 0px;
     left: 0px;
     right: 0px;
-    font-family: Open Sans;
     font-style: normal;
     font-weight: 600;
     font-size: 16px;

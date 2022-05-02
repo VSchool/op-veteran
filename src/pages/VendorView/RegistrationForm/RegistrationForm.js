@@ -126,7 +126,7 @@ export default function RegistrationForm(props) {
     if (input.wantToSponsor) {
       navigate('/sponsorship')
     } else {
-      navigate('/booth')
+      navigate('/booth-selection')
     }
   }
 

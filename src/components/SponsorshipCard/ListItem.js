@@ -13,7 +13,6 @@ const ItemContainer = styled.div`
 const Name = styled.p`
   height: 24px;
   margin: 0px;
-  font-family: Open Sans;
   font-style: normal;
   font-weight: 600;
   font-size: 15px;

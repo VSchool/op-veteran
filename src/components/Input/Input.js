@@ -22,7 +22,6 @@ const InputWrapper = styled.div`
 const TextInput = styled.input`
   margin: 0;
   padding: 0 12px;
-  font-family: Open Sans;
   font-style: normal;
   font-weight: normal;
   font-size: 14px;

@@ -17,7 +17,7 @@ const Wrapper = styled.div`
   width: ${(props) => props.width};
   //position:sticky;
   bottom: 50px;
-  left: 0;
+  left: 20px;
   margin: auto;
   background: #fff;
   z-index: 88;

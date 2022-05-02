@@ -18,7 +18,7 @@ const CardContainer = styled.div`
   display: flex;
   flex-direction: column;
   padding: 20px;
-  justify-content: space-between;
+  justify-content: space-around;
   position: fixed;
   top: 0;
   bottom: 0;
@@ -47,23 +47,19 @@ const ButtonWrapper = styled.div`
   flex-direction: row;
 `
 const Header = styled.h1`
-  font-family: Open Sans;
-  font-style: normal;
-  font-weight: bold;
   font-size: 17px;
   line-height: 24px;
-  color: #545454;
+  color: #2980b9;
+  font-family: 'Roboto Mono', monospace;
 `
 const Subheader = styled.h3`
-  font-family: Open Sans;
   font-style: normal;
   font-weight: normal;
-  font-size: 13px;
+  font-size: 1rem;
   line-height: 16px;
   color: #545454;
 `
 const Breadcrumbs = styled.h2`
-  font-family: Open Sans;
   font-style: normal;
   font-weight: 600;
   font-size: 15px;
@@ -75,7 +71,6 @@ const Logo = styled.img`
   width: auto;
 `
 const Paragraph = styled.p`
-  font-family: Open Sans;
   font-style: normal;
   font-weight: normal;
   font-size: 15px;
@@ -160,7 +155,10 @@ const BoothCard = (props) => {
         <Paragraph>Info & availability</Paragraph>
       </HeaderWrapper>
       <HeaderWrapper>
-        <Subheader>{`Section: ${section} | Row: ${row}`}</Subheader>
+        <Subheader>
+          {`Section: ${section} | Row:`}{' '}
+          <span style={{ fontFamily: 'Roboto Mono' }}>{row}</span>
+        </Subheader>
         {hasElectricity ? <Paragraph>Powered</Paragraph> : null}
       </HeaderWrapper>
       <HeaderWrapper>

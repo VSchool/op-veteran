@@ -21,8 +21,14 @@ import treeData from './treeData'
 const SuperStage = styled(Stage)`
   width: ${(props) => props.containerWidth};
   height: ${(props) => props.containerWidth};
-  margin: auto;
-  overflow: hidden;
+  margin: 0 auto;
+  position: relative;
+  margin-left: 43%;
+  transform: translateX(-50%);
+  @media (max-width: 768px) {
+    margin-left: 0;
+    transform: translateX(0);
+  }
 `
 const SuperLayer = styled(Layer)``
 

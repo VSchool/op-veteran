@@ -1,6 +1,17 @@
 import react from 'react'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
+const PageContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: calc(100% - 70px);
+  margin-top: -65px;
+`
+
 const LandingContainer = styled.div`
   box-sizing: border-box;
   width: 100%;
@@ -23,7 +34,6 @@ const Logo = styled.img`
 `
 const Paragraph = styled.p``
 const Subheader = styled.div`
-  font-family: 'Open Sans';
   font-style: normal;
   font-weight: normal;
   font-size: 1rem;
@@ -35,7 +45,6 @@ const Subheader = styled.div`
   }
 `
 const Header = styled.div`
-  font-family: 'Open Sans';
   font-style: normal;
   font-weight: bold;
   font-size: 1.2rem;
@@ -90,7 +99,6 @@ const Row = styled.div`
 const Label = styled.label`
   margin: 0;
   padding: 0;
-  font-family: Open Sans;
   font-style: normal;
   font-weight: normal;
   font-size: 16px;
@@ -156,4 +164,5 @@ export {
   Paragraph,
   Blur,
   FileUploader,
+  PageContainer,
 }

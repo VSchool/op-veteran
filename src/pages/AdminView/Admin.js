@@ -13,7 +13,6 @@ const AdminContainer = styled.div`
 
   & > h1 {
     margin: 0px;
-    font-family: Open Sans;
     font-style: normal;
     font-weight: bold;
     font-size: 32px;
@@ -25,7 +24,6 @@ const AdminContainer = styled.div`
 
   & > .subtitle {
     margin: 0px;
-    font-family: Open Sans;
     font-style: normal;
     font-weight: 300;
     font-size: 18px;
@@ -41,7 +39,6 @@ const AdminContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: 'Open Sans';
     border: 1px dotted orange;
   }
 `

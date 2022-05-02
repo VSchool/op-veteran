@@ -13,7 +13,6 @@ const Wrapper = styled.div`
 const Textarea = styled.textarea`
   resize: none;
   padding: 8px 12px;
-  font-family: Open Sans;
   font-style: normal;
   font-weight: normal;
   font-size: 14px;

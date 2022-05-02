@@ -43,7 +43,6 @@ const Text = styled.p`
   box-sizing: border-box;
   margin: 0px;
   padding: 0px 10px;
-  font-family: Open Sans;
   font-style: normal;
   font-weight: normal;
   font-size: 16px;

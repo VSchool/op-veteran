@@ -3,86 +3,118 @@ import styled from 'styled-components'
 import { VendorContext } from '../../context/VendorProvider'
 import { BoothContext } from '../../context/BoothProvider'
 import { UserContext } from '../../context/UserProvider'
-import { Wrapper, Container } from '../../Elements/basic'
+import { Wrapper, Container, PageContainer } from '../../Elements/basic'
 import { Button } from '../../components/Button'
 import StatusMessage from '../../components/StatusMessage'
 import { useNavigate } from 'react-router-dom'
+import { faTrash } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const CardContainer = styled.div`
-  width: 400px;
-  height: fit-content;
-  margin: auto;
-  box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.14), 0px 3px 14px rgba(0, 0, 0, 0.12),
-    0px 4px 5px rgba(0, 0, 0, 0.2);
-  border-radius: 4px;
+  box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.4);
+  border-radius: 0.5rem;
   background: #ffffff;
+  padding: 30px;
+  top: 0;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  padding: 10px;
-  top: 0;
+  justify-content: center;
+  align-items: center;
+  & button {
+    width: auto;
+  }
 `
-const ButtonWrapper = styled.div`
+
+const CartContainer = styled.div`
   display: flex;
-  flex-direction: row;
+  justify-content: space-around;
+  gap: 20px;
+
+  & > div:last-child {
+    min-width: 500px;
+  }
 `
+
 const Head = styled.h1`
-  font-family: Open Sans;
   font-style: normal;
   font-weight: bold;
   font-size: 17px;
   line-height: 24px;
-  color: #545454;
+  color: #1abc9c;
+  background-color: #ffffff;
+  padding: 10px;
+  width: 100%;
+  text-align: center;
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+  border-bottom: 1px solid #e6e6e6;
 `
-const Subheader = styled.h3`
-  font-family: Open Sans;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 13px;
-  line-height: 16px;
-  color: #545454;
+
+const Cart = styled.div`
+  margin-bottom: 30px;
+  border: 1px solid #e6e6e6;
+  border-radius: 0.5rem;
+
+  div:last-child {
+    border: none;
+  }
 `
-const Breadcrumbs = styled.h2`
-  font-family: Open Sans;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 15px;
-  line-height: 20px;
-  color: #545454;
+
+const LocalCart = styled.div`
+  p {
+    font-weight: bold;
+    color: #2980b9;
+  }
 `
-const Logo = styled.img`
-  height: 60px;
-  width: auto;
+
+const EmptyCart = styled.p`
+  font-weight: bold;
+  color: #e67e22;
+  padding: 10px;
 `
-const Paragraph = styled.p`
-  font-family: Open Sans;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 15px;
-  line-height: 20px;
-  color: #545454;
-`
-const HeaderWrapper = styled.div`
-  padding: 20px 0;
-`
-const Hr = styled.hr`
-  margin: auto;
-  margin-top: ${(props) => (props.top ? props.top : '8px')};
-  margin-bottom: ${(props) => (props.bottom ? props.botton : '8px')};
-  background-color: #f4f4f4;
-  width: 90%;
-`
-const List = styled.ul`
+
+const ProductWrapper = styled.div`
   display: flex;
-  flex-direction: row;
-  margin: auto;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10px;
+  border-bottom: 1px solid #e6e6e6;
+
+  p {
+    margin: 5px;
+  }
 `
-const ItemTitle = styled.li``
-const ItemPrice = styled.p`
-  grid-column: 2/3;
+
+const Product = styled.div`
+  display: flex;
+  justify-content: space-between;
+
+  p {
+    font-weight: bold;
+    color: #16a085;
+  }
 `
-const ItemQuantity = styled.p`
-  grid-column: 3/4;
+
+const ProductOptions = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  & > p {
+    font-weight: bold;
+  }
+`
+
+const TrashButton = styled.a`
+  color: #c0392b;
+  opacity: 0.7;
+  cursor: pointer;
+  font-size: 1.5rem;
+  margin-left: 5px;
+
+  &:hover {
+    opacity: 1;
+  }
 `
 
 const Finalize = (props) => {
@@ -116,62 +148,97 @@ const Finalize = (props) => {
   }, [])
 
   return (
-    <CardContainer>
-      {/* <Wrapper> */}
-      <Head>Local Cart Items</Head>
-      <p>Booth Selection: {localCart.primaryBoothId}</p>
-      <p>Adjacent Booth Selection: {localCart.secondaryBoothId}</p>
+    <PageContainer>
+      <CardContainer>
+        <CartContainer>
+          {/* <Wrapper> */}
+          <Cart>
+            <LocalCart>
+              <Head style={{ color: '#3498db' }}>Local Cart Items</Head>
+              <ProductWrapper>
+                <p>
+                  Booth Selection:{' '}
+                  <span style={{ fontFamily: 'Roboto Mono' }}>
+                    {localCart.primaryBoothId}
+                  </span>
+                </p>
+              </ProductWrapper>
+              <ProductWrapper>
+                <p>
+                  Adjacent Booth Selection:{' '}
+                  <span style={{ fontFamily: 'Roboto Mono' }}>
+                    {localCart.secondaryBoothId}
+                  </span>
+                </p>
+              </ProductWrapper>
+            </LocalCart>
+          </Cart>
 
-      <br />
-      <br />
+          {/* Shopify Cart items list */}
 
-      {/* Shopify Cart items list */}
+          {loading ? (
+            <Head>Loading Cart Items...</Head>
+          ) : (
+            <Cart>
+              <Head>Shopify Cart Items</Head>
+              {cartItems.length === 0 && (
+                <EmptyCart>Your cart is empty</EmptyCart>
+              )}
+              {cartItems?.map((item, index) => (
+                <ProductWrapper key={item + index}>
+                  <Product>
+                    <p>{item.title}</p>
+                    {/* <p>ID: {item.id}</p> */}
+                    <ProductOptions>
+                      <p>{item.quantity}</p>
+                      <TrashButton
+                        onClick={() => changeQuantity(item.id, item.quantity)}
+                      >
+                        <FontAwesomeIcon icon={faTrash} size='xs' />
+                      </TrashButton>{' '}
+                    </ProductOptions>
+                  </Product>
+                </ProductWrapper>
+              ))}
+            </Cart>
+          )}
+        </CartContainer>
 
-      {loading ? (
-        <Head>Loading Cart Items...</Head>
-      ) : (
-        <>
-          <Head>Shopify Cart Items</Head>
-          {cartItems?.map((item, index) => (
-            <article key={item + index}>
-              <p>Product: {item.title}</p>
-              {/* <p>ID: {item.id}</p> */}
-              <p>Quantity: {item.quantity}</p>
-              <button onClick={() => changeQuantity(item.id, item.quantity)}>
-                Remove
-              </button>
-            </article>
-          ))}
-        </>
-      )}
+        {/* End Shopify Cart ITems List */}
+        {/* <a onClick={(e)=>console.log(e.target)} href={currentVendor.cartUrl} target="_blank">Open Cart</a> */}
 
-      {/* End Shopify Cart ITems List */}
-      {/* <a onClick={(e)=>console.log(e.target)} href={currentVendor.cartUrl} target="_blank">Open Cart</a> */}
-      {!currentVendor ? (
-        <>
-          <StatusMessage
-            className={'status-message'}
-            message={
-              'You must register to checkout. Please register to continue.'
-            }
-            animationTime={5000}
-          />
+        {!currentVendor ? (
+          <>
+            <StatusMessage
+              className={'status-message'}
+              message={
+                'You must register to checkout. Please register to continue.'
+              }
+              animationTime={5000}
+            />
+            <Button
+              buttonText='Register to continue'
+              buttonStyle='primary'
+              onClick={() => navigate('/registration')}
+            />
+          </>
+        ) : cartItems.length === 0 ? (
           <Button
-            buttonText='Register to continue'
+            buttonText='Continue to Booth selection'
             buttonStyle='primary'
-            onClick={() => navigate('/registration')}
+            onClick={() => navigate('/booth-selection')}
           />
-        </>
-      ) : (
-        <Button
-          buttonText='Continue to checkout'
-          buttonStyle='primary'
-          onClick={openCart}
-        />
-      )}
+        ) : (
+          <Button
+            buttonText='Continue to checkout'
+            buttonStyle='primary'
+            onClick={openCart}
+          />
+        )}
 
-      {/* </Wrapper> */}
-    </CardContainer>
+        {/* </Wrapper> */}
+      </CardContainer>
+    </PageContainer>
   )
 }
 

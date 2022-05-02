@@ -4,36 +4,38 @@ const FooterContainer = styled.footer`
   background-color: rgb(217, 217, 217);
   bottom: 0;
   width: 100%;
+  height: 70px;
   margin: auto;
-  display: grid;
-  justify-content: space-evenly;
-  grid-template-columns: auto auto;
-  grid-template-rows: 7vh 7vh;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
   padding: 15px;
   color: rgb(35, 35, 35);
-  padding-top: 45px;
 `
 const StyledIcon = styled.i`
   font-size: 24px;
-  padding: 2vh;
 `
 const StyledLink = styled.a`
   text-decoration: none;
   color: inherit;
   font-weight: bold;
+  padding: 10px;
 `
 
 const Footer = () => {
   return (
     <FooterContainer>
-      <StyledLink href='https://www.opveteran.org/pages/o-p-vetfest'>
-        {' '}
-        About Us{' '}
-      </StyledLink>
-      <StyledLink href='mailto:denny.katona@opveteran.org'>
-        {' '}
-        Contact{' '}
-      </StyledLink>
+      <div>
+        <StyledLink href='https://www.opveteran.org/pages/o-p-vetfest'>
+          {' '}
+          About Us{' '}
+        </StyledLink>
+        <StyledLink href='mailto:denny.katona@opveteran.org'>
+          {' '}
+          Contact{' '}
+        </StyledLink>
+      </div>
+
       <p> © 2022, O.P. Veteran Powered by Shopify </p>
       <span>
         <StyledLink href='https://www.facebook.com/opveteran' target='_blank'>
