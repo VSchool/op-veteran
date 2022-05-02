@@ -13,6 +13,7 @@ import ToDoList from '../../pages/VendorView/ToDoList'
 const HeaderContainer = styled.div`
   position: relative;
   padding: 10px;
+  height: 65px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   background-color: #fff;
   display: flex;
