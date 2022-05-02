@@ -30,8 +30,8 @@ const CartContainer = styled.div`
   justify-content: space-around;
   gap: 20px;
 
-  & div:last-child {
-    min-width: 60px;
+  & > div:last-child {
+    min-width: 500px;
   }
 `
 
