@@ -7,7 +7,7 @@ const boothRef = firestore.collection('Booths')
 const batch = firestore.batch()
 
 export const BoothContext = createContext()
-export default function ({ children }) {
+export default function BoothProvider({ children }) {
   const [booths, setBooths] = useState([])
 
   const [rowsOfBooths, setRowsOfBooths] = useState({})
@@ -386,19 +386,20 @@ export default function ({ children }) {
     },
   }
 
+  const getBooths = (boothArray = []) => {
+    return boothRef.where('number', '!=', null).onSnapshot((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        boothArray.push(doc.data())
+      })
+      setBooths(boothArray)
+    })
+  }
+
   useEffect(() => {
-    let unsub
     const boothArray = []
     if (booths && booths.length === 0) {
       //.where("number", "!=", null)
-      return boothRef
-        .where('number', '!=', null)
-        .onSnapshot((querySnapshot) => {
-          querySnapshot.forEach((doc) => {
-            boothArray.push(doc.data())
-          })
-          setBooths(boothArray)
-        })
+      getBooths(boothArray)
     }
   }, [])
 
@@ -417,6 +418,7 @@ export default function ({ children }) {
         resetBooth,
         holdBooth,
         newBooths,
+        getBooths,
       }}
     >
       {children}

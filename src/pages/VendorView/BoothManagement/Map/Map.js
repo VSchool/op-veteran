@@ -17,6 +17,7 @@ import styled from 'styled-components'
 import BlankMapPathLayer from './BlankMapPathLayer'
 import Row from './Row'
 import treeData from './treeData'
+
 const SuperStage = styled(Stage)`
   width: ${(props) => props.containerWidth};
   height: ${(props) => props.containerWidth};
@@ -24,14 +25,15 @@ const SuperStage = styled(Stage)`
   overflow: hidden;
 `
 const SuperLayer = styled(Layer)``
-const StageWrapper = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-`
+
+// const StageWrapper = styled.div`
+//   width: 100%;
+//   height: 100%;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   overflow: hidden;
+// `
 
 // const SectionSelector = (props) => {   const {     setCurrentSection,     x,
 //    y,     width,     height,     sectionId   } = props   const [opacity,
@@ -44,14 +46,7 @@ const StageWrapper = styled.div`
 //     setOpacity(0)     handleClick(sectionId)   }}/>) }
 
 const Map = (props) => {
-  const {
-    scale,
-    stageSize,
-    setStageSize,
-    setCurrentSection,
-    setCurrentBooth,
-    enterMapMode,
-  } = useContext(CanvasContext)
+  const { scale, setCurrentBooth, enterMapMode } = useContext(CanvasContext)
   const {
     booths,
     diagramData,
@@ -59,9 +54,11 @@ const Map = (props) => {
     updateBooth,
     rowsOfBooths,
     pullMapDataFromFirestore,
+    getBooths,
   } = useContext(BoothContext)
-  const treeCircles = treeData.map((tree) => (
+  const treeCircles = treeData.map((tree, index) => (
     <Circle
+      key={index}
       x={tree.x}
       y={tree.y}
       radius={tree.size / 2}
@@ -108,6 +105,7 @@ const Map = (props) => {
         sectionId={0}
         setMapMode={setMapMode}
         booths={booths}
+        getBooths={getBooths}
       />
     ))
     setRowGroups(arrayOfRows)
@@ -116,7 +114,7 @@ const Map = (props) => {
   useEffect(() => {
     buildRows()
     enterMapMode()
-  }, [])
+  }, [booths])
 
   return (
     <SuperStage

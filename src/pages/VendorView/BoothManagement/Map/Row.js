@@ -20,6 +20,7 @@ const Row = (props) => {
     mapMode,
     setMapMode,
     setCurrentBooth,
+    getBooths,
   } = props
   const { x, y, theta } = rowDatum
 
@@ -35,7 +36,11 @@ const Row = (props) => {
       />
     ))
     setBoothObjects(comps)
-  }, [])
+    if (booths.length === 0) {
+      getBooths()
+      console.log(booths)
+    }
+  }, [booths, rowId, setCurrentBooth])
 
   return (
     <Group x={x} y={y} rotation={theta}>

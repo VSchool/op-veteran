@@ -3,7 +3,7 @@ import { Group, Layer, Path } from 'react-konva'
 
 const BlankMapPathLayer = (props) => {
   return (
-    <Layer width={1024} height={1083} x={0} y={0}>
+    <Layer x={0} y={0}>
       <Path
         stroke='black'
         fill='white'
