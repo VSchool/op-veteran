@@ -11,15 +11,24 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const CardContainer = styled.div`
-  width: 400px;
   box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.4);
   border-radius: 0.5rem;
   background: #ffffff;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
   padding: 30px;
   top: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  & button {
+    width: 50%;
+  }
+`
+
+const CartContainer = styled.div`
+  display: flex;
+  justify-content: space-around;
+  gap: 20px;
 `
 
 const Head = styled.h1`
@@ -137,59 +146,61 @@ const Finalize = (props) => {
   return (
     <PageContainer>
       <CardContainer>
-        {/* <Wrapper> */}
-        <Cart>
-          <LocalCart>
-            <Head style={{ color: '#3498db' }}>Local Cart Items</Head>
-            <ProductWrapper>
-              <p>
-                Booth Selection:{' '}
-                <span style={{ fontFamily: 'Roboto Mono' }}>
-                  {localCart.primaryBoothId}
-                </span>
-              </p>
-            </ProductWrapper>
-            <ProductWrapper>
-              <p>
-                Adjacent Booth Selection:{' '}
-                <span style={{ fontFamily: 'Roboto Mono' }}>
-                  {localCart.secondaryBoothId}
-                </span>
-              </p>
-            </ProductWrapper>
-          </LocalCart>
-        </Cart>
+        <CartContainer>
+          {/* <Wrapper> */}
+          <Cart>
+            <LocalCart>
+              <Head style={{ color: '#3498db' }}>Local Cart Items</Head>
+              <ProductWrapper>
+                <p>
+                  Booth Selection:{' '}
+                  <span style={{ fontFamily: 'Roboto Mono' }}>
+                    {localCart.primaryBoothId}
+                  </span>
+                </p>
+              </ProductWrapper>
+              <ProductWrapper>
+                <p>
+                  Adjacent Booth Selection:{' '}
+                  <span style={{ fontFamily: 'Roboto Mono' }}>
+                    {localCart.secondaryBoothId}
+                  </span>
+                </p>
+              </ProductWrapper>
+            </LocalCart>
+          </Cart>
 
-        {/* Shopify Cart items list */}
+          {/* Shopify Cart items list */}
 
-        {loading ? (
-          <Head>Loading Cart Items...</Head>
-        ) : (
-          <>
-            <Cart>
-              <Head>Shopify Cart Items</Head>
-              {cartItems.length === 0 && (
-                <EmptyCart>Your cart is empty</EmptyCart>
-              )}
-              {cartItems?.map((item, index) => (
-                <ProductWrapper key={item + index}>
-                  <Product>
-                    <p>{item.title}</p>
-                    {/* <p>ID: {item.id}</p> */}
-                    <ProductOptions>
-                      <p>{item.quantity}</p>
-                      <TrashButton
-                        onClick={() => changeQuantity(item.id, item.quantity)}
-                      >
-                        <FontAwesomeIcon icon={faTrash} size='xs' />
-                      </TrashButton>{' '}
-                    </ProductOptions>
-                  </Product>
-                </ProductWrapper>
-              ))}
-            </Cart>
-          </>
-        )}
+          {loading ? (
+            <Head>Loading Cart Items...</Head>
+          ) : (
+            <>
+              <Cart>
+                <Head>Shopify Cart Items</Head>
+                {cartItems.length === 0 && (
+                  <EmptyCart>Your cart is empty</EmptyCart>
+                )}
+                {cartItems?.map((item, index) => (
+                  <ProductWrapper key={item + index}>
+                    <Product>
+                      <p>{item.title}</p>
+                      {/* <p>ID: {item.id}</p> */}
+                      <ProductOptions>
+                        <p>{item.quantity}</p>
+                        <TrashButton
+                          onClick={() => changeQuantity(item.id, item.quantity)}
+                        >
+                          <FontAwesomeIcon icon={faTrash} size='xs' />
+                        </TrashButton>{' '}
+                      </ProductOptions>
+                    </Product>
+                  </ProductWrapper>
+                ))}
+              </Cart>
+            </>
+          )}
+        </CartContainer>
 
         {/* End Shopify Cart ITems List */}
         {/* <a onClick={(e)=>console.log(e.target)} href={currentVendor.cartUrl} target="_blank">Open Cart</a> */}
