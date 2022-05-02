@@ -9,7 +9,7 @@ import opveteranLogo from '../../assets/icons/OPVeteranLogo.png'
 
 const Wrapper = styled.div`
   min-width: 311px;
-  height: 80%;
+  min-height: 80%;
   margin: auto;
   box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.14), 0px 3px 14px rgba(0, 0, 0, 0.12),
     0px 4px 5px rgba(0, 0, 0, 0.2);
@@ -27,6 +27,21 @@ const Wrapper = styled.div`
 
   & div {
     height: auto;
+  }
+
+  & > div {
+    & > div {
+      & button {
+        width: auto;
+      }
+      & > div {
+        & > div:first-child {
+          & > div:first-child {
+            display: none;
+          }
+        }
+      }
+    }
   }
 `
 const Paragraph = styled.p``
