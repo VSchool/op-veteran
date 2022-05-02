@@ -35,11 +35,7 @@ const ToDoList = ({ List, Header2, ListItem }) => {
         break
     }
   }
-  console.log(currentVendor)
-  const finalize = () => {
-    console.log('Finalize registration')
-    // changeState(states.FINALIZE);
-  }
+
   const changeBooths = (e) => {
     console.log('changing booths')
     for (let booth of booths) {

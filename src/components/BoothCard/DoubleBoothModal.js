@@ -86,14 +86,22 @@ export default function DoubleBoothModal({
 }) {
   const navigate = useNavigate()
   const handleClick = (e) => {
-    e.preventDefault()
-    const boothId = e.target.innerText
-    handleSelectBooth(boothId, true)
     navigate('/finalize')
   }
 
+  const handleDoubleBoothSelect = (e) => {
+    const boothId = e.target.innerText
+    handleSelectBooth(boothId, true)
+    handleClick()
+  }
+
   const buttons = options.map((booth) => (
-    <Button buttonText={booth} buttonStyle='primary' onClick={handleClick} />
+    <Button
+      buttonText={booth}
+      buttonStyle='primary'
+      onClick={handleDoubleBoothSelect}
+      key={booth}
+    />
   ))
 
   return (

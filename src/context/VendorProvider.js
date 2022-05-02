@@ -44,30 +44,176 @@ export default function VendorProvider({ children }) {
   const { user, reserveBooth: reserve } = useContext(UserContext)
   const [currentVendor, setCurrentVendor] = useState(null)
   const { booths, statusCodes, resetBooth } = useContext(BoothContext)
-  const [cartItems, setCartItems] = useState(null)
+  const [cartItems, setCartItems] = useState([])
+  const [loading, setLoading] = useState(false)
   const client = Client.buildClient({
     domain: 'o-p-veteran.myshopify.com',
     storefrontAccessToken: '76c1fba5d995f6b7dbb1eb1c1c3c5745',
   })
 
-  // test
-  const [localCart, setLocalCart] = useState({
-    primaryBoothId: '',
-    secondaryBoothId: '',
-  })
+  const localStorageCart = JSON.parse(localStorage.getItem('localCart'))
+  const initState = {
+    primaryBoothId: localStorageCart.primaryBoothId || '',
+    secondaryBoothId: localStorageCart.secondaryBoothId || '',
+  }
 
-  // This should work if we can get the cartId properly.  Doesnt appear its in the
-  // currentVendor data becasue createCart function is never called
-  const getCartItems = () => {
+  // test
+  const [localCart, setLocalCart] = useState(initState)
+
+  const getShopifyCart = () => {
     if (!currentVendor) return
-    client.checkout
-      .fetch(currentVendor?.cartId)
+    return client.checkout
+      .fetch(currentVendor.cartId)
       .then((res) => {
-        console.log('dec 7: fetched cart items!!', res.lineItems)
-        setCartItems(res.lineItems)
+        console.log(res.lineItems)
+        const lineItemsData = res.lineItems.map((item) => {
+          return {
+            title: item.title,
+            quantity: item.quantity,
+            id: item.id,
+          }
+        })
+        setCartItems(lineItemsData)
+        setLoading(false)
       })
       .catch((err) => console.log(err))
   }
+  console.log('cartItems', cartItems)
+
+  const addPrimaryBoothToLocalCart = (boothId) => {
+    setLoading(true)
+    console.log('TEST PRIMARY: only setting current local cart')
+    setLocalCart({ primaryBoothId: boothId })
+    localStorage.setItem(
+      'localCart',
+      JSON.stringify({ primaryBoothId: boothId })
+    )
+    currentVendor && addPrimaryBoothToCart(boothId)
+  }
+
+  const addSecondaryBoothToLocalCart = (boothId) => {
+    setLoading(true)
+    console.log('TEST SECONDARY: only setting current local cart')
+    setLocalCart((prevCart) => ({ ...prevCart, secondaryBoothId: boothId }))
+    localStorage.setItem(
+      'localCart',
+      JSON.stringify({ ...localCart, secondaryBoothId: boothId })
+    )
+    currentVendor && addSecondaryBoothToCart(boothId)
+  }
+
+  const addPrimaryBoothToCart = async (boothId) => {
+    console.log(
+      'this is the current booth selection id from addPrimaryBoothCart: ',
+      boothId
+    )
+    // currentBooth should hold the whole booth instead of just the ID to avoid always holding
+    const booth = booths.find((b) => b.id === boothId)
+    if (
+      ['Paladin', 'Stryker', 'Abrams', 'Bradley'].includes(
+        currentVendor.sponsorship.level
+      )
+    ) {
+      if (booth.hasElectricity) {
+        const checkout = await addItemToCart(
+          'freeBooth',
+          boothId,
+          'electricity'
+        )
+        await checkout.addDiscount(
+          currentVendor.cartId,
+          'sponsoredBoothElectricity'
+        )
+      } else {
+        await addItemToCart('freeBooth', boothId)
+      }
+    } else if (
+      currentVendor.isNonprofit ||
+      currentVendor.isGovernmental ||
+      currentVendor.isVeteranOwned
+    ) {
+      if (booth.hasElectricity) {
+        await addItemToCart('freeBooth', boothId, 'electricity')
+      } else {
+        await addItemToCart('freeBooth', boothId)
+      }
+    } else {
+      if (booth.hasElectricity) {
+        await addItemToCart('standardBooth', boothId, 'electricity')
+      } else {
+        await addItemToCart('standardBooth', boothId)
+      }
+    }
+
+    await getShopifyCart()
+
+    // may have to refactor this part
+    // updateCurrentVendor({
+    //   'booth.primary': {
+    //     id: boothId,
+    //     status: 1,
+    //   },
+    // })
+  }
+
+  const addSecondaryBoothToCart = async (boothId) => {
+    const booth = booths.find((b) => b.id === boothId)
+    if (
+      ['Paladin', 'Stryker', 'Abrams', 'Bradley'].includes(
+        currentVendor.sponsorship.level
+      )
+    ) {
+      if (booth.hasElectricity) {
+        const checkout = await addItemToCart(
+          'doubleBooth',
+          boothId,
+          'electricity'
+        )
+        const electricityDiscount = await checkout.addDiscount(
+          currentVendor.cartId,
+          'sponsoredBoothElectricity'
+        )
+        await electricityDiscount.addDiscount(
+          currentVendor.cartId,
+          'sponsoredDoubleBooth'
+        )
+      } else {
+        const doubleBoothCheckout = await addItemToCart('doubleBooth', boothId)
+        await doubleBoothCheckout.addDiscount(
+          currentVendor.cartId,
+          'sponsoredDoubleBooth'
+        )
+      }
+    } else if (
+      currentVendor.isNonprofit ||
+      currentVendor.isGovernmental ||
+      currentVendor.isVeteranOwned
+    ) {
+      if (booth.hasElectricity) {
+        await addItemToCart('doubleBooth', boothId, 'electricity')
+      } else {
+        await addItemToCart('doubleBooth', boothId)
+      }
+    } else {
+      if (booth.hasElectricity) {
+        await addItemToCart('doubleBooth', boothId, 'electricity')
+      } else {
+        await addItemToCart('doubleBooth', boothId)
+      }
+      getShopifyCart()
+    }
+
+    // may have to refactor this part
+    // updateCurrentVendor({
+    //   'booth.secondary': {
+    //     id: boothId,
+    //     status: 1,
+    //   },
+    // })
+  }
+
+  // This should work if we can get the cartId properly.  Doesnt appear its in the
+  // currentVendor data becasue createCart function is never called
 
   const updateCurrentVendor = (data) => {
     // const updatedVendor = {   ...currentVendor,   ...data }
@@ -232,14 +378,31 @@ client.checkout.updateLineItems(checkoutId, lineItemsToUpdate).then((checkout) =
       })
   }
 
-  const addItemToCart = (item, boothId) => {
-    return client.checkout.addLineItems(currentVendor.cartId, [
-      {
-        variantId: products[item],
-        quantity: 1,
-        customAttributes: [{ key: 'boothID', value: boothId }],
-      },
-    ])
+  const addItemToCart = (item, boothId, electricity) => {
+    console.log(`addItemToCart item: ${item} boothId: ${boothId}`)
+
+    if (electricity) {
+      return client.checkout.addLineItems(currentVendor.cartId, [
+        {
+          variantId: products[item],
+          quantity: 1,
+          customAttributes: [{ key: 'boothID', value: boothId }],
+        },
+        {
+          variantId: products[electricity],
+          quantity: 1,
+          customAttributes: [{ key: 'boothID', value: boothId }],
+        },
+      ])
+    } else {
+      return client.checkout.addLineItems(currentVendor.cartId, [
+        {
+          variantId: products[item],
+          quantity: 1,
+          customAttributes: [{ key: 'boothID', value: boothId }],
+        },
+      ])
+    }
   }
   const storeFile = (file, path) => {
     const storageRef = Storage.ref(path)
@@ -281,132 +444,7 @@ client.checkout.updateLineItems(checkoutId, lineItemsToUpdate).then((checkout) =
   // [currentVendor])
 
   // test to check if it's okay to make localcart
-  const addPrimaryBoothToLocalCart = (boothId) => {
-    console.log('TEST PRIMARY: only setting current local cart')
-    setLocalCart({ primaryBoothId: boothId })
-  }
 
-  const addSecondaryBoothToLocalCart = (boothId) => {
-    console.log('TEST SECONDARY: only setting current local cart')
-    setLocalCart((prevCart) => ({ ...prevCart, secondaryBoothId: boothId }))
-  }
-
-  const addPrimaryBoothToCart = (boothId) => {
-    console.log(
-      'this is the current booth selection id from addPrimaryBoothCart: ',
-      boothId
-    )
-    //currentBooth should hold the whole booth instead of just the ID to avoid always holding
-    const booth = booths.find((b) => b.id === boothId)
-    if (
-      ['Paladin', 'Stryker', 'Abrams', 'Bradley'].includes(
-        currentVendor.sponsorship.level
-      )
-    ) {
-      addItemToCart('freeBooth', boothId)
-        .then(() => {
-          if (booth.hasElectricity) {
-            addItemToCart('electricity').then((checkout) =>
-              checkout.addDiscount(
-                currentVendor.cartId,
-                'sponsoredBoothElectricity'
-              )
-            )
-          }
-        })
-        .catch((err) => console.log(err))
-    } else if (
-      currentVendor.isNonprofit ||
-      currentVendor.isGovernmental ||
-      currentVendor.isVeteranOwned
-    ) {
-      addItemToCart('freeBooth')
-        .then(() => {
-          if (booth.hasElectricity) {
-            addItemToCart('electricity', boothId)
-              .then((checkout) => console.log(checkout))
-              .catch((err) => console.log(err))
-          }
-        })
-        .catch((err) => console.log(err))
-    } else {
-      addItemToCart('standardBooth', boothId)
-        .then(() => {
-          if (booth.hasElectricity) {
-            addItemToCart('electricity', boothId)
-              .then((checkout) => console.log(checkout))
-              .catch((err) => console.log(err))
-          }
-        })
-        .catch((err) => console.log(err))
-    }
-
-    // may have to refactor this part
-    updateCurrentVendor({
-      'booth.primary': {
-        id: boothId,
-        status: 1,
-      },
-    })
-  }
-
-  const addSecondaryBoothToCart = (boothId) => {
-    const booth = booths.find((b) => b.id === boothId)
-    if (
-      ['Paladin', 'Stryker', 'Abrams', 'Bradley'].includes(
-        currentVendor.sponsorship.level
-      )
-    ) {
-      addItemToCart('doubleBooth', boothId)
-        .then((checkout) =>
-          checkout.addDiscount(currentVendor.cartId, 'sponsoredDoubleBooth')
-        )
-        .then(() => {
-          if (booth.hasElectricity) {
-            addItemToCart('electricity')
-          }
-        })
-        .then((checkout) =>
-          checkout.addDiscount(
-            currentVendor.cartId,
-            'sponsoredBoothElectricity'
-          )
-        )
-        .catch((err) => console.log(err))
-    } else if (
-      currentVendor.isNonprofit ||
-      currentVendor.isGovernmental ||
-      currentVendor.isVeteranOwned
-    ) {
-      addItemToCart('doubleBooth', boothId)
-        .then(() => {
-          if (booth.hasElectricity) {
-            addItemToCart('electricity').then((checkout) =>
-              console.log(checkout)
-            )
-          }
-        })
-        .catch((err) => console.log(err))
-    } else {
-      addItemToCart('doubleBooth', boothId)
-        .then(() => {
-          if (booth.hasElectricity) {
-            addItemToCart('electricity')
-              .then((checkout) => console.log(checkout))
-              .catch((err) => console.log(err))
-          }
-        })
-        .catch((err) => console.log(err))
-    }
-
-    // may have to refactor this part
-    updateCurrentVendor({
-      'booth.secondary': {
-        id: boothId,
-        status: 1,
-      },
-    })
-  }
   const getOrderStatus = () => {
     client.checkout.fetch(currentVendor.cartId).then((checkout) => {
       const lineItems = checkout.lineItems
@@ -436,11 +474,12 @@ client.checkout.updateLineItems(checkoutId, lineItemsToUpdate).then((checkout) =
         checkProducts,
         primaryMode,
         setPrimaryMode,
-        getCartItems,
         openCart,
         getOrderStatus,
         client,
         localCart,
+        loading,
+        getShopifyCart,
       }}
     >
       {children}
