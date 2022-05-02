@@ -3,23 +3,20 @@ import styled from 'styled-components'
 import { VendorContext } from '../../context/VendorProvider'
 import { BoothContext } from '../../context/BoothProvider'
 import { UserContext } from '../../context/UserProvider'
-import { Wrapper, Container } from '../../Elements/basic'
+import { Wrapper, Container, PageContainer } from '../../Elements/basic'
 import { Button } from '../../components/Button'
 import StatusMessage from '../../components/StatusMessage'
 import { useNavigate } from 'react-router-dom'
 
 const CardContainer = styled.div`
   width: 400px;
-  height: fit-content;
-  margin: auto;
-  box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.14), 0px 3px 14px rgba(0, 0, 0, 0.12),
-    0px 4px 5px rgba(0, 0, 0, 0.2);
-  border-radius: 4px;
+  box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.4);
+  border-radius: 0.5rem;
   background: #ffffff;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 10px;
+  padding: 30px;
   top: 0;
 `
 const ButtonWrapper = styled.div`
@@ -113,62 +110,64 @@ const Finalize = (props) => {
   useEffect(() => {}, [])
 
   return (
-    <CardContainer>
-      {/* <Wrapper> */}
-      <Head>Local Cart Items</Head>
-      <p>Booth Selection: {localCart.primaryBoothId}</p>
-      <p>Adjacent Booth Selection: {localCart.secondaryBoothId}</p>
+    <PageContainer>
+      <CardContainer>
+        {/* <Wrapper> */}
+        <Head>Local Cart Items</Head>
+        <p>Booth Selection: {localCart.primaryBoothId}</p>
+        <p>Adjacent Booth Selection: {localCart.secondaryBoothId}</p>
 
-      <br />
-      <br />
+        <br />
+        <br />
 
-      {/* Shopify Cart items list */}
+        {/* Shopify Cart items list */}
 
-      {loading ? (
-        <Head>Loading Cart Items...</Head>
-      ) : (
-        <>
-          <Head>Shopify Cart Items</Head>
-          {cartItems?.map((item, index) => (
-            <article key={item + index}>
-              <p>Product: {item.title}</p>
-              {/* <p>ID: {item.id}</p> */}
-              <p>Quantity: {item.quantity}</p>
-              <button onClick={() => changeQuantity(item.id, item.quantity)}>
-                Remove
-              </button>
-            </article>
-          ))}
-        </>
-      )}
+        {loading ? (
+          <Head>Loading Cart Items...</Head>
+        ) : (
+          <>
+            <Head>Shopify Cart Items</Head>
+            {cartItems?.map((item, index) => (
+              <article key={item + index}>
+                <p>Product: {item.title}</p>
+                {/* <p>ID: {item.id}</p> */}
+                <p>Quantity: {item.quantity}</p>
+                <button onClick={() => changeQuantity(item.id, item.quantity)}>
+                  Remove
+                </button>
+              </article>
+            ))}
+          </>
+        )}
 
-      {/* End Shopify Cart ITems List */}
-      {/* <a onClick={(e)=>console.log(e.target)} href={currentVendor.cartUrl} target="_blank">Open Cart</a> */}
-      {!currentVendor ? (
-        <>
-          <StatusMessage
-            className={'status-message'}
-            message={
-              'You must register to checkout. Please register to continue.'
-            }
-            animationTime={5000}
-          />
+        {/* End Shopify Cart ITems List */}
+        {/* <a onClick={(e)=>console.log(e.target)} href={currentVendor.cartUrl} target="_blank">Open Cart</a> */}
+        {!currentVendor ? (
+          <>
+            <StatusMessage
+              className={'status-message'}
+              message={
+                'You must register to checkout. Please register to continue.'
+              }
+              animationTime={5000}
+            />
+            <Button
+              buttonText='Register to continue'
+              buttonStyle='primary'
+              onClick={() => navigate('/registration')}
+            />
+          </>
+        ) : (
           <Button
-            buttonText='Register to continue'
+            buttonText='Continue to checkout'
             buttonStyle='primary'
-            onClick={() => navigate('/registration')}
+            onClick={openCart}
           />
-        </>
-      ) : (
-        <Button
-          buttonText='Continue to checkout'
-          buttonStyle='primary'
-          onClick={openCart}
-        />
-      )}
+        )}
 
-      {/* </Wrapper> */}
-    </CardContainer>
+        {/* </Wrapper> */}
+      </CardContainer>
+    </PageContainer>
   )
 }
 
