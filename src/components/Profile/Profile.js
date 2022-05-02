@@ -9,7 +9,7 @@ import opveteranLogo from '../../assets/icons/OPVeteranLogo.png'
 
 const Wrapper = styled.div`
   min-width: 311px;
-  height: fit-content;
+  height: 80%;
   margin: auto;
   box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.14), 0px 3px 14px rgba(0, 0, 0, 0.12),
     0px 4px 5px rgba(0, 0, 0, 0.2);
@@ -18,11 +18,16 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding: 20px;
+  align-items: space-between;
   justify-content: space-between;
   position: fixed;
   top: 70px;
   right: 20px;
   z-index: 999;
+
+  & div {
+    height: auto;
+  }
 `
 const Paragraph = styled.p``
 const Logo = styled.img`
@@ -68,17 +73,21 @@ const Profile = (props) => {
   // }
   return (
     <Wrapper>
-      <Logo src={info.logo} />
-      <Paragraph>
-        Current Booth: {currentBooth ? currentBooth : 'None Selected'}
-      </Paragraph>
-      <Paragraph>Name: {info.rep}</Paragraph>
-      <Paragraph>Organization: {info.organization}</Paragraph>
-      <Paragraph>
-        Sponsorship:{' '}
-        {info.sponsorship.level ? info.sponsorship.level : 'None Selected'}
-      </Paragraph>
-      <Finalize />
+      <div>
+        <Logo src={info.logo} />
+        <Paragraph>
+          Current Booth: {currentBooth ? currentBooth : 'None Selected'}
+        </Paragraph>
+        <Paragraph>Name: {info.rep}</Paragraph>
+        <Paragraph>Organization: {info.organization}</Paragraph>
+        <Paragraph>
+          Sponsorship:{' '}
+          {info.sponsorship.level ? info.sponsorship.level : 'None Selected'}
+        </Paragraph>
+      </div>
+      <div>
+        <Finalize />
+      </div>
       {/* for testing purposes because you can add more than 2 booths at a time */}
       {/* <button onClick={resetBooths}>Reset Booths</button> */}
     </Wrapper>
