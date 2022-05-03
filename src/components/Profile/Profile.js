@@ -87,25 +87,26 @@ const Profile = (props) => {
   //     }).catch(err => console.log(err))
   // }
   return (
-    <Wrapper>
-      <div>
-        <Logo src={info.logo} />
-        <Paragraph>
-          Current Booth: {currentBooth ? currentBooth : 'None Selected'}
-        </Paragraph>
-        <Paragraph>Name: {info.rep}</Paragraph>
-        <Paragraph>Organization: {info.organization}</Paragraph>
-        <Paragraph>
-          Sponsorship:{' '}
-          {info.sponsorship.level ? info.sponsorship.level : 'None Selected'}
-        </Paragraph>
-      </div>
-      <div>
-        <Finalize />
-      </div>
-      {/* for testing purposes because you can add more than 2 booths at a time */}
-      {/* <button onClick={resetBooths}>Reset Booths</button> */}
-    </Wrapper>
+    <></>
+    // <Wrapper>
+    //   <div>
+    //     <Logo src={info.logo} />
+    //     <Paragraph>
+    //       Current Booth: {currentBooth ? currentBooth : 'None Selected'}
+    //     </Paragraph>
+    //     <Paragraph>Name: {info.rep}</Paragraph>
+    //     <Paragraph>Organization: {info.organization}</Paragraph>
+    //     <Paragraph>
+    //       Sponsorship:{' '}
+    //       {info.sponsorship.level ? info.sponsorship.level : 'None Selected'}
+    //     </Paragraph>
+    //   </div>
+    //   <div>
+    //     <Finalize />
+    //   </div>
+    //   {/* for testing purposes because you can add more than 2 booths at a time */}
+    //   {/* <button onClick={resetBooths}>Reset Booths</button> */}
+    // </Wrapper>
   )
 }
 

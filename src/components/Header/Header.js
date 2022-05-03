@@ -3,13 +3,64 @@ import styled from 'styled-components'
 import { AuthContext } from '../../context/AuthProvider'
 import { UserContext } from '../../context/UserProvider'
 import { VendorContext } from '../../context/VendorProvider'
+import { CanvasContext } from '../../context/CanvasProvider'
 import logo from '../../assets/images/vetfest-logo.png'
 import userIcon from '../../assets/icons/avatar-icon.svg'
 import { Profile } from '../Profile'
 import { IoChevronBackSharp, IoCloseOutline } from 'react-icons/io5'
 import { Link, useNavigate } from 'react-router-dom'
 import ToDoList from '../../pages/VendorView/ToDoList'
+import Finalize from '../../pages/VendorView/Finalize'
+import firestore from '../../database'
+import opveteranLogo from '../../assets/icons/OPVeteranLogo.png'
 
+const Wrapper = styled.div`
+  min-width: 200px;
+  min-height: 80%;
+  margin: auto;
+  box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.14), 0px 3px 14px rgba(0, 0, 0, 0.12),
+    0px 4px 5px rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  align-items: space-between;
+  justify-content: space-between;
+  position: fixed;
+  top: 70px;
+  right: 20px;
+  z-index: 999;
+
+  & div {
+    height: auto;
+  }
+
+  & > div {
+    & > div {
+      & button {
+        width: auto;
+      }
+      & > div {
+        & > div:first-child {
+          & > div:first-child {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+`
+const ProfileContainer = styled.div`
+  padding: 32px;
+`
+const Paragraph = styled.p`
+  color: #818181;
+`
+const Logo = styled.img`
+  width: 40px;
+  height: 40px;
+`
 const HeaderContainer = styled.div`
   position: relative;
   padding: 10px;
@@ -144,6 +195,7 @@ export default function Header() {
   const { logout } = useContext(AuthContext)
   const { user } = useContext(UserContext)
   const { currentVendor } = useContext(VendorContext)
+  const { currentBooth } = useContext(CanvasContext)
   const [showProfile, setShowProfile] = useState(false)
   const handleClick = () => {
     setShowProfile((prev) => !prev)
@@ -154,6 +206,28 @@ export default function Header() {
     setSideToggle((prevState) => !prevState)
     console.log(sideToggle)
   }
+
+  // const { currentVendor, updateCurrentVendor } = useContext(VendorContext)
+  // const { user, updateUser } = useContext(UserContext)
+
+  const [info, setInfo] = useState({
+    organization:
+      currentVendor !== null ? currentVendor.organization : 'Not registered',
+    description:
+      currentVendor !== null ? currentVendor.description : 'Not registered',
+    logo: currentVendor !== null ? currentVendor.logo : opveteranLogo,
+    primaryBooth:
+      currentVendor !== null ? currentVendor.primaryBooth : 'Not registered',
+    secondaryBooth:
+      currentVendor !== null ? currentVendor.secondaryBooth : 'Not registered',
+    address: currentVendor !== null ? currentVendor.address : 'Not registered',
+    rep: currentVendor !== null ? currentVendor.rep : 'Not registered',
+    repEmail:
+      currentVendor !== null ? currentVendor.repEmail : 'Not registered',
+    sponsorship:
+      currentVendor !== null ? currentVendor.sponsorship : 'Not registered',
+  })
+  const boothRef = firestore.collection('Booths')
 
   return (
     <HeaderContainer>
@@ -184,6 +258,29 @@ export default function Header() {
                 <span>Finalize</span>
               </Link> */}
             </div>
+            {/* <Wrapper> */}
+
+            <ProfileContainer>
+              <Logo src={info.logo} />
+              <Paragraph>
+                Current Booth: {currentBooth ? currentBooth : 'None Selected'}
+              </Paragraph>
+              <Paragraph>Name: {info.rep}</Paragraph>
+              <Paragraph>Organization: {info.organization}</Paragraph>
+              <Paragraph>
+                Sponsorship:{' '}
+                {info.sponsorship.level
+                  ? info.sponsorship.level
+                  : 'None Selected'}
+              </Paragraph>
+            </ProfileContainer>
+
+            <Finalize />
+
+            {/* for testing purposes because you can add more than 2 booths at a time */}
+            {/* <button onClick={resetBooths}>Reset Booths</button> */}
+            {/* </Wrapper> */}
+
             <ToDoList List={List} ListItem={ListItem} Header2={Header2} />
 
             <LogOut>

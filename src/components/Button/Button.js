@@ -22,7 +22,6 @@ const StyledButton = styled.button`
   line-height: 24px;
   letter-spacing: 0.25px;
   margin: 8px;
-  margin-bottom: 15px;
   color: ${(props) => props.color};
   background: ${(props) => props.background};
   box-shadow: ${(props) => props.boxShadow};
