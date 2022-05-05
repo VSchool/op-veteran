@@ -3,8 +3,12 @@ import styled from 'styled-components'
 import { AuthContext } from '../../context/AuthProvider'
 import { UserContext } from '../../context/UserProvider'
 import { VendorContext } from '../../context/VendorProvider'
+import { CanvasContext } from '../../context/CanvasProvider'
 import logo from '../../assets/images/vetfest-logo.png'
 import userIcon from '../../assets/icons/avatar-icon.svg'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import opveteranLogo from '../../assets/icons/OPVeteranLogo.png'
+import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import { Profile } from '../Profile'
 import { IoChevronBackSharp, IoCloseOutline } from 'react-icons/io5'
 import { Link, useNavigate } from 'react-router-dom'
@@ -29,6 +33,77 @@ const HeaderContainer = styled.div`
     right: 12px;
     width: 40px;
     border-radius: 50%;
+  }
+`
+const Cart = styled.div`
+  margin-bottom: 30px;
+  border: 1px solid #e6e6e6;
+  border-radius: 0.5rem;
+
+  div:last-child {
+    border: none;
+  }
+`
+const Head = styled.h1`
+  font-style: normal;
+  font-weight: bold;
+  font-size: 17px;
+  line-height: 24px;
+  color: #1abc9c;
+  background-color: #ffffff;
+  padding: 10px;
+  width: 100%;
+  text-align: center;
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+  border-bottom: 1px solid #e6e6e6;
+`
+const EmptyCart = styled.p`
+  font-weight: bold;
+  color: #e67e22;
+  padding: 10px;
+`
+const ProductWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10px;
+  border-bottom: 1px solid #e6e6e6;
+
+  p {
+    margin: 5px;
+  }
+`
+
+const Product = styled.div`
+  display: flex;
+  justify-content: space-between;
+
+  p {
+    font-weight: bold;
+    color: #16a085;
+  }
+`
+
+const ProductOptions = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  & > p {
+    font-weight: bold;
+  }
+`
+
+const TrashButton = styled.a`
+  color: #c0392b;
+  opacity: 0.7;
+  cursor: pointer;
+  font-size: 1.5rem;
+  margin-left: 5px;
+
+  &:hover {
+    opacity: 1;
   }
 `
 const SideNav = styled.div`
@@ -138,12 +213,20 @@ const LogOut = styled.span`
     cursor: pointer;
   }
 `
+const Paragraph = styled.p``
+const Logo = styled.img`
+  width: 40px;
+  height: 40px;
+`
 
 export default function Header() {
   const navigate = useNavigate()
   const { logout } = useContext(AuthContext)
   const { user } = useContext(UserContext)
-  const { currentVendor } = useContext(VendorContext)
+  const { currentVendor, updateCurrentVendor, changeQuantity, cartItems } =
+    useContext(VendorContext)
+  const { currentBooth } = useContext(CanvasContext)
+
   const [showProfile, setShowProfile] = useState(false)
   const handleClick = () => {
     setShowProfile((prev) => !prev)
@@ -154,6 +237,23 @@ export default function Header() {
     setSideToggle((prevState) => !prevState)
     console.log(sideToggle)
   }
+  const [info, setInfo] = useState({
+    organization:
+      currentVendor !== null ? currentVendor.organization : 'Not registered',
+    description:
+      currentVendor !== null ? currentVendor.description : 'Not registered',
+    logo: currentVendor !== null ? currentVendor.logo : opveteranLogo,
+    primaryBooth:
+      currentVendor !== null ? currentVendor.primaryBooth : 'Not registered',
+    secondaryBooth:
+      currentVendor !== null ? currentVendor.secondaryBooth : 'Not registered',
+    address: currentVendor !== null ? currentVendor.address : 'Not registered',
+    rep: currentVendor !== null ? currentVendor.rep : 'Not registered',
+    repEmail:
+      currentVendor !== null ? currentVendor.repEmail : 'Not registered',
+    sponsorship:
+      currentVendor !== null ? currentVendor.sponsorship : 'Not registered',
+  })
 
   return (
     <HeaderContainer>
@@ -184,6 +284,31 @@ export default function Header() {
                 <span>Finalize</span>
               </Link> */}
             </div>
+            <Profile />
+
+            <Cart>
+              <Head>Shopify Cart Items</Head>
+              {cartItems.length === 0 && (
+                <EmptyCart>Your cart is empty</EmptyCart>
+              )}
+              {cartItems?.map((item, index) => (
+                <ProductWrapper key={item + index}>
+                  <Product>
+                    <p>{item.title}</p>
+                    {/* <p>ID: {item.id}</p> */}
+                    <ProductOptions>
+                      <p>{item.quantity}</p>
+                      <TrashButton
+                        onClick={() => changeQuantity(item.id, item.quantity)}
+                      >
+                        <FontAwesomeIcon icon={faTrash} size='xs' />
+                      </TrashButton>{' '}
+                    </ProductOptions>
+                  </Product>
+                </ProductWrapper>
+              ))}
+            </Cart>
+
             <ToDoList List={List} ListItem={ListItem} Header2={Header2} />
 
             <LogOut>

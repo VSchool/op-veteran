@@ -8,23 +8,19 @@ import firestore from '../../database'
 import opveteranLogo from '../../assets/icons/OPVeteranLogo.png'
 
 const Wrapper = styled.div`
-  min-width: 311px;
-  min-height: 80%;
   margin: auto;
   box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.14), 0px 3px 14px rgba(0, 0, 0, 0.12),
     0px 4px 5px rgba(0, 0, 0, 0.2);
   border-radius: 4px;
-  background: #ffffff;
+  color: #ffffff;
+  background: #1a3300;
   display: flex;
   flex-direction: column;
   padding: 20px;
   align-items: space-between;
   justify-content: space-between;
-  position: fixed;
-  top: 70px;
-  right: 20px;
+  position: relative;
   z-index: 999;
-
   & div {
     height: auto;
   }
@@ -100,9 +96,7 @@ const Profile = (props) => {
           {info.sponsorship.level ? info.sponsorship.level : 'None Selected'}
         </Paragraph>
       </div>
-      <div>
-        <Finalize />
-      </div>
+      <div>{/* <Finalize /> */}</div>
       {/* for testing purposes because you can add more than 2 booths at a time */}
       {/* <button onClick={resetBooths}>Reset Booths</button> */}
     </Wrapper>
