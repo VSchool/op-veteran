@@ -36,7 +36,7 @@ const HeaderContainer = styled.div`
   }
 `
 const Cart = styled.div`
-  margin-bottom: 30px;
+  margin: 0px 30px 30px 30px;
   border: 1px solid #e6e6e6;
   border-radius: 0.5rem;
 
@@ -49,8 +49,8 @@ const Head = styled.h1`
   font-weight: bold;
   font-size: 17px;
   line-height: 24px;
-  color: #1abc9c;
-  background-color: #ffffff;
+  color: #fff;
+  background-color: #1a3300;
   padding: 10px;
   width: 100%;
   text-align: center;

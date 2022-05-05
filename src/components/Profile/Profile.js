@@ -11,7 +11,8 @@ const Wrapper = styled.div`
   margin: auto;
   box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.14), 0px 3px 14px rgba(0, 0, 0, 0.12),
     0px 4px 5px rgba(0, 0, 0, 0.2);
-  border-radius: 4px;
+  border-radius: 0.5rem;
+  border: 1px solid #e6e6e6;
   color: #ffffff;
   background: #1a3300;
   display: flex;
