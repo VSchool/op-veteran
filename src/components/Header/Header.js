@@ -333,7 +333,7 @@ export default function Header() {
           <img src={logo} alt={'OP Veteran VetFest logo.'} />
         </Link>
       </div>
-      <div>
+      {/* <div>
         <img
           src={user.userImg === '' ? userIcon : user.userImg}
           alt={'User is logged in.'}
@@ -341,7 +341,7 @@ export default function Header() {
           onClick={handleClick}
         />
         {showProfile ? <Profile /> : <></>}
-      </div>
+      </div> */}
     </HeaderContainer>
   )
 }
