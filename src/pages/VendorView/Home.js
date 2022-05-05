@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from 'react'
 import styled from 'styled-components'
+import Dashboard from '../../components/Dashboard'
 import { VendorContext } from '../../context/VendorProvider'
 import { Header, HeaderWrapper, PageContainer } from '../../Elements/basic'
 import ToDoList from './ToDoList'
@@ -91,12 +92,13 @@ const Home = (props) => {
 
   return (
     <PageContainer>
-      <TodoContainer>
+      <Dashboard />
+      {/* <TodoContainer>
         <HeaderWrapper>
           <Header>Vendor Registration</Header>
         </HeaderWrapper>
         <ToDoList List={List} Header2={Header2} ListItem={ListItem} />
-      </TodoContainer>
+      </TodoContainer> */}
     </PageContainer>
   )
 }
