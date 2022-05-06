@@ -8,8 +8,7 @@ import products from './data/shopifyProducts'
 export const CartContext = createContext()
 
 export default function CartProvider({ children }) {
-  const { currentVendor, setCurrentVendor, createVendor } =
-    useContext(VendorContext)
+  const { currentVendor, createVendor } = useContext(VendorContext)
 
   const { booths } = useContext(BoothContext)
 
@@ -73,8 +72,8 @@ export default function CartProvider({ children }) {
           }
         })
         setCart(lineItemsData)
-        setLoading(false)
       })
+      .then(() => setLoading(false))
       .catch((err) => console.log(err))
   }
 
