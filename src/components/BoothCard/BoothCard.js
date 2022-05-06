@@ -89,28 +89,8 @@ const Hr = styled.hr`
 `
 const BoothCard = (props) => {
   const navigate = useNavigate()
-  const {
-    addPrimaryBoothToLocalCart,
-    addSecondaryBoothToLocalCart,
-    currentVendor,
-    updateCurrentVendor,
-    addPrimaryBoothToCart,
-    addSecondaryBoothToCart,
-    primaryMode,
-    setPrimaryMode,
-  } = useContext(VendorContext)
-  const { reserveBooth, holdBooth, booths } = useContext(BoothContext)
   const { data, handleSelectBooth, handleClose } = props
-  const {
-    id,
-    vendor,
-    section,
-    hasElectricity,
-    row,
-    restriction,
-    status,
-    neighbors,
-  } = data
+  const { id, vendor, section, hasElectricity, row, restriction } = data
 
   const handlePrimaryClick = (e) => {
     e.preventDefault()
