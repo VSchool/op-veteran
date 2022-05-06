@@ -43,174 +43,6 @@ export default function VendorProvider({ children }) {
   const [holdingCell, setHoldingCell] = useState([])
   const { user, reserveBooth: reserve } = useContext(UserContext)
   const [currentVendor, setCurrentVendor] = useState(null)
-  const { booths, statusCodes, resetBooth } = useContext(BoothContext)
-  const [cartItems, setCartItems] = useState([])
-  const [loading, setLoading] = useState(false)
-  const client = Client.buildClient({
-    domain: 'o-p-veteran.myshopify.com',
-    storefrontAccessToken: '76c1fba5d995f6b7dbb1eb1c1c3c5745',
-  })
-
-  const localStorageCart = JSON.parse(localStorage.getItem('localCart'))
-  const initState = {
-    primaryBoothId: '' || localStorageCart?.primaryBoothId,
-    secondaryBoothId: '' || localStorageCart?.secondaryBoothId,
-  }
-
-  // test
-  const [localCart, setLocalCart] = useState(initState)
-
-  const getShopifyCart = () => {
-    if (!currentVendor) return
-    return client.checkout
-      .fetch(currentVendor.cartId)
-      .then((res) => {
-        console.log(res.lineItems)
-        const lineItemsData = res.lineItems.map((item) => {
-          return {
-            title: item.title,
-            quantity: item.quantity,
-            id: item.id,
-          }
-        })
-        setCartItems(lineItemsData)
-        setLoading(false)
-      })
-      .catch((err) => console.log(err))
-  }
-  console.log('cartItems', cartItems)
-
-  const addPrimaryBoothToLocalCart = (boothId) => {
-    setLoading(true)
-    console.log('TEST PRIMARY: only setting current local cart')
-    setLocalCart({ primaryBoothId: boothId })
-    localStorage.setItem(
-      'localCart',
-      JSON.stringify({ primaryBoothId: boothId })
-    )
-    currentVendor && addPrimaryBoothToCart(boothId)
-  }
-
-  const addSecondaryBoothToLocalCart = (boothId) => {
-    setLoading(true)
-    console.log('TEST SECONDARY: only setting current local cart')
-    setLocalCart((prevCart) => ({ ...prevCart, secondaryBoothId: boothId }))
-    localStorage.setItem(
-      'localCart',
-      JSON.stringify({ ...localCart, secondaryBoothId: boothId })
-    )
-    currentVendor && addSecondaryBoothToCart(boothId)
-  }
-
-  const addPrimaryBoothToCart = async (boothId) => {
-    console.log(
-      'this is the current booth selection id from addPrimaryBoothCart: ',
-      boothId
-    )
-    // currentBooth should hold the whole booth instead of just the ID to avoid always holding
-    const booth = booths.find((b) => b.id === boothId)
-    if (
-      ['Paladin', 'Stryker', 'Abrams', 'Bradley'].includes(
-        currentVendor.sponsorship.level
-      )
-    ) {
-      if (booth.hasElectricity) {
-        const checkout = await addItemToCart(
-          'freeBooth',
-          boothId,
-          'electricity'
-        )
-        await checkout.addDiscount(
-          currentVendor.cartId,
-          'sponsoredBoothElectricity'
-        )
-      } else {
-        await addItemToCart('freeBooth', boothId)
-      }
-    } else if (
-      currentVendor.isNonprofit ||
-      currentVendor.isGovernmental ||
-      currentVendor.isVeteranOwned
-    ) {
-      if (booth.hasElectricity) {
-        await addItemToCart('freeBooth', boothId, 'electricity')
-      } else {
-        await addItemToCart('freeBooth', boothId)
-      }
-    } else {
-      if (booth.hasElectricity) {
-        await addItemToCart('standardBooth', boothId, 'electricity')
-      } else {
-        await addItemToCart('standardBooth', boothId)
-      }
-    }
-
-    await getShopifyCart()
-
-    // may have to refactor this part
-    // updateCurrentVendor({
-    //   'booth.primary': {
-    //     id: boothId,
-    //     status: 1,
-    //   },
-    // })
-  }
-
-  const addSecondaryBoothToCart = async (boothId) => {
-    const booth = booths.find((b) => b.id === boothId)
-    if (
-      ['Paladin', 'Stryker', 'Abrams', 'Bradley'].includes(
-        currentVendor.sponsorship.level
-      )
-    ) {
-      if (booth.hasElectricity) {
-        const checkout = await addItemToCart(
-          'doubleBooth',
-          boothId,
-          'electricity'
-        )
-        const electricityDiscount = await checkout.addDiscount(
-          currentVendor.cartId,
-          'sponsoredBoothElectricity'
-        )
-        await electricityDiscount.addDiscount(
-          currentVendor.cartId,
-          'sponsoredDoubleBooth'
-        )
-      } else {
-        const doubleBoothCheckout = await addItemToCart('doubleBooth', boothId)
-        await doubleBoothCheckout.addDiscount(
-          currentVendor.cartId,
-          'sponsoredDoubleBooth'
-        )
-      }
-    } else if (
-      currentVendor.isNonprofit ||
-      currentVendor.isGovernmental ||
-      currentVendor.isVeteranOwned
-    ) {
-      if (booth.hasElectricity) {
-        await addItemToCart('doubleBooth', boothId, 'electricity')
-      } else {
-        await addItemToCart('doubleBooth', boothId)
-      }
-    } else {
-      if (booth.hasElectricity) {
-        await addItemToCart('doubleBooth', boothId, 'electricity')
-      } else {
-        await addItemToCart('doubleBooth', boothId)
-      }
-      getShopifyCart()
-    }
-
-    // may have to refactor this part
-    // updateCurrentVendor({
-    //   'booth.secondary': {
-    //     id: boothId,
-    //     status: 1,
-    //   },
-    // })
-  }
 
   // This should work if we can get the cartId properly.  Doesnt appear its in the
   // currentVendor data becasue createCart function is never called
@@ -228,37 +60,6 @@ export default function VendorProvider({ children }) {
 
   // This funciton is unused and is the root of the Shopify problem because its not saving the cart ID
   // Need to figure out where to integrate it. On the RegistrationForm component would likely make the most sense.
-  const createCart = (data) => {
-    console.log('createCart function called with data: ', data)
-    client.checkout
-      .create({
-        shippingAddress: {
-          address1: data.street,
-          address2: data.apt,
-          city: data.city,
-          company: data.organization,
-          country: 'United States',
-          firstName: data.firstName,
-          lastName: data.lastName,
-          phone: data.phone,
-          province: data.state,
-          zip: data.zip,
-        },
-        email: data.repEmail,
-      })
-      .then((checkout) => {
-        console.log('From vendor provider: checkout', checkout)
-        console.log('From vendor provider: checkout ID', checkout.id)
-        createVendor({
-          ...data,
-          cartId: checkout.id,
-          cartUrl: checkout.webUrl,
-        })
-
-        // updateCurrentVendor({cartId: checkout.id})
-      })
-      .catch((err) => console.log(err))
-  }
 
   // Need to use the createCart function before this is called for this
   // function to work so we can have a cartId and checkout.id
@@ -326,13 +127,6 @@ export default function VendorProvider({ children }) {
     // }))
   }
 
-  const checkProducts = () => {
-    for (let product of Object.keys(products)) {
-      client.product
-        .fetch(products[product])
-        .then((p) => console.log(`${product}: ${Object.entries(p)}`))
-    }
-  }
   // useEffect(() => { vendorData.forEach(b => { batch.set(vendorRef.doc(b.id),
   // b); }); batch.commit().catch(err => console.error(err)); }, []); useEffect(()
   // => { 	const unsub = vendorRef.onSnapshot(snap => { 		const list = {}; 		const
@@ -345,65 +139,6 @@ export default function VendorProvider({ children }) {
   // 		setSelectedVendor(prev => vendors[prev.id]); 	} }, [vendors,
   // setSelectedVendor]);
 
-  const openCart = () => {
-    if (!currentVendor) return
-    console.log('opening cart')
-    client.checkout
-      .fetch(currentVendor?.cartId)
-      .then((checkout) => window.open(checkout.webUrl))
-  }
-
-  const changeQuantity = (itemId, currentQuantity) => {
-    /*
-    
-    const lineItemsToUpdate = [
-  {id: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0Lzc4NTc5ODkzODQ=', quantity: 2}
-];
-
-// Update the line item on the checkout (change the quantity or variant)
-client.checkout.updateLineItems(checkoutId, lineItemsToUpdate).then((checkout) => {
-  // Do something with the updated checkout
-  console.log(checkout.lineItems); // Quantity of line item 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0Lzc4NTc5ODkzODQ=' updated to 2
-});
-
-    */
-    let newQuantity = currentQuantity - 1
-    client.checkout
-      .updateLineItems(currentVendor.cartId, {
-        id: itemId,
-        quantity: newQuantity,
-      })
-      .then((checkout) => {
-        setCartItems(checkout.lineItems)
-      })
-  }
-
-  const addItemToCart = (item, boothId, electricity) => {
-    console.log(`addItemToCart item: ${item} boothId: ${boothId}`)
-
-    if (electricity) {
-      return client.checkout.addLineItems(currentVendor.cartId, [
-        {
-          variantId: products[item],
-          quantity: 1,
-          customAttributes: [{ key: 'boothID', value: boothId }],
-        },
-        {
-          variantId: products[electricity],
-          quantity: 1,
-          customAttributes: [{ key: 'boothID', value: boothId }],
-        },
-      ])
-    } else {
-      return client.checkout.addLineItems(currentVendor.cartId, [
-        {
-          variantId: products[item],
-          quantity: 1,
-          customAttributes: [{ key: 'boothID', value: boothId }],
-        },
-      ])
-    }
-  }
   const storeFile = (file, path) => {
     const storageRef = Storage.ref(path)
     storageRef
@@ -445,15 +180,6 @@ client.checkout.updateLineItems(checkoutId, lineItemsToUpdate).then((checkout) =
 
   // test to check if it's okay to make localcart
 
-  const getOrderStatus = () => {
-    client.checkout.fetch(currentVendor.cartId).then((checkout) => {
-      const lineItems = checkout.lineItems
-      const toRemove = lineItems.map((item) => item.id)
-      client.checkout
-        .removeLineItems(currentVendor.cartId, toRemove)
-        .then(() => console.log('removed'))
-    })
-  }
   return (
     <VendorContext.Provider
       value={{
@@ -463,23 +189,8 @@ client.checkout.updateLineItems(checkoutId, lineItemsToUpdate).then((checkout) =
         matchVendor,
         updateCurrentVendor,
         storeFile,
-        cartItems,
-        changeQuantity,
-        addItemToCart,
-        addPrimaryBoothToCart,
-        addSecondaryBoothToCart,
-        addPrimaryBoothToLocalCart,
-        addSecondaryBoothToLocalCart,
-        createCart,
-        checkProducts,
         primaryMode,
         setPrimaryMode,
-        openCart,
-        getOrderStatus,
-        client,
-        localCart,
-        loading,
-        getShopifyCart,
       }}
     >
       {children}
