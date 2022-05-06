@@ -4,6 +4,7 @@ import { AuthContext } from '../../context/AuthProvider'
 import { UserContext } from '../../context/UserProvider'
 import { VendorContext } from '../../context/VendorProvider'
 import { CanvasContext } from '../../context/CanvasProvider'
+import { CartContext } from '../../context/CartProvider'
 import logo from '../../assets/images/vetfest-logo.png'
 import userIcon from '../../assets/icons/avatar-icon.svg'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -223,8 +224,8 @@ export default function Header() {
   const navigate = useNavigate()
   const { logout } = useContext(AuthContext)
   const { user } = useContext(UserContext)
-  const { currentVendor, updateCurrentVendor, changeQuantity, cartItems } =
-    useContext(VendorContext)
+  const { cart, changeQuantity } = useContext(CartContext)
+  const { currentVendor, updateCurrentVendor } = useContext(VendorContext)
   const { currentBooth } = useContext(CanvasContext)
 
   const [showProfile, setShowProfile] = useState(false)
@@ -287,11 +288,9 @@ export default function Header() {
             <Profile />
 
             <Cart>
-              <Head>Shopify Cart Items</Head>
-              {cartItems.length === 0 && (
-                <EmptyCart>Your cart is empty</EmptyCart>
-              )}
-              {cartItems?.map((item, index) => (
+              <Head>Shopify Cart </Head>
+              {cart.length === 0 && <EmptyCart>Your cart is empty</EmptyCart>}
+              {cart?.map((item, index) => (
                 <ProductWrapper key={item + index}>
                   <Product>
                     <p>{item.title}</p>
