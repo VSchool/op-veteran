@@ -5,6 +5,7 @@ import ProgressBar from '../../../components/ProgressBar'
 import StatusMessage from '../../../components/StatusMessage'
 import { UserContext } from '../../../context/UserProvider'
 import { VendorContext } from '../../../context/VendorProvider'
+import { CartContext } from '../../../context/CartProvider'
 import { BoothContext } from '../../../context/BoothProvider'
 import { Input } from '../../../components/Input'
 import { Button } from '../../../components/Button'
@@ -47,12 +48,10 @@ export default function RegistrationForm(props) {
   const { user, updateUser } = useContext(UserContext)
   const { seedBooths } = useContext(BoothContext)
   const {
-    currentVendor,
-    matchVendor,
-    createVendor,
-    storeFile,
     createCart, // This function needs to be called to create a shopify cartId. Use it in the handleSubmit function here or at the begining of the createVendor function in the VendorProvider.  This is currently untested
-  } = useContext(VendorContext)
+  } = useContext(CartContext)
+  const { currentVendor, matchVendor, createVendor, storeFile } =
+    useContext(VendorContext)
   const navigate = useNavigate()
   const [showSponsorship, setShowSponsorship] = useState(false)
   const { changeState, states } = props

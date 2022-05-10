@@ -2,10 +2,6 @@ import React, { useState, useContext, useEffect } from 'react'
 import styled from 'styled-components'
 import Konva from 'konva'
 import { Stage, Layer, Rect, Text, Group, Path } from 'react-konva'
-import { CanvasContext } from '../../../../context/CanvasProvider'
-import { UserContext } from '../../../../context/UserProvider'
-import { VendorContext } from '../../../../context/VendorProvider'
-import { BoothContext } from '../../../../context/BoothProvider'
 
 const colors = {
   green: '#799C8A',

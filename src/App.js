@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { AuthContext } from './context/AuthProvider'
 import UserProvider, { UserContext } from './context/UserProvider'
 import VendorProvider, { VendorContext } from './context/VendorProvider'
+import CartProvider from './context/CartProvider'
 import BoothProvider from './context/BoothProvider'
 import SponsorshipSelection from './pages/VendorView/SponsorshipSelection/SponsorshipSelection'
 import Finalize from './pages/VendorView/Finalize'
@@ -51,13 +52,15 @@ export default function App() {
     <BoothProvider>
       <UserProvider>
         <VendorProvider>
-          <CanvasProvider>
+          <CartProvider>
             <CanvasProvider>
-              <AppContainer>
-                <UserViews />
-              </AppContainer>
+              <CanvasProvider>
+                <AppContainer>
+                  <UserViews />
+                </AppContainer>
+              </CanvasProvider>
             </CanvasProvider>
-          </CanvasProvider>
+          </CartProvider>
         </VendorProvider>
       </UserProvider>
     </BoothProvider>

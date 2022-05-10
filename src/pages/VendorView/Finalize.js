@@ -1,6 +1,7 @@
 import React, { Fragment, useState, useContext, useEffect } from 'react'
 import styled from 'styled-components'
 import { VendorContext } from '../../context/VendorProvider'
+import { CartContext } from '../../context/CartProvider'
 import { BoothContext } from '../../context/BoothProvider'
 import { UserContext } from '../../context/UserProvider'
 import { Wrapper, Container, PageContainer } from '../../Elements/basic'
@@ -120,16 +121,9 @@ const TrashButton = styled.a`
 const Finalize = (props) => {
   // const { currentVendor, getCartItems, cart, openCart } = useContext(VendorContext);
   const navigate = useNavigate()
-  const {
-    currentVendor,
-    openCart,
-    getCartItems,
-    cartItems,
-    changeQuantity,
-    localCart,
-    loading,
-    getShopifyCart,
-  } = useContext(VendorContext)
+  const { currentVendor } = useContext(VendorContext)
+  const { cart, getShopifyCart, localCart, changeQuantity, openCart, loading } =
+    useContext(CartContext)
   // const [cartItems, setCartItems] = useState([])
 
   // This was the original code which breaks
@@ -181,10 +175,8 @@ const Finalize = (props) => {
           ) : (
             <Cart>
               <Head>Shopify Cart Items</Head>
-              {cartItems.length === 0 && (
-                <EmptyCart>Your cart is empty</EmptyCart>
-              )}
-              {cartItems?.map((item, index) => (
+              {cart.length === 0 && <EmptyCart>Your cart is empty</EmptyCart>}
+              {cart?.map((item, index) => (
                 <ProductWrapper key={item + index}>
                   <Product>
                     <p>{item.title}</p>
@@ -222,7 +214,7 @@ const Finalize = (props) => {
               onClick={() => navigate('/registration')}
             />
           </>
-        ) : cartItems.length === 0 ? (
+        ) : cart.length === 0 ? (
           <Button
             buttonText='Continue to Booth selection'
             buttonStyle='primary'

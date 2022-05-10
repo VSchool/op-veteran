@@ -6,6 +6,7 @@ import { CanvasContext } from '../../../context/CanvasProvider'
 import { UserContext } from '../../../context/UserProvider'
 import { VendorContext } from '../../../context/VendorProvider'
 import { BoothContext } from '../../../context/BoothProvider'
+import { CartContext } from '../../../context/CartProvider'
 import BoothCard from '../../../components/BoothCard/BoothCard'
 import Map from './Map/Map'
 import Diagram from './Diagram/Diagram'
@@ -73,12 +74,9 @@ const BoothManagement = (props) => {
   const [showInfo, setShowInfo] = useState(false)
   const [organizedBooths, setOrganizedBooths] = useState([])
   const { user } = useContext(UserContext)
-  const {
-    currentVendor,
-    updateCurrentVendor,
-    addPrimaryBoothToLocalCart,
-    addSecondaryBoothToLocalCart,
-  } = useContext(VendorContext)
+  const { currentVendor, updateCurrentVendor } = useContext(VendorContext)
+  const { addPrimaryBoothToLocalCart, addSecondaryBoothToLocalCart } =
+    useContext(CartContext)
   const [secondary, setSecondary] = useState(false)
   const [modalIsOpen, setModalIsOpen] = useState(false)
   const [isDoubleBoothOpen, setIsDoubleBoothOpen] = useState(false)

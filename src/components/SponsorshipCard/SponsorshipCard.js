@@ -4,6 +4,7 @@ import { Button } from '../../components/Button'
 import ListItem from './ListItem'
 import { UserContext } from '../../context/UserProvider'
 import { VendorContext } from '../../context/VendorProvider'
+import { CartContext } from '../../context/CartProvider'
 import { Blur } from '../../Elements/basic'
 import { CloseButton } from '../../Elements/basic'
 import { useNavigate } from 'react-router-dom'
@@ -119,14 +120,9 @@ export default function SponsorshipCard(props) {
     handlePayToday,
     handleContactMe,
   } = props
-  const { user, updateUser } = useContext(UserContext)
   const {} = props
-  const {
-    currentVendor,
-    updateCurrentVendor,
-    addItemToCart,
-    getSponsorshipVariantId,
-  } = useContext(VendorContext)
+  const { updateCurrentVendor } = useContext(VendorContext)
+  const { addItemToCart } = useContext(CartContext)
   const [selected, setSelected] = useState(false)
 
   const listItems = perks.map((perk) => (
@@ -143,7 +139,7 @@ export default function SponsorshipCard(props) {
   const handleSelect = (e) => {
     e.preventDefault()
     const status = e.target.innerText
-    const item = status == 'Pay Today' ? name : `${name}Promise`
+    const item = status === 'Pay Today' ? name : `${name}Promise`
     console.log(item)
     addItemToCart(item)
     // const updatedVendor = {...currentVendor}
