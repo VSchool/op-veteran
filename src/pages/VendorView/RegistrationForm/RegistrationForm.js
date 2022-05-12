@@ -333,12 +333,15 @@ export default function RegistrationForm(props) {
           onClick={handleSubmit}
         />
       </FormWrapper>
-      <StatusMessage
-        className={'status-message'}
-        message={
-          'Welcome to O.P. Veteran. Now, please continue the registration.'
-        }
-      />
+      {!currentVendor && (
+        <StatusMessage
+          className={'status-message'}
+          message={
+            'Welcome to O.P. Veteran. Now, please continue the registration.'
+          }
+        />
+      )}
+
       {showSponsorship ? <></> : null}
     </Container>
   )
