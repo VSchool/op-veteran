@@ -37,7 +37,8 @@ const TextInput = styled.input`
 `
 
 const Input = (props) => {
-  const { labelText, name, onChange, type, value, autocomplete } = props
+  const { labelText, name, onChange, type, value, autocomplete, disabled } =
+    props
   return (
     <InputWrapper>
       <Label>{labelText}</Label>
@@ -47,6 +48,7 @@ const Input = (props) => {
         onChange={onChange}
         value={value}
         type={type}
+        disabled={disabled}
       />
     </InputWrapper>
   )

@@ -48,13 +48,32 @@ export default function VendorProvider({ children }) {
   // currentVendor data becasue createCart function is never called
 
   const updateCurrentVendor = (data) => {
-    // const updatedVendor = {   ...currentVendor,   ...data }
     if (!currentVendor) {
       return
     }
+    setCurrentVendor((prevState) => ({
+      ...prevState,
+      ...data,
+      address: {
+        street: data.address.street,
+        city: data.address.city,
+        state: data.address.state,
+        zip: data.address.zip,
+      },
+    }))
+
     vendorRef
       .doc(`${currentVendor.organization}`)
-      .update(data)
+      .update({
+        ...currentVendor,
+        ...data,
+        address: {
+          street: data.address.street,
+          city: data.address.city,
+          state: data.address.state,
+          zip: data.address.zip,
+        },
+      })
       .catch((err) => console.log(err))
   }
 
@@ -68,6 +87,8 @@ export default function VendorProvider({ children }) {
     // this gets called from createVendor so it works in conjuction with createCart.
     // after createCart returns cart Id, it calls createVendor
     const currentVendorData = {
+      firstName: data.firstName,
+      lastName: data.lastName,
       cartId: data.cartId, // Doesnt appear this info saved? // THIS IS CHECKOUT ID
       cartUrl: data.cartUrl,
       address: {

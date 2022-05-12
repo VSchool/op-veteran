@@ -22,6 +22,7 @@ import {
   Wrapper,
   Row,
   Container,
+  PageContainer,
 } from '../../../Elements/basic'
 import { CheckBox } from '../../../components/CheckBox'
 import { useNavigate } from 'react-router-dom'
@@ -36,46 +37,61 @@ const FileButton = styled.input`
 	position: absolute;
 	z-index: -1; */
 `
-const FileLable = styled.label`
-  font-size: 1.25em;
-  font-weight: 700;
-  color: white;
-  background-color: #4e92f9;
-  display: inline-block;
-  margin: 5px;
+
+const Card = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  width: 500px;
+  height: 200px;
+  background-color: white;
+  padding: 20px;
+  border-radius: 0.5rem;
 `
+
 export default function RegistrationForm(props) {
   const { user, updateUser } = useContext(UserContext)
   const { seedBooths } = useContext(BoothContext)
   const {
     createCart, // This function needs to be called to create a shopify cartId. Use it in the handleSubmit function here or at the begining of the createVendor function in the VendorProvider.  This is currently untested
   } = useContext(CartContext)
-  const { currentVendor, matchVendor, createVendor, storeFile } =
-    useContext(VendorContext)
+  const {
+    currentVendor,
+    updateCurrentVendor,
+    matchVendor,
+    createVendor,
+    storeFile,
+  } = useContext(VendorContext)
   const navigate = useNavigate()
   const [showSponsorship, setShowSponsorship] = useState(false)
   const { changeState, states } = props
-  const [input, setInput] = useState({
-    firstName: '',
-    lastName: '',
-    organization: '',
-    description: '',
-    phone: '',
-    apt: '',
-    street: '',
-    apt: '',
-    city: '',
-    zip: '',
-    state: '',
-    nonprofit: false,
-    governmental: false,
-    vetOwned: false,
-    isSponsor: false,
-    sponsorshipLevel: '',
-    wantToSponsor: false,
-    file: null,
-    repEmail: user.email,
-  })
+  const [input, setInput] = useState(
+    currentVendor
+      ? { ...currentVendor, ...currentVendor.address }
+      : {
+          firstName: '',
+          lastName: '',
+          organization: '',
+          description: '',
+          phone: '',
+          apt: '',
+          street: '',
+          apt: '',
+          city: '',
+          zip: '',
+          state: '',
+          nonprofit: false,
+          governmental: false,
+          vetOwned: false,
+          isSponsor: false,
+          sponsorshipLevel: '',
+          wantToSponsor: false,
+          file: null,
+          repEmail: user.email,
+        }
+  )
+  const [isEdit, setIsEdit] = useState(false)
 
   // useEffect(() => {
   //   if (currentVendor && currentVendor.repEmail ===user.email){
@@ -114,11 +130,16 @@ export default function RegistrationForm(props) {
   // async but no await?
   const handleSubmit = (e) => {
     e.preventDefault()
-    setShowSponsorship(input.wantToSponsor)
-    // createVendor({...input})
 
-    console.log('from handlesubmit: ', { ...input })
-    createCart({ ...input })
+    if (isEdit) {
+      updateCurrentVendor(input)
+    } else {
+      setShowSponsorship(input.wantToSponsor)
+      // createVendor({...input})
+
+      console.log('from handlesubmit: ', { ...input })
+      createCart({ ...input })
+    }
     if (input.file) {
       saveLogo(input.file)
     }
@@ -139,15 +160,37 @@ export default function RegistrationForm(props) {
     })
   }
 
+  const handleIsEditing = () => {
+    setIsEdit(true)
+  }
+
+  if (currentVendor && !isEdit) {
+    return (
+      <PageContainer>
+        <Card>
+          <h1>You have already registered.</h1>
+          <p>
+            If you would like to edit your information click the button below:
+          </p>
+          <Button
+            buttonText='Edit Registration'
+            buttonStyle='primary'
+            onClick={handleIsEditing}
+          />
+        </Card>
+      </PageContainer>
+    )
+  }
+
   return (
     <Container height='fit-content'>
       <HeaderWrapper>
-        <Subheader>Registration Form</Subheader>
+        <Subheader>{isEdit && 'Edit '}Registration Form</Subheader>
         <Header>Point of Contact</Header>
       </HeaderWrapper>
       <FormWrapper>
         <Input
-          autocomplete='frst'
+          autocomplete='first'
           labelText='First name'
           name='firstName'
           type='text'
@@ -162,11 +205,17 @@ export default function RegistrationForm(props) {
           value={input.lastName}
           onChange={handleChange}
         />
+
         <Input
-          labelText='Name of organization'
+          labelText={
+            currentVendor
+              ? 'Name of Organization (cannot change)'
+              : 'Name of organization'
+          }
           autocomplete='organization'
           name='organization'
           type='text'
+          disabled={currentVendor}
           value={input.organization}
           onChange={handleChange}
         />
@@ -284,12 +333,15 @@ export default function RegistrationForm(props) {
           onClick={handleSubmit}
         />
       </FormWrapper>
-      <StatusMessage
-        className={'status-message'}
-        message={
-          'Welcome to O.P. Veteran. Now, please continue the registration.'
-        }
-      />
+      {!currentVendor && (
+        <StatusMessage
+          className={'status-message'}
+          message={
+            'Welcome to O.P. Veteran. Now, please continue the registration.'
+          }
+        />
+      )}
+
       {showSponsorship ? <></> : null}
     </Container>
   )
