@@ -1,7 +1,10 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import styled from 'styled-components'
 import { UserContext } from '../context/UserProvider'
+import { CartContext } from '../context/CartProvider'
 import ToDoList from '../pages/VendorView/ToDoList'
+import { Link } from 'react-router-dom'
+
 const DashboardContainer = styled.div`
   padding: 30px;
   border-radius: 0.5rem;
@@ -9,15 +12,13 @@ const DashboardContainer = styled.div`
 
 const DashboardFlex = styled.div`
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
+  align-items: stretch;
   background-color: white;
-  border-top-left-radius: 0.5rem;
-  border-bottom-left-radius: 0.5rem;
+  border-radius: 0.5rem;
 `
 
 const InfoContainer = styled.div`
+  position: relative;
   background-color: ${(props) => props.bgcolor};
   padding: 20px;
   border-radius: 0.5rem;
@@ -26,8 +27,17 @@ const InfoContainer = styled.div`
   & p {
     padding: 10px 0;
   }
+  & > a {
+    color: white;
+    text-decoration: none;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    background-color: #575a6c;
+    border-radius: 0.5rem;
+  }
 `
-
 const TodoContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -41,6 +51,7 @@ const List = styled.ol`
   list-style: none;
   counter-reset: steps;
   background-color: #575a6c;
+  height: 100%;
   color: #575a6c;
   padding: 20px;
   border-radius: 0.5rem;
@@ -82,22 +93,36 @@ const ListItem = styled.li`
 
 const Dashboard = () => {
   const { user } = useContext(UserContext)
+  const { cart, getShopifyCart } = useContext(CartContext)
 
-  //capitalize first letter of user name
   const capitalize = (s) => {
     return s.charAt(0).toUpperCase() + s.slice(1)
   }
+
+  useEffect((props) => {
+    getShopifyCart()
+  }, [])
 
   return (
     <DashboardContainer>
       <DashboardFlex>
         <div>
-          <InfoContainer bgcolor='white' color='#575A6C'>
+          <InfoContainer bgcolor='white' color='#575A6C' borderColor='white'>
             <h1>Hello {capitalize(user.name)}</h1>
             <p>Welcome to O.P Veteran</p>
           </InfoContainer>
-          <InfoContainer bgcolor='#F9AC67' color='white'>
-            (Cart Will Go Here)
+          <InfoContainer bgcolor='white' color='#575A6C'>
+            <h1>Your Cart</h1>
+            {cart.length > 0 && <Link to='/finalize'>Edit</Link>}
+            <p>
+              {cart.length === 0 ? (
+                <p>Your cart is empty</p>
+              ) : (
+                cart.map((item) => {
+                  return <p key={item.id}>{item.title}</p>
+                })
+              )}
+            </p>
           </InfoContainer>
         </div>
         <TodoContainer>
