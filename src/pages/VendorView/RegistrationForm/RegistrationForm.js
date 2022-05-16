@@ -29,6 +29,20 @@ import { useNavigate } from 'react-router-dom'
 const Paragraph = styled.p`
   padding: 10px 5px;
 `
+
+const ButtonGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  gap: 10px;
+
+  & > button {
+    margin: 0px;
+  }
+`
+
 const FileButton = styled.input`
   /* width: 0.1px;
 	height: 0.1px;
@@ -44,7 +58,7 @@ const Card = styled.div`
   justify-content: space-around;
   align-items: center;
   width: 500px;
-  height: 200px;
+  height: 250px;
   background-color: white;
   padding: 20px;
   border-radius: 0.5rem;
@@ -168,15 +182,26 @@ export default function RegistrationForm(props) {
     return (
       <PageContainer>
         <Card>
-          <h1>You have already registered.</h1>
-          <p>
-            If you would like to edit your information click the button below:
-          </p>
-          <Button
-            buttonText='Edit Registration'
-            buttonStyle='primary'
-            onClick={handleIsEditing}
-          />
+          <div>
+            <h1 style={{ marginBottom: '5px', color: '#16a085' }}>
+              You have already registered.
+            </h1>
+            <p style={{ color: '#2c2c2c' }}>
+              If you would like to edit your information click the button below
+            </p>
+          </div>
+          <ButtonGroup>
+            <Button
+              buttonText='Edit Registration'
+              buttonStyle='primary'
+              onClick={handleIsEditing}
+            />
+            <Button
+              buttonText='Return to Booth Selection'
+              buttonStyle='secondary'
+              onClick={() => navigate('/booth-selection')}
+            />
+          </ButtonGroup>
         </Card>
       </PageContainer>
     )

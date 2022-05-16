@@ -13,7 +13,7 @@ export function setStyle(style) {
       border: `2px solid #16a085`,
       borderRadius: `50px`,
       fontColor: `#16a085`,
-      hoverBackground: `#F7F7F7`,
+      hoverBackground: `#FFF`,
       activeBackground: `#F7F7F7`,
       activeBorder: `2px solid #70C297`,
     }
