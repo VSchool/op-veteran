@@ -42,7 +42,10 @@ export default function VendorProvider({ children }) {
   const [primaryMode, setPrimaryMode] = useState(true)
   const [holdingCell, setHoldingCell] = useState([])
   const { user, reserveBooth: reserve } = useContext(UserContext)
-  const [currentVendor, setCurrentVendor] = useState(null)
+
+  const initState = JSON.parse(localStorage.getItem('currentVendor')) || null
+
+  const [currentVendor, setCurrentVendor] = useState(initState)
 
   // This should work if we can get the cartId properly.  Doesnt appear its in the
   // currentVendor data becasue createCart function is never called
@@ -175,6 +178,12 @@ export default function VendorProvider({ children }) {
   // "==", user.email)     .onSnapshot((querySnapshot) => {
   // querySnapshot.forEach((doc)=>{       setCurrentVendor(doc.data())       })  }
   //     )   }
+
+  const saveCurrentVendor = (data) => {
+    localStorage.setItem('currentVendor', JSON.stringify(data))
+    setCurrentVendor(data)
+  }
+
   const matchVendor = () => {
     if (user && currentVendor === null) {
       console.log(`matching vendor with ${user?.email}`)
@@ -182,7 +191,7 @@ export default function VendorProvider({ children }) {
         .where('repEmail', '==', user.email)
         .onSnapshot((querySnapshot) => {
           querySnapshot.forEach((doc) => {
-            setCurrentVendor(doc.data())
+            saveCurrentVendor(doc.data())
           })
         })
     }
