@@ -114,7 +114,7 @@ const SideNav = styled.div`
   z-index: 1;
   top: 0;
   left: 0;
-  background-color: #111;
+  background-color: #004c00;
   overflow-x: hidden;
   transition: 0.5s;
   padding: 30px 0;
@@ -131,7 +131,7 @@ const SideNav = styled.div`
         padding: 8px 8px 8px 32px;
         text-decoration: none;
         font-size: 25px;
-        color: #818181;
+        color: #bababa;
         display: block;
         transition: 0.3s;
         cursor: pointer;
