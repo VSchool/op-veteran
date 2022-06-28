@@ -11,6 +11,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import opveteranLogo from '../../assets/icons/OPVeteranLogo.png'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import { Profile } from '../Profile'
+import StatusMessage from '../../components/StatusMessage'
+import { Button } from '../../components/Button'
 import { IoChevronBackSharp, IoCloseOutline } from 'react-icons/io5'
 import { Link, useNavigate } from 'react-router-dom'
 import ToDoList from '../../pages/VendorView/ToDoList'
@@ -43,6 +45,12 @@ const Cart = styled.div`
 
   div:last-child {
     border: none;
+  }
+`
+const LocalCart = styled.div`
+  p {
+    font-weight: bold;
+    color: #2980b9;
   }
 `
 const Head = styled.h1`
@@ -224,7 +232,7 @@ export default function Header() {
   const navigate = useNavigate()
   const { logout } = useContext(AuthContext)
   const { user } = useContext(UserContext)
-  const { cart, changeQuantity } = useContext(CartContext)
+  const { cart, changeQuantity, localCart, openCart } = useContext(CartContext)
   const { currentVendor, updateCurrentVendor } = useContext(VendorContext)
   const { currentBooth } = useContext(CanvasContext)
 
@@ -288,25 +296,55 @@ export default function Header() {
             <Profile />
 
             <Cart>
-              <Head>Shopify Cart </Head>
-              {cart.length === 0 && <EmptyCart>Your cart is empty</EmptyCart>}
-              {cart?.map((item, index) => (
-                <ProductWrapper key={item + index}>
-                  <Product>
-                    <p>{item.title}</p>
-                    {/* <p>ID: {item.id}</p> */}
-                    <ProductOptions>
-                      <p>{item.quantity}</p>
-                      <TrashButton
-                        onClick={() => changeQuantity(item.id, item.quantity)}
-                      >
-                        <FontAwesomeIcon icon={faTrash} size='xs' />
-                      </TrashButton>{' '}
-                    </ProductOptions>
-                  </Product>
+              <LocalCart>
+                <Head style={{ color: '#3498db' }}>Local Cart Items</Head>
+                <ProductWrapper>
+                  <p>
+                    Booth Selection:{' '}
+                    <span style={{ fontFamily: 'Roboto Mono' }}>
+                      {localCart.primaryBoothId}
+                    </span>
+                  </p>
                 </ProductWrapper>
-              ))}
+                <ProductWrapper>
+                  <p>
+                    Adjacent Booth Selection:{' '}
+                    <span style={{ fontFamily: 'Roboto Mono' }}>
+                      {localCart.secondaryBoothId}
+                    </span>
+                  </p>
+                </ProductWrapper>
+              </LocalCart>
             </Cart>
+
+            {!currentVendor ? (
+              <>
+                <StatusMessage
+                  className={'status-message'}
+                  message={
+                    'You must register to checkout. Please register to continue.'
+                  }
+                  animationTime={5000}
+                />
+                <Button
+                  buttonText='Register to continue'
+                  buttonStyle='primary'
+                  onClick={() => navigate('/registration')}
+                />
+              </>
+            ) : cart.length === 0 ? (
+              <Button
+                buttonText='Continue to Booth selection'
+                buttonStyle='primary'
+                onClick={() => navigate('/booth-selection')}
+              />
+            ) : (
+              <Button
+                buttonText='Continue to checkout'
+                buttonStyle='primary'
+                onClick={() => navigate('/finalize')}
+              />
+            )}
 
             <ToDoList List={List} ListItem={ListItem} Header2={Header2} />
 
