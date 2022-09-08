@@ -87,6 +87,7 @@ export default function VendorProvider({ children }) {
   // function to work so we can have a cartId and checkout.id
   // best to split into 2
   const createVendor = (data) => {
+    console.log('vendor data', data) //kelly added to check what's coming in--this seems to have reg info that I added
     // this gets called from createVendor so it works in conjuction with createCart.
     // after createCart returns cart Id, it calls createVendor
     const currentVendorData = {
@@ -149,6 +150,9 @@ export default function VendorProvider({ children }) {
     //   .create({shippingAddress, email})
     //   .then((checkout => {
     // }))
+
+    console.log('currentVendorData', currentVendorData) //kelly added as checkpoint
+    console.log('vendorRef.doc', vendorRef.doc) //kelly added as checkpoint
   }
 
   // useEffect(() => { vendorData.forEach(b => { batch.set(vendorRef.doc(b.id),

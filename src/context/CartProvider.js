@@ -4,6 +4,8 @@ import { BoothContext } from './BoothProvider'
 import Client from 'shopify-buy/index.unoptimized.umd'
 
 import products from './data/shopifyProducts'
+import { FieldsOnCorrectTypeRule } from 'graphql'
+import { Input } from '../components/Input'
 
 export const CartContext = createContext()
 
@@ -53,7 +55,7 @@ export default function CartProvider({ children }) {
           cartUrl: checkout.webUrl,
         })
 
-        // updateCurrentVendor({cartId: checkout.id})
+        //updateCurrentVendor({ cartId: checkout.id })  //commented out w/Maira on call 9/1
       })
       .catch((err) => console.log(err))
   }
@@ -106,6 +108,7 @@ export default function CartProvider({ children }) {
 
   const addPrimaryBoothToLocalCart = (boothId) => {
     setLoading(true)
+    console.log('boothId', boothId) //kelly added to see if anything set here
     console.log('TEST PRIMARY: only setting current local cart')
     setLocalCart({ primaryBoothId: boothId })
     localStorage.setItem(
