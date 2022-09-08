@@ -162,12 +162,16 @@ export default function SponsorshipCard(props) {
       <Price className={'price'}>{formatter.format(price)}</Price>
       <Perks className={'items-container'}>{listItems}</Perks>
       <Hr className={'divider2'} top='22px' bottom='16px'></Hr>
-      <SponsorshipButton
+      {/* <SponsorshipButton
         className={'sponsorship-button'}
         buttonText={'Select this level'}
         buttonStyle={'primary'}
         onClick={handleClick}
-      />
+      /> */}
+      <Subheader>
+        Please contact the event organizers if you are interested in a
+        sponsorship.
+      </Subheader>
 
       {selected ? (
         <>

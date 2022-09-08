@@ -25,7 +25,9 @@ import {
   PageContainer,
 } from '../../../Elements/basic'
 import { CheckBox } from '../../../components/CheckBox'
+import { StateDropdown } from '../../../components/StateDropdown'
 import { useNavigate } from 'react-router-dom'
+
 const Paragraph = styled.p`
   padding: 10px 5px;
 `
@@ -64,6 +66,13 @@ const Card = styled.div`
   border-radius: 0.5rem;
 `
 
+const Required = styled.span`
+  display: flex;
+  justify-content: center;
+  color: red;
+  font-size: smaller;
+`
+
 export default function RegistrationForm(props) {
   const { user, updateUser } = useContext(UserContext)
   const { seedBooths } = useContext(BoothContext)
@@ -80,9 +89,10 @@ export default function RegistrationForm(props) {
   const navigate = useNavigate()
   const [showSponsorship, setShowSponsorship] = useState(false)
   const { changeState, states } = props
+
   const [input, setInput] = useState(
     currentVendor
-      ? { ...currentVendor, ...currentVendor.address }
+      ? { ...currentVendor, ...currentVendor.address } //kelly - theory: showing register inputs again b/c did not have address inputs??
       : {
           firstName: '',
           lastName: '',
@@ -105,6 +115,21 @@ export default function RegistrationForm(props) {
           repEmail: user.email,
         }
   )
+
+  // const [regErrors, setRegErrors] = useState({
+  //   firstName: '',
+  //   lastName: '',
+  //   phone: '',
+  //   street: '',
+  //   city: '',
+  //   zip: '',
+  //   state: '',
+  // })
+
+  const [regErrors, setRegErrors] = useState({})
+
+  // const [isValidReg, setIsValidReg] = useState(true)
+
   const [isEdit, setIsEdit] = useState(false)
 
   // useEffect(() => {
@@ -116,6 +141,7 @@ export default function RegistrationForm(props) {
 
   const handleChange = (e) => {
     const { name, value } = e.target
+
     setInput((prev) => {
       return {
         ...prev,
@@ -141,27 +167,220 @@ export default function RegistrationForm(props) {
     )
   }
 
+  //validation seems to work but problems with how to check that regErrors are present/cleared b/4 to go to booth selection***
+  //useRef??
+  // const handleValidation = () => {
+  //   if (input.firstName.length < 2) {
+  //     setRegErrors((prevState) => ({
+  //       ...prevState,
+  //       lastName: 'Last name is a required field.',
+  //     }))
+
+  //   if (input.lastName.length < 2) {
+  //     setRegErrors((prevState) => ({
+  //       ...prevState,
+  //       lastName: 'Last name is a required field.',
+  //     }))
+  //   }
+
+  //   if (input.phone.length === 0) {
+  //     //other format validation here?
+  //     setRegErrors((prevState) => ({
+  //       ...prevState,
+  //       phone: 'Phone is a required field.',
+  //     }))
+  //   }
+
+  //   if (input.street.length === 0) {
+  //     setRegErrors((prevState) => ({
+  //       ...prevState,
+  //       street: 'Street address is a required field.',
+  //     }))
+  //   }
+
+  //   if (input.city.length === 0) {
+  //     setRegErrors((prevState) => ({
+  //       ...prevState,
+  //       city: 'City is a required field.',
+  //     }))
+  //   }
+
+  //   if (input.zip.length < 5) {
+  //     setRegErrors((prevState) => ({
+  //       ...prevState,
+  //       zip: 'Valid zip code required.',
+  //     }))
+  //   }
+
+  //   if (!input.state) {
+  //     setRegErrors((prevState) => ({
+  //       ...prevState,
+  //       state: 'State is required.',
+  //     }))
+  //   }
+
+  // }
+
+  //Best way to set regErrors back to empty values for each property here??
+  // const clearRegErrors = () => {
+  //   setRegErrors({
+  //     firstName: '',
+  //     lastName: '',
+  //     phone: '',
+  //     street: '',
+  //     city: '',
+  //     zip: '',
+  //     state: '',
+  //   })
+  // }
+
+  //TRY WITH USING isValidReg with useState--not working properly
+  // const handleValidation = () => {
+  //   let errorsReg = {}
+
+  //   if (input.firstName.length < 2) {
+  //     errorsReg.firstName = 'First name is a required field.'
+  //   }
+
+  //   if (input.lastName.length < 2) {
+  //     errorsReg.lastName = 'Last name is a required field.'
+  //   }
+
+  //   if (input.phone.length < 10) {
+  //     errorsReg.phone = 'Phone is a required field.'
+  //   }
+
+  //   if (input.street.length === 0) {
+  //     errorsReg.street = 'Street address is a required field.'
+  //   }
+
+  //   if (input.city.length === 0) {
+  //     errorsReg.city = 'City is a required field.'
+  //   }
+
+  //   if (input.zip.length < 5) {
+  //     errorsReg.zip = 'Valid zip code required.'
+  //   }
+
+  //   if (!input.state) {
+  //     errorsReg.state = 'State is required.'
+  //   }
+
+  //   console.log('errors', errorsReg)
+  //   console.log(
+  //     'Object.values(errorsReg).length',
+  //     Object.values(errorsReg).length
+  //   )
+
+  //   if (Object.values(errorsReg).length > 0) {
+  //     setIsValidReg(false)
+  //     setRegErrors(errorsReg)
+  //   }
+
+  //   console.log('isValidReg', isValidReg) //this does not console.log as changed, even though errors
+  //   console.log('regErrors', regErrors)
+
+  //   return errorsReg
+  // }
+
+  //ALTERNATE FORM VALIDATION--this works (without employing useState for isValidReg)
+  const handleValidation = () => {
+    let isValidReg = true
+    let errorsReg = {}
+    if (input.firstName.length < 2) {
+      errorsReg.firstName = 'First name is a required field.'
+      isValidReg = false
+    }
+
+    if (input.lastName.length < 2) {
+      errorsReg.lastName = 'Last name is a required field.'
+      isValidReg = false
+    }
+
+    if (input.phone.length < 10) {
+      errorsReg.phone = 'Phone is a required field.'
+      isValidReg = false
+    }
+
+    if (input.street.length === 0) {
+      errorsReg.street = 'Street address is a required field.'
+      isValidReg = false
+    }
+
+    if (input.city.length === 0) {
+      errorsReg.city = 'City is a required field.'
+      isValidReg = false
+    }
+
+    if (input.zip.length < 5) {
+      errorsReg.zip = 'Valid zip code required.'
+      isValidReg = false
+    }
+
+    if (!input.state) {
+      errorsReg.state = 'State is required.'
+      isValidReg = false
+    }
+    console.log('isValidReg', isValidReg)
+    console.log('errors', errorsReg)
+    setRegErrors(errorsReg)
+    return isValidReg
+  }
+
   // async but no await?
   const handleSubmit = (e) => {
     e.preventDefault()
+    // clearRegErrors()
+
+    const isValidReg = handleValidation()
+    console.log(
+      'isValidReg after handleValidation inside handleSubmit',
+      isValidReg
+    )
+
+    // const regErrorArr = Object.values(regErrors)
+    // console.log('regErrorArr from handleValidation', regErrorArr)
+    // if (Object.values(regErrors).length !== 0) {
+    // Object.values(object).every(x => x === null || x === '')
+
+    if (isValidReg === false) {
+      //not giving correct answer b/c seems like value not keeping up with state
+      //how validate that object has associated values???  have to loop through?
+      //need different way to check here
+      console.log('hey, there are some registration errors here!')
+      console.log('regErrors Object', regErrors) //NOTE:  state appears to be updating, but this console.log does not seem to work (except on second button click)
+    }
 
     if (isEdit) {
+      console.log('isEdit', isEdit)
       updateCurrentVendor(input)
     } else {
-      setShowSponsorship(input.wantToSponsor)
-      // createVendor({...input})
+      // setShowSponsorship(input.wantToSponsor)
+      // createVendor({ ...input })
 
       console.log('from handlesubmit: ', { ...input })
-      createCart({ ...input })
+      createCart({ ...input }) //kelly-this calls createVendor() currently
     }
+
     if (input.file) {
       saveLogo(input.file)
     }
+
     if (input.wantToSponsor) {
       navigate('/sponsorship')
-    } else {
+    } else if (isValidReg === true) {
       navigate('/booth-selection')
     }
+
+    // else {
+    //   navigate('/booth-selection')
+    // }
+
+    // if (isErrorReg === false) {
+    //   navigate('/booth-selection')
+    // }
+
+    //comment here to push
   }
 
   const handleCheck = (e) => {
@@ -221,7 +440,12 @@ export default function RegistrationForm(props) {
           type='text'
           value={input.firstName}
           onChange={handleChange}
+          required //does not work
         />
+        <Required>
+          {regErrors.firstName ? <span>{regErrors.firstName}</span> : null}
+        </Required>
+
         <Input
           autocomplete='last'
           labelText='Last name'
@@ -229,7 +453,11 @@ export default function RegistrationForm(props) {
           type='text'
           value={input.lastName}
           onChange={handleChange}
+          required //not working
         />
+        <Required>
+          {regErrors.lastName ? <span>{regErrors.lastName}</span> : null}
+        </Required>
 
         <Input
           labelText={
@@ -251,6 +479,7 @@ export default function RegistrationForm(props) {
           value={input.description}
           onChange={handleChange}
         ></TextArea>
+
         <Input
           type='phone'
           autocomplete='tel'
@@ -258,7 +487,12 @@ export default function RegistrationForm(props) {
           name='phone'
           value={input.phone}
           onChange={handleChange}
+          required //not working
         />
+        <Required>
+          {regErrors.phone ? <span>{regErrors.phone}</span> : null}
+        </Required>
+
         <Input
           labelText='Address'
           autocomplete='street-address'
@@ -266,7 +500,12 @@ export default function RegistrationForm(props) {
           type='text'
           value={input.street}
           onChange={handleChange}
+          required //not working
         />
+        <Required>
+          {regErrors.street ? <span>{regErrors.street}</span> : null}
+        </Required>
+
         <Input
           labelText='City'
           name='city'
@@ -274,8 +513,13 @@ export default function RegistrationForm(props) {
           type='text'
           value={input.city}
           onChange={handleChange}
+          required //not working
         />
-        <Row coloumms='3'>
+        <Required>
+          {regErrors.city ? <span>{regErrors.city}</span> : null}
+        </Required>
+
+        <Row columns='3'>
           <Input
             type='text'
             labelText='Apt or suite'
@@ -283,14 +527,23 @@ export default function RegistrationForm(props) {
             value={input.apt}
             onChange={handleChange}
           />
-          <Input
+          {/* <Input
             type='text'
             labelText='State'
             name='state'
             autocomplete='address-level2'
             value={input.state}
             onChange={handleChange}
+          /> */}
+
+          <StateDropdown
+            value={input.state}
+            state={input.state}
+            handleChange={handleChange}
           />
+          <Required>
+            {regErrors.state ? <span>{regErrors.state}</span> : null}
+          </Required>
           <Input
             type='text'
             labelText='Zipcode'
@@ -298,7 +551,11 @@ export default function RegistrationForm(props) {
             auto-complete='postal-code'
             value={input.zip}
             onChange={handleChange}
+            required //not working
           />
+          <Required>
+            {regErrors.zip ? <span>{regErrors.zip} </span> : null}
+          </Required>
         </Row>
         <Row columns='2'>
           <Paragraph>Upload your organization's logo.</Paragraph>

@@ -12,6 +12,7 @@
     "@testing-library/user-event": "^12.7.1",
     "axios": "^0.21.1",
     "babel-plugin-graphql-js-client-transform": "^1.1.1",
+    "chokidar": "^3.5.3",
     "firebase": "^8.2.7",
     "graphql": "^15.5.1",
     "graphql-js-client": "^0.12.0",
