@@ -39,7 +39,6 @@ const ButtonGroup = styled.div`
   align-items: center;
   width: 100%;
   gap: 10px;
-
   & > button {
     margin: 0px;
   }
@@ -92,7 +91,7 @@ export default function RegistrationForm(props) {
 
   const [input, setInput] = useState(
     currentVendor
-      ? { ...currentVendor, ...currentVendor.address } //kelly - theory: showing register inputs again b/c did not have address inputs??
+      ? { ...currentVendor, ...currentVendor.address }
       : {
           firstName: '',
           lastName: '',
@@ -105,9 +104,9 @@ export default function RegistrationForm(props) {
           city: '',
           zip: '',
           state: '',
-          nonprofit: false,
-          governmental: false,
-          vetOwned: false,
+          isNonprofit: false, //changed this from "nonprofit"
+          isGovernmental: false, //changed this from "governmental"
+          isVeteranOwned: false, //changed this from "vetOwned"
           isSponsor: false,
           sponsorshipLevel: '',
           wantToSponsor: false,
@@ -128,9 +127,9 @@ export default function RegistrationForm(props) {
 
   const [regErrors, setRegErrors] = useState({})
 
-  // const [isValidReg, setIsValidReg] = useState(true)
-
   const [isEdit, setIsEdit] = useState(false)
+
+  const [isValidReg, setIsValidReg] = useState(false)
 
   // useEffect(() => {
   //   if (currentVendor && currentVendor.repEmail ===user.email){
@@ -167,192 +166,73 @@ export default function RegistrationForm(props) {
     )
   }
 
-  //validation seems to work but problems with how to check that regErrors are present/cleared b/4 to go to booth selection***
-  //useRef??
-  // const handleValidation = () => {
-  //   if (input.firstName.length < 2) {
-  //     setRegErrors((prevState) => ({
-  //       ...prevState,
-  //       lastName: 'Last name is a required field.',
-  //     }))
-
-  //   if (input.lastName.length < 2) {
-  //     setRegErrors((prevState) => ({
-  //       ...prevState,
-  //       lastName: 'Last name is a required field.',
-  //     }))
-  //   }
-
-  //   if (input.phone.length === 0) {
-  //     //other format validation here?
-  //     setRegErrors((prevState) => ({
-  //       ...prevState,
-  //       phone: 'Phone is a required field.',
-  //     }))
-  //   }
-
-  //   if (input.street.length === 0) {
-  //     setRegErrors((prevState) => ({
-  //       ...prevState,
-  //       street: 'Street address is a required field.',
-  //     }))
-  //   }
-
-  //   if (input.city.length === 0) {
-  //     setRegErrors((prevState) => ({
-  //       ...prevState,
-  //       city: 'City is a required field.',
-  //     }))
-  //   }
-
-  //   if (input.zip.length < 5) {
-  //     setRegErrors((prevState) => ({
-  //       ...prevState,
-  //       zip: 'Valid zip code required.',
-  //     }))
-  //   }
-
-  //   if (!input.state) {
-  //     setRegErrors((prevState) => ({
-  //       ...prevState,
-  //       state: 'State is required.',
-  //     }))
-  //   }
-
-  // }
-
-  //Best way to set regErrors back to empty values for each property here??
-  // const clearRegErrors = () => {
-  //   setRegErrors({
-  //     firstName: '',
-  //     lastName: '',
-  //     phone: '',
-  //     street: '',
-  //     city: '',
-  //     zip: '',
-  //     state: '',
-  //   })
-  // }
-
-  //TRY WITH USING isValidReg with useState--not working properly
-  // const handleValidation = () => {
-  //   let errorsReg = {}
-
-  //   if (input.firstName.length < 2) {
-  //     errorsReg.firstName = 'First name is a required field.'
-  //   }
-
-  //   if (input.lastName.length < 2) {
-  //     errorsReg.lastName = 'Last name is a required field.'
-  //   }
-
-  //   if (input.phone.length < 10) {
-  //     errorsReg.phone = 'Phone is a required field.'
-  //   }
-
-  //   if (input.street.length === 0) {
-  //     errorsReg.street = 'Street address is a required field.'
-  //   }
-
-  //   if (input.city.length === 0) {
-  //     errorsReg.city = 'City is a required field.'
-  //   }
-
-  //   if (input.zip.length < 5) {
-  //     errorsReg.zip = 'Valid zip code required.'
-  //   }
-
-  //   if (!input.state) {
-  //     errorsReg.state = 'State is required.'
-  //   }
-
-  //   console.log('errors', errorsReg)
-  //   console.log(
-  //     'Object.values(errorsReg).length',
-  //     Object.values(errorsReg).length
-  //   )
-
-  //   if (Object.values(errorsReg).length > 0) {
-  //     setIsValidReg(false)
-  //     setRegErrors(errorsReg)
-  //   }
-
-  //   console.log('isValidReg', isValidReg) //this does not console.log as changed, even though errors
-  //   console.log('regErrors', regErrors)
-
-  //   return errorsReg
-  // }
-
-  //ALTERNATE FORM VALIDATION--this works (without employing useState for isValidReg)
   const handleValidation = () => {
-    let isValidReg = true
     let errorsReg = {}
+
     if (input.firstName.length < 2) {
       errorsReg.firstName = 'First name is a required field.'
-      isValidReg = false
+      console.log('isValidReg missing first name', isValidReg)
     }
 
     if (input.lastName.length < 2) {
       errorsReg.lastName = 'Last name is a required field.'
-      isValidReg = false
+      console.log('isValidReg missing last name', isValidReg)
     }
 
     if (input.phone.length < 10) {
       errorsReg.phone = 'Phone is a required field.'
-      isValidReg = false
+      console.log('isValidReg missing phone', isValidReg)
     }
 
     if (input.street.length === 0) {
       errorsReg.street = 'Street address is a required field.'
-      isValidReg = false
+      console.log('isValidReg missing street', isValidReg)
     }
 
     if (input.city.length === 0) {
       errorsReg.city = 'City is a required field.'
-      isValidReg = false
+      console.log('isValidReg missing city', isValidReg)
     }
 
     if (input.zip.length < 5) {
       errorsReg.zip = 'Valid zip code required.'
-      isValidReg = false
+      console.log('isValidReg missing zip', isValidReg)
     }
 
     if (!input.state) {
       errorsReg.state = 'State is required.'
-      isValidReg = false
+      console.log('isValidReg missing state', isValidReg)
     }
-    console.log('isValidReg', isValidReg)
+
     console.log('errors', errorsReg)
     setRegErrors(errorsReg)
-    return isValidReg
+
+    if (Object.keys(regErrors).length === 0) {
+      //is this working when editing??? does not seem to, but why
+      setIsValidReg(!isValidReg)
+      console.log('isValidReg when empty regErrors obj', isValidReg)
+    }
   }
 
   // async but no await?
   const handleSubmit = (e) => {
     e.preventDefault()
-    // clearRegErrors()
 
-    const isValidReg = handleValidation()
+    handleValidation()
+
     console.log(
       'isValidReg after handleValidation inside handleSubmit',
       isValidReg
     )
 
-    // const regErrorArr = Object.values(regErrors)
-    // console.log('regErrorArr from handleValidation', regErrorArr)
-    // if (Object.values(regErrors).length !== 0) {
-    // Object.values(object).every(x => x === null || x === '')
-
     if (isValidReg === false) {
-      //not giving correct answer b/c seems like value not keeping up with state
-      //how validate that object has associated values???  have to loop through?
-      //need different way to check here
       console.log('hey, there are some registration errors here!')
       console.log('regErrors Object', regErrors) //NOTE:  state appears to be updating, but this console.log does not seem to work (except on second button click)
     }
 
     if (isEdit) {
       console.log('isEdit', isEdit)
+      handleValidation(input) //this does not seem to be working here -- b/c even if error, continues to booth selection anyway
       updateCurrentVendor(input)
     } else {
       // setShowSponsorship(input.wantToSponsor)
@@ -368,18 +248,14 @@ export default function RegistrationForm(props) {
 
     if (input.wantToSponsor) {
       navigate('/sponsorship')
-    } else if (isValidReg === true) {
+    // } else if (isEdit === false && isValidReg === true) {   //kelly -- changed this condition
+    } else {
       navigate('/booth-selection')
     }
 
     // else {
     //   navigate('/booth-selection')
     // }
-
-    // if (isErrorReg === false) {
-    //   navigate('/booth-selection')
-    // }
-
     //comment here to push
   }
 
@@ -440,7 +316,6 @@ export default function RegistrationForm(props) {
           type='text'
           value={input.firstName}
           onChange={handleChange}
-          required //does not work
         />
         <Required>
           {regErrors.firstName ? <span>{regErrors.firstName}</span> : null}
@@ -453,7 +328,6 @@ export default function RegistrationForm(props) {
           type='text'
           value={input.lastName}
           onChange={handleChange}
-          required //not working
         />
         <Required>
           {regErrors.lastName ? <span>{regErrors.lastName}</span> : null}
@@ -487,7 +361,6 @@ export default function RegistrationForm(props) {
           name='phone'
           value={input.phone}
           onChange={handleChange}
-          required //not working
         />
         <Required>
           {regErrors.phone ? <span>{regErrors.phone}</span> : null}
@@ -500,7 +373,6 @@ export default function RegistrationForm(props) {
           type='text'
           value={input.street}
           onChange={handleChange}
-          required //not working
         />
         <Required>
           {regErrors.street ? <span>{regErrors.street}</span> : null}
@@ -513,7 +385,6 @@ export default function RegistrationForm(props) {
           type='text'
           value={input.city}
           onChange={handleChange}
-          required //not working
         />
         <Required>
           {regErrors.city ? <span>{regErrors.city}</span> : null}
@@ -551,7 +422,6 @@ export default function RegistrationForm(props) {
             auto-complete='postal-code'
             value={input.zip}
             onChange={handleChange}
-            required //not working
           />
           <Required>
             {regErrors.zip ? <span>{regErrors.zip} </span> : null}
@@ -563,20 +433,20 @@ export default function RegistrationForm(props) {
         </Row>
         <CheckBox
           labelText='Organization is veteran owned'
-          name='vetOwned'
-          checked={input.vetOwned}
+          name='isVeteranOwned' //changed from "vetOwned"
+          checked={input.isVeteranOwned} //changed from input.vetOwned
           onChange={handleCheck}
         />
         <CheckBox
           labelText='Organization is a nonprofit'
-          name='nonprofit'
-          checked={input.nonprofit}
+          name='isNonprofit' //changed from "nonprofit"
+          checked={input.isNonprofit} //changed from input.nonprofit
           onChange={handleCheck}
         />
         <CheckBox
           labelText='Organization is a governmental organization'
-          name='governmental'
-          checked={input.governmental}
+          name='isGovernmental' //changed from "governmental"
+          checked={input.isGovernmental} //changed from input.governmental
           onChange={handleCheck}
         />
         <CheckBox

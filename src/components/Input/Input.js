@@ -45,7 +45,6 @@ const Input = (props) => {
     value,
     autocomplete,
     disabled,
-    required,
   } = props
   return (
     <InputWrapper>
@@ -57,7 +56,6 @@ const Input = (props) => {
         value={value}
         type={type}
         disabled={disabled}
-        required={required} //kelly added
       />
     </InputWrapper>
   )

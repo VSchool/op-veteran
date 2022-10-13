@@ -9,6 +9,7 @@ import firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/database'
 import 'firebase/firestore'
+import { getFirestore, doc, setDoc } from 'firebase/firestore'
 import 'firebase/storage'
 import 'firebase/functions'
 import axios from 'axios'
@@ -50,35 +51,101 @@ export default function VendorProvider({ children }) {
   // This should work if we can get the cartId properly.  Doesnt appear its in the
   // currentVendor data becasue createCart function is never called
 
-  const updateCurrentVendor = (data) => {
+  // ORIGINAL EDIT/UPDATE CODE using update
+  //   const updateCurrentVendor = (data) => {
+  //   if (!currentVendor) {
+  //     return
+  //   }
+  //   setCurrentVendor((prevState) => ({
+  //     ...prevState,
+  //     ...data,
+  //     address: {
+  //       street: data.address.street,
+  //       city: data.address.city,
+  //       state: data.address.state,
+  //       zip: data.address.zip,
+  //     },
+  //   }))
+
+  //   vendorRef
+  //     .doc(`${currentVendor.organization}`)
+  //     .update({
+  //       ...currentVendor,
+  //       ...data,
+  //       address: {
+  //         street: data.address.street,
+  //         city: data.address.city,
+  //         state: data.address.state,
+  //         zip: data.address.zip,
+  //       },
+  //     })
+  //     .catch((err) => console.log(err))
+  // }
+
+  //ORIGINAL EDIT/UPDATE CODE using update -- but with KR changes;
+  //NOTE:  THIS ONE WORKS!!!!
+  const updateCurrentVendor = ({ city, state, street, zip, ...data }) => {
+    //kelly -- attempting to destructure data to exclude address & avoid duplicate info in Firebase doc
+
     if (!currentVendor) {
       return
     }
-    setCurrentVendor((prevState) => ({
-      ...prevState,
+    setCurrentVendor({
+      city,
+      state,
+      street,
+      zip,
       ...data,
-      address: {
-        street: data.address.street,
-        city: data.address.city,
-        state: data.address.state,
-        zip: data.address.zip,
-      },
-    }))
+    })
 
     vendorRef
       .doc(`${currentVendor.organization}`)
       .update({
-        ...currentVendor,
-        ...data,
+        // {...currentVendor, //kelly- if use ...currentVendor instead of ...data-- does not work
+        ...data, //kelly - hopefully this now excludes the extra address "stuff"
         address: {
-          street: data.address.street,
-          city: data.address.city,
-          state: data.address.state,
-          zip: data.address.zip,
+          street: street, //instead of data.address.street here & for the 3 fields below, now changed to street, etc. b/c of destructuring above
+          city: city,
+          state: state,
+          zip: zip,
         },
+        rep: `${data.firstName} ${data.lastName}`,
       })
       .catch((err) => console.log(err))
   }
+
+  //ATTEMPT with setDoc (NOT working) -- try with just .set maybe?
+  // const updateCurrentVendor = (data) => {
+  //   if (!currentVendor) {
+  //     return
+  //   }
+  //   setCurrentVendor ({
+  //     ...data,
+  //     address: {
+  //       street: data.address.street,
+  //       city: data.address.city,
+  //       state: data.address.state,
+  //       zip: data.address.zip,
+  //     },
+  //   })
+
+  //     vendorRef.doc(`${currentVendor.organization}`)
+  //      .set(
+  //       {...data,
+
+  //       address: {
+  //         street: data.street, //kelly -- should this actually be data.street, vs. data.address.street etc.?
+  //         city: data.city,
+  //         state: data.state,
+  //         zip: data.zip,
+  //       }
+  //     },
+
+  //       {merge: true}
+  //      )
+
+  //     .catch((err) => console.log(err))
+  // }
 
   // This funciton is unused and is the root of the Shopify problem because its not saving the cart ID
   // Need to figure out where to integrate it. On the RegistrationForm component would likely make the most sense.
@@ -105,9 +172,9 @@ export default function VendorProvider({ children }) {
       phone: data.phone,
       rep: `${data.firstName} ${data.lastName}`,
       repEmail: user.email,
-      isGovernmental: data.governmental,
-      isNonprofit: data.nonprofit,
-      isVeteranOwned: data.vetOwned,
+      isGovernmental: data.isGovernmental, //changed from data.governmental
+      isNonprofit: data.isNonprofit, //changed from data.nonprofit
+      isVeteranOwned: data.isVeteranOwned, //changed from data.vetOwned
       description: data.description,
       organization: data.organization,
       booth: {
@@ -123,7 +190,7 @@ export default function VendorProvider({ children }) {
       sponsorship: {
         interested: data.wantToSponsor,
         level: data.isSponsor ? data.sponsorshipLevel : null,
-        staus: data.isSponsor ? 2 : 0,
+        status: data.isSponsor ? 2 : 0, //fixed typo here -- changed "staus" to "status"
       },
       logo: null,
     }
@@ -151,8 +218,8 @@ export default function VendorProvider({ children }) {
     //   .then((checkout => {
     // }))
 
-    console.log('currentVendorData', currentVendorData) //kelly added as checkpoint
-    console.log('vendorRef.doc', vendorRef.doc) //kelly added as checkpoint
+    // console.log('currentVendorData', currentVendorData) //kelly added as checkpoint
+    // console.log('vendorRef.doc', vendorRef.doc) //kelly added as checkpoint
   }
 
   // useEffect(() => { vendorData.forEach(b => { batch.set(vendorRef.doc(b.id),
