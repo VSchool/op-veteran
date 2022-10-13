@@ -127,7 +127,7 @@ const BoothManagement = (props) => {
 
   const selectedBooth = booths.filter((booth) => booth.id === currentBooth)[0]
 
-  console.log(selectedBooth)
+  console.log("selectedBooth", selectedBooth)  //kelly -- this is coming up as undefined now
   const checkNeighbors = () => {
     const options = booths.reduce((response, b) => {
       if (
