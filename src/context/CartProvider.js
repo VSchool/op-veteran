@@ -49,14 +49,20 @@ export default function CartProvider({ children }) {
       .then((checkout) => {
         console.log('From vendor provider: checkout', checkout)
         console.log('From vendor provider: checkout ID', checkout.id)
-        
+
+   
+
         createVendor({
           ...data,
           cartId: checkout.id,
           cartUrl: checkout.webUrl,
         })
 
-        console.log("cartId after createVendor inside createCart", client.cartId) //kelly - added
+        console.log(
+          'cartId after createVendor inside createCart',
+          client.cartId
+        ) //kelly - added
+
         //updateCurrentVendor({ cartId: checkout.id })  //commented out w/Maira on call 9/1
       })
       .catch((err) => console.log(err))
@@ -67,9 +73,21 @@ export default function CartProvider({ children }) {
     return client.checkout
       .fetch(currentVendor.cartId)
       .then((res) => {
-        console.log("currentVendor from getShopifyCart", currentVendor)
-        console.log("currentVendor.cartId from getShopifyCart", currentVendor.cartId)  //kelly -- added to check & this console.logs too
-        console.log("res.lineItems", res.lineItems)              //kelly -- but this console.log shows an empty array after trying to add booth -- and shows empty on screen too??
+        console.log('currentVendor from getShopifyCart', currentVendor)
+        console.log(
+          'currentVendor.cartId from getShopifyCart',
+          currentVendor.cartId
+        ) //kelly -- added to check & this console.logs too
+        console.log('res.lineItems', res.lineItems) //kelly -- but this console.log shows an empty array after trying to add booth -- and shows empty on screen too??
+        console.log('res from getShopifyCart', res)
+
+        //TEST FETCH--FOR FREE BOOTH THAT WE ADDED BACK TO SHOPIFY PRODUCTS ON 11/4/22--this seems to work
+        // const productId = 'gid://shopify/Product/7541532557497'
+        // client.product.fetch(productId).then((product) => {
+        //   // Do something with the product
+        //   console.log('TEST FREE BOOTH product', product)
+        // })
+
         const lineItemsData = res.lineItems.map((item) => {
           return {
             title: item.title,
@@ -79,6 +97,7 @@ export default function CartProvider({ children }) {
         })
         setCart(lineItemsData)
       })
+      
       .then(() => setLoading(false))
       .catch((err) => console.log(err))
   }
@@ -100,14 +119,20 @@ export default function CartProvider({ children }) {
           customAttributes: [{ key: 'boothID', value: boothId }],
         },
       ])
+      .then(res=>console.log("res from add", res.lineItems))
+      .catch(err=>console.log("err from add", err))
+
     } else {
-      return client.checkout.addLineItems(currentVendor.cartId, [
-        {
-          variantId: products[item],
-          quantity: 1,
-          customAttributes: [{ key: 'boothID', value: boothId }],
-        },
-      ])
+      return client.checkout
+        .addLineItems(currentVendor.cartId, [
+          {
+            variantId: products[item],
+            quantity: 1,
+            customAttributes: [{ key: 'boothID', value: boothId }],
+          },
+        ])
+        .then((res) => console.log('res from add', res.lineItems))
+        .catch((err) => console.log('err from add', err))
     }
   }
 
@@ -153,19 +178,21 @@ export default function CartProvider({ children }) {
       currentVendor.isGovernmental ||
       currentVendor.isVeteranOwned
     ) {
+      console.log("isNonProfit/isVet")
       if (booth.hasElectricity) {
         await addItemToCart('freeBooth', boothId, 'electricity')
       } else {
         await addItemToCart('freeBooth', boothId)
       }
     } else {
+      console.log('regular user')
       if (booth.hasElectricity) {
         await addItemToCart('standardBooth', boothId, 'electricity')
       } else {
         await addItemToCart('standardBooth', boothId)
       }
     }
-    await getShopifyCart()
+   await getShopifyCart()
   }
 
   const addSecondaryBoothToLocalCart = (boothId) => {
@@ -223,7 +250,7 @@ export default function CartProvider({ children }) {
       } else {
         await addItemToCart('doubleBooth', boothId)
       }
-      getShopifyCart()
+      getShopifyCart()  
     }
   }
 
