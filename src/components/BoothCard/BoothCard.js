@@ -91,7 +91,7 @@ const BoothCard = (props) => {
   const navigate = useNavigate()
   const { data, handleSelectBooth, handleClose } = props
   const { id, vendor, section, hasElectricity, row, restriction } = data
-
+  const { currentVendor, createVendor } = useContext(VendorContext)
   const handlePrimaryClick = (e) => {
     e.preventDefault()
     if (isAllowed()) {
