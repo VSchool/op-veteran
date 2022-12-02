@@ -15,28 +15,38 @@ import 'firebase/functions'
 import axios from 'axios'
 const vendorRef = firestore.collection('vendors')
 const batch = firestore.batch()
-const products = {
-  Paladin: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8zODgyMzc3NjgxMzI0MQ==',
-  Abrams: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8zODgyMzc3Njg0NjAwOQ==',
-  Stryker: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8zODgyMzc3Njg3ODc3Nw==',
-  Bradley: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8zODgyMzc3NjkxMTU0NQ==',
-  Amtrak: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8zODgyMzc3Njk0NDMxMw==',
-  WLA: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8zODgyMzc3Njk3NzA4MQ==',
-  doubleBooth: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC80MDI0NDgxODU3NTU0NQ==', //this decodes to gid://shopify/ProductVariant/40244818575545
-  electricity: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC80MDI0NDgxODU0Mjc3Nw==', //this decodes to gid://shopify/ProductVariant/40244818542777
-  // freeBooth: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC80MDI0NDgxODUxMDAwOQ==', //this is original code for free booth that was deleted -- this decodes to gid://shopify/ProductVariant/40244818510009
-  freeBooth: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC80MzAxODQwMDc5Mjc2MQ==', //this is the new free booth that we had to add back                                                                         //new free booth:  gid://shopify/ProductVariant/43018400792761
-  standardBooth: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC80MDI0NDgxODQ0NDQ3Mw==', //this decodes to gid://shopify/ProductVariant/40244818444473
-  PaladinPromise:
-    'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC80MDI2NzYzMjY0MDE4NQ==',
-  AbramsPromise: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC80MDI2NzYzMjY3Mjk1Mw==',
-  StrykerPromise:
-    'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC80MDI2NzYzMjcwNTcyMQ==',
-  BradleyPromise:
-    'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC80MDI2NzYzMjczODQ4OQ==',
-  AmtrakPromise: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC80MDI2NzYzMjc3MTI1Nw==',
-  WLAPromise: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC80MDI2NzYzMjgwNDAyNQ==',
-}
+
+//COMMENTED PRODUCTS OUT HERE B/C DO NOT THINK THIS CODE BELOW IS BEING UTILIZED (note: products info is in ./data/shopifyProducts & accessed in CartProvider )
+// const products = {
+//   Paladin: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8zODgyMzc3NjgxMzI0MQ==',
+//   Abrams: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8zODgyMzc3Njg0NjAwOQ==',
+//   Stryker: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8zODgyMzc3Njg3ODc3Nw==',
+//   Bradley: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8zODgyMzc3NjkxMTU0NQ==',
+//   Amtrak: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8zODgyMzc3Njk0NDMxMw==',
+//   WLA: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8zODgyMzc3Njk3NzA4MQ==',
+//   doubleBooth: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC80MDI0NDgxODU3NTU0NQ==', 
+//   electricity: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC80MDI0NDgxODU0Mjc3Nw==', 
+//   freeBooth: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC80MzAxODQwMDc5Mjc2MQ==',   //new code after deleted                                                                 
+//   standardBooth: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC80MDI0NDgxODQ0NDQ3Mw==', 
+//   PaladinPromise:
+//     'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC80MDI2NzYzMjY0MDE4NQ==',
+//   AbramsPromise: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC80MDI2NzYzMjY3Mjk1Mw==',
+//   StrykerPromise:
+//     'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC80MDI2NzYzMjcwNTcyMQ==',
+//   BradleyPromise:
+//     'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC80MDI2NzYzMjczODQ4OQ==',
+//   AmtrakPromise: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC80MDI2NzYzMjc3MTI1Nw==',
+//   WLAPromise: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC80MDI2NzYzMjgwNDAyNQ==',
+// }
+
+
+//Kelly -- NOTES re: product info:
+ // freeBooth: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC80MDI0NDgxODUxMDAwOQ==', //this is original code for free booth that was deleted -- 
+ //freeBooth: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC80MzAxODQwMDc5Mjc2MQ==', //this is the new free booth that we had to add back  //new Z free booth:  gid://shopify/ProductVariant/43018400792761
+ //this line right above decodes to gid://shopify/ProductVariant/40244818510009 (note: this console.logging as products[item] even though product was deleted & commented out here??)
+//   doubleBooth: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC80MDI0NDgxODU3NTU0NQ=='; this decodes to gid://shopify/ProductVariant/40244818575545
+//  electricity: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC80MDI0NDgxODU0Mjc3Nw==', //this decodes to gid://shopify/ProductVariant/40244818542777
+//  standardBooth: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC80MDI0NDgxODQ0NDQ3Mw==',  //this decodes to gid://shopify/ProductVariant/40244818444473
 
 //10x20 booth fee:  https://o-p-veteran.myshopify.com/admin/products/6777794134201
 //powered booth fee:  https://o-p-veteran.myshopify.com/admin/products/6777794101433
@@ -89,7 +99,7 @@ export default function VendorProvider({ children }) {
   // }
 
   //ORIGINAL EDIT/UPDATE CODE using update -- but with KR changes;
-  //NOTE:  THIS ONE WORKS!!!!
+  //NOTE:  THIS ONE WORKS w/o duplicating info in Firebase when make edit
   const updateCurrentVendor = ({ city, state, street, zip, ...data }) => {
     //kelly -- attempting to destructure data to exclude address & avoid duplicate info in Firebase doc
 
@@ -120,38 +130,7 @@ export default function VendorProvider({ children }) {
       .catch((err) => console.log(err))
   }
 
-  //ATTEMPT with setDoc (NOT working) -- try with just .set maybe?
-  // const updateCurrentVendor = (data) => {
-  //   if (!currentVendor) {
-  //     return
-  //   }
-  //   setCurrentVendor ({
-  //     ...data,
-  //     address: {
-  //       street: data.address.street,
-  //       city: data.address.city,
-  //       state: data.address.state,
-  //       zip: data.address.zip,
-  //     },
-  //   })
 
-  //     vendorRef.doc(`${currentVendor.organization}`)
-  //      .set(
-  //       {...data,
-
-  //       address: {
-  //         street: data.street, //kelly -- should this actually be data.street, vs. data.address.street etc.?
-  //         city: data.city,
-  //         state: data.state,
-  //         zip: data.zip,
-  //       }
-  //     },
-
-  //       {merge: true}
-  //      )
-
-  //     .catch((err) => console.log(err))
-  // }
 
   // This funciton is unused and is the root of the Shopify problem because its not saving the cart ID
   // Need to figure out where to integrate it. On the RegistrationForm component would likely make the most sense.
