@@ -131,7 +131,33 @@ const Blur = styled.div`
   left: 0;
   right: 0;
 `
-const FileUploader = styled.input``
+const FileUploader = styled.input`display: none`
+const FileUploaderLabel = styled.label`
+font-style: normal;
+font-weight: 500;
+font-size: 16px;
+line-height: 20px;
+/* identical to box height, or 125% */
+justify-content: center;
+display: flex;
+align-items: center;
+text-align: center;
+padding: 5px 10px;
+cursor: pointer;
+width: 100%;
+/* Primary/White */
+box-sizing: border-box;
+  height: 40px;
+  line-height: 24px;
+  letter-spacing: 0.25px;
+  margin: 8px;
+  margin-bottom: 15px;
+  border-radius: 50px;
+  outline: none;
+  color: white;
+  color: #FFFFFF;
+  background: #16a085;
+`
 const CloseButton = styled.div`
   cursor: pointer;
   display: grid;
@@ -165,4 +191,5 @@ export {
   Blur,
   FileUploader,
   PageContainer,
+  FileUploaderLabel,
 }

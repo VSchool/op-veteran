@@ -23,6 +23,7 @@ const StyledButton = styled.button`
   letter-spacing: 0.25px;
   margin: 8px;
   margin-bottom: 15px;
+  width: ${(props) => props.width};
   color: ${(props) => props.color};
   background: ${(props) => props.background};
   box-shadow: ${(props) => props.boxShadow};
@@ -53,8 +54,9 @@ export default function Button(props) {
     activeBackground,
     activeBorder,
     borderRadius,
+    width,
   } = setStyle(buttonStyle)
-
+  console.log(props)
   return (
     <StyledButton
       // className={className}
@@ -66,6 +68,7 @@ export default function Button(props) {
       activeBackground={activeBackground}
       activeBorder={activeBorder}
       disabled={disabled ? disabled : false}
+      width = {width}
       {...buttonProps}
     >
       {buttonText}

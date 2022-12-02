@@ -150,6 +150,7 @@ export default function RegistrationForm(props) {
     })
     handleValidation()
   }
+
   const handleShowSponsorship = (e) => {
     e.preventDefault()
     setShowSponsorship(true)
@@ -227,6 +228,7 @@ export default function RegistrationForm(props) {
   }
 
   const handleSubmit = async (e) => {
+
     e.preventDefault()
 
     handleValidation()
@@ -235,11 +237,6 @@ export default function RegistrationForm(props) {
       'isValidReg after handleValidation inside handleSubmit',
       isValidReg
     )
-
-    if (!isValidReg) {
-      console.log('hey, there are some registration errors here!')
-      console.log('regErrors Object', regErrors) //NOTE:  state appears to be updating, but this console.log does not seem to work (except on second button click)
-    }
 
     if (isEdit) {
       console.log('isEdit', isEdit)
@@ -263,11 +260,6 @@ export default function RegistrationForm(props) {
       // } else {
       navigate('/booth-selection')
     }
-
-    // } else {
-    //   navigate('/booth-selection')
-    // }
-    //comment here to push
   }
 
   const handleCheck = (e) => {
@@ -281,7 +273,7 @@ export default function RegistrationForm(props) {
   }
 
   const handleIsEditing = () => {
-    setIsEdit(true)
+    setIsEdit(!isEdit)
   }
 
   if (currentVendor && !isEdit) {
@@ -409,15 +401,7 @@ export default function RegistrationForm(props) {
             value={input.apt}
             onChange={handleChange}
           />
-          {/* <Input
-            type='text'
-            labelText='State'
-            name='state'
-            autocomplete='address-level2'
-            value={input.state}
-            onChange={handleChange}
-          /> */}
-
+  
           <StateDropdown
             value={input.state}
             state={input.state}

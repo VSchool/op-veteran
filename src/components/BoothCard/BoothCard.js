@@ -91,7 +91,7 @@ const BoothCard = (props) => {
   const navigate = useNavigate()
   const { data, handleSelectBooth, handleClose } = props
   const { id, vendor, section, hasElectricity, row, restriction } = data
-
+  const { currentVendor, createVendor } = useContext(VendorContext)
   const handlePrimaryClick = (e) => {
     e.preventDefault()
     if (isAllowed()) {
@@ -115,14 +115,18 @@ const BoothCard = (props) => {
   }
 
   const isAllowed = () => {
+    const tier1 = ['Paladin', 'Stryker', 'Abrams', 'Bradley']
+    const tier2 = ['Paladin', 'Stryker']
+   
     if (vendor) return false
     if (restriction === 0) {
       return true
-    } else {
-      return false
+    } else if (restriction === 1) {
+      return tier1.some(tier => currentVendor.sponsorship.level.includes(tier))
+    } else if (restriction === 2) {
+      return tier2.some(tier => currentVendor.sponsorship.level.includes(tier))
     }
   }
-
   return (
     <CardContainer>
       <HeaderWrapper>
