@@ -130,6 +130,7 @@ export default function RegistrationForm(props) {
   const [isEdit, setIsEdit] = useState(false)
 
   const [isValidReg, setIsValidReg] = useState(false)
+  console.log(isValidReg)
 
   // useEffect(() => {
   //   if (currentVendor && currentVendor.repEmail ===user.email){
@@ -147,6 +148,7 @@ export default function RegistrationForm(props) {
         [name]: value,
       }
     })
+    handleValidation()
   }
 
   const handleShowSponsorship = (e) => {
@@ -205,8 +207,9 @@ export default function RegistrationForm(props) {
       console.log('isValidReg missing state', isValidReg)
     }
 
-    setRegErrors(errorsReg)
-
+    console.log('errors', errorsReg)
+    setRegErrors(errorsReg) //maybe set this in each if statement with prev???
+    console.log('Object.keys(regErrors).length', Object.keys(regErrors).length)
 
     if (Object.keys(regErrors).length === 0) {
       setIsValidReg(true)
@@ -215,12 +218,17 @@ export default function RegistrationForm(props) {
         'isValidReg value after check for empty regErrors obj',
         isValidReg
       )
-      // return isValidReg
+      //example -- if just edit a checkbox or add a letter-- this is not flipping to true=>works on second button click though??
     }
-   
+
+    if (!isValidReg) {
+      console.log('hey, there are some registration errors here!')
+      console.log('regErrors Object', regErrors) //NOTE:  state appears to be updating, but this console.log does not seem to work (except on second button click)
+    }
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
+
     e.preventDefault()
 
     handleValidation()
@@ -247,8 +255,9 @@ export default function RegistrationForm(props) {
 
     if (input.wantToSponsor) {
       navigate('/sponsorship')
-
     } else if (isValidReg) {
+      //kelly -- changed this condition back on 10/15/22 -- possibly need to push this again so most updated is there.
+      // } else {
       navigate('/booth-selection')
     }
   }
