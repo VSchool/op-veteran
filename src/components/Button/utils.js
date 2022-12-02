@@ -6,6 +6,16 @@ export function setStyle(style) {
       fontColor: `#FFFFFF`,
       hoverBackground: `#1abc9c`,
       activeBackground: `#1abc9c`,
+      
+    }
+  }else if (style === 'upload') {
+    return {
+      background: `#16a085`,
+      border: `none`,
+      fontColor: `#FFFFFF`,
+      hoverBackground: `#1abc9c`,
+      activeBackground: `#1abc9c`,
+      width: '100%',
     }
   } else if (style === 'secondary') {
     return {

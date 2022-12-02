@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { VendorContext } from '../../context/VendorProvider'
-import { Container, FileUploader } from '../../Elements/basic'
+import { Container, FileUploader, FileUploaderLabel } from '../../Elements/basic'
 import { BoothContext } from '../../context/BoothProvider'
 import { Button } from '../../components/Button'
 
@@ -47,7 +47,7 @@ const ToDoList = ({ List, Header2, ListItem }) => {
       }
     }
   }
-
+  
   return (
     <List>
       <Header2>To do:</Header2>
@@ -73,24 +73,34 @@ const ToDoList = ({ List, Header2, ListItem }) => {
         </ListItem>
       ) : null}
       {currentVendor && !currentVendor?.logo && showLogoUploader ? (
-        <Container width='80%'>
+        <Container width='80%' height='auto'>
+          
           <FileUploader
             onChange={(e) => {
               setFile(e.target.files[0])
             }}
             type='file'
+            Style='primary'
+            id='upload-photo'
           />
-          {file === null ? null : (
+          <FileUploaderLabel id='upload-photo-label' for="upload-photo" type='label'>Choose File</FileUploaderLabel>
+          {file === null ? null : 
+            
+          (
+            <div>
+              <label style={{color: "white"}}>${file.name}</label>
             <Button
               buttonText='Upload'
-              buttonStyle='primary'
+              buttonStyle='upload'
               onClick={(e) => {
                 saveLogo(file)
               }}
             >
               Upload file
             </Button>
+            </div>
           )}
+          
         </Container>
       ) : null}
       {currentVendor?.sponsorship &&

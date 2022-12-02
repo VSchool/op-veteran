@@ -155,10 +155,9 @@ export default function CartProvider({ children }) {
     )
     // currentBooth should hold the whole booth instead of just the ID to avoid always holding
     const booth = booths.find((b) => b.id === boothId)
+    const tier1 = ['Paladin', 'Stryker', 'Abrams', 'Bradley']
     if (
-      ['Paladin', 'Stryker', 'Abrams', 'Bradley'].includes(
-        currentVendor.sponsorship.level
-      )
+      tier1.some(tier => currentVendor.sponsorship.level.includes(tier))
     ) {
       if (booth.hasElectricity) {
         const checkout = await addItemToCart(
@@ -207,11 +206,10 @@ export default function CartProvider({ children }) {
   }
 
   const addSecondaryBoothToCart = async (boothId) => {
+    const tier1 = ['Paladin', 'Stryker', 'Abrams', 'Bradley']
     const booth = booths.find((b) => b.id === boothId)
     if (
-      ['Paladin', 'Stryker', 'Abrams', 'Bradley'].includes(
-        currentVendor.sponsorship.level
-      )
+      tier1.some(tier => currentVendor.sponsorship.level.includes(tier))
     ) {
       if (booth.hasElectricity) {
         const checkout = await addItemToCart(
