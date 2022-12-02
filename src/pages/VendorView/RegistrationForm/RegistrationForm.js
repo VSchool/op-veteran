@@ -138,9 +138,7 @@ export default function RegistrationForm(props) {
   //   }
   // }, [currentVendor])
 
-
-
-const handleChange = (e) => {
+  const handleChange = (e) => {
     const { name, value } = e.target
 
     setInput((prev) => {
@@ -150,6 +148,7 @@ const handleChange = (e) => {
       }
     })
   }
+
   const handleShowSponsorship = (e) => {
     e.preventDefault()
     setShowSponsorship(true)
@@ -168,68 +167,60 @@ const handleChange = (e) => {
     )
   }
 
+  const handleValidation = () => {
+    let errorsReg = {}
 
-const handleValidation = () => {
-  let errorsReg = {}
+    if (input.firstName.length < 2) {
+      errorsReg.firstName = 'First name is a required field.'
+      console.log('isValidReg missing first name', isValidReg)
+    }
 
-  if (input.firstName.length < 2) {
-    errorsReg.firstName = 'First name is a required field.'
-    console.log('isValidReg missing first name', isValidReg)
+    if (input.lastName.length < 2) {
+      errorsReg.lastName = 'Last name is a required field.'
+      console.log('isValidReg missing last name', isValidReg)
+    }
+
+    if (input.phone.length < 10) {
+      errorsReg.phone = 'Phone is a required field.'
+      console.log('isValidReg missing phone', isValidReg)
+    }
+
+    if (input.street.length === 0) {
+      errorsReg.street = 'Street address is a required field.'
+      console.log('isValidReg missing street', isValidReg)
+    }
+
+    if (input.city.length === 0) {
+      errorsReg.city = 'City is a required field.'
+      console.log('isValidReg missing city', isValidReg)
+    }
+
+    if (input.zip.length < 5) {
+      errorsReg.zip = 'Valid zip code required.'
+      console.log('isValidReg missing zip', isValidReg)
+    }
+
+    if (!input.state) {
+      errorsReg.state = 'State is required.'
+      console.log('isValidReg missing state', isValidReg)
+    }
+
+    setRegErrors(errorsReg)
+
+
+    if (Object.keys(regErrors).length === 0) {
+      setIsValidReg(true)
+      console.log('isEdit when no errors', isEdit)
+      console.log(
+        'isValidReg value after check for empty regErrors obj',
+        isValidReg
+      )
+      // return isValidReg
+    }
+   
   }
 
-  if (input.lastName.length < 2) {
-    errorsReg.lastName = 'Last name is a required field.'
-    console.log('isValidReg missing last name', isValidReg)
-  }
-
-  if (input.phone.length < 10) {
-    errorsReg.phone = 'Phone is a required field.'
-    console.log('isValidReg missing phone', isValidReg)
-  }
-
-  if (input.street.length === 0) {
-    errorsReg.street = 'Street address is a required field.'
-    console.log('isValidReg missing street', isValidReg)
-  }
-
-  if (input.city.length === 0) {
-    errorsReg.city = 'City is a required field.'
-    console.log('isValidReg missing city', isValidReg)
-  }
-
-  if (input.zip.length < 5) {
-    errorsReg.zip = 'Valid zip code required.'
-    console.log('isValidReg missing zip', isValidReg)
-  }
-
-  if (!input.state) {
-    errorsReg.state = 'State is required.'
-    console.log('isValidReg missing state', isValidReg)
-  }
-
-  console.log('errors', errorsReg)
-  setRegErrors(errorsReg) //maybe set this in each if statement with prev???
-  console.log('Object.keys(regErrors).length', Object.keys(regErrors).length)
-
-if (Object.keys(regErrors).length === 0) {
-    setIsValidReg(true)
-    console.log("isEdit when no errors", isEdit)
-    console.log(
-      'isValidReg value after check for empty regErrors obj',
-      isValidReg
-    )
-    //example -- if just edit a checkbox or add a letter-- this is not flipping to true=>works on second button click though??
-  }
-
-  if (!isValidReg) {
-    console.log('hey, there are some registration errors here!')
-    console.log('regErrors Object', regErrors) //NOTE:  state appears to be updating, but this console.log does not seem to work (except on second button click)
-  }
-
-}
-      
-
-const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault()
 
     handleValidation()
@@ -239,15 +230,9 @@ const handleSubmit = async (e) => {
       isValidReg
     )
 
-    if (!isValidReg) {
-      console.log('hey, there are some registration errors here!')
-      console.log('regErrors Object', regErrors) //NOTE:  state appears to be updating, but this console.log does not seem to work (except on second button click)
-    }
-
     if (isEdit) {
       console.log('isEdit', isEdit)
       updateCurrentVendor(input)
-   
     } else {
       // setShowSponsorship(input.wantToSponsor)
       // createVendor({ ...input })
@@ -263,18 +248,10 @@ const handleSubmit = async (e) => {
     if (input.wantToSponsor) {
       navigate('/sponsorship')
 
-
-    } else if (isValidReg) {   //kelly -- changed this condition back on 10/15/22 -- possibly need to push this again so most updated is there.
-    // } else {
+    } else if (isValidReg) {
       navigate('/booth-selection')
     }
-
-    // } else {
-    //   navigate('/booth-selection')
-    // }
-    //comment here to push
   }
-
 
   const handleCheck = (e) => {
     const { name, checked } = e.target
@@ -287,9 +264,8 @@ const handleSubmit = async (e) => {
   }
 
   const handleIsEditing = () => {
-    setIsEdit(true)
+    setIsEdit(!isEdit)
   }
-
 
   if (currentVendor && !isEdit) {
     return (
@@ -312,7 +288,7 @@ const handleSubmit = async (e) => {
             <Button
               buttonText='Return to Booth Selection'
               buttonStyle='secondary'
-              onClick={() => navigate('/booth-selection')} 
+              onClick={() => navigate('/booth-selection')}
             />
           </ButtonGroup>
         </Card>
@@ -416,15 +392,7 @@ const handleSubmit = async (e) => {
             value={input.apt}
             onChange={handleChange}
           />
-          {/* <Input
-            type='text'
-            labelText='State'
-            name='state'
-            autocomplete='address-level2'
-            value={input.state}
-            onChange={handleChange}
-          /> */}
-
+  
           <StateDropdown
             value={input.state}
             state={input.state}

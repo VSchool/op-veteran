@@ -29,7 +29,7 @@ export default function CartProvider({ children }) {
   const [loading, setLoading] = useState(true)
 
   const createCart = (data) => {
-    console.log('createCart function called with data: ', data)
+    console.log('createCart function called with data: ', data) 
     client.checkout
       .create({
         shippingAddress: {
@@ -50,14 +50,13 @@ export default function CartProvider({ children }) {
         console.log('From vendor provider: checkout', checkout)
         console.log('From vendor provider: checkout ID', checkout.id)
 
-   
-
         createVendor({
           ...data,
           cartId: checkout.id,
           cartUrl: checkout.webUrl,
         })
 
+        
         console.log(
           'cartId after createVendor inside createCart',
           client.cartId
@@ -87,6 +86,11 @@ export default function CartProvider({ children }) {
         //   // Do something with the product
         //   console.log('TEST FREE BOOTH product', product)
         // })
+        //TEST FETCH OF ALL PRODUCTS
+        // client.product.fetchAll().then((products) => {
+        //   // Do something with the products
+        //   console.log('fetch all products', products)
+        // })
 
         const lineItemsData = res.lineItems.map((item) => {
           return {
@@ -97,31 +101,36 @@ export default function CartProvider({ children }) {
         })
         setCart(lineItemsData)
       })
-      
+
       .then(() => setLoading(false))
       .catch((err) => console.log(err))
   }
 
   const addItemToCart = (item, boothId, electricity) => {
-    console.log(`addItemToCart item: ${item} boothId: ${boothId}`)    //kelly -- this is console.logging
-    console.log("currentVendor.cartId from addItemToCart", currentVendor.cartId) //kelly added to see if coming through; this is console.logging as well
+    console.log(`addItemToCart item: ${item} boothId: ${boothId}`) //kelly -- this is console.logging
+    console.log('currentVendor.cartId from addItemToCart', currentVendor.cartId) //kelly added to see if coming through; this is console.logging as well
+    console.log('products[item]', products[item]) //this console.logs the old freeBooth id -- but HOW?
+
+    // products[item]= 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC80MzAxODQwMDc5Mjc2MQ=='
+    //note:  Z Free Booth adds to cart like this when set it above, so seems like right code;
+    //BUT...why is it setting to the old freeBooth code & where is this occurring b/c it's commented out in VendorProvider????
 
     if (electricity) {
-      return client.checkout.addLineItems(currentVendor.cartId, [
-        {
-          variantId: products[item],
-          quantity: 1,
-          customAttributes: [{ key: 'boothID', value: boothId }],
-        },
-        {
-          variantId: products[electricity],
-          quantity: 1,
-          customAttributes: [{ key: 'boothID', value: boothId }],
-        },
-      ])
-      .then(res=>console.log("res from add", res.lineItems))
-      .catch(err=>console.log("err from add", err))
-
+      return client.checkout
+        .addLineItems(currentVendor.cartId, [
+          {
+            variantId: products[item],
+            quantity: 1,
+            customAttributes: [{ key: 'boothID', value: boothId }],
+          },
+          {
+            variantId: products[electricity],
+            quantity: 1,
+            customAttributes: [{ key: 'boothID', value: boothId }],
+          },
+        ])
+        .then((res) => console.log('res from add', res.lineItems))
+        .catch((err) => console.log('err from add', err))
     } else {
       return client.checkout
         .addLineItems(currentVendor.cartId, [
@@ -139,18 +148,18 @@ export default function CartProvider({ children }) {
   const addPrimaryBoothToLocalCart = (boothId) => {
     setLoading(true)
     console.log('boothId', boothId) //kelly added to see if anything set here
-    console.log('TEST PRIMARY: only setting current local cart')   //kelly -- this console.logs
+    console.log('TEST PRIMARY: only setting current local cart') //kelly -- this console.logs
     setLocalCart({ primaryBoothId: boothId })
     localStorage.setItem(
       'localCart',
-      JSON.stringify({ primaryBoothId: boothId })             //kelly -- this shows up in local storage
+      JSON.stringify({ primaryBoothId: boothId }) //kelly -- this shows up in local storage
     )
     currentVendor && addPrimaryBoothToCart(boothId)
   }
 
   const addPrimaryBoothToCart = async (boothId) => {
     console.log(
-      'this is the current booth selection id from addPrimaryBoothCart: ',        //kelly -- this console.logs
+      'this is the current booth selection id from addPrimaryBoothCart: ', //kelly -- this console.logs
       boothId
     )
     // currentBooth should hold the whole booth instead of just the ID to avoid always holding
@@ -177,7 +186,8 @@ export default function CartProvider({ children }) {
       currentVendor.isGovernmental ||
       currentVendor.isVeteranOwned
     ) {
-      console.log("isNonProfit/isVet")
+      console.log("isNonProfit/isVet/isGov't")
+
       if (booth.hasElectricity) {
         await addItemToCart('freeBooth', boothId, 'electricity')
       } else {
@@ -191,7 +201,7 @@ export default function CartProvider({ children }) {
         await addItemToCart('standardBooth', boothId)
       }
     }
-   await getShopifyCart()
+    await getShopifyCart()
   }
 
   const addSecondaryBoothToLocalCart = (boothId) => {
@@ -248,7 +258,7 @@ export default function CartProvider({ children }) {
       } else {
         await addItemToCart('doubleBooth', boothId)
       }
-      getShopifyCart()  
+      getShopifyCart()
     }
   }
 
@@ -277,7 +287,9 @@ export default function CartProvider({ children }) {
     console.log('opening cart')
     client.checkout
       .fetch(currentVendor?.cartId)
-      .then((checkout) => window.open(checkout.webUrl))
+      .then(
+        (checkout) => window.open(checkout.webUrl))
+      
   }
 
   const getOrderStatus = () => {
