@@ -24,10 +24,10 @@ const batch = firestore.batch()
 //   Bradley: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8zODgyMzc3NjkxMTU0NQ==',
 //   Amtrak: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8zODgyMzc3Njk0NDMxMw==',
 //   WLA: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8zODgyMzc3Njk3NzA4MQ==',
-//   doubleBooth: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC80MDI0NDgxODU3NTU0NQ==', 
-//   electricity: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC80MDI0NDgxODU0Mjc3Nw==', 
-//   freeBooth: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC80MzAxODQwMDc5Mjc2MQ==',   //new code after deleted                                                                 
-//   standardBooth: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC80MDI0NDgxODQ0NDQ3Mw==', 
+//   doubleBooth: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC80MDI0NDgxODU3NTU0NQ==',
+//   electricity: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC80MDI0NDgxODU0Mjc3Nw==',
+//   freeBooth: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC80MzAxODQwMDc5Mjc2MQ==',   //new code after deleted
+//   standardBooth: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC80MDI0NDgxODQ0NDQ3Mw==',
 //   PaladinPromise:
 //     'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC80MDI2NzYzMjY0MDE4NQ==',
 //   AbramsPromise: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC80MDI2NzYzMjY3Mjk1Mw==',
@@ -39,11 +39,10 @@ const batch = firestore.batch()
 //   WLAPromise: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC80MDI2NzYzMjgwNDAyNQ==',
 // }
 
-
 //Kelly -- NOTES re: product info:
- // freeBooth: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC80MDI0NDgxODUxMDAwOQ==', //this is original code for free booth that was deleted -- 
- //freeBooth: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC80MzAxODQwMDc5Mjc2MQ==', //this is the new free booth that we had to add back  //new Z free booth:  gid://shopify/ProductVariant/43018400792761
- //this line right above decodes to gid://shopify/ProductVariant/40244818510009 (note: this console.logging as products[item] even though product was deleted & commented out here??)
+// freeBooth: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC80MDI0NDgxODUxMDAwOQ==', //this is original code for free booth that was deleted --
+//freeBooth: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC80MzAxODQwMDc5Mjc2MQ==', //this is the new free booth that we had to add back  //new Z free booth:  gid://shopify/ProductVariant/43018400792761
+//this line right above decodes to gid://shopify/ProductVariant/40244818510009 (note: this console.logging as products[item] even though product was deleted & commented out here??)
 //   doubleBooth: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC80MDI0NDgxODU3NTU0NQ=='; this decodes to gid://shopify/ProductVariant/40244818575545
 //  electricity: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC80MDI0NDgxODU0Mjc3Nw==', //this decodes to gid://shopify/ProductVariant/40244818542777
 //  standardBooth: 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC80MDI0NDgxODQ0NDQ3Mw==',  //this decodes to gid://shopify/ProductVariant/40244818444473
@@ -51,7 +50,6 @@ const batch = firestore.batch()
 //10x20 booth fee:  https://o-p-veteran.myshopify.com/admin/products/6777794134201
 //powered booth fee:  https://o-p-veteran.myshopify.com/admin/products/6777794101433
 //Z free booth:  https://o-p-veteran.myshopify.com/admin/products/7541532557497
-
 
 export const VendorContext = createContext()
 
@@ -129,8 +127,6 @@ export default function VendorProvider({ children }) {
       })
       .catch((err) => console.log(err))
   }
-
-
 
   // This funciton is unused and is the root of the Shopify problem because its not saving the cart ID
   // Need to figure out where to integrate it. On the RegistrationForm component would likely make the most sense.

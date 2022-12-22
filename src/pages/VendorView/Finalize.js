@@ -10,6 +10,7 @@ import StatusMessage from '../../components/StatusMessage'
 import { useNavigate } from 'react-router-dom'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Modal from '../../components/Modal'
 
 const CardContainer = styled.div`
   box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.4);
@@ -124,6 +125,12 @@ const Finalize = (props) => {
   const { currentVendor } = useContext(VendorContext)
   const { cart, getShopifyCart, localCart, changeQuantity, openCart, loading } =
     useContext(CartContext)
+  const [modalOpen, setModalOpen] = useState(false)
+  const doubleCheck = () => {
+    // write or import modal, display after 'continue to checkout' is clicked'
+    setModalOpen(true)
+  }
+
   // const [cartItems, setCartItems] = useState([])
 
   // This was the original code which breaks
@@ -224,7 +231,17 @@ const Finalize = (props) => {
           <Button
             buttonText='Continue to checkout'
             buttonStyle='primary'
-            onClick={openCart}
+            onClick={doubleCheck}
+          />
+        )}
+        {modalOpen && (
+          <Modal
+            message={
+              "Clicking 'continue' will navigate to our payment platform, and you will no longer be able to edit the items in you cart. Please confirm that you are ready to proceed, or click 'cancel' to revise your cart."
+            }
+            modalOpen={modalOpen}
+            setModalOpen={setModalOpen}
+            confirm={openCart}
           />
         )}
 

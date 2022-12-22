@@ -29,7 +29,7 @@ export default function CartProvider({ children }) {
   const [loading, setLoading] = useState(true)
 
   const createCart = (data) => {
-    console.log('createCart function called with data: ', data) 
+    console.log('createCart function called with data: ', data)
     client.checkout
       .create({
         shippingAddress: {
@@ -56,7 +56,6 @@ export default function CartProvider({ children }) {
           cartUrl: checkout.webUrl,
         })
 
-        
         console.log(
           'cartId after createVendor inside createCart',
           client.cartId
@@ -165,9 +164,9 @@ export default function CartProvider({ children }) {
     // currentBooth should hold the whole booth instead of just the ID to avoid always holding
     const booth = booths.find((b) => b.id === boothId)
     const tier1 = ['Paladin', 'Stryker', 'Abrams', 'Bradley']
-    if (
-      tier1.some(tier => currentVendor.sponsorship.level.includes(tier))
-    ) {
+    console.log('Cart provider - current vendor')
+    console.log(currentVendor)
+    if (tier1.some((tier) => currentVendor.sponsorshipLevel.includes(tier))) {
       if (booth.hasElectricity) {
         const checkout = await addItemToCart(
           'freeBooth',
@@ -218,9 +217,7 @@ export default function CartProvider({ children }) {
   const addSecondaryBoothToCart = async (boothId) => {
     const tier1 = ['Paladin', 'Stryker', 'Abrams', 'Bradley']
     const booth = booths.find((b) => b.id === boothId)
-    if (
-      tier1.some(tier => currentVendor.sponsorship.level.includes(tier))
-    ) {
+    if (tier1.some((tier) => currentVendor.sponsorshipLevel.includes(tier))) {
       if (booth.hasElectricity) {
         const checkout = await addItemToCart(
           'doubleBooth',
@@ -287,9 +284,7 @@ export default function CartProvider({ children }) {
     console.log('opening cart')
     client.checkout
       .fetch(currentVendor?.cartId)
-      .then(
-        (checkout) => window.open(checkout.webUrl))
-      
+      .then((checkout) => window.open(checkout.webUrl))
   }
 
   const getOrderStatus = () => {
