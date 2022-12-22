@@ -79,17 +79,6 @@ export default function CartProvider({ children }) {
         console.log('res.lineItems', res.lineItems) //kelly -- but this console.log shows an empty array after trying to add booth -- and shows empty on screen too??
         console.log('res from getShopifyCart', res)
 
-        //TEST FETCH--FOR FREE BOOTH THAT WE ADDED BACK TO SHOPIFY PRODUCTS ON 11/4/22--this seems to work
-        // const productId = 'gid://shopify/Product/7541532557497'
-        // client.product.fetch(productId).then((product) => {
-        //   // Do something with the product
-        //   console.log('TEST FREE BOOTH product', product)
-        // })
-        //TEST FETCH OF ALL PRODUCTS
-        // client.product.fetchAll().then((products) => {
-        //   // Do something with the products
-        //   console.log('fetch all products', products)
-        // })
 
         const lineItemsData = res.lineItems.map((item) => {
           return {
@@ -164,9 +153,10 @@ export default function CartProvider({ children }) {
     // currentBooth should hold the whole booth instead of just the ID to avoid always holding
     const booth = booths.find((b) => b.id === boothId)
     const tier1 = ['Paladin', 'Stryker', 'Abrams', 'Bradley']
-    console.log('Cart provider - current vendor')
-    console.log(currentVendor)
-    if (tier1.some((tier) => currentVendor.sponsorshipLevel.includes(tier))) {
+    if (
+      tier1.some((tier) => currentVendor.sponsorshipLevel.includes(tier)) //changed from sponsorship.level to sponsorshipLevel
+    ) {
+
       if (booth.hasElectricity) {
         const checkout = await addItemToCart(
           'freeBooth',
@@ -217,7 +207,10 @@ export default function CartProvider({ children }) {
   const addSecondaryBoothToCart = async (boothId) => {
     const tier1 = ['Paladin', 'Stryker', 'Abrams', 'Bradley']
     const booth = booths.find((b) => b.id === boothId)
-    if (tier1.some((tier) => currentVendor.sponsorshipLevel.includes(tier))) {
+
+    if (
+      tier1.some((tier) => currentVendor.sponsorshipLevel.includes(tier)) //changed from sponsorship.level to sponsorshipLevel
+    ) {
       if (booth.hasElectricity) {
         const checkout = await addItemToCart(
           'doubleBooth',
@@ -316,3 +309,4 @@ export default function CartProvider({ children }) {
     </CartContext.Provider>
   )
 }
+

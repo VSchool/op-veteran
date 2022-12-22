@@ -158,6 +158,7 @@ export default function VendorProvider({ children }) {
       isVeteranOwned: data.isVeteranOwned, //changed from data.vetOwned
       description: data.description,
       organization: data.organization,
+      sponsorshipLevel: data.sponsorshipLevel, //added this -- kelly
       booth: {
         primary: {
           id: null,
@@ -168,11 +169,11 @@ export default function VendorProvider({ children }) {
           status: 0,
         },
       },
-      sponsorship: {
-        interested: data.wantToSponsor,
-        level: data.isSponsor ? data.sponsorshipLevel : null,
-        status: data.isSponsor ? 2 : 0, //fixed typo here -- changed "staus" to "status"
-      },
+      // sponsorship: {
+      //   interested: data.wantToSponsor,
+      //   level: data.isSponsor ? data.sponsorshipLevel : null,   //updated this from sponsorshipLevel
+      //   status: data.isSponsor ? 2 : 0, //fixed typo here -- changed "staus" to "status"
+      // },
       logo: null,
     }
     vendorRef
