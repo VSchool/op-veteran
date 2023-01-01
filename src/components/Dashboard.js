@@ -93,7 +93,7 @@ const ListItem = styled.li`
 
 const Dashboard = () => {
   const { user } = useContext(UserContext)
-  const { cart, getShopifyCart } = useContext(CartContext)
+  const { localCart, getShopifyCart } = useContext(CartContext)
 
   const capitalize = (s) => {
     return s.charAt(0).toUpperCase() + s.slice(1)
@@ -113,16 +113,15 @@ const Dashboard = () => {
           </InfoContainer>
           <InfoContainer bgcolor='white' color='#575A6C'>
             <h1>Your Cart</h1>
-            {cart.length > 0 && <Link to='/finalize'>Edit</Link>}
-            <p>
-              {cart.length === 0 ? (
-                <p>Your cart is empty</p>
-              ) : (
-                cart.map((item) => {
-                  return <p key={item.id}>{item.title}</p>
-                })
-              )}
-            </p>
+            {localCart.length > 0 && <Link to='/finalize'>Edit</Link>}
+         
+              {localCart.length === 0 ? (
+                <p>Your cart is empty</p>)
+              : 
+                // cart.map((item) => {
+                //   return <p key={item.id}>{item.title}</p>
+               (<p>Primary Booth: {localCart.primaryBoothId} <br/> Adjacent Booth: {localCart.secondaryBoothId}</p>)
+              }
           </InfoContainer>
         </div>
         <TodoContainer>
