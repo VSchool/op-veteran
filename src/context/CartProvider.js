@@ -156,6 +156,7 @@ export default function CartProvider({ children }) {
     if (
       tier1.some((tier) => currentVendor.sponsorshipLevel.includes(tier)) //changed from sponsorship.level to sponsorshipLevel
     ) {
+
       if (booth.hasElectricity) {
         const checkout = await addItemToCart(
           'freeBooth',
@@ -206,6 +207,7 @@ export default function CartProvider({ children }) {
   const addSecondaryBoothToCart = async (boothId) => {
     const tier1 = ['Paladin', 'Stryker', 'Abrams', 'Bradley']
     const booth = booths.find((b) => b.id === boothId)
+
     if (
       tier1.some((tier) => currentVendor.sponsorshipLevel.includes(tier)) //changed from sponsorship.level to sponsorshipLevel
     ) {
