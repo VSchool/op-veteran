@@ -94,7 +94,7 @@ const Profile = (props) => {
         <Paragraph>Organization: {info.organization}</Paragraph>
         <Paragraph>
           Sponsorship:{' '}
-          {info.sponsorship.level ? info.sponsorship.level : 'None Selected'}
+          {info.sponsorshipLevel ? info.sponsorshipLevel : 'None Selected'}
         </Paragraph>
       </div>
       <div>{/* <Finalize /> */}</div>

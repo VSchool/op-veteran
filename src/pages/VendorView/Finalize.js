@@ -123,13 +123,23 @@ const Finalize = (props) => {
   // const { currentVendor, getCartItems, cart, openCart } = useContext(VendorContext);
   const navigate = useNavigate()
   const { currentVendor } = useContext(VendorContext)
-  const { cart, getShopifyCart, localCart, changeQuantity, openCart, loading } =
-    useContext(CartContext)
+
+  const {
+    loadShopifyCart,
+    cart,
+    getShopifyCart,
+    localCart,
+    changeQuantity,
+    openCart,
+    loading,
+  } = useContext(CartContext)
+
   const [modalOpen, setModalOpen] = useState(false)
   const doubleCheck = () => {
     // write or import modal, display after 'continue to checkout' is clicked'
     setModalOpen(true)
   }
+
 
   // const [cartItems, setCartItems] = useState([])
 
@@ -144,9 +154,9 @@ const Finalize = (props) => {
   // }, [])})
 
   // This is for testing
-  useEffect(() => {
-    getShopifyCart()
-  }, [])
+  // useEffect(() => {
+  //   getShopifyCart()
+  // }, [])
 
   return (
     <PageContainer>
@@ -155,7 +165,7 @@ const Finalize = (props) => {
           {/* <Wrapper> */}
           <Cart>
             <LocalCart>
-              <Head style={{ color: '#3498db' }}>Local Cart Items</Head>
+              <Head style={{ color: '#3498db' }}>Cart Items</Head>
               <ProductWrapper>
                 <p>
                   Booth Selection:{' '}
@@ -176,7 +186,7 @@ const Finalize = (props) => {
           </Cart>
 
           {/* Shopify Cart items list */}
-
+          {/* 
           {loading ? (
             <Head>Loading Cart Items...</Head>
           ) : (
@@ -187,8 +197,8 @@ const Finalize = (props) => {
                 <ProductWrapper key={item + index}>
                   <Product>
                     <p>{item.title}</p>
-                    {/* <p>ID: {item.id}</p> */}
-                    <ProductOptions>
+          <p>ID: {item.id}</p>
+          <ProductOptions>
                       <p>{item.quantity}</p>
                       <TrashButton
                         onClick={() => changeQuantity(item.id, item.quantity)}
@@ -200,10 +210,10 @@ const Finalize = (props) => {
                 </ProductWrapper>
               ))}
             </Cart>
-          )}
+          )} */}
         </CartContainer>
 
-        {/* End Shopify Cart ITems List */}
+        {/* End Shopify Cart ITems List
         {/* <a onClick={(e)=>console.log(e.target)} href={currentVendor.cartUrl} target="_blank">Open Cart</a> */}
 
         {!currentVendor ? (
@@ -221,19 +231,34 @@ const Finalize = (props) => {
               onClick={() => navigate('/registration')}
             />
           </>
-        ) : cart.length === 0 ? (
+        ) : // ) : cart.length === 0 ? (
+        localCart.length === 0 ? (
           <Button
             buttonText='Continue to Booth selection'
             buttonStyle='primary'
             onClick={() => navigate('/booth-selection')}
           />
         ) : (
+
+          <>
+            {/*
+            <Button
+              buttonText='Return to Booth Selection'
+              buttonStyle='primary'
+              onClick={() => navigate('/booth-selection')}
+              // onClick={openCart}
+            />
+            */}
+          </>
+          
           <Button
             buttonText='Continue to checkout'
             buttonStyle='primary'
             onClick={doubleCheck}
           />
         )}
+        {/* Add Return to Booth Selection button inside moda */}
+        
         {modalOpen && (
           <Modal
             message={
@@ -241,7 +266,11 @@ const Finalize = (props) => {
             }
             modalOpen={modalOpen}
             setModalOpen={setModalOpen}
-            confirm={openCart}
+            confirm={() =>
+                loadShopifyCart(
+                  localCart.primaryBoothId,
+                  localCart.secondaryBoothId
+            )}
           />
         )}
 

@@ -67,6 +67,8 @@ export default function CartProvider({ children }) {
   }
 
   const getShopifyCart = () => {
+    console.log('getShopifyCart called')
+
     if (!currentVendor) return
     return client.checkout
       .fetch(currentVendor.cartId)
@@ -78,7 +80,6 @@ export default function CartProvider({ children }) {
         ) //kelly -- added to check & this console.logs too
         console.log('res.lineItems', res.lineItems) //kelly -- but this console.log shows an empty array after trying to add booth -- and shows empty on screen too??
         console.log('res from getShopifyCart', res)
-
 
         const lineItemsData = res.lineItems.map((item) => {
           return {
@@ -142,7 +143,7 @@ export default function CartProvider({ children }) {
       'localCart',
       JSON.stringify({ primaryBoothId: boothId }) //kelly -- this shows up in local storage
     )
-    currentVendor && addPrimaryBoothToCart(boothId)
+    // currentVendor && addPrimaryBoothToCart(boothId)  //NOTE:  took out b/c adding to local & shopify cart in same function
   }
 
   const addPrimaryBoothToCart = async (boothId) => {
@@ -150,8 +151,12 @@ export default function CartProvider({ children }) {
       'this is the current booth selection id from addPrimaryBoothCart: ', //kelly -- this console.logs
       boothId
     )
+
     // currentBooth should hold the whole booth instead of just the ID to avoid always holding
     const booth = booths.find((b) => b.id === boothId)
+
+    console.log('booth.hasElectricity primary', booth.hasElectricity)
+
     const tier1 = ['Paladin', 'Stryker', 'Abrams', 'Bradley']
     if (
       tier1.some((tier) => currentVendor.sponsorshipLevel.includes(tier)) //changed from sponsorship.level to sponsorshipLevel
@@ -201,13 +206,30 @@ export default function CartProvider({ children }) {
       'localCart',
       JSON.stringify({ ...localCart, secondaryBoothId: boothId })
     )
-    currentVendor && addSecondaryBoothToCart(boothId)
+    //currentVendor && addSecondaryBoothToCart(boothId) //NOTE:  took out b/c adding to local & shopify cart in same function
+  }
+
+  const loadShopifyCart = async (primaryBoothId, secondaryBoothId) => {
+    console.log('loadShopifyCart primaryBoothId', primaryBoothId)
+    console.log('loadShopifyCart secondaryBoothId', secondaryBoothId)
+
+    await addPrimaryBoothToCart(primaryBoothId)
+    if (secondaryBoothId) {
+      await addSecondaryBoothToCart(secondaryBoothId)
+    }
+    await openCart()
   }
 
   const addSecondaryBoothToCart = async (boothId) => {
+    console.log(
+      'this is the current booth selection id from addSecondaryBoothCart: ',
+      boothId
+    )
+
     const tier1 = ['Paladin', 'Stryker', 'Abrams', 'Bradley']
     const booth = booths.find((b) => b.id === boothId)
 
+    console.log('booth.hasElectricity secondary', booth.hasElectricity)
     if (
       tier1.some((tier) => currentVendor.sponsorshipLevel.includes(tier)) //changed from sponsorship.level to sponsorshipLevel
     ) {
@@ -248,7 +270,8 @@ export default function CartProvider({ children }) {
       } else {
         await addItemToCart('doubleBooth', boothId)
       }
-      getShopifyCart()
+
+      await getShopifyCart()
     }
   }
 
@@ -275,6 +298,7 @@ export default function CartProvider({ children }) {
   const openCart = () => {
     if (!currentVendor) return
     console.log('opening cart')
+
     client.checkout
       .fetch(currentVendor?.cartId)
       .then((checkout) => window.open(checkout.webUrl))
@@ -298,6 +322,7 @@ export default function CartProvider({ children }) {
         addItemToCart,
         addPrimaryBoothToLocalCart,
         addSecondaryBoothToLocalCart,
+        loadShopifyCart,
         getShopifyCart,
         openCart,
         localCart,
@@ -309,4 +334,3 @@ export default function CartProvider({ children }) {
     </CartContext.Provider>
   )
 }
-
