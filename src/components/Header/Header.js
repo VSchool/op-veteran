@@ -297,7 +297,7 @@ export default function Header() {
 
             <Cart>
               <LocalCart>
-                <Head style={{ color: '#3498db' }}>Local Cart Items</Head>
+                <Head style={{ color: '#3498db' }}>Cart Items</Head>
                 <ProductWrapper>
                   <p>
                     Booth Selection:{' '}

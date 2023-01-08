@@ -2,6 +2,7 @@ import { createContext, useContext, useState } from 'react'
 import { VendorContext } from './VendorProvider'
 import { BoothContext } from './BoothProvider'
 import Client from 'shopify-buy/index.unoptimized.umd'
+import { useNavigate } from 'react-router-dom'
 
 import products from './data/shopifyProducts'
 import { FieldsOnCorrectTypeRule } from 'graphql'
@@ -11,6 +12,8 @@ export const CartContext = createContext()
 
 export default function CartProvider({ children }) {
   const { currentVendor, createVendor } = useContext(VendorContext)
+
+  const navigate = useNavigate()
 
   const { booths } = useContext(BoothContext)
 
@@ -98,12 +101,11 @@ export default function CartProvider({ children }) {
   const addItemToCart = (item, boothId, electricity) => {
     console.log(`addItemToCart item: ${item} boothId: ${boothId}`) //kelly -- this is console.logging
     console.log('currentVendor.cartId from addItemToCart', currentVendor.cartId) //kelly added to see if coming through; this is console.logging as well
-    console.log('products[item]', products[item]) //this console.logs the old freeBooth id -- but HOW?
+    console.log('products[item]', products[item]) 
 
     // products[item]= 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC80MzAxODQwMDc5Mjc2MQ=='
     //note:  Z Free Booth adds to cart like this when set it above, so seems like right code;
-    //BUT...why is it setting to the old freeBooth code & where is this occurring b/c it's commented out in VendorProvider????
-
+  
     if (electricity) {
       return client.checkout
         .addLineItems(currentVendor.cartId, [
@@ -143,7 +145,6 @@ export default function CartProvider({ children }) {
       'localCart',
       JSON.stringify({ primaryBoothId: boothId }) //kelly -- this shows up in local storage
     )
-    // currentVendor && addPrimaryBoothToCart(boothId)  //NOTE:  took out b/c adding to local & shopify cart in same function
   }
 
   const addPrimaryBoothToCart = async (boothId) => {
@@ -159,9 +160,8 @@ export default function CartProvider({ children }) {
 
     const tier1 = ['Paladin', 'Stryker', 'Abrams', 'Bradley']
     if (
-      tier1.some((tier) => currentVendor.sponsorshipLevel.includes(tier)) //changed from sponsorship.level to sponsorshipLevel
+      tier1.some((tier) => currentVendor.sponsorshipLevel.includes(tier)) 
     ) {
-
       if (booth.hasElectricity) {
         const checkout = await addItemToCart(
           'freeBooth',
@@ -195,7 +195,7 @@ export default function CartProvider({ children }) {
         await addItemToCart('standardBooth', boothId)
       }
     }
-    await getShopifyCart()
+
   }
 
   const addSecondaryBoothToLocalCart = (boothId) => {
@@ -206,19 +206,47 @@ export default function CartProvider({ children }) {
       'localCart',
       JSON.stringify({ ...localCart, secondaryBoothId: boothId })
     )
-    //currentVendor && addSecondaryBoothToCart(boothId) //NOTE:  took out b/c adding to local & shopify cart in same function
+
   }
 
-  const loadShopifyCart = async (primaryBoothId, secondaryBoothId) => {
-    console.log('loadShopifyCart primaryBoothId', primaryBoothId)
-    console.log('loadShopifyCart secondaryBoothId', secondaryBoothId)
+  const clearAndLoadShopifyCart = async (
+    currentVendor,
+    primaryBoothId,
+    secondaryBoothId
+  ) => {
+    console.log('clearLineItemsFrom Cart Called')
 
-    await addPrimaryBoothToCart(primaryBoothId)
-    if (secondaryBoothId) {
-      await addSecondaryBoothToCart(secondaryBoothId)
-    }
-    await openCart()
+    const checkoutId = currentVendor.cartId
+
+    console.log('checkoutId from clear cart', checkoutId)
+    console.log('cart before remove items', cart)
+
+    const lineItemsToRemove = await cart.map((item) => item.id)
+
+    console.log('lineItemsToRemove', lineItemsToRemove)
+
+    await client.checkout
+      .removeLineItems(checkoutId, lineItemsToRemove)
+
+      .then(async (checkout) => {
+        console.log(
+          'checkout.lineItems after remove all line item ids',
+          checkout.lineItems
+        )
+
+        await addPrimaryBoothToCart(primaryBoothId)
+
+        if (secondaryBoothId) {
+          await addSecondaryBoothToCart(secondaryBoothId)
+        }
+
+        await getShopifyCart()
+
+        await openCart()
+      })
   }
+
+
 
   const addSecondaryBoothToCart = async (boothId) => {
     console.log(
@@ -231,7 +259,7 @@ export default function CartProvider({ children }) {
 
     console.log('booth.hasElectricity secondary', booth.hasElectricity)
     if (
-      tier1.some((tier) => currentVendor.sponsorshipLevel.includes(tier)) //changed from sponsorship.level to sponsorshipLevel
+      tier1.some((tier) => currentVendor.sponsorshipLevel.includes(tier)) 
     ) {
       if (booth.hasElectricity) {
         const checkout = await addItemToCart(
@@ -271,7 +299,6 @@ export default function CartProvider({ children }) {
         await addItemToCart('doubleBooth', boothId)
       }
 
-      await getShopifyCart()
     }
   }
 
@@ -322,7 +349,7 @@ export default function CartProvider({ children }) {
         addItemToCart,
         addPrimaryBoothToLocalCart,
         addSecondaryBoothToLocalCart,
-        loadShopifyCart,
+        clearAndLoadShopifyCart,
         getShopifyCart,
         openCart,
         localCart,

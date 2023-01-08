@@ -125,7 +125,7 @@ const Finalize = (props) => {
   const { currentVendor } = useContext(VendorContext)
 
   const {
-    loadShopifyCart,
+    clearAndLoadShopifyCart,
     cart,
     getShopifyCart,
     localCart,
@@ -139,7 +139,6 @@ const Finalize = (props) => {
     // write or import modal, display after 'continue to checkout' is clicked'
     setModalOpen(true)
   }
-
 
   // const [cartItems, setCartItems] = useState([])
 
@@ -184,33 +183,6 @@ const Finalize = (props) => {
               </ProductWrapper>
             </LocalCart>
           </Cart>
-
-          {/* Shopify Cart items list */}
-          {/* 
-          {loading ? (
-            <Head>Loading Cart Items...</Head>
-          ) : (
-            <Cart>
-              <Head>Shopify Cart Items</Head>
-              {cart.length === 0 && <EmptyCart>Your cart is empty</EmptyCart>}
-              {cart?.map((item, index) => (
-                <ProductWrapper key={item + index}>
-                  <Product>
-                    <p>{item.title}</p>
-          <p>ID: {item.id}</p>
-          <ProductOptions>
-                      <p>{item.quantity}</p>
-                      <TrashButton
-                        onClick={() => changeQuantity(item.id, item.quantity)}
-                      >
-                        <FontAwesomeIcon icon={faTrash} size='xs' />
-                      </TrashButton>{' '}
-                    </ProductOptions>
-                  </Product>
-                </ProductWrapper>
-              ))}
-            </Cart>
-          )} */}
         </CartContainer>
 
         {/* End Shopify Cart ITems List
@@ -239,7 +211,6 @@ const Finalize = (props) => {
             onClick={() => navigate('/booth-selection')}
           />
         ) : (
-
           <>
             {/*
             <Button
@@ -249,16 +220,16 @@ const Finalize = (props) => {
               // onClick={openCart}
             />
             */}
+
+            <Button
+              buttonText='Continue to checkout'
+              buttonStyle='primary'
+              onClick={doubleCheck}
+            />
           </>
-          
-          <Button
-            buttonText='Continue to checkout'
-            buttonStyle='primary'
-            onClick={doubleCheck}
-          />
         )}
         {/* Add Return to Booth Selection button inside moda */}
-        
+
         {modalOpen && (
           <Modal
             message={
@@ -267,10 +238,12 @@ const Finalize = (props) => {
             modalOpen={modalOpen}
             setModalOpen={setModalOpen}
             confirm={() =>
-                loadShopifyCart(
-                  localCart.primaryBoothId,
-                  localCart.secondaryBoothId
-            )}
+              clearAndLoadShopifyCart(
+                currentVendor,
+                localCart.primaryBoothId,
+                localCart.secondaryBoothId
+              )
+            }
           />
         )}
 
