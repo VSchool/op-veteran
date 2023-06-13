@@ -25,5 +25,6 @@
   "prettier.singleQuote": true,
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "peacock.remoteColor": "#13311d"
+  "peacock.remoteColor": "#13311d",
+  "liveServer.settings.ChromeDebuggingAttachment": false
 }

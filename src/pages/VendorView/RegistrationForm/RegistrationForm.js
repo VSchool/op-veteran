@@ -115,22 +115,19 @@ export default function RegistrationForm(props) {
         }
   )
 
-  // const [regErrors, setRegErrors] = useState({
-  //   firstName: '',
-  //   lastName: '',
-  //   phone: '',
-  //   street: '',
-  //   city: '',
-  //   zip: '',
-  //   state: '',
-  // })
+  console.log('input outside of anything', input)
 
   const [regErrors, setRegErrors] = useState({})
 
   const [isEdit, setIsEdit] = useState(false)
 
   const [isValidReg, setIsValidReg] = useState(false)
-  console.log(isValidReg)
+  console.log('isValidReg', isValidReg)
+
+  //USEEFFECT TO HANDLE FORM EDITS
+  useEffect(() => {
+    handleValidation()
+  }, [input])
 
   // useEffect(() => {
   //   if (currentVendor && currentVendor.repEmail ===user.email){
@@ -148,7 +145,6 @@ export default function RegistrationForm(props) {
         [name]: value,
       }
     })
-    handleValidation()
   }
 
   const handleShowSponsorship = (e) => {
@@ -170,73 +166,63 @@ export default function RegistrationForm(props) {
   }
 
   const handleValidation = () => {
+    console.log('handleValidation called')
+    console.log('input from inside handleValidation', input)
+    console.log('address from inside handleValidation', input.address)
+
+    setIsValidReg(false)
+
     let errorsReg = {}
 
     if (input.firstName.length < 2) {
       errorsReg.firstName = 'First name is a required field.'
-      console.log('isValidReg missing first name', isValidReg)
     }
 
     if (input.lastName.length < 2) {
       errorsReg.lastName = 'Last name is a required field.'
-      console.log('isValidReg missing last name', isValidReg)
     }
 
     if (input.phone.length < 10) {
-      errorsReg.phone = 'Phone is a required field.'
-      console.log('isValidReg missing phone', isValidReg)
+      errorsReg.phone = 'Valid phone number required.'
     }
 
     if (input.street.length === 0) {
       errorsReg.street = 'Street address is a required field.'
-      console.log('isValidReg missing street', isValidReg)
     }
 
-    if (input.city.length === 0) {
+    if (input.city.length === 0 || input.address.city.length === 0) {
       errorsReg.city = 'City is a required field.'
-      console.log('isValidReg missing city', isValidReg)
     }
 
     if (input.zip.length < 5) {
       errorsReg.zip = 'Valid zip code required.'
-      console.log('isValidReg missing zip', isValidReg)
     }
 
-    if (!input.state) {
+    if (input.state === '') {
       errorsReg.state = 'State is required.'
-      console.log('isValidReg missing state', isValidReg)
     }
 
     console.log('errors', errorsReg)
-    setRegErrors(errorsReg) //maybe set this in each if statement with prev???
+
+    setRegErrors(errorsReg)
+
     console.log('Object.keys(regErrors).length', Object.keys(regErrors).length)
 
-    if (Object.keys(regErrors).length === 0) {
-      setIsValidReg(true)
-      console.log('isEdit when no errors', isEdit)
-      console.log(
-        'isValidReg value after check for empty regErrors obj',
-        isValidReg
-      )
-      //example -- if just edit a checkbox or add a letter-- this is not flipping to true=>works on second button click though??
+    if (Object.keys(errorsReg).length > 0) {
+      setIsValidReg(false)
+      console.log('NOT VALID')
     }
 
-    if (!isValidReg) {
-      console.log('hey, there are some registration errors here!')
-      console.log('regErrors Object', regErrors) //NOTE:  state appears to be updating, but this console.log does not seem to work (except on second button click)
+    if (Object.keys(errorsReg).length === 0) {
+      setIsValidReg(true)
+      console.log('VALID')
     }
   }
 
   const handleSubmit = async (e) => {
-
     e.preventDefault()
 
-    handleValidation()
-
-    console.log(
-      'isValidReg after handleValidation inside handleSubmit',
-      isValidReg
-    )
+    console.log('isValidReg right after handleSubmit called', isValidReg)
 
     if (isEdit) {
       console.log('isEdit', isEdit)
@@ -255,14 +241,15 @@ export default function RegistrationForm(props) {
 
     if (input.wantToSponsor) {
       navigate('/sponsorship')
-    } else if (isValidReg) {
-      //kelly -- changed this condition back on 10/15/22 -- possibly need to push this again so most updated is there.
-      // } else {
+    } else {
       navigate('/booth-selection')
     }
   }
 
   const handleCheck = (e) => {
+    console.log('handleCheck called -name', e.target.name)
+    console.log('handleCheck called - checked', e.target.checked)
+
     const { name, checked } = e.target
     setInput((prev) => {
       return {
@@ -317,6 +304,7 @@ export default function RegistrationForm(props) {
           labelText='First name'
           name='firstName'
           type='text'
+          defaultValue={currentVendor.firstName}
           value={input.firstName}
           onChange={handleChange}
         />
@@ -329,6 +317,7 @@ export default function RegistrationForm(props) {
           labelText='Last name'
           name='lastName'
           type='text'
+          defaultValue={currentVendor.lastName}
           value={input.lastName}
           onChange={handleChange}
         />
@@ -346,6 +335,7 @@ export default function RegistrationForm(props) {
           name='organization'
           type='text'
           disabled={currentVendor}
+          defaultValue={currentVendor.organization}
           value={input.organization}
           onChange={handleChange}
         />
@@ -353,15 +343,17 @@ export default function RegistrationForm(props) {
           labelText='Brief description of organization'
           name='description'
           rows='4'
+          defaultValue={currentVendor.description}
           value={input.description}
           onChange={handleChange}
         ></TextArea>
 
         <Input
-          type='phone'
+          type='tel'
           autocomplete='tel'
           labelText='Phone'
           name='phone'
+          defaultValue={currentVendor.phone}
           value={input.phone}
           onChange={handleChange}
         />
@@ -374,6 +366,7 @@ export default function RegistrationForm(props) {
           autocomplete='street-address'
           name='street'
           type='text'
+          defaultValue={currentVendor.address.street}
           value={input.street}
           onChange={handleChange}
         />
@@ -386,6 +379,7 @@ export default function RegistrationForm(props) {
           name='city'
           autocomplete='address-level1'
           type='text'
+          defaultValue={currentVendor.address.city}
           value={input.city}
           onChange={handleChange}
         />
@@ -398,11 +392,13 @@ export default function RegistrationForm(props) {
             type='text'
             labelText='Apt or suite'
             name='apt'
+            defaultValue={currentVendor.address.apt}
             value={input.apt}
             onChange={handleChange}
           />
-  
+
           <StateDropdown
+            defaultValue={currentVendor.address.state}
             value={input.state}
             state={input.state}
             handleChange={handleChange}
@@ -415,6 +411,7 @@ export default function RegistrationForm(props) {
             labelText='Zipcode'
             name='zip'
             auto-complete='postal-code'
+            defaultValue={currentVendor.address.zip}
             value={input.zip}
             onChange={handleChange}
           />
@@ -454,6 +451,7 @@ export default function RegistrationForm(props) {
           <Selection
             name='sponsorshipLevel'
             options={[
+              '---',
               'WLA - $250',
               'AMTRAK - $500',
               'Bradley - $1000',
@@ -475,6 +473,7 @@ export default function RegistrationForm(props) {
         )}
         {/* <Button buttonText="See sponsorship levels and benifits" buttonStyle="text" onClick={handleShowSponsorship}/> */}
         <Button
+          disabled={!isValidReg} //disables submit button until registration is valid/isValidReg = true
           buttonText='Continue'
           buttonStyle='primary'
           onClick={handleSubmit}

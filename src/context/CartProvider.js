@@ -101,11 +101,11 @@ export default function CartProvider({ children }) {
   const addItemToCart = (item, boothId, electricity) => {
     console.log(`addItemToCart item: ${item} boothId: ${boothId}`) //kelly -- this is console.logging
     console.log('currentVendor.cartId from addItemToCart', currentVendor.cartId) //kelly added to see if coming through; this is console.logging as well
-    console.log('products[item]', products[item]) 
+    console.log('products[item]', products[item])
 
     // products[item]= 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC80MzAxODQwMDc5Mjc2MQ=='
     //note:  Z Free Booth adds to cart like this when set it above, so seems like right code;
-  
+
     if (electricity) {
       return client.checkout
         .addLineItems(currentVendor.cartId, [
@@ -159,9 +159,7 @@ export default function CartProvider({ children }) {
     console.log('booth.hasElectricity primary', booth.hasElectricity)
 
     const tier1 = ['Paladin', 'Stryker', 'Abrams', 'Bradley']
-    if (
-      tier1.some((tier) => currentVendor.sponsorshipLevel.includes(tier)) 
-    ) {
+    if (tier1.some((tier) => currentVendor.sponsorshipLevel.includes(tier))) {
       if (booth.hasElectricity) {
         const checkout = await addItemToCart(
           'freeBooth',
@@ -195,7 +193,6 @@ export default function CartProvider({ children }) {
         await addItemToCart('standardBooth', boothId)
       }
     }
-
   }
 
   const addSecondaryBoothToLocalCart = (boothId) => {
@@ -206,7 +203,6 @@ export default function CartProvider({ children }) {
       'localCart',
       JSON.stringify({ ...localCart, secondaryBoothId: boothId })
     )
-
   }
 
   const clearAndLoadShopifyCart = async (
@@ -246,8 +242,6 @@ export default function CartProvider({ children }) {
       })
   }
 
-
-
   const addSecondaryBoothToCart = async (boothId) => {
     console.log(
       'this is the current booth selection id from addSecondaryBoothCart: ',
@@ -258,9 +252,7 @@ export default function CartProvider({ children }) {
     const booth = booths.find((b) => b.id === boothId)
 
     console.log('booth.hasElectricity secondary', booth.hasElectricity)
-    if (
-      tier1.some((tier) => currentVendor.sponsorshipLevel.includes(tier)) 
-    ) {
+    if (tier1.some((tier) => currentVendor.sponsorshipLevel.includes(tier))) {
       if (booth.hasElectricity) {
         const checkout = await addItemToCart(
           'doubleBooth',
@@ -298,7 +290,6 @@ export default function CartProvider({ children }) {
       } else {
         await addItemToCart('doubleBooth', boothId)
       }
-
     }
   }
 
@@ -353,6 +344,7 @@ export default function CartProvider({ children }) {
         getShopifyCart,
         openCart,
         localCart,
+        setLocalCart,
         cart,
         loading,
       }}
