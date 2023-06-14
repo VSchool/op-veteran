@@ -7,7 +7,6 @@ const colors = {
   green: '#799C8A',
   red: '#EA7C7C',
   yellow: '#FBBC05',
-  purple: '#8F00FF', //added to help see it on map for testing
   blue: '#4E92F9',
   grey: '#ecf0f1',
   white: '#def',
@@ -64,9 +63,9 @@ const Booth = (props) => {
         y={0}
         fill={
           status === 2
-            ? colors.blue  //note:  previously was white -- but changed to blue so easier to see for testing
+            ? colors.white
             : status === 1
-            ? colors.purple //note: previously was grey -- but changed to purple so easier to see for testing
+            ? colors.grey
             : restriction === 1
             ? colors.red
             : restriction === 2

@@ -114,17 +114,14 @@ const Dashboard = () => {
           <InfoContainer bgcolor='white' color='#575A6C'>
             <h1>Your Cart</h1>
             {localCart.length > 0 && <Link to='/finalize'>Edit</Link>}
-
-            {localCart.length === 0 ? (
-              <p>Your cart is empty</p>
-            ) : (
-              // cart.map((item) => {
-              //   return <p key={item.id}>{item.title}</p>
-              <p>
-                Primary Booth: {localCart.primaryBoothId} <br /> Adjacent Booth:{' '}
-                {localCart.secondaryBoothId}
-              </p>
-            )}
+         
+              {localCart.length === 0 ? (
+                <p>Your cart is empty</p>)
+              : 
+                // cart.map((item) => {
+                //   return <p key={item.id}>{item.title}</p>
+               (<p>Primary Booth: {localCart.primaryBoothId} <br/> Adjacent Booth: {localCart.secondaryBoothId}</p>)
+              }
           </InfoContainer>
         </div>
         <TodoContainer>
