@@ -190,7 +190,7 @@ export default function RegistrationForm(props) {
       errorsReg.street = 'Street address is a required field.'
     }
 
-    if (input.city.length === 0 || input.address.city.length === 0) {
+    if (input.city.length === 0) {
       errorsReg.city = 'City is a required field.'
     }
 
@@ -254,6 +254,10 @@ export default function RegistrationForm(props) {
     setInput((prev) => {
       return {
         ...prev,
+        sponsorshipLevel:
+          input.isSponsor || currentVendor.isSponsor === false
+            ? null
+            : input.sponsorshipLevel,
         [name]: checked,
       }
     })
@@ -304,7 +308,9 @@ export default function RegistrationForm(props) {
           labelText='First name'
           name='firstName'
           type='text'
-          defaultValue={currentVendor.firstName}
+          defaultValue={
+            currentVendor ? currentVendor.firstName : input.firstName
+          }
           value={input.firstName}
           onChange={handleChange}
         />
@@ -317,7 +323,7 @@ export default function RegistrationForm(props) {
           labelText='Last name'
           name='lastName'
           type='text'
-          defaultValue={currentVendor.lastName}
+          defaultValue={currentVendor ? currentVendor.lastName : input.lastName}
           value={input.lastName}
           onChange={handleChange}
         />
@@ -335,7 +341,9 @@ export default function RegistrationForm(props) {
           name='organization'
           type='text'
           disabled={currentVendor}
-          defaultValue={currentVendor.organization}
+          defaultValue={
+            currentVendor ? currentVendor.organization : input.organization
+          }
           value={input.organization}
           onChange={handleChange}
         />
@@ -343,7 +351,9 @@ export default function RegistrationForm(props) {
           labelText='Brief description of organization'
           name='description'
           rows='4'
-          defaultValue={currentVendor.description}
+          defaultValue={
+            currentVendor ? currentVendor.description : input.description
+          }
           value={input.description}
           onChange={handleChange}
         ></TextArea>
@@ -353,7 +363,7 @@ export default function RegistrationForm(props) {
           autocomplete='tel'
           labelText='Phone'
           name='phone'
-          defaultValue={currentVendor.phone}
+          defaultValue={currentVendor ? currentVendor.phone : input.phone}
           value={input.phone}
           onChange={handleChange}
         />
@@ -366,7 +376,9 @@ export default function RegistrationForm(props) {
           autocomplete='street-address'
           name='street'
           type='text'
-          defaultValue={currentVendor.address.street}
+          defaultValue={
+            currentVendor ? currentVendor.address.street : input.street
+          }
           value={input.street}
           onChange={handleChange}
         />
@@ -379,7 +391,7 @@ export default function RegistrationForm(props) {
           name='city'
           autocomplete='address-level1'
           type='text'
-          defaultValue={currentVendor.address.city}
+          defaultValue={currentVendor ? currentVendor.address.city : input.city}
           value={input.city}
           onChange={handleChange}
         />
@@ -392,13 +404,15 @@ export default function RegistrationForm(props) {
             type='text'
             labelText='Apt or suite'
             name='apt'
-            defaultValue={currentVendor.address.apt}
+            defaultValue={currentVendor ? currentVendor.address.apt : input.apt}
             value={input.apt}
             onChange={handleChange}
           />
 
           <StateDropdown
-            defaultValue={currentVendor.address.state}
+            defaultValue={
+              currentVendor ? currentVendor.address.state : input.state
+            }
             value={input.state}
             state={input.state}
             handleChange={handleChange}
@@ -411,7 +425,7 @@ export default function RegistrationForm(props) {
             labelText='Zipcode'
             name='zip'
             auto-complete='postal-code'
-            defaultValue={currentVendor.address.zip}
+            defaultValue={currentVendor ? currentVendor.address.zip : input.zip}
             value={input.zip}
             onChange={handleChange}
           />
@@ -447,11 +461,11 @@ export default function RegistrationForm(props) {
           checked={input.isSponsor}
           onChange={handleCheck}
         />
+
         {input.isSponsor ? (
           <Selection
             name='sponsorshipLevel'
             options={[
-              '---',
               'WLA - $250',
               'AMTRAK - $500',
               'Bradley - $1000',
@@ -459,10 +473,16 @@ export default function RegistrationForm(props) {
               'Abrams - $5000',
               'Paladin - $10000',
             ]}
-            value={input.sponsorshipLevel}
+            defaultValue={
+              currentVendor
+                ? currentVendor.sponsorshipLevel
+                : input.sponsorshipLevel
+            }
+            value={input.sponsorshipLevel} //Select Options go away, but this value doesn't change back to empty in database
             handleChange={handleChange}
           />
         ) : null}
+
         {input.isSponsor ? null : (
           <CheckBox
             labelText='Interested in becoming a sponsor of O.P. Vetfest'
@@ -471,6 +491,7 @@ export default function RegistrationForm(props) {
             onChange={handleCheck}
           />
         )}
+
         {/* <Button buttonText="See sponsorship levels and benifits" buttonStyle="text" onClick={handleShowSponsorship}/> */}
         <Button
           disabled={!isValidReg} //disables submit button until registration is valid/isValidReg = true

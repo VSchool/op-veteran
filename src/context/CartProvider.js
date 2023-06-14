@@ -62,9 +62,8 @@ export default function CartProvider({ children }) {
         console.log(
           'cartId after createVendor inside createCart',
           client.cartId
-        ) //kelly - added
+        ) 
 
-        //updateCurrentVendor({ cartId: checkout.id })  //commented out w/Maira on call 9/1
       })
       .catch((err) => console.log(err))
   }
@@ -80,8 +79,8 @@ export default function CartProvider({ children }) {
         console.log(
           'currentVendor.cartId from getShopifyCart',
           currentVendor.cartId
-        ) //kelly -- added to check & this console.logs too
-        console.log('res.lineItems', res.lineItems) //kelly -- but this console.log shows an empty array after trying to add booth -- and shows empty on screen too??
+        ) 
+        console.log('res.lineItems', res.lineItems)
         console.log('res from getShopifyCart', res)
 
         const lineItemsData = res.lineItems.map((item) => {
@@ -99,8 +98,8 @@ export default function CartProvider({ children }) {
   }
 
   const addItemToCart = (item, boothId, electricity) => {
-    console.log(`addItemToCart item: ${item} boothId: ${boothId}`) //kelly -- this is console.logging
-    console.log('currentVendor.cartId from addItemToCart', currentVendor.cartId) //kelly added to see if coming through; this is console.logging as well
+    console.log(`addItemToCart item: ${item} boothId: ${boothId}`) 
+    console.log('currentVendor.cartId from addItemToCart', currentVendor.cartId)
     console.log('products[item]', products[item])
 
     // products[item]= 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC80MzAxODQwMDc5Mjc2MQ=='
@@ -138,18 +137,18 @@ export default function CartProvider({ children }) {
 
   const addPrimaryBoothToLocalCart = (boothId) => {
     setLoading(true)
-    console.log('boothId', boothId) //kelly added to see if anything set here
-    console.log('TEST PRIMARY: only setting current local cart') //kelly -- this console.logs
+    console.log('boothId', boothId)
+    console.log('TEST PRIMARY: only setting current local cart')
     setLocalCart({ primaryBoothId: boothId })
     localStorage.setItem(
       'localCart',
-      JSON.stringify({ primaryBoothId: boothId }) //kelly -- this shows up in local storage
+      JSON.stringify({ primaryBoothId: boothId })
     )
   }
 
   const addPrimaryBoothToCart = async (boothId) => {
     console.log(
-      'this is the current booth selection id from addPrimaryBoothCart: ', //kelly -- this console.logs
+      'this is the current booth selection id from addPrimaryBoothCart: ', 
       boothId
     )
 

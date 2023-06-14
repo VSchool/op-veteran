@@ -143,7 +143,7 @@ export default function VendorProvider({ children }) {
     const currentVendorData = {
       firstName: data.firstName,
       lastName: data.lastName,
-      cartId: data.cartId, // Doesnt appear this info saved? // THIS IS CHECKOUT ID
+      cartId: data.cartId, // THIS IS CHECKOUT ID
       cartUrl: data.cartUrl,
       address: {
         street: data.street,
@@ -155,12 +155,14 @@ export default function VendorProvider({ children }) {
       phone: data.phone,
       rep: `${data.firstName} ${data.lastName}`,
       repEmail: user.email,
-      isGovernmental: data.isGovernmental, //changed from data.governmental
-      isNonprofit: data.isNonprofit, //changed from data.nonprofit
-      isVeteranOwned: data.isVeteranOwned, //changed from data.vetOwned
+      isGovernmental: data.isGovernmental,
+      isNonprofit: data.isNonprofit,
+      isVeteranOwned: data.isVeteranOwned,
       description: data.description,
       organization: data.organization,
-      sponsorshipLevel: data.sponsorshipLevel, //added this -- kelly
+      wantToSponsor: data.wantToSponsor,
+      isSponsor: data.isSponsor,                  
+      sponsorshipLevel: data.sponsorshipLevel,           //TEST TO SEE IF MISSING THIS WAS MESSING IT UP
       booth: {
         primary: {
           id: null,

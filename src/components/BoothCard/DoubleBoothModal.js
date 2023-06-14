@@ -79,22 +79,14 @@ const Icon = styled(MdReport)`
 `
 
 const DoubleBoothModal = (props)=>{
-  // {
-  // options,
-  // handleSelectBooth,
-  // handleClose,
-  // data
-// }
-
 
   const {data, options, handleSelectBooth, handleClose} = props
-  // const { id, vendor, section, hasElectricity, row, restriction } = data
+  //const { id, vendor, section, hasElectricity, row, restriction } = data
   const { id } = data
 
   console.log("booth id from doubleBoothModal", id)
   
-  //added this to test
-
+  
   const navigate = useNavigate()
   const handleClick = () => {
     navigate('/finalize')
@@ -107,7 +99,6 @@ const DoubleBoothModal = (props)=>{
     handleClick()
   }
 
-  //test this function
   const handleDoubleCardClose = async(e) =>{
     e.preventDefault()
     console.log("handleDoubleCardClose id", id)
@@ -119,9 +110,8 @@ const DoubleBoothModal = (props)=>{
       buttonText={booth} 
       buttonStyle='primary'
       onClick={handleDoubleBoothSelect}
-      key={index}  //this seemed to get rid of some of the encountered two children w/ same key errors, but NOT all - still one talking about Group/Row/Layer
-      // booth={booth} //added booth={booth}
-      // key={index}  //changed from key={booth} (b/c of two children w/ same key warning)
+      id={id}
+      key={index}
     />
   ))
 
@@ -139,7 +129,7 @@ const DoubleBoothModal = (props)=>{
       <Button
         buttonStyle='primary'
         buttonText='Close'
-        onClick={handleDoubleCardClose}   //maybe working now???
+        onClick={handleDoubleCardClose}
       />
     </MessageContainer>
   )
