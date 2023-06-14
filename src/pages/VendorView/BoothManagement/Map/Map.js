@@ -102,7 +102,7 @@ const Map = (props) => {
       'P',
       'Q',
       'R',
-    ].map((rowId, index) => (
+    ].map((rowId) => (
       <Row
         key={rowId}
         setCurrentBooth={setCurrentBooth}
@@ -120,7 +120,7 @@ const Map = (props) => {
   useEffect(() => {
     buildRows()
     enterMapMode()
-  }, [booths])  
+  }, [booths])
 
   return (
     <SuperStage

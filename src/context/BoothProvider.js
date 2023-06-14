@@ -9,10 +9,9 @@ const batch = firestore.batch()
 export const BoothContext = createContext()
 export default function BoothProvider({ children }) {
   const [booths, setBooths] = useState([])
+
   const [rowsOfBooths, setRowsOfBooths] = useState({})
   const [sectionsOfRows, setSectionsOfRows] = useState({})
-
-
   const statusCodes = {
     OPEN: 0,
     ONHOLD: 1,
@@ -68,30 +67,26 @@ export default function BoothProvider({ children }) {
       .catch((err) => console.error(err))
   }
   const resetBooth = (id) => {
-    console.log('id from resetBooth', id)
     updateBooth(
       {
-        vendor: null,
         status: 0,
+        vendor: null,
       },
       id
     )
   }
-
   const updateBooth = (data, id) => {
     boothRef
       .doc(id)
       .update(data)
       .catch((err) => console.error(err))
   }
-
   const deleteBooth = (id) => {
     boothRef
       .doc(id)
       .delete()
       .catch((err) => console.error(err))
   }
-
   const reserveBooth = (vendor, id) => {
     updateBooth(
       {
@@ -101,7 +96,6 @@ export default function BoothProvider({ children }) {
       id
     )
   }
-
   const holdBooth = (vendor, id) => {
     updateBooth(
       {
@@ -392,46 +386,22 @@ export default function BoothProvider({ children }) {
     },
   }
 
+  const getBooths = (boothArray = []) => {
+    return boothRef.where('number', '!=', null).onSnapshot((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        boothArray.push(doc.data())
+      })
+      setBooths(boothArray)
+    })
+  }
 
-  //ORIGINAL getBooths & useEffect:
-  // const getBooths = (boothArray = []) => {
-  //   return boothRef.where('number', '!=', null).onSnapshot((querySnapshot) => {
-  //     querySnapshot.forEach((doc) => {
-  //       boothArray.push(doc.data())
-  //     })
-  //     console.log("boothArray after pushes from getBooths", boothArray)
-  //     setBooths(boothArray)  //why would this be additive???
-  //   })
-  // }
-
-  // useEffect(() => {
-  //   const boothArray = []
-  //   console.log("booths inside useEffect", booths)
-  //   if (booths && booths.length === 0) {
-  //     //.where("number", "!=", null)
-  //     getBooths(boothArray)
-  //   }
-  // }, [])
-
-   
-    const getBooths = () => {
-       return boothRef
-            .where('number', '!=', null)
-            .onSnapshot((querySnapshot) => {
-              const boothArray = []
-              querySnapshot.forEach((doc) => {
-                boothArray.push(doc.data())
-              })
-              console.log('boothArray after pushes from getBooths', boothArray)
-              setBooths(boothArray)
-            })
-        }
-
-    useEffect(() => {
-      console.log('booths inside useEffect', booths)
-      getBooths()
-    }, [])
-
+  useEffect(() => {
+    const boothArray = []
+    if (booths && booths.length === 0) {
+      //.where("number", "!=", null)
+      getBooths(boothArray)
+    }
+  }, [])
 
   return (
     <BoothContext.Provider

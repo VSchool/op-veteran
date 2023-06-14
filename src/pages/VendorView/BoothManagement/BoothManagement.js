@@ -58,13 +58,9 @@ const Wrapper = styled.div`
   height: clamp(600px, 70%, 900px);
 `
 const BoothManagement = (props) => {
-
-
-
   const closeModal = () => {
     setModalOptions((prev) => ({ ...prev, isOpen: false }))
   }
-
   const [showTrees, setShowTrees] = useState(true)
   const [modalOptions, setModalOptions] = useState({
     options: [],
@@ -72,8 +68,6 @@ const BoothManagement = (props) => {
     visible: false,
     close: closeModal,
   })
- 
-
   const { states, changeState } = props
   const [containerWidth, setContainerWidth] = useState(0)
   const [mapMode, setMapMode] = useState(true)
@@ -81,7 +75,7 @@ const BoothManagement = (props) => {
   const [organizedBooths, setOrganizedBooths] = useState([])
   const { user } = useContext(UserContext)
   const { currentVendor, updateCurrentVendor } = useContext(VendorContext)
-  const { localCart, setLocalCart, addPrimaryBoothToLocalCart, addSecondaryBoothToLocalCart } =
+  const { addPrimaryBoothToLocalCart, addSecondaryBoothToLocalCart } =
     useContext(CartContext)
   const [secondary, setSecondary] = useState(false)
   const [modalIsOpen, setModalIsOpen] = useState(false)
@@ -107,100 +101,66 @@ const BoothManagement = (props) => {
 
   const {
     booths,
-    holdBooth,
-    resetBooth,
     reserveBooth,
     pullMapDataFromFirestore,
     organizeBoothData,
     statusCodes,
   } = useContext(BoothContext)
 
-  const handleSelectBooth = async (_id, secondary = false) => {
-    console.log('handleSelectBooth called')
-    console.log('handleSelectBooth _id', _id)
+  const handleSelectBooth = (_id, secondary = false) => {
     if (secondary) {
       // addSecondaryBoothToCart(_id);
       addSecondaryBoothToLocalCart(_id)
-      secondary = true
-      await holdBooth(currentVendor, _id)  //WORKS - this changes Firebase status & adds vendor info to selected booth
       setIsDoubleBoothOpen(false)
     } else {
+      // addPrimaryBoothToCart(_id);
       addPrimaryBoothToLocalCart(_id)
-      //NOTE: **this holdBooth() below worked to update the specified booth status & vendor info in Firebase Booth Collection & also turns box grey/white on map - kelly
-      await holdBooth(currentVendor, _id) //WORKS - this changes status & adds vendor info to selected booth
+      handleClose()
       checkNeighbors()
     }
   }
 
-  //note:  reset booth worked with currentBooth -- but causes issues with adjacent booth info
-  //ALSO-- map not updateing even though Firebase updated status ==> block color not going back to green when release booth/change status*******
-
-  //This updates firebase & console.logs BUT...not updating color of block on map & getting warning message: "encountered two children with same key"
-  const handleClose = async(id) => {
-    console.log('handleClose triggered')
-    console.log('_id from inside handleClose', id)
-    console.log("localCart.secondaryBoothId", localCart.secondaryBoothId)
-    if(localCart.secondaryBoothId){
-      await resetBooth(localCart.secondaryBoothId)
-    }
-    await resetBooth(id)
-    setIsDoubleBoothOpen(false) 
+  const handleClose = () => {
+    setIsDoubleBoothOpen(false)
     setCurrentBooth(null)
-    setLocalCart({primaryBoothId: ""}, {secondaryBoothId: ""}) //test clears localcart
-    // localStorage.removeItem("localCart") //test to see if clears localCart on cancels
   }
-
 
   const selectedBooth = booths.filter((booth) => booth.id === currentBooth)[0]
 
-  
+  console.log("selectedBooth", selectedBooth)  //kelly -- this is coming up as undefined now
   const checkNeighbors = () => {
-    console.log("checkNeighbors called")
-
     const options = booths.reduce((response, b) => {
       if (
         selectedBooth.neighbors.includes(b.id) &&
         (b.status === 0 || b.status === 'open')
       ) {
-           response.push(b.id)
-        }
+        response.push(b.id)
+      }
       return response
     }, [])
-
     if (options.length > 0) {
       setModalOptions((prev) => ({
         ...prev,
         options: options,
-
-    }))
+      }))
       setIsDoubleBoothOpen(true)
     }
-}
+  }
 
-//added additional isMounted logic in useEffect...seemed(?) to get rid of error re: Can't perform a React state update
-//on an unmounted component.To fix, cancel all subscriptions and asynchronous tasksin a useEffect cleanup function.
   useEffect(() => {
-    let isMounted = true;
-    if(isMounted){
     const data = organizeBoothData()
     const width = getContainerWidth()
     setContainerWidth(width)
     setOrganizedBooths(data)
-    }
-    return ()=>{
-      isMounted = false
-    }
   }, [])
 
   return (
     <>
       {isDoubleBoothOpen && (
         <DoubleBoothModal
-          data={selectedBooth}
           options={modalOptions.options}
           handleSelectBooth={handleSelectBooth}
-          // close={handleClose}
-          handleClose={handleClose}
+          close={handleClose}
         />
       )}
       <ButtonWrapper>

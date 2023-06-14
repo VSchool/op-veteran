@@ -332,8 +332,7 @@ export default function Header() {
                   onClick={() => navigate('/registration')}
                 />
               </>
-            ) : // cart.length === 0 ? (  //changed to attempt to utilize the localCart to flip button instead
-            Object.values(localCart).every((val) => val === '') ? (
+            ) : cart.length === 0 ? (
               <Button
                 buttonText='Continue to Booth selection'
                 buttonStyle='primary'
