@@ -308,9 +308,7 @@ export default function RegistrationForm(props) {
           labelText='First name'
           name='firstName'
           type='text'
-          defaultValue={
-            currentVendor ? currentVendor.firstName : input.firstName
-          }
+          defaultValue={currentVendor ? currentVendor.firstName : ''}
           value={input.firstName}
           onChange={handleChange}
         />
@@ -323,7 +321,7 @@ export default function RegistrationForm(props) {
           labelText='Last name'
           name='lastName'
           type='text'
-          defaultValue={currentVendor ? currentVendor.lastName : input.lastName}
+          defaultValue={currentVendor ? currentVendor.lastName : ''}
           value={input.lastName}
           onChange={handleChange}
         />
@@ -341,9 +339,7 @@ export default function RegistrationForm(props) {
           name='organization'
           type='text'
           disabled={currentVendor}
-          defaultValue={
-            currentVendor ? currentVendor.organization : input.organization
-          }
+          defaultValue={currentVendor ? currentVendor.organization : ''}
           value={input.organization}
           onChange={handleChange}
         />
@@ -351,9 +347,7 @@ export default function RegistrationForm(props) {
           labelText='Brief description of organization'
           name='description'
           rows='4'
-          defaultValue={
-            currentVendor ? currentVendor.description : input.description
-          }
+          defaultValue={currentVendor ? currentVendor.description : ''}
           value={input.description}
           onChange={handleChange}
         ></TextArea>
@@ -363,7 +357,7 @@ export default function RegistrationForm(props) {
           autocomplete='tel'
           labelText='Phone'
           name='phone'
-          defaultValue={currentVendor ? currentVendor.phone : input.phone}
+          defaultValue={currentVendor ? currentVendor.phone : ''}
           value={input.phone}
           onChange={handleChange}
         />
@@ -376,9 +370,7 @@ export default function RegistrationForm(props) {
           autocomplete='street-address'
           name='street'
           type='text'
-          defaultValue={
-            currentVendor ? currentVendor.address.street : input.street
-          }
+          defaultValue={currentVendor ? currentVendor.address.street : ''}
           value={input.street}
           onChange={handleChange}
         />
@@ -391,7 +383,7 @@ export default function RegistrationForm(props) {
           name='city'
           autocomplete='address-level1'
           type='text'
-          defaultValue={currentVendor ? currentVendor.address.city : input.city}
+          defaultValue={currentVendor ? currentVendor.address.city : ''}
           value={input.city}
           onChange={handleChange}
         />
@@ -404,15 +396,13 @@ export default function RegistrationForm(props) {
             type='text'
             labelText='Apt or suite'
             name='apt'
-            defaultValue={currentVendor ? currentVendor.address.apt : input.apt}
+            defaultValue={currentVendor ? currentVendor.address.apt : ''}
             value={input.apt}
             onChange={handleChange}
           />
 
           <StateDropdown
-            defaultValue={
-              currentVendor ? currentVendor.address.state : input.state
-            }
+            defaultValue={currentVendor ? currentVendor.address.state : ''}
             value={input.state}
             state={input.state}
             handleChange={handleChange}
@@ -425,7 +415,7 @@ export default function RegistrationForm(props) {
             labelText='Zipcode'
             name='zip'
             auto-complete='postal-code'
-            defaultValue={currentVendor ? currentVendor.address.zip : input.zip}
+            defaultValue={currentVendor ? currentVendor.address.zip : ''}
             value={input.zip}
             onChange={handleChange}
           />
@@ -473,11 +463,7 @@ export default function RegistrationForm(props) {
               'Abrams - $5000',
               'Paladin - $10000',
             ]}
-            defaultValue={
-              currentVendor
-                ? currentVendor.sponsorshipLevel
-                : input.sponsorshipLevel
-            }
+            defaultValue={currentVendor ? currentVendor.sponsorshipLevel : ''}
             value={input.sponsorshipLevel} //Select Options go away, but this value doesn't change back to empty in database
             handleChange={handleChange}
           />
