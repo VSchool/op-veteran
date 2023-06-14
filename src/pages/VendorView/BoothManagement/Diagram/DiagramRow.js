@@ -21,7 +21,8 @@ const DiagramRow = (props) => {
     )
     filtered.sort((a, b) => a.number - b.number)
     const comps = filtered.map((b) => (
-      <DiagramBooth key={b.id} data={b} key={b.id} />
+      <DiagramBooth key={b.id} data={b}/>
+      // <DiagramBooth key={b.id} data={b} key={b.id} /> replaced with line right above b/c of duplicate
     ))
     setBoothObjects(comps)
   }, [])

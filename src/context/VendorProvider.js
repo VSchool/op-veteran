@@ -98,7 +98,7 @@ export default function VendorProvider({ children }) {
 
   //ORIGINAL EDIT/UPDATE CODE using update -- but with KR changes;
   //NOTE:  THIS ONE WORKS w/o duplicating info in Firebase when make edit
-  const updateCurrentVendor = ({ city, state, street, zip, ...data }) => {
+  const updateCurrentVendor = ({ city, state, street, apt, zip, ...data }) => {
     //kelly -- attempting to destructure data to exclude address & avoid duplicate info in Firebase doc
 
     if (!currentVendor) {
@@ -108,6 +108,7 @@ export default function VendorProvider({ children }) {
       city,
       state,
       street,
+      apt,
       zip,
       ...data,
     })
@@ -119,6 +120,7 @@ export default function VendorProvider({ children }) {
         ...data, //kelly - hopefully this now excludes the extra address "stuff"
         address: {
           street: street, //instead of data.address.street here & for the 3 fields below, now changed to street, etc. b/c of destructuring above
+          apt: apt,
           city: city,
           state: state,
           zip: zip,
@@ -141,7 +143,7 @@ export default function VendorProvider({ children }) {
     const currentVendorData = {
       firstName: data.firstName,
       lastName: data.lastName,
-      cartId: data.cartId, // Doesnt appear this info saved? // THIS IS CHECKOUT ID
+      cartId: data.cartId, // THIS IS CHECKOUT ID
       cartUrl: data.cartUrl,
       address: {
         street: data.street,
@@ -153,12 +155,14 @@ export default function VendorProvider({ children }) {
       phone: data.phone,
       rep: `${data.firstName} ${data.lastName}`,
       repEmail: user.email,
-      isGovernmental: data.isGovernmental, //changed from data.governmental
-      isNonprofit: data.isNonprofit, //changed from data.nonprofit
-      isVeteranOwned: data.isVeteranOwned, //changed from data.vetOwned
+      isGovernmental: data.isGovernmental,
+      isNonprofit: data.isNonprofit,
+      isVeteranOwned: data.isVeteranOwned,
       description: data.description,
       organization: data.organization,
-      sponsorshipLevel: data.sponsorshipLevel, //added this -- kelly
+      wantToSponsor: data.wantToSponsor,
+      isSponsor: data.isSponsor,                  
+      sponsorshipLevel: data.sponsorshipLevel,           //TEST TO SEE IF MISSING THIS WAS MESSING IT UP
       booth: {
         primary: {
           id: null,
@@ -181,7 +185,9 @@ export default function VendorProvider({ children }) {
       .set(currentVendorData)
       .then(() => matchVendor())
       .catch((err) => console.log(err))
-    // const shippingAddress = {
+    
+    
+    //   const shippingAddress = {
     //   address1: data.street,
     //   address2: data.apt,
     //   city: data.city,

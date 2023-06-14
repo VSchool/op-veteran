@@ -78,28 +78,40 @@ const Icon = styled(MdReport)`
   padding: 4px auto;
 `
 
-export default function DoubleBoothModal({
-  options,
-  handleSelectBooth,
-  close,
-}) {
+const DoubleBoothModal = (props)=>{
+
+  const {data, options, handleSelectBooth, handleClose} = props
+  //const { id, vendor, section, hasElectricity, row, restriction } = data
+  const { id } = data
+
+  console.log("booth id from doubleBoothModal", id)
+  
+  
   const navigate = useNavigate()
-  const handleClick = (e) => {
+  const handleClick = () => {
     navigate('/finalize')
   }
 
   const handleDoubleBoothSelect = (e) => {
+    console.log("handleDoubleBoothSelect called")
     const boothId = e.target.innerText
     handleSelectBooth(boothId, true)
     handleClick()
   }
 
-  const buttons = options.map((booth) => (
+  const handleDoubleCardClose = async(e) =>{
+    e.preventDefault()
+    console.log("handleDoubleCardClose id", id)
+    await handleClose(id)
+  }
+
+ const buttons = options.map((booth, index) => (
     <Button
-      buttonText={booth}
+      buttonText={booth} 
       buttonStyle='primary'
       onClick={handleDoubleBoothSelect}
-      key={booth}
+      id={id}
+      key={index}
     />
   ))
 
@@ -114,7 +126,13 @@ export default function DoubleBoothModal({
         column='1/3'
         row='2/3'
       />
-      <Button buttonStyle='primary' buttonText='Close' onClick={close} />
+      <Button
+        buttonStyle='primary'
+        buttonText='Close'
+        onClick={handleDoubleCardClose}
+      />
     </MessageContainer>
   )
 }
+
+export default DoubleBoothModal
