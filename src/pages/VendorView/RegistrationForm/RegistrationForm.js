@@ -121,7 +121,15 @@ export default function RegistrationForm(props) {
         }
   )
 
-  console.log('input outside of anything', input)
+  // const [regErrors, setRegErrors] = useState({
+  //   firstName: '',
+  //   lastName: '',
+  //   phone: '',
+  //   street: '',
+  //   city: '',
+  //   zip: '',
+  //   state: '',
+  // })
 
   const [regErrors, setRegErrors] = useState({})
 
@@ -134,6 +142,7 @@ export default function RegistrationForm(props) {
   useEffect(() => {
     handleValidation()
   }, [input]) //COMMENT: React Hook useEffect has a missing dependency: 'handleValidation'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
 
   // useEffect(() => {
   //   if (currentVendor && currentVendor.repEmail ===user.email){
@@ -151,6 +160,7 @@ export default function RegistrationForm(props) {
         [name]: value,
       }
     })
+    handleValidation()
   }
 
   // const handleShowSponsorship = (e) => {
@@ -172,63 +182,73 @@ export default function RegistrationForm(props) {
   }
 
   const handleValidation = () => {
-    console.log('handleValidation called')
-    console.log('input from inside handleValidation', input)
-    console.log('address from inside handleValidation', input.address)
-
-    setIsValidReg(false)
-
     let errorsReg = {}
 
     if (input.firstName.length < 2) {
       errorsReg.firstName = 'First name is a required field.'
+      console.log('isValidReg missing first name', isValidReg)
     }
 
     if (input.lastName.length < 2) {
       errorsReg.lastName = 'Last name is a required field.'
+      console.log('isValidReg missing last name', isValidReg)
     }
 
     if (input.phone.length < 10) {
-      errorsReg.phone = 'Valid phone number required.'
+      errorsReg.phone = 'Phone is a required field.'
+      console.log('isValidReg missing phone', isValidReg)
     }
 
     if (input.street.length === 0) {
       errorsReg.street = 'Street address is a required field.'
+      console.log('isValidReg missing street', isValidReg)
     }
 
     if (input.city.length === 0) {
       errorsReg.city = 'City is a required field.'
+      console.log('isValidReg missing city', isValidReg)
     }
 
     if (input.zip.length < 5) {
       errorsReg.zip = 'Valid zip code required.'
+      console.log('isValidReg missing zip', isValidReg)
     }
 
-    if (input.state === '') {
+    if (!input.state) {
       errorsReg.state = 'State is required.'
+      console.log('isValidReg missing state', isValidReg)
     }
 
     console.log('errors', errorsReg)
-
-    setRegErrors(errorsReg)
-
+    setRegErrors(errorsReg) //maybe set this in each if statement with prev???
     console.log('Object.keys(regErrors).length', Object.keys(regErrors).length)
 
-    if (Object.keys(errorsReg).length > 0) {
-      setIsValidReg(false)
-      console.log('NOT VALID')
+    if (Object.keys(regErrors).length === 0) {
+      setIsValidReg(true)
+      console.log('isEdit when no errors', isEdit)
+      console.log(
+        'isValidReg value after check for empty regErrors obj',
+        isValidReg
+      )
+      //example -- if just edit a checkbox or add a letter-- this is not flipping to true=>works on second button click though??
     }
 
-    if (Object.keys(errorsReg).length === 0) {
-      setIsValidReg(true)
-      console.log('VALID')
+    if (!isValidReg) {
+      console.log('hey, there are some registration errors here!')
+      console.log('regErrors Object', regErrors) //NOTE:  state appears to be updating, but this console.log does not seem to work (except on second button click)
     }
   }
 
   const handleSubmit = async (e) => {
+
     e.preventDefault()
 
-    console.log('isValidReg right after handleSubmit called', isValidReg)
+    handleValidation()
+
+    console.log(
+      'isValidReg after handleValidation inside handleSubmit',
+      isValidReg
+    )
 
     if (isEdit) {
       console.log('isEdit', isEdit)
@@ -247,7 +267,9 @@ export default function RegistrationForm(props) {
 
     if (input.wantToSponsor) {
       navigate('/sponsorship')
-    } else {
+    } else if (isValidReg) {
+      //kelly -- changed this condition back on 10/15/22 -- possibly need to push this again so most updated is there.
+      // } else {
       navigate('/booth-selection')
     }
   }
@@ -261,11 +283,13 @@ export default function RegistrationForm(props) {
       currentVendor.isSponsor
     )
 
+
     const { name, checked } = e.target
     setInput((prev) => {
       return {
         ...prev,
         [name]: checked,
+
         sponsorshipLevel:
           input.isSponsor || currentVendor.isSponsor === false
             ? null
@@ -350,6 +374,7 @@ export default function RegistrationForm(props) {
           name='organization'
           type='text'
           disabled={currentVendor}
+
           defaultValue={currentVendor.organization}
           value={input.organization}
           onChange={handleChange}
@@ -364,7 +389,7 @@ export default function RegistrationForm(props) {
         ></TextArea>
 
         <Input
-          type='tel'
+          type='phone'
           autocomplete='tel'
           labelText='Phone'
           name='phone'
@@ -411,7 +436,7 @@ export default function RegistrationForm(props) {
             value={input.apt}
             onChange={handleChange}
           />
-
+  
           <StateDropdown
             defaultValue={currentVendor.state}
             value={input.state}
@@ -462,7 +487,6 @@ export default function RegistrationForm(props) {
           checked={input.isSponsor}
           onChange={handleCheck}
         />
-
         {input.isSponsor ? (
           <Selection
             name='sponsorshipLevel'
@@ -480,7 +504,6 @@ export default function RegistrationForm(props) {
             handleChange={handleChange}
           />
         ) : null}
-
         {input.isSponsor ? null : (
           <CheckBox
             labelText='Interested in becoming a sponsor of O.P. Vetfest'
@@ -489,10 +512,8 @@ export default function RegistrationForm(props) {
             onChange={handleCheck}
           />
         )}
-
         {/* <Button buttonText="See sponsorship levels and benifits" buttonStyle="text" onClick={handleShowSponsorship}/> */}
         <Button
-          disabled={!isValidReg} //disables submit button until registration is valid/isValidReg = true
           buttonText='Continue'
           buttonStyle='primary'
           onClick={handleSubmit}

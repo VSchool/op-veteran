@@ -115,14 +115,6 @@ const BoothCard = (props) => {
     // }
   }
 
-  const handleCloseCard = async (e) => {
-    e.preventDefault()
-    console.log("id from inside handleCloseCard", id)
-    await handleClose(id)
-  }
-
-  console.log("boothcard.js id", id)
-
   const isAllowed = () => {
     const tier1 = ['Paladin', 'Stryker', 'Abrams', 'Bradley']
     const tier2 = ['Paladin', 'Stryker']
@@ -140,7 +132,7 @@ const BoothCard = (props) => {
     <CardContainer>
       <HeaderWrapper>
         <CloseBtn>
-          <span className='closeBtn' alt='close' onClick={handleCloseCard}>
+          <span className='closeBtn' alt='close' onClick={handleClose}>
             <IoCloseOutline />
           </span>
         </CloseBtn>
@@ -182,7 +174,7 @@ const BoothCard = (props) => {
           <Button
             buttonStyle='primary'
             buttonText='Close'
-            onClick={handleCloseCard}
+            onClick={handleClose}
           />
         ) : (
           <>
@@ -195,7 +187,7 @@ const BoothCard = (props) => {
             <Button
               buttonStyle='secondary'
               buttonText='Cancel'
-              onClick={handleCloseCard}
+              onClick={handleClose}
             />{' '}
           </>
         )}

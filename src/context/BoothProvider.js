@@ -10,9 +10,11 @@ const boothRef = firestore.collection('Booths')
 export const BoothContext = createContext()
 export default function BoothProvider({ children }) {
   const [booths, setBooths] = useState([])
+
   // const [rowsOfBooths, setRowsOfBooths] = useState({})
 
   // const [sectionsOfRows, setSectionsOfRows] = useState({})
+
 
   const statusCodes = {
     OPEN: 0,
@@ -69,16 +71,14 @@ export default function BoothProvider({ children }) {
       .catch((err) => console.error(err))
   }
   const resetBooth = (id) => {
-    console.log('id from resetBooth', id)
     updateBooth(
       {
-        vendor: null,
         status: 0,
+        vendor: null,
       },
       id
     )
   }
-
   const updateBooth = (data, id) => {
     boothRef
       .doc(id)
@@ -86,12 +86,14 @@ export default function BoothProvider({ children }) {
       .catch((err) => console.error(err))
   }
 
+
   // const deleteBooth = (id) => {
   //   boothRef
   //     .doc(id)
   //     .delete()
   //     .catch((err) => console.error(err))
   // }
+
 
   const reserveBooth = (vendor, id) => {
     updateBooth(
@@ -102,7 +104,6 @@ export default function BoothProvider({ children }) {
       id
     )
   }
-
   const holdBooth = (vendor, id) => {
     updateBooth(
       {
@@ -420,11 +421,13 @@ export default function BoothProvider({ children }) {
         boothArray.push(doc.data())
       })
       console.log('boothArray after pushes from getBooths', boothArray)
+
       setBooths(boothArray)
     })
   }
 
   useEffect(() => {
+
     console.log('booths inside useEffect', booths)
     getBooths()
   }, []) //COMMENT: React Hook useEffect has a missing dependency: 'booths'. Either include it or remove the dependency array  react-hooks/exhaustive-deps

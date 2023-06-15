@@ -26,6 +26,7 @@ const DiagramRow = (props) => {
     const comps = filtered.map((b) => (
       <DiagramBooth key={b.id} data={b} />
       // <DiagramBooth key={b.id} data={b} key={b.id} /> replaced with line right above b/c of duplicate
+
     ))
     setBoothObjects(comps)
   }, []) //COMMENT:  React Hook useEffect has missing dependencies: 'booths', 'rowId', and 'sectionId'. Either include them or remove the dependency array  react-hooks/exhaustive-deps

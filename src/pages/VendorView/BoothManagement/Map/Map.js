@@ -103,7 +103,7 @@ const Map = (props) => {
       'P',
       'Q',
       'R',
-    ].map((rowId, index) => (
+    ].map((rowId) => (
       <Row
         key={rowId}
         setCurrentBooth={setCurrentBooth}
