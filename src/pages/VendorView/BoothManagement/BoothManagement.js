@@ -122,7 +122,7 @@ const BoothManagement = (props) => {
     if (secondary) {
       // addSecondaryBoothToCart(_id);
       addSecondaryBoothToLocalCart(_id)
-      secondary = true
+      setSecondary(true)
       await holdBooth(currentVendor, _id) //WORKS - this changes Firebase status & adds vendor info to selected booth
       setIsDoubleBoothOpen(false)
     } else {
@@ -184,6 +184,7 @@ const BoothManagement = (props) => {
       const width = getContainerWidth()
       setContainerWidth(width)
       setOrganizedBooths(data)
+       console.log("organized booths", organizedBooths)
     }
     return () => {
       isMounted = false
