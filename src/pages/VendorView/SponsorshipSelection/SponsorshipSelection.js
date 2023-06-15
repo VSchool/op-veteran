@@ -1,21 +1,22 @@
-import React, { useState, useContext, useEffect } from 'react'
+// import React, { useState, useContext, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import StatusMessage from '../../../components/StatusMessage'
 import { SponsorshipCard } from '../../../components/SponsorshipCard'
-import VendorContext from '../../../context/VendorProvider'
+// import VendorContext from '../../../context/VendorProvider'
 import {
-  perkList,
+  // perkList,
   sponsorshipLevels,
 } from '../../../components/SponsorshipCard/utils'
 import {
-  LandingContainer,
-  Logo,
-  Subheader,
+  // LandingContainer,
+  // Logo,
+  // Subheader,
   HeaderWrapper,
-  ButtonWrapper,
-  FormWrapper,
-  Wrapper,
-  Row,
+  // ButtonWrapper,
+  // FormWrapper,
+  // Wrapper,
+  // Row,
   Container,
   PageContainer,
 } from '../../../Elements/basic'
@@ -70,7 +71,7 @@ const Slider = styled.div`
 `
 
 export default function SponsorshipSelection(props) {
-  const [data, setData] = useState(props.data)
+  // const [data, setData] = useState(props.data)
   const { changeState, states } = props
 
   const [portrait, setPortrait] = useState(false)

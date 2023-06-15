@@ -1,25 +1,25 @@
-import React, { useContext, useState, useEffect, useRef } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { FormInput } from '../../../components/FormInput'
-import ProgressBar from '../../../components/ProgressBar'
+// import { FormInput } from '../../../components/FormInput'
+// import ProgressBar from '../../../components/ProgressBar'
 import StatusMessage from '../../../components/StatusMessage'
 import { UserContext } from '../../../context/UserProvider'
 import { VendorContext } from '../../../context/VendorProvider'
 import { CartContext } from '../../../context/CartProvider'
-import { BoothContext } from '../../../context/BoothProvider'
+// import { BoothContext } from '../../../context/BoothProvider'
 import { Input } from '../../../components/Input'
 import { Button } from '../../../components/Button'
 import { TextArea } from '../../../components/TextArea'
 import Selection from '../../../components/Selection'
 import {
-  LandingContainer,
-  Logo,
+  // LandingContainer,
+  // Logo,
   Subheader,
   Header,
   HeaderWrapper,
-  ButtonWrapper,
+  // ButtonWrapper,
   FormWrapper,
-  Wrapper,
+  // Wrapper,
   Row,
   Container,
   PageContainer,
@@ -73,25 +73,32 @@ const Required = styled.span`
 `
 
 export default function RegistrationForm(props) {
-  const { user, updateUser } = useContext(UserContext)
-  const { seedBooths } = useContext(BoothContext)
+  // const { user, updateUser } = useContext(UserContext)
+  const { user } = useContext(UserContext)
+  // const { seedBooths } = useContext(BoothContext)
   const {
     createCart, // This function needs to be called to create a shopify cartId. Use it in the handleSubmit function here or at the begining of the createVendor function in the VendorProvider.  This is currently untested
   } = useContext(CartContext)
   const {
     currentVendor,
     updateCurrentVendor,
-    matchVendor,
-    createVendor,
+    // matchVendor,
+    // createVendor,
     storeFile,
   } = useContext(VendorContext)
   const navigate = useNavigate()
-  const [showSponsorship, setShowSponsorship] = useState(false)
-  const { changeState, states } = props
+  // const [showSponsorship, setShowSponsorship] = useState(false)
+  // const { changeState, states } = props
+
+  const currentVendorAddressData = { ...currentVendor.address }
+  console.log('currentVendorAddress Data', currentVendorAddressData)
+
+  delete currentVendor.address
+  console.log('currentVendor', currentVendor)
 
   const [input, setInput] = useState(
     currentVendor
-      ? { ...currentVendor, ...currentVendor.address }
+      ? { ...currentVendor, ...currentVendorAddressData }
       : {
           firstName: '',
           lastName: '',
@@ -100,13 +107,12 @@ export default function RegistrationForm(props) {
           phone: '',
           apt: '',
           street: '',
-          apt: '',
           city: '',
-          zip: '',
           state: '',
-          isNonprofit: false, //changed this from "nonprofit"
-          isGovernmental: false, //changed this from "governmental"
-          isVeteranOwned: false, //changed this from "vetOwned"
+          zip: '',
+          isNonprofit: false,
+          isGovernmental: false,
+          isVeteranOwned: false,
           isSponsor: false,
           sponsorshipLevel: '',
           wantToSponsor: false,
@@ -127,7 +133,7 @@ export default function RegistrationForm(props) {
   //USEEFFECT TO HANDLE FORM EDITS
   useEffect(() => {
     handleValidation()
-  }, [input])
+  }, [input]) //COMMENT: React Hook useEffect has a missing dependency: 'handleValidation'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
 
   // useEffect(() => {
   //   if (currentVendor && currentVendor.repEmail ===user.email){
@@ -147,10 +153,10 @@ export default function RegistrationForm(props) {
     })
   }
 
-  const handleShowSponsorship = (e) => {
-    e.preventDefault()
-    setShowSponsorship(true)
-  }
+  // const handleShowSponsorship = (e) => {
+  //   e.preventDefault()
+  //   setShowSponsorship(true)
+  // }
 
   const handleChooseFile = (e) => {
     setInput((prev) => ({ ...prev, file: e.target.files[0] }))
@@ -249,16 +255,21 @@ export default function RegistrationForm(props) {
   const handleCheck = (e) => {
     console.log('handleCheck called -name', e.target.name)
     console.log('handleCheck called - checked', e.target.checked)
+    console.log('input.isSponsor from handleCheck', input.isSponsor)
+    console.log(
+      'currentVendor.isSponsor from handleCehck',
+      currentVendor.isSponsor
+    )
 
     const { name, checked } = e.target
     setInput((prev) => {
       return {
         ...prev,
+        [name]: checked,
         sponsorshipLevel:
           input.isSponsor || currentVendor.isSponsor === false
             ? null
             : input.sponsorshipLevel,
-        [name]: checked,
       }
     })
   }
@@ -308,7 +319,7 @@ export default function RegistrationForm(props) {
           labelText='First name'
           name='firstName'
           type='text'
-          defaultValue={currentVendor ? currentVendor.firstName : ''}
+          defaultValue={currentVendor.firstName}
           value={input.firstName}
           onChange={handleChange}
         />
@@ -321,7 +332,7 @@ export default function RegistrationForm(props) {
           labelText='Last name'
           name='lastName'
           type='text'
-          defaultValue={currentVendor ? currentVendor.lastName : ''}
+          defaultValue={currentVendor.lastName}
           value={input.lastName}
           onChange={handleChange}
         />
@@ -339,7 +350,7 @@ export default function RegistrationForm(props) {
           name='organization'
           type='text'
           disabled={currentVendor}
-          defaultValue={currentVendor ? currentVendor.organization : ''}
+          defaultValue={currentVendor.organization}
           value={input.organization}
           onChange={handleChange}
         />
@@ -347,7 +358,7 @@ export default function RegistrationForm(props) {
           labelText='Brief description of organization'
           name='description'
           rows='4'
-          defaultValue={currentVendor ? currentVendor.description : ''}
+          defaultValue={currentVendor.description}
           value={input.description}
           onChange={handleChange}
         ></TextArea>
@@ -357,7 +368,7 @@ export default function RegistrationForm(props) {
           autocomplete='tel'
           labelText='Phone'
           name='phone'
-          defaultValue={currentVendor ? currentVendor.phone : ''}
+          defaultValue={currentVendor.phone}
           value={input.phone}
           onChange={handleChange}
         />
@@ -370,7 +381,7 @@ export default function RegistrationForm(props) {
           autocomplete='street-address'
           name='street'
           type='text'
-          defaultValue={currentVendor ? currentVendor.address.street : ''}
+          defaultValue={currentVendor.street}
           value={input.street}
           onChange={handleChange}
         />
@@ -383,7 +394,7 @@ export default function RegistrationForm(props) {
           name='city'
           autocomplete='address-level1'
           type='text'
-          defaultValue={currentVendor ? currentVendor.address.city : ''}
+          defaultValue={currentVendor.city}
           value={input.city}
           onChange={handleChange}
         />
@@ -396,13 +407,13 @@ export default function RegistrationForm(props) {
             type='text'
             labelText='Apt or suite'
             name='apt'
-            defaultValue={currentVendor ? currentVendor.address.apt : ''}
+            defaultValue={currentVendor.apt}
             value={input.apt}
             onChange={handleChange}
           />
 
           <StateDropdown
-            defaultValue={currentVendor ? currentVendor.address.state : ''}
+            defaultValue={currentVendor.state}
             value={input.state}
             state={input.state}
             handleChange={handleChange}
@@ -415,7 +426,7 @@ export default function RegistrationForm(props) {
             labelText='Zipcode'
             name='zip'
             auto-complete='postal-code'
-            defaultValue={currentVendor ? currentVendor.address.zip : ''}
+            defaultValue={currentVendor.zip}
             value={input.zip}
             onChange={handleChange}
           />
@@ -456,6 +467,7 @@ export default function RegistrationForm(props) {
           <Selection
             name='sponsorshipLevel'
             options={[
+              '--Select--',
               'WLA - $250',
               'AMTRAK - $500',
               'Bradley - $1000',
@@ -463,7 +475,7 @@ export default function RegistrationForm(props) {
               'Abrams - $5000',
               'Paladin - $10000',
             ]}
-            defaultValue={currentVendor ? currentVendor.sponsorshipLevel : ''}
+            defaultValue={currentVendor.sponsorshipLevel}
             value={input.sponsorshipLevel} //Select Options go away, but this value doesn't change back to empty in database
             handleChange={handleChange}
           />
@@ -495,7 +507,7 @@ export default function RegistrationForm(props) {
         />
       )}
 
-      {showSponsorship ? <></> : null}
+      {/* {showSponsorship ? <></> : null} */}
     </Container>
   )
 }

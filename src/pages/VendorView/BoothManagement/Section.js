@@ -1,29 +1,30 @@
 import React, { useState, useContext, useEffect } from 'react'
-import styled from 'styled-components'
-import Konva from 'konva'
-import { Stage, Layer, Rect, Text } from 'react-konva'
+// import styled from 'styled-components'
+// import Konva from 'konva'
+// import { Stage, Layer, Rect, Text } from 'react-konva'
+import { Stage, Layer} from 'react-konva'
 import { CanvasContext } from '../../../context/CanvasProvider'
-import { UserContext } from '../../../context/UserProvider'
-import { VendorContext } from '../../../context/VendorProvider'
+// import { UserContext } from '../../../context/UserProvider'
+// import { VendorContext } from '../../../context/VendorProvider'
 import { BoothContext } from '../../../context/BoothProvider'
 import Row from './Map/Row'
 
 const Section = (props) => {
   const { sectionId } = props
   const [rowIds, setRowIds] = useState([])
-  const { user } = useContext(UserContext)
-  const { vendor, updateCurrentVendor } = useContext(VendorContext)
+  // const { user } = useContext(UserContext)
+  // const { vendor, updateCurrentVendor } = useContext(VendorContext)
   const {
     scale,
-    setScale,
+    // setScale,
     stageSize,
-    setStageSize,
-    modes,
-    changeMode,
-    fitStageIntoParentContainer,
-    currentSection,
-    setCurrentSection,
-    currentBooth,
+    // setStageSize,
+    // modes,
+    // changeMode,
+    // fitStageIntoParentContainer,
+    // currentSection,
+    // setCurrentSection,
+    // currentBooth,
     setCurrentBooth,
   } = useContext(CanvasContext)
   const { booths } = useContext(BoothContext)
@@ -37,7 +38,8 @@ const Section = (props) => {
       return final
     }, [])
     setRowIds(ids)
-  }, [])
+  }, []) //COMMENT:   React Hook useEffect has missing dependencies: 'booths' and 'sectionId'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+
   return (
     <Stage
       width={window.innerWidth}

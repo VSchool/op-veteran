@@ -1,8 +1,8 @@
 import React, { useContext } from 'react'
 import styled from 'styled-components'
 import { Button } from '../Button'
-import { CanvasContext } from '../../context/CanvasProvider'
-import { BoothContext } from '../../context/BoothProvider'
+// import { CanvasContext } from '../../context/CanvasProvider'
+// import { BoothContext } from '../../context/BoothProvider'
 import { VendorContext } from '../../context/VendorProvider'
 import { IoCloseOutline } from 'react-icons/io5'
 import { useNavigate } from 'react-router-dom'
@@ -59,17 +59,17 @@ const Subheader = styled.h3`
   line-height: 16px;
   color: #545454;
 `
-const Breadcrumbs = styled.h2`
-  font-style: normal;
-  font-weight: 600;
-  font-size: 15px;
-  line-height: 20px;
-  color: #545454;
-`
-const Logo = styled.img`
-  height: 60px;
-  width: auto;
-`
+// const Breadcrumbs = styled.h2`
+//   font-style: normal;
+//   font-weight: 600;
+//   font-size: 15px;
+//   line-height: 20px;
+//   color: #545454;
+// `
+// const Logo = styled.img`
+//   height: 60px;
+//   width: auto;
+// `
 const Paragraph = styled.p`
   font-style: normal;
   font-weight: normal;
@@ -80,18 +80,19 @@ const Paragraph = styled.p`
 const HeaderWrapper = styled.div`
   padding: 20px 0;
 `
-const Hr = styled.hr`
-  margin: auto;
-  margin-top: ${(props) => (props.top ? props.top : '8px')};
-  margin-bottom: ${(props) => (props.bottom ? props.botton : '8px')};
-  background-color: #f4f4f4;
-  width: 90%;
-`
+// const Hr = styled.hr`
+//   margin: auto;
+//   margin-top: ${(props) => (props.top ? props.top : '8px')};
+//   margin-bottom: ${(props) => (props.bottom ? props.botton : '8px')};
+//   background-color: #f4f4f4;
+//   width: 90%;
+// `
 const BoothCard = (props) => {
   const navigate = useNavigate()
   const { data, handleSelectBooth, handleClose } = props
   const { id, vendor, section, hasElectricity, row, restriction } = data
-  const { currentVendor, createVendor } = useContext(VendorContext)
+  // const { currentVendor, createVendor } = useContext(VendorContext)
+  const { currentVendor } = useContext(VendorContext)
   const handlePrimaryClick = (e) => {
     e.preventDefault()
     if (isAllowed()) {

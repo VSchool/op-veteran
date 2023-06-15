@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react'
 import styled from 'styled-components'
-import Konva from 'konva'
-import { Stage, Layer, Rect, Text } from 'react-konva'
+// import Konva from 'konva'
+// import { Stage, Layer, Rect, Text } from 'react-konva'
 import { CanvasContext } from '../../../context/CanvasProvider'
 import { UserContext } from '../../../context/UserProvider'
 import { VendorContext } from '../../../context/VendorProvider'
@@ -10,21 +10,21 @@ import { CartContext } from '../../../context/CartProvider'
 import BoothCard from '../../../components/BoothCard/BoothCard'
 import Map from './Map/Map'
 import Diagram from './Diagram/Diagram'
-import Section from './Section'
-import { Button } from '../../../components/Button'
+// import Section from './Section'
+// import { Button } from '../../../components/Button'
 import Legend from './Map/Legend'
 import StatusMessage from '../../../components/StatusMessage'
 import DoubleBoothModal from '../../../components/BoothCard/DoubleBoothModal'
-import {
-  LandingContainer,
-  Logo,
-  Subheader,
-  Header,
-  HeaderWrapper,
-  FormWrapper,
-  Row,
-  Container,
-} from '../../../Elements/basic'
+// import {
+//   LandingContainer,
+//   Logo,
+//   Subheader,
+//   Header,
+//   HeaderWrapper,
+//   FormWrapper,
+//   Row,
+//   Container,
+// } from '../../../Elements/basic'
 const ModeButton = styled.button`
   padding: 10px 20px;
   background-color: ${(props) => props.bgcolor};
@@ -49,18 +49,15 @@ const ButtonWrapper = styled.div`
   justify-content: space-around;
   align-items: center;
 `
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-  width: clamp(300px, 80%, 450px);
-  height: clamp(600px, 70%, 900px);
-`
+// const Wrapper = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: space-around;
+//   align-items: center;
+//   width: clamp(300px, 80%, 450px);
+//   height: clamp(600px, 70%, 900px);
+// `
 const BoothManagement = (props) => {
-
-
-
   const closeModal = () => {
     setModalOptions((prev) => ({ ...prev, isOpen: false }))
   }
@@ -72,32 +69,36 @@ const BoothManagement = (props) => {
     visible: false,
     close: closeModal,
   })
- 
 
-  const { states, changeState } = props
+  // const { states, changeState } = props
   const [containerWidth, setContainerWidth] = useState(0)
   const [mapMode, setMapMode] = useState(true)
   const [showInfo, setShowInfo] = useState(false)
   const [organizedBooths, setOrganizedBooths] = useState([])
-  const { user } = useContext(UserContext)
-  const { currentVendor, updateCurrentVendor } = useContext(VendorContext)
-  const { localCart, setLocalCart, addPrimaryBoothToLocalCart, addSecondaryBoothToLocalCart } =
-    useContext(CartContext)
+  // const { user } = useContext(UserContext)
+  // const { currentVendor, updateCurrentVendor } = useContext(VendorContext)
+  const { currentVendor } = useContext(VendorContext)
+  const {
+    localCart,
+    setLocalCart,
+    addPrimaryBoothToLocalCart,
+    addSecondaryBoothToLocalCart,
+  } = useContext(CartContext)
   const [secondary, setSecondary] = useState(false)
-  const [modalIsOpen, setModalIsOpen] = useState(false)
+  // const [modalIsOpen, setModalIsOpen] = useState(false)
   const [isDoubleBoothOpen, setIsDoubleBoothOpen] = useState(false)
   const {
-    scale,
-    setScale,
-    stageSize,
-    setStageSize,
-    modes,
-    changeMode,
-    fitStageIntoParentContainer,
-    currentSection,
-    setCurrentSection,
-    currentRow,
-    setCurrentRow,
+    // scale,
+    // setScale,
+    // stageSize,
+    // setStageSize,
+    // modes,
+    // changeMode,
+    // fitStageIntoParentContainer,
+    // currentSection,
+    // setCurrentSection,
+    // currentRow,
+    // setCurrentRow,
     currentBooth,
     setCurrentBooth,
     enterDiagramMode,
@@ -109,10 +110,10 @@ const BoothManagement = (props) => {
     booths,
     holdBooth,
     resetBooth,
-    reserveBooth,
-    pullMapDataFromFirestore,
+    // reserveBooth,
+    // pullMapDataFromFirestore,
     organizeBoothData,
-    statusCodes,
+    // statusCodes,
   } = useContext(BoothContext)
 
   const handleSelectBooth = async (_id, secondary = false) => {
@@ -122,7 +123,7 @@ const BoothManagement = (props) => {
       // addSecondaryBoothToCart(_id);
       addSecondaryBoothToLocalCart(_id)
       secondary = true
-      await holdBooth(currentVendor, _id)  //WORKS - this changes Firebase status & adds vendor info to selected booth
+      await holdBooth(currentVendor, _id) //WORKS - this changes Firebase status & adds vendor info to selected booth
       setIsDoubleBoothOpen(false)
     } else {
       addPrimaryBoothToLocalCart(_id)
@@ -136,34 +137,32 @@ const BoothManagement = (props) => {
   //ALSO-- map not updateing even though Firebase updated status ==> block color not going back to green when release booth/change status*******
 
   //This updates firebase & console.logs BUT...not updating color of block on map & getting warning message: "encountered two children with same key"
-  const handleClose = async(id) => {
+  const handleClose = async (id) => {
     console.log('handleClose triggered')
     console.log('_id from inside handleClose', id)
-    console.log("localCart.secondaryBoothId", localCart.secondaryBoothId)
-    if(localCart.secondaryBoothId){
+    console.log('localCart.secondaryBoothId', localCart.secondaryBoothId)
+    if (localCart.secondaryBoothId) {
       await resetBooth(localCart.secondaryBoothId)
     }
     await resetBooth(id)
-    setIsDoubleBoothOpen(false) 
+    setIsDoubleBoothOpen(false)
     setCurrentBooth(null)
-    setLocalCart({primaryBoothId: ""}, {secondaryBoothId: ""}) //test clears localcart
+    setLocalCart({ primaryBoothId: '' }, { secondaryBoothId: '' }) //test clears localcart
     // localStorage.removeItem("localCart") //test to see if clears localCart on cancels
   }
 
-
   const selectedBooth = booths.filter((booth) => booth.id === currentBooth)[0]
 
-  
   const checkNeighbors = () => {
-    console.log("checkNeighbors called")
+    console.log('checkNeighbors called')
 
     const options = booths.reduce((response, b) => {
       if (
         selectedBooth.neighbors.includes(b.id) &&
         (b.status === 0 || b.status === 'open')
       ) {
-           response.push(b.id)
-        }
+        response.push(b.id)
+      }
       return response
     }, [])
 
@@ -171,26 +170,25 @@ const BoothManagement = (props) => {
       setModalOptions((prev) => ({
         ...prev,
         options: options,
-
-    }))
+      }))
       setIsDoubleBoothOpen(true)
     }
-}
+  }
 
-//added additional isMounted logic in useEffect...seemed(?) to get rid of error re: Can't perform a React state update
-//on an unmounted component.To fix, cancel all subscriptions and asynchronous tasksin a useEffect cleanup function.
+  //added additional isMounted logic in useEffect...seemed(?) to get rid of error re: Can't perform a React state update
+  //on an unmounted component.To fix, cancel all subscriptions and asynchronous tasksin a useEffect cleanup function.
   useEffect(() => {
-    let isMounted = true;
-    if(isMounted){
-    const data = organizeBoothData()
-    const width = getContainerWidth()
-    setContainerWidth(width)
-    setOrganizedBooths(data)
+    let isMounted = true
+    if (isMounted) {
+      const data = organizeBoothData()
+      const width = getContainerWidth()
+      setContainerWidth(width)
+      setOrganizedBooths(data)
     }
-    return ()=>{
+    return () => {
       isMounted = false
     }
-  }, [])
+  }, []) //COMMENT:  React Hook useEffect has missing dependencies: 'getContainerWidth' and 'organizeBoothData'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
 
   return (
     <>

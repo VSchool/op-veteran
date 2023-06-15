@@ -5,15 +5,15 @@ import Client from 'shopify-buy/index.unoptimized.umd'
 import { useNavigate } from 'react-router-dom'
 
 import products from './data/shopifyProducts'
-import { FieldsOnCorrectTypeRule } from 'graphql'
-import { Input } from '../components/Input'
+// import { FieldsOnCorrectTypeRule } from 'graphql'
+// import { Input } from '../components/Input'
 
 export const CartContext = createContext()
 
 export default function CartProvider({ children }) {
   const { currentVendor, createVendor } = useContext(VendorContext)
 
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
 
   const { booths } = useContext(BoothContext)
 
@@ -292,13 +292,13 @@ export default function CartProvider({ children }) {
     }
   }
 
-  const checkProducts = () => {
-    for (let product of Object.keys(products)) {
-      client.product
-        .fetch(products[product])
-        .then((p) => console.log(`${product}: ${Object.entries(p)}`))
-    }
-  }
+  // const checkProducts = () => {
+  //   for (let product of Object.keys(products)) {
+  //     client.product
+  //       .fetch(products[product])
+  //       .then((p) => console.log(`${product}: ${Object.entries(p)}`))
+  //   }
+  // }
 
   const changeQuantity = (itemId, currentQuantity) => {
     let newQuantity = currentQuantity - 1
@@ -321,15 +321,15 @@ export default function CartProvider({ children }) {
       .then((checkout) => window.open(checkout.webUrl))
   }
 
-  const getOrderStatus = () => {
-    client.checkout.fetch(currentVendor.cartId).then((checkout) => {
-      const lineItems = checkout.lineItems
-      const toRemove = lineItems.map((item) => item.id)
-      client.checkout
-        .removeLineItems(currentVendor.cartId, toRemove)
-        .then(() => console.log('removed'))
-    })
-  }
+  // const getOrderStatus = () => {
+  //   client.checkout.fetch(currentVendor.cartId).then((checkout) => {
+  //     const lineItems = checkout.lineItems
+  //     const toRemove = lineItems.map((item) => item.id)
+  //     client.checkout
+  //       .removeLineItems(currentVendor.cartId, toRemove)
+  //       .then(() => console.log('removed'))
+  //   })
+  // }
 
   return (
     <CartContext.Provider

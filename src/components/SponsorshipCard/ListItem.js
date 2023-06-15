@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import checkmarkIcon from '../../assets/icons/card-checkmark-icon.svg'
-import uncheckmarkIcon from '../../assets/icons/card-uncheckmark-icon.svg'
+// import uncheckmarkIcon from '../../assets/icons/card-uncheckmark-icon.svg'
 
 const ItemContainer = styled.div`
   display: flex;
@@ -26,7 +26,8 @@ const Checkmark = styled.img`
 `
 
 export default function ListItem(props) {
-  const { className, wording, valid } = props
+  // const { className, wording, valid } = props
+  const { wording, valid } = props
 
   return (
     <ItemContainer style={{ opacity: valid ? 1 : 0.4 }}>

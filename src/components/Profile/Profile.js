@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { VendorContext } from '../../context/VendorProvider'
 import { UserContext } from '../../context/UserProvider'
 import { CanvasContext } from '../../context/CanvasProvider'
-import Finalize from '../../pages/VendorView/Finalize'
+// import Finalize from '../../pages/VendorView/Finalize'
 import firestore from '../../database'
 import opveteranLogo from '../../assets/icons/OPVeteranLogo.png'
 
@@ -48,28 +48,30 @@ const Logo = styled.img`
 `
 
 const Profile = (props) => {
-  const { currentVendor, updateCurrentVendor } = useContext(VendorContext)
-  const { user, updateUser } = useContext(UserContext)
+  // const { currentVendor, updateCurrentVendor } = useContext(VendorContext)
+  const { currentVendor } = useContext(VendorContext)
+  // const { user, updateUser } = useContext(UserContext)
   const { currentBooth } = useContext(CanvasContext)
 
-  const [info, setInfo] = useState({
-    organization:
-      currentVendor !== null ? currentVendor.organization : 'Not registered',
-    description:
-      currentVendor !== null ? currentVendor.description : 'Not registered',
-    logo: currentVendor !== null ? currentVendor.logo : opveteranLogo,
-    primaryBooth:
-      currentVendor !== null ? currentVendor.primaryBooth : 'Not registered',
-    secondaryBooth:
-      currentVendor !== null ? currentVendor.secondaryBooth : 'Not registered',
-    address: currentVendor !== null ? currentVendor.address : 'Not registered',
-    rep: currentVendor !== null ? currentVendor.rep : 'Not registered',
-    repEmail:
-      currentVendor !== null ? currentVendor.repEmail : 'Not registered',
-    sponsorship:
-      currentVendor !== null ? currentVendor.sponsorship : 'Not registered',
-  })
-  const boothRef = firestore.collection('Booths')
+  // const [info, setInfo] = useState({
+  //   organization:
+  //     currentVendor !== null ? currentVendor.organization : 'Not registered',
+  //   description:
+  //     currentVendor !== null ? currentVendor.description : 'Not registered',
+  //   logo: currentVendor !== null ? currentVendor.logo : opveteranLogo,
+  //   primaryBooth:
+  //     currentVendor !== null ? currentVendor.primaryBooth : 'Not registered',
+  //   secondaryBooth:
+  //     currentVendor !== null ? currentVendor.secondaryBooth : 'Not registered',
+  //   address: currentVendor !== null ? currentVendor.address : 'Not registered',
+  //   rep: currentVendor !== null ? currentVendor.rep : 'Not registered',
+  //   repEmail:
+  //     currentVendor !== null ? currentVendor.repEmail : 'Not registered',
+  //   sponsorship:
+  //     currentVendor !== null ? currentVendor.sponsorship : 'Not registered',
+  // })
+  
+  // const boothRef = firestore.collection('Booths')
 
   /* Delete this later, just for testing*/
   /* for testing purposes because you can add more than 2 booths at a time */
@@ -86,16 +88,16 @@ const Profile = (props) => {
   return (
     <Wrapper>
       <div>
-        <Logo src={info.logo} />
+        {/* <Logo src={info.logo} /> */}
         <Paragraph>
           Current Booth: {currentBooth ? currentBooth : 'None Selected'}
         </Paragraph>
-        <Paragraph>Name: {info.rep}</Paragraph>
+        {/* <Paragraph>Name: {info.rep}</Paragraph>
         <Paragraph>Organization: {info.organization}</Paragraph>
         <Paragraph>
           Sponsorship:{' '}
           {info.sponsorshipLevel ? info.sponsorshipLevel : 'None Selected'}
-        </Paragraph>
+        </Paragraph> */}
       </div>
       <div>{/* <Finalize /> */}</div>
       {/* for testing purposes because you can add more than 2 booths at a time */}

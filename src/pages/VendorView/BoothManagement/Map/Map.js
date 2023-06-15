@@ -1,18 +1,18 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { CanvasContext } from '../../../../context/CanvasProvider'
 import { BoothContext } from '../../../../context/BoothProvider'
-import { VendorContext } from '../../../../context/VendorProvider'
+// import { VendorContext } from '../../../../context/VendorProvider'
 import {
   Stage,
   Layer,
   Group,
-  Image,
-  Rect,
-  Path,
-  Text,
+  // Image,
+  // Rect,
+  // Path,
+  // Text,
   Circle,
 } from 'react-konva'
-import useImage from 'use-image'
+// import useImage from 'use-image'
 import styled from 'styled-components'
 import BlankMapPathLayer from './BlankMapPathLayer'
 import Row from './Row'
@@ -55,11 +55,11 @@ const Map = (props) => {
   const { scale, setCurrentBooth, enterMapMode } = useContext(CanvasContext)
   const {
     booths,
-    diagramData,
+    // diagramData,
     rowData,
-    updateBooth,
-    rowsOfBooths,
-    pullMapDataFromFirestore,
+    // updateBooth,
+    // rowsOfBooths,
+    // pullMapDataFromFirestore,
     getBooths,
   } = useContext(BoothContext)
   const treeCircles = treeData.map((tree, index) => (
@@ -74,14 +74,15 @@ const Map = (props) => {
   const [mapMode, setMapMode] = useState(false)
   // const [mapImage] = useImage("https://liveshameless.com/map.jpg");
   const [rowGroups, setRowGroups] = useState([])
-  const colors = {
-    green: '#799C8A',
-    red: '#EA7C7C',
-    yellow: '#FBBC05',
-    blue: '#4E92F9',
-  }
+  // const colors = {
+  //   green: '#799C8A',
+  //   red: '#EA7C7C',
+  //   yellow: '#FBBC05',
+  //   blue: '#4E92F9',
+  // }
 
-  const { setShowInfo, containerWidth, setModalOptions, showTrees } = props
+  // const { setShowInfo, containerWidth, setModalOptions, showTrees } = props
+  const { containerWidth, showTrees } = props
   const buildRows = () => {
     const arrayOfRows = [
       'A',
@@ -120,7 +121,7 @@ const Map = (props) => {
   useEffect(() => {
     buildRows()
     enterMapMode()
-  }, [booths])  
+  }, [booths]) //COMMENT:  React Hook useEffect has missing dependencies: 'buildRows' and 'enterMapMode'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
 
   return (
     <SuperStage

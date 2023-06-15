@@ -6,10 +6,10 @@ import { VendorContext } from '../../context/VendorProvider'
 import { CanvasContext } from '../../context/CanvasProvider'
 import { CartContext } from '../../context/CartProvider'
 import logo from '../../assets/images/vetfest-logo.png'
-import userIcon from '../../assets/icons/avatar-icon.svg'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+// import userIcon from '../../assets/icons/avatar-icon.svg'
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import opveteranLogo from '../../assets/icons/OPVeteranLogo.png'
-import { faTrash } from '@fortawesome/free-solid-svg-icons'
+// import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import { Profile } from '../Profile'
 import StatusMessage from '../../components/StatusMessage'
 import { Button } from '../../components/Button'
@@ -67,11 +67,11 @@ const Head = styled.h1`
   border-top-right-radius: 0.5rem;
   border-bottom: 1px solid #e6e6e6;
 `
-const EmptyCart = styled.p`
-  font-weight: bold;
-  color: #e67e22;
-  padding: 10px;
-`
+// const EmptyCart = styled.p`
+//   font-weight: bold;
+//   color: #e67e22;
+//   padding: 10px;
+// `
 const ProductWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -84,37 +84,37 @@ const ProductWrapper = styled.div`
   }
 `
 
-const Product = styled.div`
-  display: flex;
-  justify-content: space-between;
+// const Product = styled.div`
+//   display: flex;
+//   justify-content: space-between;
 
-  p {
-    font-weight: bold;
-    color: #16a085;
-  }
-`
+//   p {
+//     font-weight: bold;
+//     color: #16a085;
+//   }
+// `
 
-const ProductOptions = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+// const ProductOptions = styled.div`
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
 
-  & > p {
-    font-weight: bold;
-  }
-`
+//   & > p {
+//     font-weight: bold;
+//   }
+// `
 
-const TrashButton = styled.a`
-  color: #c0392b;
-  opacity: 0.7;
-  cursor: pointer;
-  font-size: 1.5rem;
-  margin-left: 5px;
+// const TrashButton = styled.a`
+//   color: #c0392b;
+//   opacity: 0.7;
+//   cursor: pointer;
+//   font-size: 1.5rem;
+//   margin-left: 5px;
 
-  &:hover {
-    opacity: 1;
-  }
-`
+//   &:hover {
+//     opacity: 1;
+//   }
+// `
 const SideNav = styled.div`
   height: 100%;
   width: 300px;
@@ -222,47 +222,51 @@ const LogOut = styled.span`
     cursor: pointer;
   }
 `
-const Paragraph = styled.p``
-const Logo = styled.img`
-  width: 40px;
-  height: 40px;
-`
+// const Paragraph = styled.p``
+// const Logo = styled.img`
+//   width: 40px;
+//   height: 40px;
+// `
 
 export default function Header() {
   const navigate = useNavigate()
   const { logout } = useContext(AuthContext)
-  const { user } = useContext(UserContext)
-  const { cart, changeQuantity, localCart, openCart } = useContext(CartContext)
-  const { currentVendor, updateCurrentVendor } = useContext(VendorContext)
-  const { currentBooth } = useContext(CanvasContext)
+  // const { user } = useContext(UserContext)
+  // const { cart, changeQuantity, localCart, openCart } = useContext(CartContext)
+  const { localCart} = useContext(CartContext)
+  // const { currentVendor, updateCurrentVendor } = useContext(VendorContext)
+  const { currentVendor } = useContext(VendorContext)
+  // const { currentBooth } = useContext(CanvasContext)
 
-  const [showProfile, setShowProfile] = useState(false)
-  const handleClick = () => {
-    setShowProfile((prev) => !prev)
-  }
+  // const [showProfile, setShowProfile] = useState(false)
+
+  // const handleClick = () => {
+  //   setShowProfile((prev) => !prev)
+  // }
+
   const [sideToggle, setSideToggle] = useState(true)
 
   const handleSideBarToggle = () => {
     setSideToggle((prevState) => !prevState)
     console.log(sideToggle)
   }
-  const [info, setInfo] = useState({
-    organization:
-      currentVendor !== null ? currentVendor.organization : 'Not registered',
-    description:
-      currentVendor !== null ? currentVendor.description : 'Not registered',
-    logo: currentVendor !== null ? currentVendor.logo : opveteranLogo,
-    primaryBooth:
-      currentVendor !== null ? currentVendor.primaryBooth : 'Not registered',
-    secondaryBooth:
-      currentVendor !== null ? currentVendor.secondaryBooth : 'Not registered',
-    address: currentVendor !== null ? currentVendor.address : 'Not registered',
-    rep: currentVendor !== null ? currentVendor.rep : 'Not registered',
-    repEmail:
-      currentVendor !== null ? currentVendor.repEmail : 'Not registered',
-    sponsorship:
-      currentVendor !== null ? currentVendor.sponsorship : 'Not registered',
-  })
+  // const [info, setInfo] = useState({
+  //   organization:
+  //     currentVendor !== null ? currentVendor.organization : 'Not registered',
+  //   description:
+  //     currentVendor !== null ? currentVendor.description : 'Not registered',
+  //   logo: currentVendor !== null ? currentVendor.logo : opveteranLogo,
+  //   primaryBooth:
+  //     currentVendor !== null ? currentVendor.primaryBooth : 'Not registered',
+  //   secondaryBooth:
+  //     currentVendor !== null ? currentVendor.secondaryBooth : 'Not registered',
+  //   address: currentVendor !== null ? currentVendor.address : 'Not registered',
+  //   rep: currentVendor !== null ? currentVendor.rep : 'Not registered',
+  //   repEmail:
+  //     currentVendor !== null ? currentVendor.repEmail : 'Not registered',
+  //   sponsorship:
+  //     currentVendor !== null ? currentVendor.sponsorship : 'Not registered',
+  // })
 
   return (
     <HeaderContainer>

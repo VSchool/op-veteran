@@ -1,15 +1,17 @@
-import React, { Fragment, useState, useContext, useEffect } from 'react'
+// import React, { Fragment, useState, useContext, useEffect } from 'react'
+import React, { useState, useContext } from 'react'
 import styled from 'styled-components'
 import { VendorContext } from '../../context/VendorProvider'
 import { CartContext } from '../../context/CartProvider'
-import { BoothContext } from '../../context/BoothProvider'
-import { UserContext } from '../../context/UserProvider'
-import { Wrapper, Container, PageContainer } from '../../Elements/basic'
+// import { BoothContext } from '../../context/BoothProvider'
+// import { UserContext } from '../../context/UserProvider'
+// import { Wrapper, Container, PageContainer } from '../../Elements/basic'
+import { PageContainer } from '../../Elements/basic'
 import { Button } from '../../components/Button'
 import StatusMessage from '../../components/StatusMessage'
 import { useNavigate } from 'react-router-dom'
-import { faTrash } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+// import { faTrash } from '@fortawesome/free-solid-svg-icons'
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Modal from '../../components/Modal'
 
 const CardContainer = styled.div`
@@ -69,11 +71,11 @@ const LocalCart = styled.div`
   }
 `
 
-const EmptyCart = styled.p`
-  font-weight: bold;
-  color: #e67e22;
-  padding: 10px;
-`
+// const EmptyCart = styled.p`
+//   font-weight: bold;
+//   color: #e67e22;
+//   padding: 10px;
+// `
 
 const ProductWrapper = styled.div`
   display: flex;
@@ -87,37 +89,37 @@ const ProductWrapper = styled.div`
   }
 `
 
-const Product = styled.div`
-  display: flex;
-  justify-content: space-between;
+// const Product = styled.div`
+//   display: flex;
+//   justify-content: space-between;
 
-  p {
-    font-weight: bold;
-    color: #16a085;
-  }
-`
+//   p {
+//     font-weight: bold;
+//     color: #16a085;
+//   }
+// `
 
-const ProductOptions = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+// const ProductOptions = styled.div`
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
 
-  & > p {
-    font-weight: bold;
-  }
-`
+//   & > p {
+//     font-weight: bold;
+//   }
+// `
 
-const TrashButton = styled.a`
-  color: #c0392b;
-  opacity: 0.7;
-  cursor: pointer;
-  font-size: 1.5rem;
-  margin-left: 5px;
+// const TrashButton = styled.a`
+//   color: #c0392b;
+//   opacity: 0.7;
+//   cursor: pointer;
+//   font-size: 1.5rem;
+//   margin-left: 5px;
 
-  &:hover {
-    opacity: 1;
-  }
-`
+//   &:hover {
+//     opacity: 1;
+//   }
+// `
 
 const Finalize = (props) => {
   // const { currentVendor, getCartItems, cart, openCart } = useContext(VendorContext);
@@ -126,12 +128,12 @@ const Finalize = (props) => {
 
   const {
     clearAndLoadShopifyCart,
-    cart,
-    getShopifyCart,
+    // cart,
+    // getShopifyCart,
     localCart,
-    changeQuantity,
-    openCart,
-    loading,
+    // changeQuantity,
+    // openCart,
+    // loading,
   } = useContext(CartContext)
 
   const [modalOpen, setModalOpen] = useState(false)

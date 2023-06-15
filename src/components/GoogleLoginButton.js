@@ -32,17 +32,18 @@ const StyledButton = styled.button`
     border: ${(props) => props.activeBorder};
   }
 `
-const GoogleLogo = styled.img`
-  width: 20px;
-  height: 20px;
-  padding-left: 6px;
-`
-const ButtonText = styled.span`
-  margin-right: 6px;
-`
+// const GoogleLogo = styled.img`
+//   width: 20px;
+//   height: 20px;
+//   padding-left: 6px;
+// `
+// const ButtonText = styled.span`
+//   margin-right: 6px;
+// `
 
 export default function GoogleLoginButton(props) {
-  const { className, onClick } = props
+  // const { className, onClick } = props
+  const { onClick } = props
   return (
     <StyledButton onClick={onClick}>
       <span>Register with </span>

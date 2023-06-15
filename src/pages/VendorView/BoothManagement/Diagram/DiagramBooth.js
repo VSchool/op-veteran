@@ -1,11 +1,13 @@
-import React, { useState, useContext, useEffect } from 'react'
-import styled from 'styled-components'
-import Konva from 'konva'
-import { Stage, Layer, Rect, Text, Group, Path } from 'react-konva'
-import { CanvasContext } from '../../../../context/CanvasProvider'
-import { UserContext } from '../../../../context/UserProvider'
-import { VendorContext } from '../../../../context/VendorProvider'
-import { BoothContext } from '../../../../context/BoothProvider'
+// import React, { useState, useContext, useEffect } from 'react'
+import React from 'react'
+// import styled from 'styled-components'
+// import Konva from 'konva'
+// import { Stage, Layer, Rect, Text, Group, Path } from 'react-konva'
+import { Rect, Group, Path } from 'react-konva'
+// import { CanvasContext } from '../../../../context/CanvasProvider'
+// import { UserContext } from '../../../../context/UserProvider'
+// import { VendorContext } from '../../../../context/VendorProvider'
+// import { BoothContext } from '../../../../context/BoothProvider'
 
 const colors = {
   green: '#799C8A',
@@ -14,17 +16,19 @@ const colors = {
   blue: '#4E92F9',
 }
 const DiagramBooth = (props) => {
-  const { data, mapMode, setMapMode, updateBoothObjects, setCurrentBooth } =
-    props
+  // const { data, mapMode, setMapMode, updateBoothObjects, setCurrentBooth } =
+  //   props
+  const { data, setCurrentBooth } = props
+
   const {
     hasElectricity,
     restriction,
-    name,
+    // name,
     id,
-    vendor,
+    // vendor,
     number,
-    section,
-    row,
+    // section,
+    // row,
   } = data
 
   return (

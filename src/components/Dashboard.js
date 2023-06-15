@@ -91,7 +91,7 @@ const ListItem = styled.li`
   }
 `
 
-const Dashboard = () => {
+const Dashboard = (props) => {
   const { user } = useContext(UserContext)
   const { localCart, getShopifyCart } = useContext(CartContext)
 
@@ -99,9 +99,9 @@ const Dashboard = () => {
     return s.charAt(0).toUpperCase() + s.slice(1)
   }
 
-  useEffect((props) => {
+  useEffect(() => {
     getShopifyCart()
-  }, [])
+  }, [props]) //COMMENT:  React Hook useEffect has a missing dependency: 'getShopifyCart'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
 
   return (
     <DashboardContainer>

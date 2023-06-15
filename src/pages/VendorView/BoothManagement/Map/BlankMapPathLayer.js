@@ -1,5 +1,6 @@
 import React from 'react'
-import { Group, Layer, Path } from 'react-konva'
+// import { Group, Layer, Path } from 'react-konva'
+import { Layer, Path } from 'react-konva'
 
 const BlankMapPathLayer = (props) => {
   return (

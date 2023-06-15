@@ -6,7 +6,7 @@ export const UserContext = createContext()
 
 let userRef = null
 
-export default function ({ children }) {
+export default function UserProvider ({ children }) {
   const { auth } = useContext(AuthContext)
   const [user, setUser] = useState(null)
   const [isAdmin, setIsAdmin] = useState(false)
@@ -26,7 +26,7 @@ export default function ({ children }) {
     )
 
     return unsub
-  }, [setUser])
+  }, [setUser]) //COMMENT:  React Hook useEffect has a missing dependency: 'auth'. Either include it or remove the dependency array      react-hooks/exhaustive-deps
 
   useEffect(() => {
     checkPermissions(auth.uid)
@@ -37,7 +37,7 @@ export default function ({ children }) {
         }
       })
       .catch((err) => console.error(err))
-  }, [setIsAdmin, setIsDev])
+  }, [setIsAdmin, setIsDev]) //COMMENT:  React Hook useEffect has a missing dependency: 'auth.uid'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
 
   const updateUser = (data) => {
     userRef.update(data).catch((err) => console.error(err))

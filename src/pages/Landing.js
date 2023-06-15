@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { AuthContext } from '../context/AuthProvider'
-import { Auth } from '../Firebase'
+// import { Auth } from '../Firebase'
 import { Button } from '../components/Button'
 import { GoogleButton } from '../components/GoogleButton'
 import { Input } from '../components/Input'
@@ -13,7 +13,7 @@ import {
   Subheader,
   Header,
   HeaderWrapper,
-  ButtonWrapper,
+  // ButtonWrapper,
   FormWrapper,
   Wrapper,
   Row,
@@ -40,8 +40,8 @@ export default function Landing() {
   const {
     auth,
     authError,
-    setAuthErr,
-    handleErrors,
+    // setAuthErr,
+    // handleErrors,
     signInWithGoogle,
     signInWithEmail,
     signUpWithEmail,
@@ -55,15 +55,15 @@ export default function Landing() {
   const [errMsg, setErrMsg] = useState('')
   const [notification, setNotification] = useState('')
   const [toggleLogin, setToggleLogin] = useState(true)
-  const [state, setState] = useState(null)
-  const states = { REGISTER: 'register', SIGNUP: 'signup' }
-  const selectRegister = (e) => {}
+  // const [state, setState] = useState(null)
+  // const states = { REGISTER: 'register', SIGNUP: 'signup' }
+  // const selectRegister = (e) => {}
   const handleGoogle = (e) => {
     e.preventDefault()
     signInWithGoogle()
   }
 
-  const ActionCodeSettings = {}
+  // const ActionCodeSettings = {}
 
   const handleConfirmPassword = () => {
     if (inputs.password !== inputs.confirmPassword) {
@@ -86,7 +86,7 @@ export default function Landing() {
     e.preventDefault()
     const { email, password } = inputs
     /*** Add validation ***/
-    const { name } = e.target
+    // const { name } = e.target
     if (e.target.innerText === 'Register') {
       handleConfirmPassword() && signUpWithEmail(email, password)
       if (authError === null) {

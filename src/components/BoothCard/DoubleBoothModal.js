@@ -1,6 +1,7 @@
-import styled, { keyframes } from 'styled-components'
-import { MdReport } from 'react-icons/md'
-import { CloseButton } from '../../Elements/basic'
+// import styled, { keyframes } from 'styled-components'
+import styled from 'styled-components'
+// import { MdReport } from 'react-icons/md'
+// import { CloseButton } from '../../Elements/basic'
 import { Button } from '../Button'
 import { useNavigate } from 'react-router-dom'
 
@@ -12,12 +13,12 @@ const ButtonWrapper = styled.div`
   align-items: center;
   margin: 10px auto;
 `
-const entrance = keyframes`
-    0% {top: -150px;}
-    20% {top: 100px;}
-    80% {top: 100px;}
-    100% {top: -150px;}
-`
+// const entrance = keyframes`
+//     0% {top: -150px;}
+//     20% {top: 100px;}
+//     80% {top: 100px;}
+//     100% {top: -150px;}
+// `
 
 const MessageContainer = styled.div`
   display: flex;
@@ -71,12 +72,12 @@ const Text = styled.p`
   color: #ecf0f1;
   // border: 1px dotted blue;
 `
-const Icon = styled(MdReport)`
-  width: 24px;
-  height: 24px;
-  color: #4e92f9;
-  padding: 4px auto;
-`
+// const Icon = styled(MdReport)`
+//   width: 24px;
+//   height: 24px;
+//   color: #4e92f9;
+//   padding: 4px auto;
+// `
 
 const DoubleBoothModal = (props)=>{
 

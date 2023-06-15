@@ -7,8 +7,9 @@ import { Button } from '../../components/Button'
 
 const ToDoList = ({ List, Header2, ListItem }) => {
   const { currentVendor, storeFile } = useContext(VendorContext)
-  const { updateBooth, booths, setNeighbors, newBooths, resetBooth } =
-    useContext(BoothContext)
+  // const { updateBooth, booths, setNeighbors, newBooths, resetBooth } =
+  //   useContext(BoothContext)
+  const { updateBooth, booths} = useContext(BoothContext)
   const [file, setFile] = useState(null)
   const [showLogoUploader, setShowLogoUploader] = useState(false)
 
@@ -21,10 +22,10 @@ const ToDoList = ({ List, Header2, ListItem }) => {
     storeFile(file, `logos/${newFileName}/${newFileName}.${extension}`)
   }
 
-  const handleLogoUpload = (e) => {
-    setShowLogoUploader(false)
-    saveLogo(file)
-  }
+  // const handleLogoUpload = (e) => {
+  //   setShowLogoUploader(false)
+  //   saveLogo(file)
+  // }
 
   const handleClick = (e) => {
     switch (e.target.innerText) {
@@ -36,17 +37,17 @@ const ToDoList = ({ List, Header2, ListItem }) => {
     }
   }
 
-  const changeBooths = (e) => {
-    console.log('changing booths')
-    for (let booth of booths) {
-      if (booth?.restriction !== 1 && booth?.restriction !== 2) {
-        const updatedBooth = { ...booth }
-        updatedBooth.restriction = 0
-        updateBooth(updatedBooth, booth?.id)
-        console.log(`updating booth ${booth?.id}`)
-      }
-    }
-  }
+  // const changeBooths = (e) => {
+  //   console.log('changing booths')
+  //   for (let booth of booths) {
+  //     if (booth?.restriction !== 1 && booth?.restriction !== 2) {
+  //       const updatedBooth = { ...booth }
+  //       updatedBooth.restriction = 0
+  //       updateBooth(updatedBooth, booth?.id)
+  //       console.log(`updating booth ${booth?.id}`)
+  //     }
+  //   }
+  // }
   
   return (
     <List>

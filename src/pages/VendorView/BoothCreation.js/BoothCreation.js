@@ -1,19 +1,20 @@
-import React, { useContext, useState, useEffect, useRef } from 'react'
+// import React, { useContext, useState, useEffect, useRef } from 'react'
+import React, { useContext, useState } from 'react'
 import { BoothContext } from '../../../context/BoothProvider'
 import { Input } from '../../../components/Input'
 import { Button } from '../../../components/Button'
-import { TextArea } from '../../../components/TextArea'
+// import { TextArea } from '../../../components/TextArea'
 import {
-  LandingContainer,
-  Logo,
-  Subheader,
-  Header,
-  HeaderWrapper,
-  ButtonWrapper,
+  // LandingContainer,
+  // Logo,
+  // Subheader,
+  // Header,
+  // HeaderWrapper,
+  // ButtonWrapper,
   FormWrapper,
-  Wrapper,
-  Row,
-  Container,
+  // Wrapper,
+  // Row,
+  // Container,
 } from '../../../Elements/basic'
 import { CheckBox } from '../../../components/CheckBox'
 
