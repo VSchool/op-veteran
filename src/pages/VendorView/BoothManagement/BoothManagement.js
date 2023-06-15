@@ -3,7 +3,7 @@ import styled from 'styled-components'
 // import Konva from 'konva'
 // import { Stage, Layer, Rect, Text } from 'react-konva'
 import { CanvasContext } from '../../../context/CanvasProvider'
-import { UserContext } from '../../../context/UserProvider'
+// import { UserContext } from '../../../context/UserProvider'
 import { VendorContext } from '../../../context/VendorProvider'
 import { BoothContext } from '../../../context/BoothProvider'
 import { CartContext } from '../../../context/CartProvider'
@@ -61,6 +61,7 @@ const BoothManagement = (props) => {
   const closeModal = () => {
     setModalOptions((prev) => ({ ...prev, isOpen: false }))
   }
+
   const [showTrees, setShowTrees] = useState(true)
   const [modalOptions, setModalOptions] = useState({
     options: [],
@@ -74,7 +75,6 @@ const BoothManagement = (props) => {
   const [mapMode, setMapMode] = useState(true)
   const [showInfo, setShowInfo] = useState(false)
   const [organizedBooths, setOrganizedBooths] = useState([])
-
   // const { user } = useContext(UserContext)
   // const { currentVendor, updateCurrentVendor } = useContext(VendorContext)
   const { currentVendor } = useContext(VendorContext)
@@ -108,17 +108,17 @@ const BoothManagement = (props) => {
 
   const {
     booths,
-
     holdBooth,
     resetBooth,
     // reserveBooth,
     // pullMapDataFromFirestore,
-
     organizeBoothData,
     // statusCodes,
   } = useContext(BoothContext)
 
-  const handleSelectBooth = (_id, secondary = false) => {
+  const handleSelectBooth = async (_id, secondary = false) => {
+    console.log('handleSelectBooth called')
+    console.log('handleSelectBooth _id', _id)
     if (secondary) {
       // addSecondaryBoothToCart(_id);
       addSecondaryBoothToLocalCart(_id)
@@ -126,13 +126,12 @@ const BoothManagement = (props) => {
       await holdBooth(currentVendor, _id) //WORKS - this changes Firebase status & adds vendor info to selected booth
       setIsDoubleBoothOpen(false)
     } else {
-      // addPrimaryBoothToCart(_id);
       addPrimaryBoothToLocalCart(_id)
-      handleClose()
+      //NOTE: **this holdBooth() below worked to update the specified booth status & vendor info in Firebase Booth Collection & also turns box grey/white on map - kelly
+      await holdBooth(currentVendor, _id) //WORKS - this changes status & adds vendor info to selected booth
       checkNeighbors()
     }
   }
-
 
   //note:  reset booth worked with currentBooth -- but causes issues with adjacent booth info
   //ALSO-- map not updateing even though Firebase updated status ==> block color not going back to green when release booth/change status*******
@@ -166,6 +165,7 @@ const BoothManagement = (props) => {
       }
       return response
     }, [])
+
     if (options.length > 0) {
       setModalOptions((prev) => ({
         ...prev,
@@ -174,6 +174,7 @@ const BoothManagement = (props) => {
       setIsDoubleBoothOpen(true)
     }
   }
+
   //added additional isMounted logic in useEffect...seemed(?) to get rid of error re: Can't perform a React state update
   //on an unmounted component.To fix, cancel all subscriptions and asynchronous tasksin a useEffect cleanup function.
   useEffect(() => {
@@ -193,9 +194,11 @@ const BoothManagement = (props) => {
     <>
       {isDoubleBoothOpen && (
         <DoubleBoothModal
+          data={selectedBooth}
           options={modalOptions.options}
           handleSelectBooth={handleSelectBooth}
-          close={handleClose}
+          // close={handleClose}
+          handleClose={handleClose}
         />
       )}
       <ButtonWrapper>
@@ -263,3 +266,4 @@ const BoothManagement = (props) => {
   )
 }
 export default BoothManagement
+
