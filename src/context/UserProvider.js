@@ -26,6 +26,7 @@ export default function UserProvider ({ children }) {
     )
 
     return unsub
+     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setUser]) //COMMENT:  React Hook useEffect has a missing dependency: 'auth'. Either include it or remove the dependency array      react-hooks/exhaustive-deps
 
   useEffect(() => {
@@ -37,6 +38,7 @@ export default function UserProvider ({ children }) {
         }
       })
       .catch((err) => console.error(err))
+     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setIsAdmin, setIsDev]) //COMMENT:  React Hook useEffect has a missing dependency: 'auth.uid'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
 
   const updateUser = (data) => {
