@@ -189,6 +189,7 @@ const BoothManagement = (props) => {
     return () => {
       isMounted = false
     }
+     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []) //COMMENT:  React Hook useEffect has missing dependencies: 'getContainerWidth' and 'organizeBoothData'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
 
   return (
