@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react'
-import styled from 'styled-components'
+//import styled from 'styled-components'
 import Dashboard from '../../components/Dashboard'
 import { VendorContext } from '../../context/VendorProvider'
 // import { Header, HeaderWrapper, PageContainer } from '../../Elements/basic'
