@@ -430,6 +430,7 @@ export default function BoothProvider({ children }) {
 
     console.log('booths inside useEffect', booths)
     getBooths()
+     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []) //COMMENT: React Hook useEffect has a missing dependency: 'booths'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
 
   return (
