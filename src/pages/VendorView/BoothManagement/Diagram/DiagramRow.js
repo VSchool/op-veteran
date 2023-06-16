@@ -29,6 +29,7 @@ const DiagramRow = (props) => {
 
     ))
     setBoothObjects(comps)
+   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []) //COMMENT:  React Hook useEffect has missing dependencies: 'booths', 'rowId', and 'sectionId'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
 
   return (
