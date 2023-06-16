@@ -122,6 +122,7 @@ const Map = (props) => {
   useEffect(() => {
     buildRows()
     enterMapMode()
+     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [booths]) //COMMENT:  React Hook useEffect has missing dependencies: 'buildRows' and 'enterMapMode'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
 
   return (
