@@ -104,8 +104,10 @@ export default function FormInput(props) {
     if (focusRef.current) {
       focusRef.current.focus()
     }
-  }, [focusRef.current]) //COMMENT:  React Hook useEffect has an unnecessary dependency: 'focusRef.current'. Either exclude it or remove the dependency array. Mutable values like 'focusRef.current' aren't valid dependencies because mutating them doesn't re-render the component  react-hooks/exhaustive-deps
-
+  }, []) 
+  
+  //COMMENT:  React Hook useEffect has an unnecessary dependency: 'focusRef.current'. Either exclude it or remove the dependency array. Mutable values like 'focusRef.current' aren't valid dependencies because mutating them doesn't re-render the component  react-hooks/exhaustive-deps
+//NOTE: removed 'focusRef.current" as dependency in useEffect above to address msg/warning
   return (
     <InputContainer onSubmit={handleSubmit} className={className}>
       <p className={'label'}>{question}</p>
