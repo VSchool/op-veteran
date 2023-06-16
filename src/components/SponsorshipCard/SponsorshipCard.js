@@ -122,7 +122,7 @@ export default function SponsorshipCard(props) {
     // handlePayToday,
     // handleContactMe,
   } = props
-  const {} = props
+  //const {} = props
   const { updateCurrentVendor } = useContext(VendorContext)
   const { addItemToCart } = useContext(CartContext)
   const [selected, setSelected] = useState(false)
