@@ -101,6 +101,7 @@ const Dashboard = (props) => {
 
   useEffect(() => {
     getShopifyCart()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props]) //COMMENT:  React Hook useEffect has a missing dependency: 'getShopifyCart'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
 
   return (
