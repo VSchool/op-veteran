@@ -110,6 +110,7 @@ const Map = (props) => {
         rowId={rowId}
         rowDatum={rowData[rowId]}
         sectionId={0}
+        mapMode={mapMode}
         setMapMode={setMapMode}
         booths={booths}
         getBooths={getBooths}
