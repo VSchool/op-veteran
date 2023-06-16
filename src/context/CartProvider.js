@@ -2,7 +2,7 @@ import { createContext, useContext, useState } from 'react'
 import { VendorContext } from './VendorProvider'
 import { BoothContext } from './BoothProvider'
 import Client from 'shopify-buy/index.unoptimized.umd'
-import { useNavigate } from 'react-router-dom'
+//import { useNavigate } from 'react-router-dom'
 
 import products from './data/shopifyProducts'
 // import { FieldsOnCorrectTypeRule } from 'graphql'
