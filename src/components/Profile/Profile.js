@@ -1,11 +1,12 @@
-import React, { useState, useContext } from 'react'
+// import React, { useState, useContext } from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
-import { VendorContext } from '../../context/VendorProvider'
-import { UserContext } from '../../context/UserProvider'
+//import { VendorContext } from '../../context/VendorProvider'
+//import { UserContext } from '../../context/UserProvider'
 import { CanvasContext } from '../../context/CanvasProvider'
 // import Finalize from '../../pages/VendorView/Finalize'
-import firestore from '../../database'
-import opveteranLogo from '../../assets/icons/OPVeteranLogo.png'
+//import firestore from '../../database'
+//import opveteranLogo from '../../assets/icons/OPVeteranLogo.png'
 
 const Wrapper = styled.div`
   margin: auto;
@@ -42,14 +43,14 @@ const Wrapper = styled.div`
   }
 `
 const Paragraph = styled.p``
-const Logo = styled.img`
-  width: 40px;
-  height: 40px;
-`
+// const Logo = styled.img`
+//   width: 40px;
+//   height: 40px;
+// `
 
 const Profile = (props) => {
   // const { currentVendor, updateCurrentVendor } = useContext(VendorContext)
-  const { currentVendor } = useContext(VendorContext)
+  //const { currentVendor } = useContext(VendorContext)
   // const { user, updateUser } = useContext(UserContext)
   const { currentBooth } = useContext(CanvasContext)
 
