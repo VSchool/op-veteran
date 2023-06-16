@@ -20,7 +20,7 @@ const DiagramRow = (props) => {
 
   useEffect(() => {
     const filtered = booths.filter(
-      (b) => b.row == rowId && b.section == sectionId
+      (b) => b.row === rowId && b.section === sectionId
     )
     filtered.sort((a, b) => a.number - b.number)
     const comps = filtered.map((b) => (
