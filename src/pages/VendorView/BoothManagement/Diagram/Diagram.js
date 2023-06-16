@@ -91,6 +91,7 @@ const Diagram = (props) => {
     // const rgroup = rowsOfBooths.A.map(b=><Rect x={0} y={b.number*20} width={20}
     // height={20} fill={colors.green} stroke="#000" strokeWidth={1}/>)
     // setRowGroups(prev=>[...prev, rgroup])
+     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []) //COMMENT:  React Hook useEffect has a missing dependency: 'buildRows'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
 
   return (
