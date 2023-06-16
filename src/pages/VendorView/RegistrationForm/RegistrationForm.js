@@ -133,6 +133,7 @@ export default function RegistrationForm(props) {
   //USEEFFECT TO HANDLE FORM EDITS
   useEffect(() => {
     handleValidation(input)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [input]) //COMMENT: React Hook useEffect has a missing dependency: 'handleValidation'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
 
   // useEffect(() => {
