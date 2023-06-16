@@ -42,6 +42,7 @@ const Row = (props) => {
       getBooths()
       console.log(booths)
     }
+   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [booths, rowId, setCurrentBooth]) //COMMENT:  React Hook useEffect has a missing dependency: 'getBooths'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
 
   return (
