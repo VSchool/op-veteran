@@ -37,7 +37,7 @@ const Diagram = (props) => {
     // rowsOfBooths,
     // pullMapDataFromFirestore,
   } = useContext(BoothContext)
-  const [xOffset, setXOffset] = useState(0)
+  //const [xOffset, setXOffset] = useState(0)
   const [yOffset, setYOffset] = useState(0)
   // const [mapImage] = useImage("https://liveshameless.com/map.jpg");
   const [rowGroups, setRowGroups] = useState([])
@@ -98,7 +98,7 @@ const Diagram = (props) => {
       <Layer
         width={1400}
         height={2800}
-        x={xOffset}
+        //x={xOffset}
         y={yOffset}
         onClick={() => setYOffset((prev) => prev - 800)}
       >
