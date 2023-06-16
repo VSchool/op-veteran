@@ -2,14 +2,14 @@ import React, { useState, useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { VendorContext } from '../../context/VendorProvider'
 import { Container, FileUploader, FileUploaderLabel } from '../../Elements/basic'
-import { BoothContext } from '../../context/BoothProvider'
+//import { BoothContext } from '../../context/BoothProvider'
 import { Button } from '../../components/Button'
 
 const ToDoList = ({ List, Header2, ListItem }) => {
   const { currentVendor, storeFile } = useContext(VendorContext)
   // const { updateBooth, booths, setNeighbors, newBooths, resetBooth } =
   //   useContext(BoothContext)
-  const { updateBooth, booths} = useContext(BoothContext)
+  //const { updateBooth, booths} = useContext(BoothContext)
   const [file, setFile] = useState(null)
   const [showLogoUploader, setShowLogoUploader] = useState(false)
 
