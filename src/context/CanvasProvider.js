@@ -38,6 +38,7 @@ export default function CanvasProvider({ children }) {
 
   useEffect(() => {
     fitStageIntoParentContainer()
+     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []) //COMMENT: React Hook useEffect has a missing dependency: 'fitStageIntoParentContainer'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
 
   useEffect(() => {
@@ -48,6 +49,7 @@ export default function CanvasProvider({ children }) {
       window.removeEventListener('resize', fitStageIntoParentContainer, {
         passive: true,
       })
+     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []) //COMMENT:  React Hook useEffect has a missing dependency: 'fitStageIntoParentContainer'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
 
   return (
