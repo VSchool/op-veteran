@@ -1,13 +1,14 @@
-import React, { useState } from 'react'
+// import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
-import warningIcon from '../../assets/icons/warning-icon.svg'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {
-  faClear,
-  faEye,
-  faEyeSlash,
-  faExclamationTriangle,
-} from '@fortawesome/free-solid-svg-icons'
+// import warningIcon from '../../assets/icons/warning-icon.svg'
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+// import {
+//   faClear,
+//   faEye,
+//   faEyeSlash,
+//   faExclamationTriangle,
+// } from '@fortawesome/free-solid-svg-icons'
 import { Label } from '../../Elements/basic'
 
 const InputWrapper = styled.div`

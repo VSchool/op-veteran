@@ -91,7 +91,7 @@ const ListItem = styled.li`
   }
 `
 
-const Dashboard = () => {
+const Dashboard = (props) => {
   const { user } = useContext(UserContext)
   const { localCart, getShopifyCart } = useContext(CartContext)
 
@@ -99,9 +99,10 @@ const Dashboard = () => {
     return s.charAt(0).toUpperCase() + s.slice(1)
   }
 
-  useEffect((props) => {
+  useEffect(() => {
     getShopifyCart()
-  }, [])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props]) //COMMENT:  React Hook useEffect has a missing dependency: 'getShopifyCart'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
 
   return (
     <DashboardContainer>
@@ -114,14 +115,17 @@ const Dashboard = () => {
           <InfoContainer bgcolor='white' color='#575A6C'>
             <h1>Your Cart</h1>
             {localCart.length > 0 && <Link to='/finalize'>Edit</Link>}
-         
-              {localCart.length === 0 ? (
-                <p>Your cart is empty</p>)
-              : 
-                // cart.map((item) => {
-                //   return <p key={item.id}>{item.title}</p>
-               (<p>Primary Booth: {localCart.primaryBoothId} <br/> Adjacent Booth: {localCart.secondaryBoothId}</p>)
-              }
+
+            {localCart.length === 0 ? (
+              <p>Your cart is empty</p>
+            ) : (
+              // cart.map((item) => {
+              //   return <p key={item.id}>{item.title}</p>
+              <p>
+                Primary Booth: {localCart.primaryBoothId} <br /> Adjacent Booth:{' '}
+                {localCart.secondaryBoothId}
+              </p>
+            )}
           </InfoContainer>
         </div>
         <TodoContainer>

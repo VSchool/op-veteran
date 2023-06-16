@@ -1,15 +1,16 @@
-import React, { useState } from 'react'
+// import React, { useState } from 'react'
+import React from 'react'
 import styled, { keyframes } from 'styled-components'
 import { MdReport } from 'react-icons/md'
 import { Button } from '../components/Button'
 
-const ButtonWrapper = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill(minmax(35%, 50%)));
-  justify-content: space-between;
-  align-items: center;
-  margin: 10px auto;
-`
+// const ButtonWrapper = styled.div`
+//   display: grid;
+//   grid-template-columns: repeat(auto-fill(minmax(35%, 50%)));
+//   justify-content: space-between;
+//   align-items: center;
+//   margin: 10px auto;
+// `
 const entrance = keyframes`
     from {
       transform: translateX(-50vw)
@@ -94,8 +95,8 @@ const Icon = styled(MdReport)`
 `
 
 export default function Modal(props) {
-  const { message, modalOpen, setModalOpen, confirm, className } = props
-
+  const { message, modalOpen, setModalOpen, confirm } = props
+  
   return (
     <>
       <GreyBackground>

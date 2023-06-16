@@ -2,18 +2,18 @@ import { createContext, useContext, useState } from 'react'
 import { VendorContext } from './VendorProvider'
 import { BoothContext } from './BoothProvider'
 import Client from 'shopify-buy/index.unoptimized.umd'
-import { useNavigate } from 'react-router-dom'
+//import { useNavigate } from 'react-router-dom'
 
 import products from './data/shopifyProducts'
-import { FieldsOnCorrectTypeRule } from 'graphql'
-import { Input } from '../components/Input'
+// import { FieldsOnCorrectTypeRule } from 'graphql'
+// import { Input } from '../components/Input'
 
 export const CartContext = createContext()
 
 export default function CartProvider({ children }) {
   const { currentVendor, createVendor } = useContext(VendorContext)
 
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
 
   const { booths } = useContext(BoothContext)
 
@@ -62,9 +62,8 @@ export default function CartProvider({ children }) {
         console.log(
           'cartId after createVendor inside createCart',
           client.cartId
-        ) //kelly - added
+        ) 
 
-        //updateCurrentVendor({ cartId: checkout.id })  //commented out w/Maira on call 9/1
       })
       .catch((err) => console.log(err))
   }
@@ -80,8 +79,8 @@ export default function CartProvider({ children }) {
         console.log(
           'currentVendor.cartId from getShopifyCart',
           currentVendor.cartId
-        ) //kelly -- added to check & this console.logs too
-        console.log('res.lineItems', res.lineItems) //kelly -- but this console.log shows an empty array after trying to add booth -- and shows empty on screen too??
+        ) 
+        console.log('res.lineItems', res.lineItems)
         console.log('res from getShopifyCart', res)
 
         const lineItemsData = res.lineItems.map((item) => {
@@ -99,13 +98,13 @@ export default function CartProvider({ children }) {
   }
 
   const addItemToCart = (item, boothId, electricity) => {
-    console.log(`addItemToCart item: ${item} boothId: ${boothId}`) //kelly -- this is console.logging
-    console.log('currentVendor.cartId from addItemToCart', currentVendor.cartId) //kelly added to see if coming through; this is console.logging as well
-    console.log('products[item]', products[item]) 
+    console.log(`addItemToCart item: ${item} boothId: ${boothId}`) 
+    console.log('currentVendor.cartId from addItemToCart', currentVendor.cartId)
+    console.log('products[item]', products[item])
 
     // products[item]= 'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC80MzAxODQwMDc5Mjc2MQ=='
     //note:  Z Free Booth adds to cart like this when set it above, so seems like right code;
-  
+
     if (electricity) {
       return client.checkout
         .addLineItems(currentVendor.cartId, [
@@ -138,18 +137,18 @@ export default function CartProvider({ children }) {
 
   const addPrimaryBoothToLocalCart = (boothId) => {
     setLoading(true)
-    console.log('boothId', boothId) //kelly added to see if anything set here
-    console.log('TEST PRIMARY: only setting current local cart') //kelly -- this console.logs
+    console.log('boothId', boothId)
+    console.log('TEST PRIMARY: only setting current local cart')
     setLocalCart({ primaryBoothId: boothId })
     localStorage.setItem(
       'localCart',
-      JSON.stringify({ primaryBoothId: boothId }) //kelly -- this shows up in local storage
+      JSON.stringify({ primaryBoothId: boothId })
     )
   }
 
   const addPrimaryBoothToCart = async (boothId) => {
     console.log(
-      'this is the current booth selection id from addPrimaryBoothCart: ', //kelly -- this console.logs
+      'this is the current booth selection id from addPrimaryBoothCart: ', 
       boothId
     )
 
@@ -159,9 +158,7 @@ export default function CartProvider({ children }) {
     console.log('booth.hasElectricity primary', booth.hasElectricity)
 
     const tier1 = ['Paladin', 'Stryker', 'Abrams', 'Bradley']
-    if (
-      tier1.some((tier) => currentVendor.sponsorshipLevel.includes(tier)) 
-    ) {
+    if (tier1.some((tier) => currentVendor.sponsorshipLevel.includes(tier))) {
       if (booth.hasElectricity) {
         const checkout = await addItemToCart(
           'freeBooth',
@@ -195,7 +192,6 @@ export default function CartProvider({ children }) {
         await addItemToCart('standardBooth', boothId)
       }
     }
-
   }
 
   const addSecondaryBoothToLocalCart = (boothId) => {
@@ -206,7 +202,6 @@ export default function CartProvider({ children }) {
       'localCart',
       JSON.stringify({ ...localCart, secondaryBoothId: boothId })
     )
-
   }
 
   const clearAndLoadShopifyCart = async (
@@ -246,8 +241,6 @@ export default function CartProvider({ children }) {
       })
   }
 
-
-
   const addSecondaryBoothToCart = async (boothId) => {
     console.log(
       'this is the current booth selection id from addSecondaryBoothCart: ',
@@ -258,9 +251,7 @@ export default function CartProvider({ children }) {
     const booth = booths.find((b) => b.id === boothId)
 
     console.log('booth.hasElectricity secondary', booth.hasElectricity)
-    if (
-      tier1.some((tier) => currentVendor.sponsorshipLevel.includes(tier)) 
-    ) {
+    if (tier1.some((tier) => currentVendor.sponsorshipLevel.includes(tier))) {
       if (booth.hasElectricity) {
         const checkout = await addItemToCart(
           'doubleBooth',
@@ -298,17 +289,16 @@ export default function CartProvider({ children }) {
       } else {
         await addItemToCart('doubleBooth', boothId)
       }
-
     }
   }
 
-  const checkProducts = () => {
-    for (let product of Object.keys(products)) {
-      client.product
-        .fetch(products[product])
-        .then((p) => console.log(`${product}: ${Object.entries(p)}`))
-    }
-  }
+  // const checkProducts = () => {
+  //   for (let product of Object.keys(products)) {
+  //     client.product
+  //       .fetch(products[product])
+  //       .then((p) => console.log(`${product}: ${Object.entries(p)}`))
+  //   }
+  // }
 
   const changeQuantity = (itemId, currentQuantity) => {
     let newQuantity = currentQuantity - 1
@@ -331,15 +321,15 @@ export default function CartProvider({ children }) {
       .then((checkout) => window.open(checkout.webUrl))
   }
 
-  const getOrderStatus = () => {
-    client.checkout.fetch(currentVendor.cartId).then((checkout) => {
-      const lineItems = checkout.lineItems
-      const toRemove = lineItems.map((item) => item.id)
-      client.checkout
-        .removeLineItems(currentVendor.cartId, toRemove)
-        .then(() => console.log('removed'))
-    })
-  }
+  // const getOrderStatus = () => {
+  //   client.checkout.fetch(currentVendor.cartId).then((checkout) => {
+  //     const lineItems = checkout.lineItems
+  //     const toRemove = lineItems.map((item) => item.id)
+  //     client.checkout
+  //       .removeLineItems(currentVendor.cartId, toRemove)
+  //       .then(() => console.log('removed'))
+  //   })
+  // }
 
   return (
     <CartContext.Provider
@@ -353,6 +343,7 @@ export default function CartProvider({ children }) {
         getShopifyCart,
         openCart,
         localCart,
+        setLocalCart,
         cart,
         loading,
       }}

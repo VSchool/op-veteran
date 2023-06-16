@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+// import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import { Label } from '../../Elements/basic'
 
@@ -27,7 +28,8 @@ const Textarea = styled.textarea`
   }
 `
 const TextArea = (props) => {
-  const { labelText, name, onChange, value, rows } = props
+  // const { labelText, name, onChange, value, rows } = props
+  const { labelText, name, onChange, value } = props
   return (
     <Wrapper>
       <Label>{labelText}</Label>

@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Label } from '../../Elements/basic'
+// import { Label } from '../../Elements/basic'
 
 const Wrapper = styled.div`
   display: flex;

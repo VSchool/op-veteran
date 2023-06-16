@@ -2,13 +2,15 @@ import React, { useContext, useState } from 'react'
 import styled from 'styled-components'
 import { Button } from '../../components/Button'
 import ListItem from './ListItem'
-import { UserContext } from '../../context/UserProvider'
+// import { UserContext } from '../../context/UserProvider'
 import { VendorContext } from '../../context/VendorProvider'
 import { CartContext } from '../../context/CartProvider'
 import { Blur } from '../../Elements/basic'
 import { CloseButton } from '../../Elements/basic'
 import { useNavigate } from 'react-router-dom'
-import Client from 'shopify-buy'
+// import Client from 'shopify-buy'
+
+
 const CardContainer = styled.div`
   width: 288px;
   height: 450px;
@@ -69,10 +71,10 @@ const Price = styled.h1`
   color: #696969;
   margin-top: 20px;
 `
-const SponsorshipButton = styled(Button)`
-  //margin: 16px auto;
-  padding: 4px 8px;
-`
+// const SponsorshipButton = styled(Button)`
+//   //margin: 16px auto;
+//   padding: 4px 8px;
+// `
 const Perks = styled.div`
   width: 100%;
   //height: 184px;
@@ -115,12 +117,12 @@ export default function SponsorshipCard(props) {
     name,
     price,
     perks,
-    changeState,
-    states,
-    handlePayToday,
-    handleContactMe,
+    // changeState,
+    // states,
+    // handlePayToday,
+    // handleContactMe,
   } = props
-  const {} = props
+  //const {} = props
   const { updateCurrentVendor } = useContext(VendorContext)
   const { addItemToCart } = useContext(CartContext)
   const [selected, setSelected] = useState(false)
@@ -133,9 +135,9 @@ export default function SponsorshipCard(props) {
       valid={perk.valid}
     />
   ))
-  const handleClick = (e) => {
-    setSelected((prev) => !prev)
-  }
+  // const handleClick = (e) => {
+  //   setSelected((prev) => !prev)
+  // }
   const handleSelect = (e) => {
     e.preventDefault()
     const status = e.target.innerText

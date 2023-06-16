@@ -1,7 +1,9 @@
-import React, { useState, useContext, useEffect } from 'react'
-import styled from 'styled-components'
-import Konva from 'konva'
-import { Stage, Layer, Rect, Text, Group, Path } from 'react-konva'
+// import React, { useState, useContext, useEffect } from 'react'
+import React from 'react'
+// import styled from 'styled-components'
+// import Konva from 'konva'
+// import { Stage, Layer, Rect, Text, Group, Path } from 'react-konva'
+import { Rect, Group, Path } from 'react-konva'
 
 const colors = {
   green: '#799C8A',
@@ -14,19 +16,19 @@ const colors = {
 const Booth = (props) => {
   const {
     data,
-    mapMode,
-    setMapMode,
-    updateBoothObjects,
+    // mapMode,
+    // setMapMode,
+    // updateBoothObjects,
     setCurrentBooth,
     size,
   } = props
   const {
     hasElectricity,
     restriction,
-    name,
-    vendor,
+    // name,
+    // vendor,
     number,
-    section,
+    // section,
     row,
     status,
   } = data

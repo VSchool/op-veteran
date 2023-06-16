@@ -1,30 +1,30 @@
 import React, { useState, useContext, useEffect } from 'react'
 import styled from 'styled-components'
-import Konva from 'konva'
-import { Stage, Layer, Rect, Text } from 'react-konva'
+// import Konva from 'konva'
+// import { Stage, Layer, Rect, Text } from 'react-konva'
 import { CanvasContext } from '../../../context/CanvasProvider'
-import { UserContext } from '../../../context/UserProvider'
+// import { UserContext } from '../../../context/UserProvider'
 import { VendorContext } from '../../../context/VendorProvider'
 import { BoothContext } from '../../../context/BoothProvider'
 import { CartContext } from '../../../context/CartProvider'
 import BoothCard from '../../../components/BoothCard/BoothCard'
 import Map from './Map/Map'
 import Diagram from './Diagram/Diagram'
-import Section from './Section'
-import { Button } from '../../../components/Button'
+// import Section from './Section'
+// import { Button } from '../../../components/Button'
 import Legend from './Map/Legend'
 import StatusMessage from '../../../components/StatusMessage'
 import DoubleBoothModal from '../../../components/BoothCard/DoubleBoothModal'
-import {
-  LandingContainer,
-  Logo,
-  Subheader,
-  Header,
-  HeaderWrapper,
-  FormWrapper,
-  Row,
-  Container,
-} from '../../../Elements/basic'
+// import {
+//   LandingContainer,
+//   Logo,
+//   Subheader,
+//   Header,
+//   HeaderWrapper,
+//   FormWrapper,
+//   Row,
+//   Container,
+// } from '../../../Elements/basic'
 const ModeButton = styled.button`
   padding: 10px 20px;
   background-color: ${(props) => props.bgcolor};
@@ -49,18 +49,19 @@ const ButtonWrapper = styled.div`
   justify-content: space-around;
   align-items: center;
 `
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-  width: clamp(300px, 80%, 450px);
-  height: clamp(600px, 70%, 900px);
-`
+// const Wrapper = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: space-around;
+//   align-items: center;
+//   width: clamp(300px, 80%, 450px);
+//   height: clamp(600px, 70%, 900px);
+// `
 const BoothManagement = (props) => {
   const closeModal = () => {
     setModalOptions((prev) => ({ ...prev, isOpen: false }))
   }
+
   const [showTrees, setShowTrees] = useState(true)
   const [modalOptions, setModalOptions] = useState({
     options: [],
@@ -68,30 +69,36 @@ const BoothManagement = (props) => {
     visible: false,
     close: closeModal,
   })
-  const { states, changeState } = props
+
+  // const { states, changeState } = props
   const [containerWidth, setContainerWidth] = useState(0)
   const [mapMode, setMapMode] = useState(true)
   const [showInfo, setShowInfo] = useState(false)
   const [organizedBooths, setOrganizedBooths] = useState([])
-  const { user } = useContext(UserContext)
-  const { currentVendor, updateCurrentVendor } = useContext(VendorContext)
-  const { addPrimaryBoothToLocalCart, addSecondaryBoothToLocalCart } =
-    useContext(CartContext)
+  // const { user } = useContext(UserContext)
+  // const { currentVendor, updateCurrentVendor } = useContext(VendorContext)
+  const { currentVendor } = useContext(VendorContext)
+  const {
+    localCart,
+    setLocalCart,
+    addPrimaryBoothToLocalCart,
+    addSecondaryBoothToLocalCart,
+  } = useContext(CartContext)
   const [secondary, setSecondary] = useState(false)
-  const [modalIsOpen, setModalIsOpen] = useState(false)
+  // const [modalIsOpen, setModalIsOpen] = useState(false)
   const [isDoubleBoothOpen, setIsDoubleBoothOpen] = useState(false)
   const {
-    scale,
-    setScale,
-    stageSize,
-    setStageSize,
-    modes,
-    changeMode,
-    fitStageIntoParentContainer,
-    currentSection,
-    setCurrentSection,
-    currentRow,
-    setCurrentRow,
+    // scale,
+    // setScale,
+    // stageSize,
+    // setStageSize,
+    // modes,
+    // changeMode,
+    // fitStageIntoParentContainer,
+    // currentSection,
+    // setCurrentSection,
+    // currentRow,
+    // setCurrentRow,
     currentBooth,
     setCurrentBooth,
     enterDiagramMode,
@@ -101,34 +108,54 @@ const BoothManagement = (props) => {
 
   const {
     booths,
-    reserveBooth,
-    pullMapDataFromFirestore,
+    holdBooth,
+    resetBooth,
+    // reserveBooth,
+    // pullMapDataFromFirestore,
     organizeBoothData,
-    statusCodes,
+    // statusCodes,
   } = useContext(BoothContext)
 
-  const handleSelectBooth = (_id, secondary = false) => {
+  const handleSelectBooth = async (_id, secondary = false) => {
+    console.log('handleSelectBooth called')
+    console.log('handleSelectBooth _id', _id)
     if (secondary) {
       // addSecondaryBoothToCart(_id);
       addSecondaryBoothToLocalCart(_id)
+      setSecondary(true)
+      await holdBooth(currentVendor, _id) //WORKS - this changes Firebase status & adds vendor info to selected booth
       setIsDoubleBoothOpen(false)
     } else {
-      // addPrimaryBoothToCart(_id);
       addPrimaryBoothToLocalCart(_id)
-      handleClose()
+      //NOTE: **this holdBooth() below worked to update the specified booth status & vendor info in Firebase Booth Collection & also turns box grey/white on map - kelly
+      await holdBooth(currentVendor, _id) //WORKS - this changes status & adds vendor info to selected booth
       checkNeighbors()
     }
   }
 
-  const handleClose = () => {
+  //note:  reset booth worked with currentBooth -- but causes issues with adjacent booth info
+  //ALSO-- map not updateing even though Firebase updated status ==> block color not going back to green when release booth/change status*******
+
+  //This updates firebase & console.logs BUT...not updating color of block on map & getting warning message: "encountered two children with same key"
+  const handleClose = async (id) => {
+    console.log('handleClose triggered')
+    console.log('_id from inside handleClose', id)
+    console.log('localCart.secondaryBoothId', localCart.secondaryBoothId)
+    if (localCart.secondaryBoothId) {
+      await resetBooth(localCart.secondaryBoothId)
+    }
+    await resetBooth(id)
     setIsDoubleBoothOpen(false)
     setCurrentBooth(null)
+    setLocalCart({ primaryBoothId: '' }, { secondaryBoothId: '' }) //test clears localcart
+    // localStorage.removeItem("localCart") //test to see if clears localCart on cancels
   }
 
   const selectedBooth = booths.filter((booth) => booth.id === currentBooth)[0]
 
-  console.log("selectedBooth", selectedBooth)  //kelly -- this is coming up as undefined now
   const checkNeighbors = () => {
+    console.log('checkNeighbors called')
+
     const options = booths.reduce((response, b) => {
       if (
         selectedBooth.neighbors.includes(b.id) &&
@@ -138,6 +165,7 @@ const BoothManagement = (props) => {
       }
       return response
     }, [])
+
     if (options.length > 0) {
       setModalOptions((prev) => ({
         ...prev,
@@ -147,20 +175,32 @@ const BoothManagement = (props) => {
     }
   }
 
+  //added additional isMounted logic in useEffect...seemed(?) to get rid of error re: Can't perform a React state update
+  //on an unmounted component.To fix, cancel all subscriptions and asynchronous tasksin a useEffect cleanup function.
   useEffect(() => {
-    const data = organizeBoothData()
-    const width = getContainerWidth()
-    setContainerWidth(width)
-    setOrganizedBooths(data)
-  }, [])
+    let isMounted = true
+    if (isMounted) {
+      const data = organizeBoothData()
+      const width = getContainerWidth()
+      setContainerWidth(width)
+      setOrganizedBooths(data)
+       console.log("organized booths", organizedBooths)
+    }
+    return () => {
+      isMounted = false
+    }
+     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []) //COMMENT:  React Hook useEffect has missing dependencies: 'getContainerWidth' and 'organizeBoothData'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
 
   return (
     <>
       {isDoubleBoothOpen && (
         <DoubleBoothModal
+          data={selectedBooth}
           options={modalOptions.options}
           handleSelectBooth={handleSelectBooth}
-          close={handleClose}
+          // close={handleClose}
+          handleClose={handleClose}
         />
       )}
       <ButtonWrapper>
@@ -228,3 +268,4 @@ const BoothManagement = (props) => {
   )
 }
 export default BoothManagement
+

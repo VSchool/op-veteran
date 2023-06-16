@@ -1,20 +1,21 @@
-import react, { createContext, useContext, useEffect, useState } from 'react'
+// import React, { createContext, useContext, useEffect, useState } from 'react'
+import React, { createContext, useContext, useState } from 'react'
 import firestore from '../database'
-import Firebase, { Storage } from '../Firebase'
+// import Firebase, { Storage } from '../Firebase'
 import { UserContext } from './UserProvider'
-import { BoothContext } from './BoothProvider'
+// import { BoothContext } from './BoothProvider'
 // import vendorData from "../testing/vendors.json";
-import Client from 'shopify-buy/index.unoptimized.umd'
-import firebase from 'firebase/app'
+// import Client from 'shopify-buy/index.unoptimized.umd'
+// import firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/database'
 import 'firebase/firestore'
-import { getFirestore, doc, setDoc } from 'firebase/firestore'
+// import { getFirestore, doc, setDoc } from 'firebase/firestore'
 import 'firebase/storage'
 import 'firebase/functions'
-import axios from 'axios'
+// import axios from 'axios'
 const vendorRef = firestore.collection('vendors')
-const batch = firestore.batch()
+// const batch = firestore.batch()
 
 //COMMENTED PRODUCTS OUT HERE B/C DO NOT THINK THIS CODE BELOW IS BEING UTILIZED (note: products info is in ./data/shopifyProducts & accessed in CartProvider )
 // const products = {
@@ -55,8 +56,9 @@ export const VendorContext = createContext()
 
 export default function VendorProvider({ children }) {
   const [primaryMode, setPrimaryMode] = useState(true)
-  const [holdingCell, setHoldingCell] = useState([])
-  const { user, reserveBooth: reserve } = useContext(UserContext)
+  // const [holdingCell, setHoldingCell] = useState([])
+  // const { user, reserveBooth: reserve } = useContext(UserContext)
+  const { user } = useContext(UserContext)
 
   const initState = JSON.parse(localStorage.getItem('currentVendor')) || null
 
@@ -111,6 +113,8 @@ export default function VendorProvider({ children }) {
       zip,
       ...data,
     })
+
+    console.log("currentVendor after setCurrentVendor in updateCurrentVendor function", currentVendor)
 
     vendorRef
       .doc(`${currentVendor.organization}`)

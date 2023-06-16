@@ -43,7 +43,7 @@ export default function Button(props) {
   const {
     background,
     border,
-    fontColor,
+    // fontColor,
     hoverBackground,
     activeBackground,
     activeBorder,

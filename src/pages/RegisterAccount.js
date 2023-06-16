@@ -11,7 +11,7 @@ import {
   Subheader,
   Header,
   HeaderWrapper,
-  ButtonWrapper,
+  // ButtonWrapper,
   FormWrapper,
   Wrapper,
 } from '../Elements/basic'
@@ -30,15 +30,15 @@ export default function RegisterAccount() {
     }))
   }
 
-  const handleClick = (e) => {
-    const { email, password } = inputs
-    /*** Add validation ***/
-    const { name } = e.target
-    if (name === 'register') {
-      signUpWithEmail(email, password)
-    }
-    signInWithEmail(email, password)
-  }
+  // const handleClick = (e) => {
+  //   const { email, password } = inputs
+  //   /*** Add validation ***/
+  //   const { name } = e.target
+  //   if (name === 'register') {
+  //     signUpWithEmail(email, password)
+  //   }
+  //   signInWithEmail(email, password)
+  // }
   return (
     <LandingContainer>
       {authError ? <StatusMessage message={authError} /> : null}
