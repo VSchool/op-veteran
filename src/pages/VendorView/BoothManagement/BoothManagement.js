@@ -60,6 +60,7 @@ const ButtonWrapper = styled.div`
 const BoothManagement = (props) => {
   const closeModal = () => {
     setModalOptions((prev) => ({ ...prev, isOpen: false }))
+    handleClose()
   }
 
   const [showTrees, setShowTrees] = useState(true)
@@ -137,14 +138,23 @@ const BoothManagement = (props) => {
   //ALSO-- map not updateing even though Firebase updated status ==> block color not going back to green when release booth/change status*******
 
   //This updates firebase & console.logs BUT...not updating color of block on map & getting warning message: "encountered two children with same key"
-  const handleClose = async (id) => {
+
+  //TEST --  //added additonal if statement here & changed from using id to using localCart
+  const handleClose = async () => {
     console.log('handleClose triggered')
-    console.log('_id from inside handleClose', id)
+    // console.log('id from handleClose', id)
+    console.log(
+      'localCart.primaryBoothid from inside handleClose',
+      localCart.primaryBoothId
+    )
     console.log('localCart.secondaryBoothId', localCart.secondaryBoothId)
+
     if (localCart.secondaryBoothId) {
       await resetBooth(localCart.secondaryBoothId)
     }
-    await resetBooth(id)
+    if (localCart.primaryBoothId) {
+      await resetBooth(localCart.primaryBoothId)
+    }
     setIsDoubleBoothOpen(false)
     setCurrentBooth(null)
     setLocalCart({ primaryBoothId: '' }, { secondaryBoothId: '' }) //test clears localcart
@@ -184,12 +194,12 @@ const BoothManagement = (props) => {
       const width = getContainerWidth()
       setContainerWidth(width)
       setOrganizedBooths(data)
-       console.log("organized booths", organizedBooths)
+      console.log('organized booths', organizedBooths)
     }
     return () => {
       isMounted = false
     }
-     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []) //COMMENT:  React Hook useEffect has missing dependencies: 'getContainerWidth' and 'organizeBoothData'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
 
   return (
@@ -199,8 +209,7 @@ const BoothManagement = (props) => {
           data={selectedBooth}
           options={modalOptions.options}
           handleSelectBooth={handleSelectBooth}
-          // close={handleClose}
-          handleClose={handleClose}
+          close={modalOptions.close}
         />
       )}
       <ButtonWrapper>
@@ -268,4 +277,3 @@ const BoothManagement = (props) => {
   )
 }
 export default BoothManagement
-

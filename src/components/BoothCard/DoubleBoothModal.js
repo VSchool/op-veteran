@@ -82,7 +82,7 @@ const Text = styled.p`
 export default function DoubleBoothModal({
   options,
   handleSelectBooth,
-  close,
+  close, //handleClose?? instead of close
 }) {
   const navigate = useNavigate()
   const handleClick = (e) => {
