@@ -1,12 +1,20 @@
 import React, { useState, useContext } from 'react'
+// import StatusMessage from '../../components/StatusMessage'
 import { Link } from 'react-router-dom'
 import { VendorContext } from '../../context/VendorProvider'
-import { Container, FileUploader, FileUploaderLabel } from '../../Elements/basic'
+import { CanvasContext } from '../../context/CanvasProvider'
+import {
+  Container,
+  FileUploader,
+  FileUploaderLabel,
+} from '../../Elements/basic'
 //import { BoothContext } from '../../context/BoothProvider'
 import { Button } from '../../components/Button'
 
 const ToDoList = ({ List, Header2, ListItem }) => {
   const { currentVendor, storeFile } = useContext(VendorContext)
+  const { currentBooth } = useContext(CanvasContext)
+
   // const { updateBooth, booths, setNeighbors, newBooths, resetBooth } =
   //   useContext(BoothContext)
   //const { updateBooth, booths} = useContext(BoothContext)
@@ -48,7 +56,7 @@ const ToDoList = ({ List, Header2, ListItem }) => {
   //     }
   //   }
   // }
-  
+
   return (
     <List>
       <Header2>To do:</Header2>
@@ -61,7 +69,7 @@ const ToDoList = ({ List, Header2, ListItem }) => {
           Register vendor
         </ListItem>
       </Link>
-      {currentVendor && !currentVendor?.logo ? (
+      {(currentVendor && !currentVendor?.logo) || !currentVendor ? (
         <ListItem
           complete={currentVendor && currentVendor?.logo}
           current={currentVendor && !currentVendor?.logo}
@@ -73,9 +81,9 @@ const ToDoList = ({ List, Header2, ListItem }) => {
           Upload logo
         </ListItem>
       ) : null}
+
       {currentVendor && !currentVendor?.logo && showLogoUploader ? (
         <Container width='80%' height='auto'>
-          
           <FileUploader
             onChange={(e) => {
               setFile(e.target.files[0])
@@ -84,63 +92,80 @@ const ToDoList = ({ List, Header2, ListItem }) => {
             Style='primary'
             id='upload-photo'
           />
-          <FileUploaderLabel id='upload-photo-label' for="upload-photo" type='label'>Choose File</FileUploaderLabel>
-          {file === null ? null : 
-            
-          (
+          <FileUploaderLabel
+            id='upload-photo-label'
+            for='upload-photo'
+            type='label'
+          >
+            Choose File
+          </FileUploaderLabel>
+          {file === null ? null : (
             <div>
-              <label style={{color: "white"}}>${file.name}</label>
-            <Button
-              buttonText='Upload'
-              buttonStyle='upload'
-              onClick={(e) => {
-                saveLogo(file)
-              }}
-            >
-              Upload file
-            </Button>
+              <label style={{ color: 'white' }}>${file.name}</label>
+              <Button
+                buttonText='Upload'
+                buttonStyle='upload'
+                onClick={(e) => {
+                  saveLogo(file)
+                }}
+              >
+                Upload file
+              </Button>
             </div>
           )}
-          
         </Container>
       ) : null}
       {currentVendor?.sponsorship &&
-      !currentVendor?.sponsorship.level &&
+      !currentVendor?.sponsorshipLevel &&
       currentVendor?.sponsorship.interested ? (
         <ListItem
           onClick={(e) => {
-            if (currentVendor?.sponsorship && !currentVendor?.sponsorship.level)
+            if (currentVendor?.sponsorship && !currentVendor?.sponsorshipLevel)
               handleClick(e)
           }}
           complete={
-            currentVendor?.sponsorship && currentVendor?.sponsorship.level
+            currentVendor?.sponsorship && currentVendor?.sponsorshipLevel
           }
           current={
-            currentVendor?.sponsorship && !currentVendor?.sponsorship.level
+            currentVendor?.sponsorship && !currentVendor?.sponsorshipLevel
           }
         >
           Choose sponsorship
         </ListItem>
       ) : null}
-      <Link to='/booth-selection'>
-        <ListItem
-          onClick={(e) => {
-            handleClick(e)
-          }}
-          complete={currentVendor?.booth?.primary.status > 0}
-          current={currentVendor?.booth?.primary.status === 0}
-        >
-          Select booth
-        </ListItem>
-      </Link>
-      <Link to='/finalize'>
-        <ListItem
-          current={currentVendor?.booth?.primary?.status === 1}
-          complete={currentVendor?.booth?.primary?.status === 2}
-        >
-          Finalize registration
-        </ListItem>
-      </Link>
+
+      {!currentVendor ? (
+        <Link to='/booth-selection' onClick={(e) => e.preventDefault()}>
+          <ListItem>Select booth</ListItem>
+        </Link>
+      ) : (
+        <Link to='/booth-selection'>
+          <ListItem
+            onClick={(e) => {
+              handleClick(e)
+            }}
+            complete={currentVendor?.booth?.primary.status > 0}
+            current={currentVendor?.booth?.primary.status === 0}
+          >
+            Select booth
+          </ListItem>
+        </Link>
+      )}
+
+      {!currentVendor || !currentBooth ? (
+        <Link to='/finalize' onClick={(e) => e.preventDefault()}>
+          <ListItem>Finalize registration</ListItem>
+        </Link>
+      ) : (
+        <Link to='/finalize'>
+          <ListItem
+            current={currentVendor?.booth?.primary?.status === 1}
+            complete={currentVendor?.booth?.primary?.status === 2}
+          >
+            Finalize registration
+          </ListItem>
+        </Link>
+      )}
     </List>
   )
 }

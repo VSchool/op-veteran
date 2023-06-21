@@ -90,11 +90,24 @@ export default function RegistrationForm(props) {
   // const [showSponsorship, setShowSponsorship] = useState(false)
   // const { changeState, states } = props
 
-  const currentVendorAddressData = { ...currentVendor.address }
-  console.log('currentVendorAddress Data', currentVendorAddressData)
+  const [regErrors, setRegErrors] = useState({})
 
-  delete currentVendor.address
+  const [isEdit, setIsEdit] = useState(false)
+
+  const [isValidReg, setIsValidReg] = useState(false)
+  console.log('isValidReg', isValidReg)
+
+  //better way to do these next 5 lines???
+  const currentVendorAddressData = currentVendor
+    ? { ...currentVendor.address }
+    : null
+  console.log('currentVendorAddress Data', currentVendorAddressData)
+  if (currentVendorAddressData !== null) {
+    delete currentVendor.address
+  }
   console.log('currentVendor', currentVendor)
+  console.log('currentVendor from reg form', currentVendor)
+  //  console.log("currentVendor.address", currentVendor.address)
 
   const [input, setInput] = useState(
     currentVendor
@@ -123,17 +136,10 @@ export default function RegistrationForm(props) {
 
   console.log('input outside of anything', input)
 
-  const [regErrors, setRegErrors] = useState({})
-
-  const [isEdit, setIsEdit] = useState(false)
-
-  const [isValidReg, setIsValidReg] = useState(false)
-  console.log('isValidReg', isValidReg)
-
   //USEEFFECT TO HANDLE FORM EDITS
   useEffect(() => {
-    handleValidation(input)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    handleValidation()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [input]) //COMMENT: React Hook useEffect has a missing dependency: 'handleValidation'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
 
   // useEffect(() => {
@@ -175,10 +181,10 @@ export default function RegistrationForm(props) {
   const handleValidation = () => {
     console.log('handleValidation called')
     console.log('input from inside handleValidation', input)
-    console.log('address from inside handleValidation', input.address)
+    // console.log('address from inside handleValidation', input.address)
 
     setIsValidReg(false)
-	  
+
     let errorsReg = {}
 
     if (input.firstName.length < 2) {
@@ -201,21 +207,21 @@ export default function RegistrationForm(props) {
       errorsReg.city = 'City is a required field.'
     }
 
+    if (input.state === '') {
+      errorsReg.state = 'State is required.'
+    }
+
     if (input.zip.length < 5) {
       errorsReg.zip = 'Valid zip code required.'
     }
 
-    if (input.state === "") {
-      errorsReg.state = 'State is required.'
-    }
-
     console.log('errors', errorsReg)
-	  
+
     setRegErrors(errorsReg)
-	  
+
     console.log('Object.keys(regErrors).length', Object.keys(regErrors).length)
 
-     if (Object.keys(errorsReg).length > 0) {
+    if (Object.keys(errorsReg).length > 0) {
       setIsValidReg(false)
       console.log('NOT VALID')
     }
@@ -248,7 +254,7 @@ export default function RegistrationForm(props) {
 
     if (input.wantToSponsor) {
       navigate('/sponsorship')
-      } else {
+    } else {
       navigate('/booth-selection')
     }
   }
@@ -256,21 +262,16 @@ export default function RegistrationForm(props) {
   const handleCheck = (e) => {
     console.log('handleCheck called -name', e.target.name)
     console.log('handleCheck called - checked', e.target.checked)
-    console.log('input.isSponsor from handleCheck', input.isSponsor)
-    console.log(
-      'currentVendor.isSponsor from handleCehck',
-      currentVendor.isSponsor
-    )
 
     const { name, checked } = e.target
+
     setInput((prev) => {
       return {
         ...prev,
         [name]: checked,
-        sponsorshipLevel:
-          input.isSponsor || currentVendor.isSponsor === false
-            ? null
-            : input.sponsorshipLevel,
+        sponsorshipLevel: !input.isSponsor.checked
+          ? ''
+          : input.sponsorshipLevel,
       }
     })
   }
@@ -320,7 +321,6 @@ export default function RegistrationForm(props) {
           labelText='First name'
           name='firstName'
           type='text'
-          defaultValue={currentVendor.firstName}
           value={input.firstName}
           onChange={handleChange}
         />
@@ -333,7 +333,6 @@ export default function RegistrationForm(props) {
           labelText='Last name'
           name='lastName'
           type='text'
-          defaultValue={currentVendor.lastName}
           value={input.lastName}
           onChange={handleChange}
         />
@@ -351,7 +350,6 @@ export default function RegistrationForm(props) {
           name='organization'
           type='text'
           disabled={currentVendor}
-          defaultValue={currentVendor.organization}
           value={input.organization}
           onChange={handleChange}
         />
@@ -359,7 +357,6 @@ export default function RegistrationForm(props) {
           labelText='Brief description of organization'
           name='description'
           rows='4'
-          defaultValue={currentVendor.description}
           value={input.description}
           onChange={handleChange}
         ></TextArea>
@@ -369,7 +366,6 @@ export default function RegistrationForm(props) {
           autocomplete='tel'
           labelText='Phone'
           name='phone'
-          defaultValue={currentVendor.phone}
           value={input.phone}
           onChange={handleChange}
         />
@@ -382,7 +378,6 @@ export default function RegistrationForm(props) {
           autocomplete='street-address'
           name='street'
           type='text'
-          defaultValue={currentVendor.street}
           value={input.street}
           onChange={handleChange}
         />
@@ -395,7 +390,6 @@ export default function RegistrationForm(props) {
           name='city'
           autocomplete='address-level1'
           type='text'
-          defaultValue={currentVendor.city}
           value={input.city}
           onChange={handleChange}
         />
@@ -408,13 +402,11 @@ export default function RegistrationForm(props) {
             type='text'
             labelText='Apt or suite'
             name='apt'
-            defaultValue={currentVendor.apt}
             value={input.apt}
             onChange={handleChange}
           />
-  
+
           <StateDropdown
-            defaultValue={currentVendor.state}
             value={input.state}
             state={input.state}
             handleChange={handleChange}
@@ -427,7 +419,6 @@ export default function RegistrationForm(props) {
             labelText='Zipcode'
             name='zip'
             auto-complete='postal-code'
-            defaultValue={currentVendor.zip}
             value={input.zip}
             onChange={handleChange}
           />
@@ -463,12 +454,12 @@ export default function RegistrationForm(props) {
           checked={input.isSponsor}
           onChange={handleCheck}
         />
-		
+
         {input.isSponsor ? (
           <Selection
             name='sponsorshipLevel'
             options={[
-              '--Select--',
+              '',
               'WLA - $250',
               'AMTRAK - $500',
               'Bradley - $1000',
@@ -476,12 +467,11 @@ export default function RegistrationForm(props) {
               'Abrams - $5000',
               'Paladin - $10000',
             ]}
-            defaultValue={currentVendor.sponsorshipLevel}
             value={input.sponsorshipLevel} //Select Options go away, but this value doesn't change back to empty in database
             handleChange={handleChange}
           />
         ) : null}
-		
+
         {input.isSponsor ? null : (
           <CheckBox
             labelText='Interested in becoming a sponsor of O.P. Vetfest'
@@ -490,10 +480,10 @@ export default function RegistrationForm(props) {
             onChange={handleCheck}
           />
         )}
-		    
+
         {/* <Button buttonText="See sponsorship levels and benifits" buttonStyle="text" onClick={handleShowSponsorship}/> */}
         <Button
-	  disabled={!isValidReg}  //disables submit button until registration is valid/isValidReg = true
+          disabled={!isValidReg} //disables submit button until registration is valid/isValidReg = true
           buttonText='Continue'
           buttonStyle='primary'
           onClick={handleSubmit}
