@@ -106,6 +106,12 @@ export default function VendorProvider({ children }) {
     if (!currentVendor) {
       return
     }
+
+    localStorage.setItem(
+      'currentVendor',
+      JSON.stringify({ city, state, street, zip, ...data })
+    )
+    
     setCurrentVendor({
       city,
       state,
