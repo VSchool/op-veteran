@@ -123,9 +123,9 @@ const BoothCard = (props) => {
     if (restriction === 0) {
       return true
     } else if (restriction === 1) {
-      return tier1.some(tier => currentVendor.sponsorship.level.includes(tier))
+      return tier1.some(tier => currentVendor.sponsorshipLevel.includes(tier))
     } else if (restriction === 2) {
-      return tier2.some(tier => currentVendor.sponsorship.level.includes(tier))
+      return tier2.some(tier => currentVendor.sponsorshipLevel.includes(tier))
     }
   }
   return (

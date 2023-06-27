@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 import styled from 'styled-components'
-// import { BrowserRouter, Routes, Route } from 'react-router-dom'
+//import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { Routes, Route } from 'react-router-dom'
 import { AuthContext } from './context/AuthProvider'
 import UserProvider, { UserContext } from './context/UserProvider'
@@ -11,7 +11,7 @@ import SponsorshipSelection from './pages/VendorView/SponsorshipSelection/Sponso
 import Finalize from './pages/VendorView/Finalize'
 
 import CanvasProvider from './context/CanvasProvider'
-// import { Landing, Vendor, Admin, Playground } from './pages'
+//import { Landing, Vendor, Admin, Playground } from './pages'
 import { Landing, Admin } from './pages'
 // import RegisterAccount from './pages/RegisterAccount'
 import RegistrationForm from './pages/VendorView/RegistrationForm/RegistrationForm'

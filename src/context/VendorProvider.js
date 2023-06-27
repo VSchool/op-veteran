@@ -106,6 +106,12 @@ export default function VendorProvider({ children }) {
     if (!currentVendor) {
       return
     }
+
+    localStorage.setItem(
+      'currentVendor',
+      JSON.stringify({ city, state, street, zip, ...data })
+    )
+    
     setCurrentVendor({
       city,
       state,
@@ -114,7 +120,10 @@ export default function VendorProvider({ children }) {
       ...data,
     })
 
-    console.log("currentVendor after setCurrentVendor in updateCurrentVendor function", currentVendor)
+    console.log(
+      'currentVendor after setCurrentVendor in updateCurrentVendor function',
+      currentVendor
+    )
 
     vendorRef
       .doc(`${currentVendor.organization}`)
@@ -162,6 +171,7 @@ export default function VendorProvider({ children }) {
       isVeteranOwned: data.isVeteranOwned, //changed from data.vetOwned
       description: data.description,
       organization: data.organization,
+      isSponsor: data.isSponsor,
       sponsorshipLevel: data.sponsorshipLevel, //added this -- kelly
       booth: {
         primary: {
