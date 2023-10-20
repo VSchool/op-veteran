@@ -235,7 +235,7 @@ const Finalize = (props) => {
         {modalOpen && (
           <Modal
             message={
-              "Clicking 'continue' will navigate to our payment platform, and you will no longer be able to edit the items in you cart. Please confirm that you are ready to proceed, or click 'cancel' to revise your cart."
+              "Clicking 'continue' will navigate to our payment platform, and you will no longer be able to edit the items in your cart. Please confirm that you are ready to proceed, or click 'cancel' to revise your cart."
             }
             modalOpen={modalOpen}
             setModalOpen={setModalOpen}

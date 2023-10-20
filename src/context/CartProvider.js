@@ -68,7 +68,7 @@ export default function CartProvider({ children }) {
       .catch((err) => console.log(err))
   }
 
-  const getShopifyCart = () => {
+  const getShopifyCart = () => {   //TEST - add useCallback here
     console.log('getShopifyCart called')
 
     if (!currentVendor) return
@@ -146,9 +146,50 @@ export default function CartProvider({ children }) {
     )
   }
 
+  let sponsorTier = currentVendor.sponsorshipLevel
+
+  const processSponsor = async(boothId) => {      
+          console.log(
+            'currentVendor.sponsorshipLevel',
+            currentVendor.sponsorshipLevel
+          )
+
+
+        switch (sponsorTier) {
+          case 'Paladin - $10000':
+            sponsorTier = 'PaladinPromise' 
+            break
+          case 'Abrams - $5000':
+            sponsorTier = 'AbramsPromise' 
+            break
+          case 'Stryker - $2500':
+            sponsorTier = 'StrykerPromise' 
+            break
+          case 'Bradley - $1000':
+            sponsorTier = 'BradleyPromise' 
+            break
+          case 'AMTRAK - $500':
+            sponsorTier = 'AmtrakPromise'
+            break
+          case 'WLA - $250':
+            sponsorTier = 'WLAPromise'
+            break
+          default:
+            console.log("ARE YOU SURE YOU'RE A SPONSOR??")
+            break
+        }
+
+        await addItemToCart(
+          // 'PaladinPromise',
+          //try switch case here
+          sponsorTier,
+          boothId
+        )
+}
+
   const addPrimaryBoothToCart = async (boothId) => {
     console.log(
-      'this is the current booth selection id from addPrimaryBoothCart: ', 
+      'this is the current booth selection id from addPrimaryBoothCart: ',
       boothId
     )
 
@@ -157,21 +198,36 @@ export default function CartProvider({ children }) {
 
     console.log('booth.hasElectricity primary', booth.hasElectricity)
 
-    const tier1 = ['Paladin', 'Stryker', 'Abrams', 'Bradley']
-    if (tier1.some((tier) => currentVendor.sponsorshipLevel.includes(tier))) {
-      if (booth.hasElectricity) {
-        const checkout = await addItemToCart(
-          'freeBooth',
-          boothId,
-          'electricity'
-        )
-        await checkout.addDiscount(
-          currentVendor.cartId,
-          'sponsoredBoothElectricity'
-        )
-      } else {
-        await addItemToCart('freeBooth', boothId)
-      }
+    const tier1 = ['Paladin', 'Abrams', 'Stryker', 'Bradley', 'Amtrak', 'WLA'] //added Amtrak & WLA here
+    // if (tier1.some((tier) => currentVendor.sponsorshipLevel.includes(tier))) {
+    //   if (booth.hasElectricity) {
+    //     const checkout = await addItemToCart(
+    //       'freeBooth',
+    //       boothId,
+    //       'electricity'
+    //     )
+    //     await checkout.addDiscount(
+    //       currentVendor.cartId,
+    //       'sponsoredBoothElectricity'
+    //     )
+    //   } else {
+    //     await addItemToCart('freeBooth', boothId)
+    //   }
+
+  if(tier1.some((tier) => currentVendor.sponsorshipLevel.includes(tier))) {
+      // if (booth) {
+        console.log("currentVendor.sponsorshipLevel", currentVendor.sponsorshipLevel)
+        processSponsor(boothId)
+   
+      //   await checkout.addDiscount(
+      //     currentVendor.cartId,
+      //     'sponsoredBoothElectricity'
+      //   )
+      // } else {
+      //   await addItemToCart('freeBooth', boothId)
+      // }
+
+
     } else if (
       currentVendor.isNonprofit ||
       currentVendor.isGovernmental ||
@@ -247,32 +303,38 @@ export default function CartProvider({ children }) {
       boothId
     )
 
-    const tier1 = ['Paladin', 'Stryker', 'Abrams', 'Bradley']
+    const tier1 = ['Paladin', 'Abrams', 'Stryker', 'Bradley', 'Amtrak', 'WLA']
     const booth = booths.find((b) => b.id === boothId)
 
     console.log('booth.hasElectricity secondary', booth.hasElectricity)
     if (tier1.some((tier) => currentVendor.sponsorshipLevel.includes(tier))) {
-      if (booth.hasElectricity) {
-        const checkout = await addItemToCart(
-          'doubleBooth',
-          boothId,
-          'electricity'
-        )
-        const electricityDiscount = await checkout.addDiscount(
-          currentVendor.cartId,
-          'sponsoredBoothElectricity'
-        )
-        await electricityDiscount.addDiscount(
-          currentVendor.cartId,
-          'sponsoredDoubleBooth'
-        )
-      } else {
-        const doubleBoothCheckout = await addItemToCart('doubleBooth', boothId)
-        await doubleBoothCheckout.addDiscount(
-          currentVendor.cartId,
-          'sponsoredDoubleBooth'
-        )
-      }
+        // console.log(
+        //   'currentVendor.sponsorshipLevel',
+        //   currentVendor.sponsorshipLevel
+        // )
+      console.log('currentVendor.sponsorshipLevel', currentVendor.sponsorshipLevel)
+      processSponsor(boothId)
+      // if (booth.hasElectricity) {
+      //   const checkout = await addItemToCart(
+      //     'doubleBooth',
+      //     boothId,
+      //     'electricity'
+      //   )
+      //   const electricityDiscount = await checkout.addDiscount(
+      //     currentVendor.cartId,
+      //     'sponsoredBoothElectricity'
+      //   )
+      //   await electricityDiscount.addDiscount(
+      //     currentVendor.cartId,
+      //     'sponsoredDoubleBooth'
+      //   )
+      // } else {
+      //   const doubleBoothCheckout = await addItemToCart('doubleBooth', boothId)
+      //   await doubleBoothCheckout.addDiscount(
+      //     currentVendor.cartId,
+      //     'sponsoredDoubleBooth'
+      //   )
+      // }
     } else if (
       currentVendor.isNonprofit ||
       currentVendor.isGovernmental ||
@@ -291,7 +353,7 @@ export default function CartProvider({ children }) {
       }
     }
   }
-
+  
   // const checkProducts = () => {
   //   for (let product of Object.keys(products)) {
   //     client.product

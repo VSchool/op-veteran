@@ -77,4 +77,4 @@ const seedBooths = (e) => {
     createBooth(obj)
   })
 }
-c
+

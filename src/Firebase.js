@@ -5,20 +5,33 @@ import 'firebase/firestore'
 import 'firebase/storage'
 import 'firebase/functions'
 
+
+//OLD SETUP:
+// const Firebase = firebase.initializeApp({
+//   apiKey: 'AIzaSyCs--Y464NA0UNY00kp-0G5g07_qDoPH5U', 
+//   authDomain: 'op-veterans-dev.firebaseapp.com', 
+//   storageBucket: 'op-veterans-dev.appspot.com', 
+//   messagingSenderId: '1051774604446', 
+//   appId: '1:1051774604446:web:86911cc8aeda5a9636d78f', 
+// })
+
+
+//NEW SETUP
 const Firebase = firebase.initializeApp({
-  apiKey: 'AIzaSyCs--Y464NA0UNY00kp-0G5g07_qDoPH5U',
-  authDomain: 'op-veterans-dev.firebaseapp.com',
-  projectId: 'op-veterans-dev',
-  storageBucket: 'op-veterans-dev.appspot.com',
-  messagingSenderId: '1051774604446',
-  appId: '1:1051774604446:web:86911cc8aeda5a9636d78f',
+  apiKey: 'AIzaSyA3nRjJCbk9BqcAIkm7VPSp-4-yVVIb61M',
+  authDomain: 'op-veteran-dev.firebaseapp.com',
+  projectId: 'op-veteran-dev',
+  storageBucket: 'op-veteran-dev.appspot.com',
+  messagingSenderId: '355726156805',
+  appId: '1:355726156805:web:74d95fc681204c8b53286c',
 })
+
 
 export const Auth = Firebase.auth()
 export const Storage = Firebase.storage()
 
 let actionCodeSettings = {
-  url: 'https://op-veterans-dev.firebaseapp.com/',
+  url: 'https://op-veteran-dev.firebaseapp.com/', //NEW --edited to remove "s" from veterans for NEW SETUP (now verification email being sent)
   handleCodeInApp: false,
 }
 

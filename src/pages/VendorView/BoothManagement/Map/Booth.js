@@ -12,6 +12,7 @@ const colors = {
   blue: '#4E92F9',
   grey: '#ecf0f1',
   white: '#def',
+  purple: '#800080',
 }
 const Booth = (props) => {
   const {
@@ -67,7 +68,7 @@ const Booth = (props) => {
           status === 2
             ? colors.white
             : status === 1
-            ? colors.grey
+            ? colors.purple   //changed from 'grey' to see better when testing
             : restriction === 1
             ? colors.red
             : restriction === 2

@@ -29,7 +29,7 @@ export default function AuthProvider({ children }) {
 
   const signInWithGoogle = () => {
     setAuthError(null)
-    googleSignIn(handleErrors)
+    googleSignIn(handleErrors) 
   }
 
   const signInWithEmail = (email, password) => {

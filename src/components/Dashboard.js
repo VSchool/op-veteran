@@ -101,8 +101,9 @@ const Dashboard = (props) => {
 
   useEffect(() => {
     getShopifyCart()
+    //NOTE: don't think this is even receiving any props?? NOTE: prev. had props as the dependency for useEffect
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props]) //COMMENT:  React Hook useEffect has a missing dependency: 'getShopifyCart'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+  }, []) //COMMENT:  React Hook useEffect has a missing dependency: 'getShopifyCart'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
 
   return (
     <DashboardContainer>

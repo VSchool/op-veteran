@@ -28,6 +28,7 @@ const Section = (props) => {
     setCurrentBooth,
   } = useContext(CanvasContext)
   const { booths } = useContext(BoothContext)
+  
   useEffect(() => {
     const filtered = booths.filter((b) => b.section === sectionId)
     filtered.sort((a, b) => a.row - b.row)
@@ -38,8 +39,8 @@ const Section = (props) => {
       return final
     }, [])
     setRowIds(ids)
-     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []) //COMMENT:   React Hook useEffect has missing dependencies: 'booths' and 'sectionId'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+    
+  }, [booths, sectionId]) //COMMENT:   React Hook useEffect has missing dependencies: 'booths' and 'sectionId'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
 
   return (
     <Stage
