@@ -120,8 +120,10 @@ export default function VendorProvider({ children }) {
 
     localStorage.setItem(
       'currentVendor',
+
       JSON.stringify({ apt, city, state, street, zip, ...data })
     )
+
 
     setCurrentVendor({
       apt,
