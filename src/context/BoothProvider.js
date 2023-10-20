@@ -9,11 +9,12 @@ const boothRef = firestore.collection('Booths')
 
 export const BoothContext = createContext()
 export default function BoothProvider({ children }) {
-  const [booths, setBooths] = useState([])
+const [booths, setBooths] = useState([])
 
   // const [rowsOfBooths, setRowsOfBooths] = useState({})
 
   // const [sectionsOfRows, setSectionsOfRows] = useState({})
+
 
 
   const statusCodes = {
@@ -70,6 +71,16 @@ export default function BoothProvider({ children }) {
       .then(console.log(`booth ${id} created`))
       .catch((err) => console.error(err))
   }
+
+    const updateBooth = (data, id) => {
+      boothRef
+        .doc(id)
+        .update(data)
+        .catch((err) => console.error(err))
+    }
+
+
+
   const resetBooth = (id) => {
     updateBooth(
       {
@@ -79,12 +90,7 @@ export default function BoothProvider({ children }) {
       id
     )
   }
-  const updateBooth = (data, id) => {
-    boothRef
-      .doc(id)
-      .update(data)
-      .catch((err) => console.error(err))
-  }
+
 
 
   // const deleteBooth = (id) => {
@@ -394,6 +400,8 @@ export default function BoothProvider({ children }) {
     },
   }
 
+  console.log("DIAGRAM DATA", diagramData)
+
   //ORIGINAL getBooths & useEffect:
   // const getBooths = (boothArray = []) => {
   //   return boothRef.where('number', '!=', null).onSnapshot((querySnapshot) => {
@@ -407,31 +415,52 @@ export default function BoothProvider({ children }) {
 
   // useEffect(() => {
   //   const boothArray = []
-  //   console.log("booths inside useEffect", booths)
+  //   console.log('booths inside useEffect', booths)
   //   if (booths && booths.length === 0) {
   //     //.where("number", "!=", null)
   //     getBooths(boothArray)
   //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, [])
 
   const getBooths = () => {
+    
+
     return boothRef.where('number', '!=', null).onSnapshot((querySnapshot) => {
+      console.log('getBooths called')
       const boothArray = []
       querySnapshot.forEach((doc) => {
         boothArray.push(doc.data())
+        // console.log("doc.data() from querySnapshot.forEach in getBooths()", doc.data())
       })
-      console.log('boothArray after pushes from getBooths', boothArray)
 
+      //CHECK to see what changes are happening
+      querySnapshot.docChanges().forEach((change) => {
+        if (change.type === 'added') {
+          console.log('added ', change.doc.data())
+        }
+        if (change.type === 'modified') {
+          console.log('modified ', change.doc.data())
+        }
+        if (change.type === 'removed') {
+          console.log('removed: ', change.doc.data())
+        }
+      })
+
+      console.log('boothArray after pushes from getBooths', boothArray)
       setBooths(boothArray)
+
+      // setBooths(querySnapshot.docs.map(doc=>doc.data()))
     })
   }
 
   useEffect(() => {
-
-    console.log('booths inside useEffect', booths)
+    console.log('boothProvider useEffect triggered')
     getBooths()
-     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []) //COMMENT: React Hook useEffect has a missing dependency: 'booths'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+
 
   return (
     <BoothContext.Provider
@@ -448,7 +477,7 @@ export default function BoothProvider({ children }) {
         resetBooth,
         holdBooth,
         newBooths,
-        getBooths,
+        //getBooths,
       }}
     >
       {children}

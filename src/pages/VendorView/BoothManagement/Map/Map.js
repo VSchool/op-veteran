@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useState, useContext, useEffect} from 'react'
 import { CanvasContext } from '../../../../context/CanvasProvider'
 import { BoothContext } from '../../../../context/BoothProvider'
 // import { VendorContext } from '../../../../context/VendorProvider'
@@ -17,6 +17,7 @@ import styled from 'styled-components'
 import BlankMapPathLayer from './BlankMapPathLayer'
 import Row from './Row'
 import treeData from './treeData'
+// import { MdBluetoothSearching } from 'react-icons/md'
 
 const SuperStage = styled(Stage)`
   width: ${(props) => props.containerWidth};
@@ -81,6 +82,8 @@ const Map = (props) => {
   //   blue: '#4E92F9',
   // }
 
+ 
+
   // const { setShowInfo, containerWidth, setModalOptions, showTrees } = props
   const { containerWidth, showTrees } = props
   const buildRows = () => {
@@ -112,7 +115,7 @@ const Map = (props) => {
         sectionId={0}
         mapMode={mapMode}
         setMapMode={setMapMode}
-        booths={booths}
+        booths={booths} 
         getBooths={getBooths}
       />
     ))
@@ -122,8 +125,13 @@ const Map = (props) => {
   useEffect(() => {
     buildRows()
     enterMapMode()
-     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [booths]) //COMMENT:  React Hook useEffect has missing dependencies: 'buildRows' and 'enterMapMode'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [...booths]) //COMMENT:  React Hook useEffect has missing dependencies: 'buildRows' and 'enterMapMode'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+
+  //testing useEffect dependency with ...booths above -- QUESTION: is it OK to spread it like this or NO?
+  
+//adding booths as dependency line 126 above seems to help with map updates when booth status changes
+//may need to check how this is affecting Firebase/Firestore usage though -- if at all.
 
   return (
     <SuperStage

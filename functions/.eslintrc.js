@@ -6,9 +6,10 @@ module.exports = {
   },
   extends: [
     "eslint:recommended",
-    "google",
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // 'google',
   ],
   rules: {
     quotes: ["error", "double"],
   },
-};
+}

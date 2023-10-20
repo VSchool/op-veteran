@@ -116,16 +116,18 @@ const BoothCard = (props) => {
   }
 
   const isAllowed = () => {
-    const tier1 = ['Paladin', 'Stryker', 'Abrams', 'Bradley']
-    const tier2 = ['Paladin', 'Stryker']
-   
+    const tier1 = ['Stryker', 'Bradley']
+    const tier2 = ['Paladin', 'Abrams']
+
     if (vendor) return false
     if (restriction === 0) {
       return true
     } else if (restriction === 1) {
-      return tier1.some(tier => currentVendor.sponsorshipLevel.includes(tier))
+
+      return tier1.some((tier) => currentVendor.sponsorshipLevel.includes(tier)) //change to sponsorshipLevel from sponsorship.level
     } else if (restriction === 2) {
-      return tier2.some(tier => currentVendor.sponsorshipLevel.includes(tier))
+      return tier2.some((tier) => currentVendor.sponsorshipLevel.includes(tier)) //change to sponsorshipLevel from sponsorship.level
+
     }
   }
   return (
@@ -149,7 +151,7 @@ const BoothCard = (props) => {
       <HeaderWrapper>
         {vendor && vendor !== null ? (
           <>
-            <Subheader>{vendor.organization}</Subheader>
+            <Subheader>Reserved By:  {vendor.organization}</Subheader>
             <Paragraph> {vendor.description} </Paragraph>
           </>
         ) : (
@@ -170,8 +172,9 @@ const BoothCard = (props) => {
         )}
       </HeaderWrapper>
       <ButtonWrapper>
+        {/* check this condition below -- does not seem to operate properly */}
         {vendor && vendor === null ? (
-          <Button
+        <Button
             buttonStyle='primary'
             buttonText='Close'
             onClick={handleClose}

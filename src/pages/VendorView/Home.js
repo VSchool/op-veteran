@@ -90,8 +90,8 @@ const Home = (props) => {
 
   useEffect(() => {
     matchVendor()
-     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []) //COMMENT:    React Hook useEffect has a missing dependency: 'matchVendor'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+  }, [matchVendor]) //COMMENT:    React Hook useEffect has a missing dependency: 'matchVendor'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
 
   return (
     <PageContainer>

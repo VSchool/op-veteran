@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useState, useContext, useEffect, useCallback } from 'react'
 import { CanvasContext } from '../../../../context/CanvasProvider'
 import { BoothContext } from '../../../../context/BoothProvider'
 // import { Stage, Layer, Group, Image, Rect, Path } from 'react-konva'
@@ -47,11 +47,13 @@ const Diagram = (props) => {
   //   yellow: '#FBBC05',
   //   blue: '#4E92F9',
   // }
-  const buildRows = () => {
+  const buildRows = useCallback(() => {
+    console.log("buildRows called")
     let arrayOfRows = []
     for (let i = 1; i < 8; i++) {
       let section = `section${i}`
-      console.log(diagramData[section])
+      console.log("section{i}", i)
+      console.log("diagramData[section]", diagramData[section])
       const rowLetters = [
         'A',
         'B',
@@ -70,6 +72,7 @@ const Diagram = (props) => {
       ]
       for (let j = 0; j < rowLetters.length; j++) {
         let rowId = rowLetters[j]
+        console.log("rowId", rowId)
         if (diagramData[section][rowId]) {
           arrayOfRows.push(
             <DiagramRow
@@ -85,14 +88,16 @@ const Diagram = (props) => {
       }
       setRowGroups(arrayOfRows)
     }
-  }
+  },[booths, diagramData, setCurrentBooth])
+
+
   useEffect(() => {
     buildRows()
     // const rgroup = rowsOfBooths.A.map(b=><Rect x={0} y={b.number*20} width={20}
     // height={20} fill={colors.green} stroke="#000" strokeWidth={1}/>)
     // setRowGroups(prev=>[...prev, rgroup])
-     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []) //COMMENT:  React Hook useEffect has a missing dependency: 'buildRows'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+  
+  }, [buildRows]) //COMMENT:  React Hook useEffect has a missing dependency: 'buildRows'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
 
   return (
     <SuperStage width={700} height={700} scale={scale}>

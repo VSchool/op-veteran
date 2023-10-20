@@ -75,7 +75,7 @@ const BoothManagement = (props) => {
   const [containerWidth, setContainerWidth] = useState(0)
   const [mapMode, setMapMode] = useState(true)
   const [showInfo, setShowInfo] = useState(false)
-  const [organizedBooths, setOrganizedBooths] = useState([])
+  // const [organizedBooths, setOrganizedBooths] = useState([])
   // const { user } = useContext(UserContext)
   // const { currentVendor, updateCurrentVendor } = useContext(VendorContext)
   const { currentVendor } = useContext(VendorContext)
@@ -111,9 +111,10 @@ const BoothManagement = (props) => {
     booths,
     holdBooth,
     resetBooth,
+    //getBooths,
     // reserveBooth,
     // pullMapDataFromFirestore,
-    organizeBoothData,
+    // organizeBoothData,
     // statusCodes,
   } = useContext(BoothContext)
 
@@ -155,6 +156,7 @@ const BoothManagement = (props) => {
     if (localCart.primaryBoothId) {
       await resetBooth(localCart.primaryBoothId)
     }
+    //test this   
     setIsDoubleBoothOpen(false)
     setCurrentBooth(null)
     setLocalCart({ primaryBoothId: '' }, { secondaryBoothId: '' }) //test clears localcart
@@ -190,17 +192,20 @@ const BoothManagement = (props) => {
   useEffect(() => {
     let isMounted = true
     if (isMounted) {
-      const data = organizeBoothData()
+      // const data = organizeBoothData()
       const width = getContainerWidth()
       setContainerWidth(width)
-      setOrganizedBooths(data)
-      console.log('organized booths', organizedBooths)
+      // setOrganizedBooths(data)
+      console.log("width from boothMgmt component useEffect", width)
+      // console.log("data coming into BoothMgmt useEffect", data)
+      // console.log('organized booths', organizedBooths)
     }
     return () => {
       isMounted = false
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []) //COMMENT:  React Hook useEffect has missing dependencies: 'getContainerWidth' and 'organizeBoothData'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+  
+  }, [getContainerWidth])  
+  //COMMENT:  React Hook useEffect has missing dependencies: 'getContainerWidth' and 'organizeBoothData'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
 
   return (
     <>

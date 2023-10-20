@@ -1,5 +1,7 @@
-import React, { useContext, useState, useEffect } from 'react'
+// import React, { useContext, useState, useEffect} from 'react'
+import React, { useContext, useState } from 'react'
 import styled from 'styled-components'
+import Modal from '../../../components/FileUploadModal'
 // import { FormInput } from '../../../components/FormInput'
 // import ProgressBar from '../../../components/ProgressBar'
 import StatusMessage from '../../../components/StatusMessage'
@@ -27,6 +29,7 @@ import {
 import { CheckBox } from '../../../components/CheckBox'
 import { StateDropdown } from '../../../components/StateDropdown'
 import { useNavigate } from 'react-router-dom'
+// import { IoLogoAndroid } from 'react-icons/io5'
 
 const Paragraph = styled.p`
   padding: 10px 5px;
@@ -81,7 +84,11 @@ export default function RegistrationForm(props) {
   } = useContext(CartContext)
   const {
     currentVendor,
+    //setCurrentVendor,
     updateCurrentVendor,
+    //saveLogo,
+    //setLogoUrl,
+    //logoUrl,
     // matchVendor,
     // createVendor,
     storeFile,
@@ -93,25 +100,43 @@ export default function RegistrationForm(props) {
   const [regErrors, setRegErrors] = useState({})
 
   const [isEdit, setIsEdit] = useState(false)
-
   const [isValidReg, setIsValidReg] = useState(false)
-  console.log('isValidReg', isValidReg)
+  const [logoFile, setLogoFile] = useState(null) //TEST w/ null as default instead of {}
+  const [logoFileName, setLogoFileName] = useState('')
+  const [logoUrl, setLogoUrl] = useState('')
+
+
+ const [modalOpen, setModalOpen] = useState(false)
+
+const fileSizeAlert = () => {
+  //    // write or import modal, display after 'continue to checkout' is clicked'
+     setModalOpen(true)
+   }
+  
+// console.log("CURRENTVENDOR.ADDRESS", currentVendor.address)
 
   //better way to do these next 5 lines???
-  const currentVendorAddressData = currentVendor
+  const currentVendorAddressData = currentVendor !== null
     ? { ...currentVendor.address }
     : null
-  console.log('currentVendorAddress Data', currentVendorAddressData)
+    
+    console.log('currentVendorAddress Data', currentVendorAddressData)
+  
   if (currentVendorAddressData !== null) {
     delete currentVendor.address
-  }
+  } 
+
+
   console.log('currentVendor', currentVendor)
+  // console.log("currentVendor.city", currentVendor.city)
   console.log('currentVendor from reg form', currentVendor)
-  //  console.log("currentVendor.address", currentVendor.address)
+  // console.log("currentVendor.address", currentVendor.address)
 
   const [input, setInput] = useState(
     currentVendor
-      ? { ...currentVendor, ...currentVendorAddressData }
+      ? { ...currentVendor, ...currentVendorAddressData}
+      
+      // ? { ...currentVendor, ...currentVendorAddressData}
       : {
           firstName: '',
           lastName: '',
@@ -129,54 +154,14 @@ export default function RegistrationForm(props) {
           isSponsor: false,
           sponsorshipLevel: '',
           wantToSponsor: false,
-          file: null,
+          // file: null,
+          //logoUrl: '',
+          // logoFileName: '',
           repEmail: user.email,
         }
   )
 
   console.log('input outside of anything', input)
-
-  //USEEFFECT TO HANDLE FORM EDITS
-  useEffect(() => {
-    handleValidation()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [input]) //COMMENT: React Hook useEffect has a missing dependency: 'handleValidation'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
-
-  // useEffect(() => {
-  //   if (currentVendor && currentVendor.repEmail ===user.email){
-  //     const nextState = (currentVendor.sponsorship.interested && !currentVendor.sponsorship.finalized) ? states.SPONSOR : states.SELECT
-  //     changeState(nextState)
-  //   }
-  // }, [currentVendor])
-
-  const handleChange = (e) => {
-    const { name, value } = e.target
-
-    setInput((prev) => {
-      return {
-        ...prev,
-        [name]: value,
-      }
-    })
-  }
-
-  // const handleShowSponsorship = (e) => {
-  //   e.preventDefault()
-  //   setShowSponsorship(true)
-  // }
-
-  const handleChooseFile = (e) => {
-    setInput((prev) => ({ ...prev, file: e.target.files[0] }))
-  }
-
-  const saveLogo = (file) => {
-    const fileName = file.name
-    const extension = fileName.split('.')[1]
-    storeFile(
-      file,
-      `logos/${input.organization}/${input.organization}.${extension}`
-    )
-  }
 
   const handleValidation = () => {
     console.log('handleValidation called')
@@ -211,11 +196,11 @@ export default function RegistrationForm(props) {
       errorsReg.state = 'State is required.'
     }
 
-    if (input.zip.length < 5) {
+    if (input.zip.length < 4) {
       errorsReg.zip = 'Valid zip code required.'
     }
 
-    console.log('errors', errorsReg)
+    console.log('errorsReg', errorsReg)
 
     setRegErrors(errorsReg)
 
@@ -232,25 +217,201 @@ export default function RegistrationForm(props) {
     }
   }
 
+ 
+//moved saveLogo funciton  back here (from Vendor context)
+    //  const saveLogo = async (file) => {
+    //    console.log('file inside saveLogo', file)
+    //    const fileName = file.name
+    //    console.log('FILENAME', fileName) //this is UNDEFINED for some reason
+    //    const extension = fileName.split('.')[1]
+    //    const newFileName = currentVendor?.organization.replace(/ /g, '')
+
+    //    console.log(newFileName)
+
+  
+    //    const url = storeFile(file, `logos/${newFileName}/${newFileName}.${extension}`)
+
+    //    console.log("url from saveLogo", url)
+
+    //    setLogoUrl(url)
+
+    
+
+    //           // setCurrentVendor((prev) => ({
+    //           //   ...prev,
+    //           //   logoFileName: fileName,
+    //           //   logoUrl: url
+    //           // }))
+
+
+    //    // console.log("logoUrl from inside saveLogo", logoUrl)
+    //  }
+
+
+  //TEST DIFF USEEFFECT
+  // useEffect(() => {
+  //   console.log("useEffect regErrors", regErrors)
+  //   if (Object.keys(regErrors).length === 0 && isValidReg) {
+  //     // console.log("useEffect input", input)
+  //   }
+  // }, [regErrors, isValidReg])
+
+  //USEEFFECT TO HANDLE FORM EDITS
+  // useEffect(() => {
+  //   handleValidation()
+  //   console.log('useEffect/handleValidation called')
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []) //COMMENT: React Hook useEffect has a missing dependency: 'handleValidation'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+
+  // useEffect(() => {
+  //   if (currentVendor && currentVendor.repEmail ===user.email){
+  //     const nextState = (currentVendor.sponsorship.interested && !currentVendor.sponsorship.finalized) ? states.SPONSOR : states.SELECT
+  //     changeState(nextState)
+  //   }
+  // }, [currentVendor])
+
+  //TRY THIS =======> TEST moving function inside of useEffect instead*****************
+
+
+  const handleChange = (e) => {
+    const { name, value } = e.target
+    handleValidation()  //NOTE: this doesn't work if just try to add file on EDIT but don't make any other changes
+    setInput((prev) => {
+      return {
+        ...prev,
+        [name]: value
+      }
+    })
+  }
+
+  // const handleShowSponsorship = (e) => {
+  //   e.preventDefault()
+  //   setShowSponsorship(true)
+  // }
+
+
+
+
+
+
+  const handleChooseFile = (e) => {
+    console.log('handleChooseFile called')
+    console.log('handleChooseFile e.target.files[0]', e.target.files[0]) //check to see what's in there
+    console.log(
+      'handleChooseFile e.target.files[0].name',
+      e.target.files[0].name
+    )
+       if (e.target.files[0].size > 1 * 1000 * 1024) {
+        fileSizeAlert()
+        // alert('Only logo files sized at 1 MB or under are allowed. Please try again.')
+        return false
+      }
+
+      // do other operation
+  
+    console.log("SETLOGOFILE getting called")
+    setLogoFile(e.target.files[0])
+    setLogoFileName(e.target.files[0].name)
+    console.log('logoFile', logoFile)
+    console.log('logoFileName', logoFileName)
+    handleValidation()
+
+  }
+
+  // const saveLogo = (logo) => {
+  //   console.log("saveLogo inside of RegForm called")
+  //   console.log("saveLogo file", logo)
+  //   console.log("saveLogo file.name", logo.name)
+
+  //   const fileName = logo.name
+  //   const extension = fileName.split('.')[1]
+  //   storeFile(logo,`logos/${input.organization}/${input.organization}.${extension}`)
+  // }
+
+  //storefile from vendor context w/ setInputs added
+
+
+  //ORIGINAL CODE FOR saveLogo:
+  // const saveLogo = (file) => {
+  //   const fileName = file.name
+  //   // console.log("fileName from saveLogo", filename)
+  //   const extension = fileName.split('.')[1]
+  //   storeFile(
+  //     file,
+  //     `logos/${input.organization}/${input.organization}.${extension}`
+  //   )
+  // }
+
+//***********CURRENT SAVELOGO FROM VENDOR CONTEXT
+    // const saveLogo = (file) => {
+    //   console.log('file inside saveLogo', file)
+    //   const fileName = file.name
+    //   const extension = fileName.split('.')[1]
+    //   const newFileName = currentVendor?.organization.replace(/ /g, '')
+
+    //   console.log(newFileName)
+
+    //   storeFile(file, `logos/${newFileName}/${newFileName}.${extension}`)
+    // }
+
+    // if (logoFile) {
+    //   // console.log('if input.file', input.file)
+    //   saveLogo(logoFile)
+    // }
+
+  // const logoUrl = JSON.parse(localStorage.getItem('logoUrl'))
+  // console.log("LOGOURL outside of anything in REG form", logoUrl)
+
   const handleSubmit = async (e) => {
     e.preventDefault()
-
+    
     console.log('isValidReg right after handleSubmit called', isValidReg)
+
+    if(logoFile) {  
+      console.log('LOGOFILE inside handleSubmit', logoFile)
+      console.log('LOGOFILE.NAME', logoFile.name)
+      // saveLogo(logoFile)
+      const fileName = logoFile.name
+      console.log('FILENAME', fileName) 
+      const extension = fileName.split('.')[1]
+      const newFileName = currentVendor?.organization.replace(/ /g, '')
+      const url = storeFile(logoFile,`logos/${newFileName}/${newFileName}.${extension}`) 
+      console.log('URL inside of handleSubmit/if(logoFile)', url)
+ 
+      setLogoUrl(url)   //this not getting captured/set when submit -- coming back as empty ''
+    }
 
     if (isEdit) {
       console.log('isEdit', isEdit)
-      updateCurrentVendor(input)
+      console.log(
+        'currentVendor.logoUrl inside if(isEdit)handleSubmit',
+        currentVendor.logoUrl
+      )
+      console.log("logoUrl for isEdit? inside handleSubmit", logoUrl)
+
+      updateCurrentVendor({
+        ...input,
+        logoFileName: logoFile !== null ? logoFileName : currentVendor.logoFileName || null,
+        logoUrl: logoFile !== null ? logoUrl : currentVendor.logoUrl || null,
+      })
+   
+      
     } else {
       // setShowSponsorship(input.wantToSponsor)
       // createVendor({ ...input })
 
-      console.log('from handlesubmit: ', { ...input })
-      createCart({ ...input }) //kelly-this calls createVendor() currently
+      console.log('INPUTS from handlesubmit: ', { ...input })
+      await createCart({ ...input }) //kelly-this calls createVendor() currently
+
     }
 
-    if (input.file) {
-      saveLogo(input.file)
-    }
+   
+    // if (input.file) {
+    //   console.log('if input.file', input.file)
+    //   await saveLogo(input.file)
+    //   await setInput(prev=>({...prev, file: null}))
+    // }
 
     if (input.wantToSponsor) {
       navigate('/sponsorship')
@@ -274,6 +435,7 @@ export default function RegistrationForm(props) {
           : input.sponsorshipLevel,
       }
     })
+    handleValidation()
   }
 
   const handleIsEditing = () => {
@@ -427,8 +589,21 @@ export default function RegistrationForm(props) {
           </Required>
         </Row>
         <Row columns='2'>
-          <Paragraph>Upload your organization's logo.</Paragraph>
-          <FileButton type='file' name='logo' onChange={handleChooseFile} />
+          {/* <Paragraph>Upload your organization's logo.</Paragraph> */}
+          <Row columns='2'>
+            <Paragraph>Upload your organization's logo.</Paragraph>
+            <FileButton
+              type='file'
+              name='logoFile'
+              onChange={handleChooseFile}
+            />{' '}
+            {/*changed name='logo' to name='file' */}
+          </Row>
+          <Row style={{ fontSize: '10px', fontWeight: 'bold', color: 'blue' }}>
+            {currentVendor?.logoFileName
+              ? `Last selected logo file: "${currentVendor.logoFileName}"`
+              : null}
+          </Row>
         </Row>
         <CheckBox
           labelText='Organization is veteran owned'
@@ -499,6 +674,15 @@ export default function RegistrationForm(props) {
       )}
 
       {/* {showSponsorship ? <></> : null} */}
+         {modalOpen && (
+          <Modal
+            message={
+              'Logo file uploads should be sized at 1 MB or less. Please try again.'
+            }
+            modalOpen={modalOpen}
+            setModalOpen={setModalOpen}
+          />
+        )}
     </Container>
   )
 }

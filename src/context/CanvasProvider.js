@@ -1,5 +1,5 @@
 // import React, { createContext, useContext, useEffect, useState } from 'react'
-import React, { createContext, useEffect, useState } from 'react'
+import React, { createContext, useEffect, useState, useCallback } from 'react'
 // import firestore from '../database'
 // import Konva from 'konva'
 
@@ -20,15 +20,19 @@ export default function CanvasProvider({ children }) {
     setStageSize({ w: 1024, h: 1083 })
     fitStageIntoParentContainer(1)
   }
-  function fitStageIntoParentContainer(mod = 1) {
-    let container = document.querySelector('#root')
-    let containerWidth = container.offsetWidth
-    // let containerHeight = container.offsetHeight
-    //let scaleAmnt = containerWidth < containerHeight ? Math.min(Math.max(containerWidth / stageSize.w, 0), 1) :  Math.min(Math.max(containerHeight / stageSize.h, 0),1)
-    let scaleAmnt = Math.min(Math.max(containerWidth / stageSize.w, 0), 1)
-    setScale({ x: scaleAmnt, y: scaleAmnt })
-    // console.log(`container: ${containerWidth} | stage.w: ${stageSize.w} | scaleAmnt: ${scaleAmnt}`)
-  }
+ const fitStageIntoParentContainer = useCallback(
+   (mod = 1) => {
+     let container = document.querySelector('#root')
+     let containerWidth = container.offsetWidth
+     // let containerHeight = container.offsetHeight
+     //let scaleAmnt = containerWidth < containerHeight ? Math.min(Math.max(containerWidth / stageSize.w, 0), 1) :  Math.min(Math.max(containerHeight / stageSize.h, 0),1)
+     let scaleAmnt = Math.min(Math.max(containerWidth / stageSize.w, 0), 1)
+     setScale({ x: scaleAmnt, y: scaleAmnt })
+     // console.log(`container: ${containerWidth} | stage.w: ${stageSize.w} | scaleAmnt: ${scaleAmnt}`)
+   },
+   [stageSize.w]
+ )
+
   const getContainerWidth = () => {
     let container = document.querySelector('#root')
     let containerWidth = container.offsetWidth
@@ -38,8 +42,8 @@ export default function CanvasProvider({ children }) {
 
   useEffect(() => {
     fitStageIntoParentContainer()
-     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []) //COMMENT: React Hook useEffect has a missing dependency: 'fitStageIntoParentContainer'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+   
+  }, [fitStageIntoParentContainer]) //COMMENT: React Hook useEffect has a missing dependency: 'fitStageIntoParentContainer'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
 
   useEffect(() => {
     window.addEventListener('resize', fitStageIntoParentContainer, {
@@ -49,8 +53,7 @@ export default function CanvasProvider({ children }) {
       window.removeEventListener('resize', fitStageIntoParentContainer, {
         passive: true,
       })
-     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []) //COMMENT:  React Hook useEffect has a missing dependency: 'fitStageIntoParentContainer'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+  }, [fitStageIntoParentContainer]) //COMMENT:  React Hook useEffect has a missing dependency: 'fitStageIntoParentContainer'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
 
   return (
     <CanvasContext.Provider
